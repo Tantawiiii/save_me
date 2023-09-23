@@ -10,19 +10,26 @@ environment:
   sdk: '>=3.1.0 <4.0.0'
 
 dependencies:
+
+  animated_splash_screen: ^1.3.0
+
   flutter:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
 
   fluttertoast: ^8.2.2
-
+  # network_info_plus: request
+  dio: ^4.0.4
+  json_annotation: ^4.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+
+  json_serializable: ^4.1.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -36,9 +43,16 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/logo/logo_save_me.png
+    - assets/images/logo_save_me.png
+    - assets/images/logowithnobg.png
 
-
+  fonts:
+     - family: cairo
+       fonts:
+         - asset: assets/fonts/cairo.ttf
+     - family: abel
+       fonts:
+         - asset: assets/fonts/abel-regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

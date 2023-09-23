@@ -1,7 +1,14 @@
 
 
 // This Class for a represent validation of Login and Register Screens
-class Validator {
+class Validation {
+
+  static String? validateName(String value){
+    if(value.isEmpty){
+      return 'Please Enter Name';
+    }
+    return null;
+  }
 
   static String? validateEmail(String value){
     Pattern pattern = r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+';
@@ -23,5 +30,23 @@ class Validator {
       return null;
     }
   }
+
+  static String? validatePhoneNumber(String value){
+
+    if(value.length != 11){
+      return 'Mobile Number must be of 11 digit';
+    } else if (value.isEmpty){
+      return 'Not require';
+    } else{
+      return null;
+    }
+
+
+
+  }
+
+
+
+
 
 }
