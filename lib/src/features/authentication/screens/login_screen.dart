@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:save_me/src/features/authentication/Screens/register_screen.dart';
-import 'package:save_me/src/features/authentication/utils/validation.dart';
-
 import '../widget/login_form.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-
 
   @override
   Widget build(BuildContext context) {
