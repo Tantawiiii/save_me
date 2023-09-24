@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:save_me/constants/settings.dart';
+import 'package:save_me/src/features/home/screens/home.dart';
+import '../../../../constants/Strings.dart';
 import '../Screens/register_screen.dart';
 import '../utils/validation.dart';
 
@@ -47,20 +49,20 @@ class LoginFormState extends State<LoginForm> {
               const SizedBox(
                 height: 40,
               ),
-              const Text(
-                'Welcome Back !',
+              Text(
+                Strings.txtWelcomeLogin,
                 style: TextStyle(
                   fontSize: 22,
-                  fontFamily: "cairo",
+                  fontFamily: Settings.getFontFamilyCairo(),
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 5),
-              const Text(
-                'Here We Can Help You To Find Your Lost Items',
+               Text(
+                Strings.txtWelcomeLogin2,
                 style: TextStyle(
                   fontSize: 15,
-                  fontFamily: "cairo",
+                  fontFamily: Settings.getFontFamilyCairo(),
                 ),
               ),
               const SizedBox(height: 50),
@@ -72,8 +74,14 @@ class LoginFormState extends State<LoginForm> {
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                          labelText: 'Email', icon: Icon(Icons.email)),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        labelText: Strings.txtEmail,
+                        hintText: Strings.txtHintEmail,
+                        //isDense: true,
+                      ),
                       validator: (value) {
                         return Validation.validateEmail(value ?? "");
                       },
@@ -84,9 +92,13 @@ class LoginFormState extends State<LoginForm> {
                     TextFormField(
                       controller: _passwordController,
                       obscureText: true,
-                      decoration: const InputDecoration(
-                        labelText: 'Password',
-                        icon: Icon(Icons.lock),
+                      //keyboardType: TextInputType.visiblePassword,
+                      decoration:  InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        labelText: Strings.txtPassword,
+                        hintText: Strings.txtHintPassword,
                       ),
                       validator: (value) {
                         return Validation.validatePassword(value ?? "");
@@ -102,27 +114,34 @@ class LoginFormState extends State<LoginForm> {
                         borderRadius: BorderRadius.circular(20),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.grey,
+                            primary: Colors.grey.shade300,
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               String email = _emailController.text;
                               String password = _passwordController.text;
-
                               if (kDebugMode) {
                                 print('Email: $email');
                               }
                               if (kDebugMode) {
                                 print('Password: $password');
                               }
+
+                              Navigator.push(context,
+                                MaterialPageRoute(builder:
+                                    (context) => const HomePage()
+                                ),
+                              );
+
                             }
+
                           },
-                          child: const Text(
-                            "Let's Go",
+                          child: Text(
+                            Strings.txtButtonLogin,
                             style:
                             TextStyle(color: Colors.black,
-                              fontSize: 16,
-                              fontFamily: "abel",
+                              fontSize: 18,
+                              fontFamily: Settings.getFontFamilyAbel(),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -134,7 +153,7 @@ class LoginFormState extends State<LoginForm> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         const Text(
-                          "Don't Have Account ?",
+                          Strings.txtDoNotHaveAcc,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
@@ -142,7 +161,7 @@ class LoginFormState extends State<LoginForm> {
                         ),
                         const SizedBox(width: 10,),
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(24),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               primary: Colors.black,
@@ -155,7 +174,7 @@ class LoginFormState extends State<LoginForm> {
                               );
                             },
                             child: const Text(
-                              'Register',
+                              Strings.txtButtonRegister,
                               style:
                               TextStyle(color: Colors.white, fontSize: 16),
                             ),
