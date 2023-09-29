@@ -1,5 +1,3 @@
-
-
 //Login Screens Texts
 
 
