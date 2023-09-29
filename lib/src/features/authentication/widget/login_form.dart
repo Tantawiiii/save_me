@@ -1,6 +1,8 @@
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:save_me/constants/settings.dart';
+import 'package:save_me/src/features/authentication/service/api_client.dart';
 import 'package:save_me/src/features/home/screens/home.dart';
 import '../../../../constants/Strings.dart';
 import '../Screens/register_screen.dart';
@@ -21,9 +23,49 @@ class LoginFormState extends State<LoginForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final ApiClient _apiClient = ApiClient();
 
   @override
   Widget build(BuildContext context) {
+
+    Future<void> _LoginUserFun() async {
+      if (_formKey.currentState!.validate()) {
+        String email = _emailController.text;
+        String password = _passwordController.text;
+
+        final user = await _apiClient.loginUser(
+            _emailController.text,
+            _passwordController.text);
+
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(
+          content: const Text('Processing Login Data ...'),
+          backgroundColor: Colors.green.shade300,
+        ));
+
+        if(user != null){
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+          if (kDebugMode) {
+            print('Email: $email');
+            print('Password: $password');
+          }
+          Navigator.pushReplacement(context,
+            MaterialPageRoute(builder:
+                (context) => const HomePage()
+            ),
+          );
+        } else{
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(
+            content:
+            Text('Error Login: $user'),
+            backgroundColor: Colors.red.shade300,
+          ));
+        }
+      }
+    }
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -117,24 +159,7 @@ class LoginFormState extends State<LoginForm> {
                             primary: Colors.grey.shade300,
                           ),
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              String email = _emailController.text;
-                              String password = _passwordController.text;
-                              if (kDebugMode) {
-                                print('Email: $email');
-                              }
-                              if (kDebugMode) {
-                                print('Password: $password');
-                              }
-
-                              Navigator.push(context,
-                                MaterialPageRoute(builder:
-                                    (context) => const HomePage()
-                                ),
-                              );
-
-                            }
-
+                            _LoginUserFun();
                           },
                           child: Text(
                             Strings.txtButtonLogin,

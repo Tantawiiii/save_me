@@ -38,16 +38,16 @@ class Validation {
     }
   }
 
-  // static String? validatePhoneNumber(String value){
-  //   if(value.length != 11){
-  //     return 'Mobile Number must be of 11 digit';
-  //   } else if (value.isEmpty){
-  //     return 'Not require';
-  //   } else{
-  //     return null;
-  //   }
-  //
-  // }
+  static String? validatePhoneNumber(String value){
+    if(value.length != 11){
+      return 'Mobile Number must be of 11 digit';
+    } else if (value.isEmpty){
+      return 'Not require';
+    } else{
+      return null;
+    }
+
+  }
 
 
 

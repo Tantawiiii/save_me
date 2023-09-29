@@ -1,10 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:save_me/constants/settings.dart';
 import 'package:save_me/src/features/authentication/Screens/login_screen.dart';
+import 'package:save_me/src/features/authentication/model/user_model.dart';
+import 'package:save_me/src/features/authentication/service/api_client.dart';
 
 import '../../../../constants/Strings.dart';
+import '../../home/screens/home.dart';
 import '../utils/validation.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -18,6 +22,8 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneNumController = TextEditingController();
@@ -25,8 +31,58 @@ class _RegisterFormState extends State<RegisterForm> {
       TextEditingController();
   final TextEditingController _locationController = TextEditingController();
 
+  // Initialize Dio with ApiClient
+  final ApiClient _apiClient = ApiClient();
+
   @override
   Widget build(BuildContext context) {
+    Future<void> _registerUserFun() async {
+      // to implement a register
+      if (_formKey.currentState!.validate()) {
+        String name = _nameController.text;
+        String username = _usernameController.text;
+        String email = _emailController.text;
+        String password = _passwordController.text;
+        String phoneNumber = _phoneNumController.text;
+        String location = _locationController.text;
+
+        if (kDebugMode) {
+          print('Name: $name');
+          print('Username: $username');
+          print('Email: $email');
+          print('Password: $password');
+          print('PhoneNumber: $phoneNumber');
+          print('location: $location');
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Progress to Add Data'),
+          backgroundColor: Colors.blueAccent,
+        ));
+        final user = User(
+          name: _nameController.text,
+          username: _usernameController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+          phonenumber: _phoneNumController.text,
+          location: _locationController.text,
+        );
+
+        final registerSuccessful = await _apiClient.registerUser(user);
+
+        if (registerSuccessful) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Error: $registerSuccessful'),
+            backgroundColor: Colors.red.shade300,
+          ));
+        }
+      }
+    }
+
     return Scaffold(
       body: Center(
         child: Container(
@@ -74,6 +130,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           height: 35,
                         ),
                         TextFormField(
+                          controller: _nameController,
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -91,6 +148,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         ),
                         TextFormField(
                           keyboardType: TextInputType.name,
+                          controller: _usernameController,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -116,7 +174,7 @@ class _RegisterFormState extends State<RegisterForm> {
                             hintText: Strings.txtHintPhoneNumber,
                           ),
                           validator: (value) {
-                            //return Validation.validatePhoneNumber(value ?? "");
+                            return Validation.validatePhoneNumber(value ?? "");
                           },
                         ),
                         const SizedBox(
@@ -185,6 +243,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
                         // Auto Located Place
                         GooglePlaceAutoCompleteTextField(
+                          isCrossBtnShown: true,
                           textEditingController: _locationController,
                           googleAPIKey: Strings.API_KEY,
                           inputDecoration: const InputDecoration(
@@ -195,7 +254,9 @@ class _RegisterFormState extends State<RegisterForm> {
                           countries: const ["eg", "de"],
                           isLatLngRequired: true,
                           getPlaceDetailWithLatLng: (Prediction prediction) {
-                            print("placeDetails${prediction.lng}");
+                            if (kDebugMode) {
+                              print("placeDetails${prediction.lng}");
+                            }
                           },
                           itemClick: (Prediction prediction) {
                             _locationController.text = prediction.description!;
@@ -205,7 +266,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           },
                         ),
                         const SizedBox(
-                          height: 25,
+                          height: 45,
                         ),
                         // Button to register
                         SizedBox(
@@ -217,8 +278,10 @@ class _RegisterFormState extends State<RegisterForm> {
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.grey.shade300,
                               ),
-                              onPressed: () {},
-                              child:  Text(
+                              onPressed: () async {
+                                _registerUserFun();
+                              },
+                              child: Text(
                                 Strings.txtBtnSubmit,
                                 style: TextStyle(
                                   color: Colors.black,
@@ -270,7 +333,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           ],
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 60,
                         ),
                       ],
                     )),
