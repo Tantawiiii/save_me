@@ -8,7 +8,7 @@ import 'package:save_me/src/features/authentication/model/user_model.dart';
 import 'package:save_me/src/features/authentication/service/api_client.dart';
 
 import '../../../../constants/Strings.dart';
-import '../../home/screens/home.dart';
+import '../../home/screens/home_screen.dart';
 import '../utils/validation.dart';
 
 class RegisterForm extends StatefulWidget {

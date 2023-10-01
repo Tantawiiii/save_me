@@ -2,4 +2,6 @@ package com.example.save_me
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity()
+class MainActivity: FlutterActivity(){}
+
+

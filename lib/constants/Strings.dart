@@ -53,4 +53,7 @@ class Strings{
 
   static const String txtBtnLogin = "Login";
 
+  static const String txtAddProfile = "You Can Add Profiles \n From Here";
+  static const String txtStartAddProfile = "Start Adding Profiles";
+
 }

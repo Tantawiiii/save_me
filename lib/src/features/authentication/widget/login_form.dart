@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:save_me/constants/settings.dart';
 import 'package:save_me/src/features/authentication/service/api_client.dart';
-import 'package:save_me/src/features/home/screens/home.dart';
+import 'package:save_me/src/features/home/screens/home_screen.dart';
 import '../../../../constants/Strings.dart';
 import '../Screens/register_screen.dart';
 import '../utils/validation.dart';
@@ -37,10 +37,9 @@ class LoginFormState extends State<LoginForm> {
             _emailController.text,
             _passwordController.text);
 
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(
-          content: const Text('Processing Login Data ...'),
-          backgroundColor: Colors.green.shade300,
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Progress Check Data'),
+          backgroundColor: Colors.blueAccent,
         ));
 
         if(user != null){
@@ -52,7 +51,7 @@ class LoginFormState extends State<LoginForm> {
           }
           Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
-                (context) => const HomePage()
+                (context) =>  HomePage()
             ),
           );
         } else{
@@ -156,7 +155,7 @@ class LoginFormState extends State<LoginForm> {
                         borderRadius: BorderRadius.circular(20),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.grey.shade300,
+                            backgroundColor: Colors.grey.shade300,
                           ),
                           onPressed: () {
                             _LoginUserFun();
@@ -189,7 +188,7 @@ class LoginFormState extends State<LoginForm> {
                           borderRadius: BorderRadius.circular(24),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.black,
+                              backgroundColor: Colors.black,
                             ),
                             onPressed: (){
                               Navigator.push(context,
