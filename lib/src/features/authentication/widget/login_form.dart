@@ -1,16 +1,16 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:save_me/constants/settings.dart';
 import 'package:save_me/src/features/authentication/service/api_client.dart';
 import 'package:save_me/src/features/home/screens/home_screen.dart';
+
 import '../../../../constants/Strings.dart';
 import '../Screens/register_screen.dart';
 import '../utils/validation.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
-  
+
   static String id = 'LoginScreen';
 
   @override
@@ -18,7 +18,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class LoginFormState extends State<LoginForm> {
-
   final Validation valid = Validation();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
@@ -27,38 +26,33 @@ class LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-
     Future<void> _LoginUserFun() async {
       if (_formKey.currentState!.validate()) {
         String email = _emailController.text;
         String password = _passwordController.text;
 
         final user = await _apiClient.loginUser(
-            _emailController.text,
-            _passwordController.text);
+            _emailController.text, _passwordController.text);
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Progress Check Data'),
           backgroundColor: Colors.blueAccent,
         ));
 
-        if(user != null){
+        if (user != null) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
           if (kDebugMode) {
             print('Email: $email');
             print('Password: $password');
           }
-          Navigator.pushReplacement(context,
-            MaterialPageRoute(builder:
-                (context) =>  HomePage()
-            ),
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
           );
-        } else{
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(
-            content:
-            Text('Error Login: $user'),
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Error Login: $user'),
             backgroundColor: Colors.red.shade300,
           ));
         }
@@ -99,7 +93,7 @@ class LoginFormState extends State<LoginForm> {
                 ),
               ),
               const SizedBox(height: 5),
-               Text(
+              Text(
                 Strings.txtWelcomeLogin2,
                 style: TextStyle(
                   fontSize: 15,
@@ -134,7 +128,7 @@ class LoginFormState extends State<LoginForm> {
                       controller: _passwordController,
                       obscureText: true,
                       //keyboardType: TextInputType.visiblePassword,
-                      decoration:  InputDecoration(
+                      decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -162,8 +156,8 @@ class LoginFormState extends State<LoginForm> {
                           },
                           child: Text(
                             Strings.txtButtonLogin,
-                            style:
-                            TextStyle(color: Colors.black,
+                            style: TextStyle(
+                              color: Colors.black,
                               fontSize: 18,
                               fontFamily: Settings.getFontFamilyAbel(),
                               fontWeight: FontWeight.bold,
@@ -172,7 +166,9 @@ class LoginFormState extends State<LoginForm> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -183,24 +179,27 @@ class LoginFormState extends State<LoginForm> {
                             fontWeight: FontWeight.normal,
                           ),
                         ),
-                        const SizedBox(width: 10,),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(24),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
                             ),
-                            onPressed: (){
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder:
-                                      (context) => const RegisterScreen()
-                                  ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const RegisterScreen()
+                                ),
                               );
                             },
                             child: const Text(
                               Strings.txtButtonRegister,
                               style:
-                              TextStyle(color: Colors.white, fontSize: 16),
+                                  TextStyle(color: Colors.white, fontSize: 16),
                             ),
                           ),
                         ),

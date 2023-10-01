@@ -36,6 +36,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: no_leading_underscores_for_local_identifiers
     Future<void> _registerUserFun() async {
       // to implement a register
       if (_formKey.currentState!.validate()) {
@@ -64,7 +65,7 @@ class _RegisterFormState extends State<RegisterForm> {
           username: _usernameController.text,
           email: _emailController.text,
           password: _passwordController.text,
-          phonenumber: _phoneNumController.text,
+          phoneNumber: _phoneNumController.text,
           location: _locationController.text,
         );
 

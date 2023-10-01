@@ -6,7 +6,7 @@ class User{
   late final String username;
   late final String email;
   late final String password;
-  late final String phonenumber;
+  late final String phoneNumber;
   late final String location;
 
   User({
@@ -14,7 +14,7 @@ class User{
     required this.username,
     required this.email,
     required this.password,
-    required this.phonenumber,
+    required this.phoneNumber,
     required this.location });
 
   //create a User object from a JSON map
@@ -24,7 +24,7 @@ class User{
         username: json['username'].toString(),
         email: json['email'].toString(),
         password: json['password'].toString(),
-        phonenumber: json['phoneNumber'].toString(),
+        phoneNumber: json['phoneNumber'].toString(),
         location: json['location'].toString(),
     );
   }
@@ -36,7 +36,7 @@ class User{
     data['username'] = username;
     data['email'] = email;
     data['password'] = password;
-    data['phoneNumber'] = phonenumber;
+    data['phoneNumber'] = phoneNumber;
     data['location'] = location;
     return data;
   }

@@ -53,7 +53,15 @@ class Strings{
 
   static const String txtBtnLogin = "Login";
 
-  static const String txtAddProfile = "You Can Add Profiles \n From Here";
+  static const String txtCanAddProfile = "You Can Add Profiles \n From Here";
   static const String txtStartAddProfile = "Start Adding Profiles";
+  static const String txtAddProfile = "Add Profile";
+
+  static const String txtItemHomeMenu = "Home";
+  static const String txtItemLogoutMenu = "LogOut";
+
+  static const String txtChooseProfile = "Choose Your Profile Type:- ";
+
+
 
 }

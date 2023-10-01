@@ -19,11 +19,11 @@ dependencies:
 
   fluttertoast: ^8.2.2
   # network_info_plus: request
-  dio: ^4.0.4
   json_annotation: ^4.0.1
   google_places_flutter: ^2.0.6
   http: ^1.1.0
   shared_preferences: ^2.2.1
+  connectivity_plus: ^4.0.2
 
 dev_dependencies:
   flutter_test:
