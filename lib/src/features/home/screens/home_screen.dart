@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:save_me/constants/Strings.dart';
+import 'package:save_me/src/features/home/screens/add_profile_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -47,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.indigo,
               ),
               title: const Text(
-                'Home',
+                Strings.txtItemHomeMenu,
                 style: TextStyle(
                   fontSize: 18,
                 ),
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.red,
               ),
               title: const Text(
-                'LogOut',
+                Strings.txtItemLogoutMenu,
                 style: TextStyle(
                   fontSize: 18,
                 ),
@@ -125,6 +126,11 @@ class _HomePageState extends State<HomePage> {
                     ),
                     onTap: () {
                       // Action to add Profile Card
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>   const AddProfile()),
+                      );
                       print("Tapped on Add Profile");
                     },
                   ),
@@ -137,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                             width: 12.0,
                           ),
                           Text(
-                            Strings.txtAddProfile,
+                            Strings.txtCanAddProfile,
                             style: TextStyle(
                               fontSize: 16,
                               // fontFamily: Settings.getFontFamilyCairo(),
