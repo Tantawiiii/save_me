@@ -1,6 +1,11 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:save_me/constants/Strings.dart';
 import 'package:save_me/src/features/home/screens/add_profile_screen.dart';
+
+import '../../../../constants/settings.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,7 +44,7 @@ class _HomePageState extends State<HomePage> {
               child: Image(
                 image: AssetImage('assets/images/logowithnobg.png'),
                 height: 18,
-                width: 80,
+                width: 70,
               ),
             ),
             ListTile(
@@ -47,10 +52,11 @@ class _HomePageState extends State<HomePage> {
                 Icons.home_rounded,
                 color: Colors.indigo,
               ),
-              title: const Text(
+              title:  const Text(
                 Strings.txtItemHomeMenu,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
+
                 ),
               ),
               onTap: () {
@@ -66,7 +72,7 @@ class _HomePageState extends State<HomePage> {
               title: const Text(
                 Strings.txtItemLogoutMenu,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                 ),
               ),
               onTap: () {
@@ -97,6 +103,41 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Check Internet Connection
+              // Container(
+              //   margin: const EdgeInsets.all(20),
+              //   width: double.infinity,
+              //   height: double.infinity,
+              //   child: StreamBuilder(
+              //       stream: Connectivity().onConnectivityChanged,
+              //       builder: (context, AsyncSnapshot<ConnectivityResult> snapshot){
+              //         print(snapshot.toString());
+              //         if(snapshot.hasData){
+              //           ConnectivityResult? result = snapshot.data;
+              //           if(result == ConnectivityResult.mobile){
+              //             // connected a data internet mobile
+              //              if (kDebugMode) {
+              //                print("MOBILE");
+              //              }
+              //           } else if (result == ConnectivityResult.wifi){
+              //             // Connected with Wifi internet
+              //             if (kDebugMode) {
+              //               print("WIFI");
+              //             }
+              //
+              //           } else {
+              //             // No Internet
+              //             noInternet();
+              //           }
+              //         } else {
+              //           // Show Loading..
+              //           return loading();
+              //         }
+              //         return const Text("No widget to build");
+              //       },
+              //   ),
+              // ),
+
               Row(
                 children: [
                   InkWell(
@@ -203,6 +244,65 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget loading() {
+    return const Center(
+      child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrange),
+      ),
+    );
+  }
+
+  Widget connected(String type){
+    return Center(
+      child: Text(
+        "$type Connected",
+        style: const TextStyle(
+          fontSize: 20,
+          color: Colors.green,
+        ),
+      ),
+    );
+
+  }
+
+  Widget noInternet(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Lottie.asset(
+            'assets/anim/anim_internet.json',
+        height: 100,
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 20,bottom: 10),
+          child: const Text(
+            "No Internet Connection.",
+            style: TextStyle(fontSize: 22),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(bottom: 20),
+          child: const Text(
+            "Check your connection, then refresh the page.",
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+        ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.green),
+          ),
+          onPressed: () async {
+            // You can also check the internet connection through this below function as well
+            ConnectivityResult result = await Connectivity().checkConnectivity();
+            print(result.toString());
+          },
+          child: const Text("Refresh"),
+        ),
+      ],
     );
   }
 }
