@@ -1,11 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:save_me/constants/Strings.dart';
 import 'package:save_me/src/features/home/screens/add_profile_screen.dart';
-
-import '../../../../constants/settings.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,11 +49,10 @@ class _HomePageState extends State<HomePage> {
                 Icons.home_rounded,
                 color: Colors.indigo,
               ),
-              title:  const Text(
+              title: const Text(
                 Strings.txtItemHomeMenu,
                 style: TextStyle(
                   fontSize: 16,
-
                 ),
               ),
               onTap: () {
@@ -103,41 +99,6 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Check Internet Connection
-              // Container(
-              //   margin: const EdgeInsets.all(20),
-              //   width: double.infinity,
-              //   height: double.infinity,
-              //   child: StreamBuilder(
-              //       stream: Connectivity().onConnectivityChanged,
-              //       builder: (context, AsyncSnapshot<ConnectivityResult> snapshot){
-              //         print(snapshot.toString());
-              //         if(snapshot.hasData){
-              //           ConnectivityResult? result = snapshot.data;
-              //           if(result == ConnectivityResult.mobile){
-              //             // connected a data internet mobile
-              //              if (kDebugMode) {
-              //                print("MOBILE");
-              //              }
-              //           } else if (result == ConnectivityResult.wifi){
-              //             // Connected with Wifi internet
-              //             if (kDebugMode) {
-              //               print("WIFI");
-              //             }
-              //
-              //           } else {
-              //             // No Internet
-              //             noInternet();
-              //           }
-              //         } else {
-              //           // Show Loading..
-              //           return loading();
-              //         }
-              //         return const Text("No widget to build");
-              //       },
-              //   ),
-              // ),
-
               Row(
                 children: [
                   InkWell(
@@ -170,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>   const AddProfile()),
+                            builder: (context) => const AddProfile()),
                       );
                       print("Tapped on Add Profile");
                     },
@@ -255,7 +216,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget connected(String type){
+  Widget connected(String type) {
     return Center(
       child: Text(
         "$type Connected",
@@ -265,20 +226,19 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-
   }
 
-  Widget noInternet(){
+  Widget noInternet() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Lottie.asset(
-            'assets/anim/anim_internet.json',
-        height: 100,
+          'assets/anim/anim_internet.json',
+          height: 100,
         ),
         Container(
-          margin: const EdgeInsets.only(top: 20,bottom: 10),
+          margin: const EdgeInsets.only(top: 20, bottom: 10),
           child: const Text(
             "No Internet Connection.",
             style: TextStyle(fontSize: 22),
@@ -297,7 +257,8 @@ class _HomePageState extends State<HomePage> {
           ),
           onPressed: () async {
             // You can also check the internet connection through this below function as well
-            ConnectivityResult result = await Connectivity().checkConnectivity();
+            ConnectivityResult result =
+                await Connectivity().checkConnectivity();
             print(result.toString());
           },
           child: const Text("Refresh"),
