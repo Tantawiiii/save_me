@@ -21,8 +21,6 @@ class AddProfile extends StatefulWidget {
 class _AddProfileState extends State<AddProfile> {
   String selectMenuValue = list.first;
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -31,13 +29,13 @@ class _AddProfileState extends State<AddProfile> {
   bool isCompleted = false;
   int _counter = 0;
 
-  void _incrementCounter(){
+  void _incrementCounter() {
     setState(() {
       _counter++;
     });
   }
 
-  void _decrementCounter(){
+  void _decrementCounter() {
     setState(() {
       _counter--;
     });
@@ -156,8 +154,8 @@ class _AddProfileState extends State<AddProfile> {
               const Text(
                 'Here We Write Basic Information First',
                 style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black,
+                  fontSize: 15,
+                  color: Colors.black,
                 ),
               ),
               const SizedBox(
@@ -169,42 +167,42 @@ class _AddProfileState extends State<AddProfile> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
-                    borderSide: BorderSide(
-                      width: 0.1,
-                      style: BorderStyle.none
-                    ),
+                    borderSide: BorderSide(width: 0.1, style: BorderStyle.none),
                   ),
                   labelText: Strings.txtName,
                   hintText: Strings.txtName,
                   filled: true,
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               TextField(
                 controller: _dateController,
                 style: const TextStyle(
-                   color: Colors.black,
+                  color: Colors.black,
                 ),
-                decoration:  const InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "yyyy-mm-dd",
                   icon: Icon(Icons.calendar_today),
                   labelText: 'Birthday ',
-                  border:OutlineInputBorder(
+                  border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ) ,
+                  ),
                 ),
                 readOnly: true,
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1950),
-                      lastDate: DateTime(2100),
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1950),
+                    lastDate: DateTime(2100),
                   );
 
-                  if(pickedDate != null){
+                  if (pickedDate != null) {
                     print(pickedDate);
-                    String formattedDate = DateFormat('yyyy-mm-dd').format(pickedDate);
+                    String formattedDate =
+                        DateFormat('yyyy-mm-dd').format(pickedDate);
                     print(pickedDate);
 
                     setState(() {
@@ -213,10 +211,11 @@ class _AddProfileState extends State<AddProfile> {
                   } else {
                     print('Bug Formatted');
                   }
-
                 },
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 40,
@@ -242,7 +241,6 @@ class _AddProfileState extends State<AddProfile> {
                   ],
                 ),
               ),
-
             ],
           ),
         ),
