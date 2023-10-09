@@ -119,6 +119,7 @@ class _AddProfileState extends State<AddProfile> {
                 height: 25,
               ),
               Stepper(
+                physics: const ClampingScrollPhysics(),
                 type: StepperType.vertical,
                 steps: getSteps(),
                 currentStep: _currentStep,
@@ -245,11 +246,133 @@ class _AddProfileState extends State<AddProfile> {
           ),
         ),
         Step(
+          // Body info Ui Design and Implementation
           state: _currentStep > 1 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 1,
           title: const Text('Body Information'),
           content: const Column(
-            children: <Widget>[],
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'Here We Write Body Information',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          borderSide:
+                              BorderSide(width: 0.1, style: BorderStyle.none),
+                        ),
+                        labelText: 'Size',
+                        hintText: 'Size',
+                        filled: true,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          borderSide:
+                              BorderSide(width: 0.1, style: BorderStyle.none),
+                        ),
+                        labelText: 'Weight',
+                        hintText: 'Kg',
+                        filled: true,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          borderSide:
+                              BorderSide(width: 0.1, style: BorderStyle.none),
+                        ),
+                        labelText: 'Height',
+                        hintText: 'Cm',
+                        filled: true,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10,),
+              SizedBox(
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderSide: BorderSide(
+                        width: 0.1,
+                        style: BorderStyle.none,
+                      ),
+                    ),
+                    labelText: 'Characteristics',
+                    hintText: 'Characteristics',
+                    filled: true,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              SizedBox(
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderSide: BorderSide(
+                        width: 0.1,
+                        style: BorderStyle.none,
+                      ),
+                    ),
+                    labelText: 'Behavior',
+                    hintText: 'Behavior',
+                    filled: true,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              SizedBox(
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderSide: BorderSide(
+                        width: 0.1,
+                        style: BorderStyle.none,
+                      ),
+                    ),
+                    labelText: 'Special Characteristics',
+                    hintText: 'Special Characteristics',
+                    filled: true,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         Step(
@@ -257,7 +380,114 @@ class _AddProfileState extends State<AddProfile> {
           isActive: _currentStep >= 2,
           title: const Text('Health Information'),
           content: const Column(
-            children: <Widget>[],
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'Here We Write Healths Information',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              SizedBox(height: 10,),
+              SizedBox(
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderSide: BorderSide(
+                        width: 0.1,
+                        style: BorderStyle.none,
+                      ),
+                    ),
+                    labelText: 'Diet',
+                    hintText: 'diet',
+                    filled: true,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              SizedBox(
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderSide: BorderSide(
+                        width: 0.1,
+                        style: BorderStyle.none,
+                      ),
+                    ),
+                    labelText: 'Allergies',
+                    hintText: 'Allergies',
+                    filled: true,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              SizedBox(
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderSide: BorderSide(
+                        width: 0.1,
+                        style: BorderStyle.none,
+                      ),
+                    ),
+                    labelText: 'Diseases',
+                    hintText: 'Diseases',
+                    filled: true,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              SizedBox(
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderSide: BorderSide(
+                        width: 0.1,
+                        style: BorderStyle.none,
+                      ),
+                    ),
+                    labelText: 'Medicines',
+                    hintText: 'Medicines',
+                    filled: true,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              SizedBox(
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderSide: BorderSide(
+                        width: 0.1,
+                        style: BorderStyle.none,
+                      ),
+                    ),
+                    labelText: 'Addition Information',
+                    hintText: 'Addition Information',
+                    filled: true,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ];
