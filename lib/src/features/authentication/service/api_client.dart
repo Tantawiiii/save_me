@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 class ApiClient {
   // register User Api request
   Future<bool> registerUser(User user) async {
-
     const url = 'https://api-saveme.dev.fillflix.de/auth/register';
     final response = await http.post(
       Uri.parse(url),
@@ -26,7 +25,6 @@ class ApiClient {
     } else {
       print("Error Failed Response ${response.statusCode}");
     }
-
     return false;
   }
 

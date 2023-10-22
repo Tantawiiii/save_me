@@ -34,8 +34,9 @@ class LoginFormState extends State<LoginForm> {
         final user = await _apiClient.loginUser(
             _emailController.text, _passwordController.text);
 
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Progress Check Data'),
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Progress Check Data'),
           backgroundColor: Colors.blueAccent,
         ));
 

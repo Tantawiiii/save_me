@@ -25,6 +25,7 @@ class _AddProfileState extends State<AddProfile> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
+
   int _currentStep = 0;
   bool isCompleted = false;
   int _counter = 0;
@@ -99,7 +100,7 @@ class _AddProfileState extends State<AddProfile> {
                   DropdownMenu(
                     controller: _typeController,
                     initialSelection: list.first,
-                    label: const Text('Type'),
+                    label: const Text(Strings.txtType),
                     width: 350,
                     onSelected: (String? value) {
                       // This is called when the user selects an item.
@@ -148,12 +149,12 @@ class _AddProfileState extends State<AddProfile> {
         Step(
           state: _currentStep > 0 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 0,
-          title: const Text('Basic Information'),
+          title: const Text(Strings.txtBasicInfo),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               const Text(
-                'Here We Write Basic Information First',
+                Strings.txtBasicInfoHint,
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.black,
@@ -184,9 +185,9 @@ class _AddProfileState extends State<AddProfile> {
                   color: Colors.black,
                 ),
                 decoration: const InputDecoration(
-                  hintText: "yyyy-mm-dd",
+                  hintText: Strings.txtDatePattern,
                   icon: Icon(Icons.calendar_today),
-                  labelText: 'Birthday ',
+                  labelText: Strings.txtBirthday,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
@@ -203,7 +204,7 @@ class _AddProfileState extends State<AddProfile> {
                   if (pickedDate != null) {
                     print(pickedDate);
                     String formattedDate =
-                        DateFormat('yyyy-mm-dd').format(pickedDate);
+                        DateFormat(Strings.txtDatePattern).format(pickedDate);
                     print(pickedDate);
 
                     setState(() {
@@ -249,12 +250,12 @@ class _AddProfileState extends State<AddProfile> {
           // Body info Ui Design and Implementation
           state: _currentStep > 1 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 1,
-          title: const Text('Body Information'),
+          title: const Text(Strings.txtBodyInfo),
           content: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Here We Write Body Information',
+                Strings.txtBodyInfoHint,
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.black,
@@ -273,8 +274,8 @@ class _AddProfileState extends State<AddProfile> {
                           borderSide:
                               BorderSide(width: 0.1, style: BorderStyle.none),
                         ),
-                        labelText: 'Size',
-                        hintText: 'Size',
+                        labelText: Strings.txtSize,
+                        hintText: Strings.txtSize,
                         filled: true,
                       ),
                     ),
@@ -290,8 +291,8 @@ class _AddProfileState extends State<AddProfile> {
                           borderSide:
                               BorderSide(width: 0.1, style: BorderStyle.none),
                         ),
-                        labelText: 'Weight',
-                        hintText: 'Kg',
+                        labelText: Strings.txtWeight,
+                        hintText: Strings.txtKg,
                         filled: true,
                       ),
                     ),
@@ -307,8 +308,8 @@ class _AddProfileState extends State<AddProfile> {
                           borderSide:
                               BorderSide(width: 0.1, style: BorderStyle.none),
                         ),
-                        labelText: 'Height',
-                        hintText: 'Cm',
+                        labelText: Strings.txtHeight,
+                        hintText: Strings.txtCm,
                         filled: true,
                       ),
                     ),
@@ -328,8 +329,8 @@ class _AddProfileState extends State<AddProfile> {
                         style: BorderStyle.none,
                       ),
                     ),
-                    labelText: 'Characteristics',
-                    hintText: 'Characteristics',
+                    labelText:Strings.txtCharacteristics ,
+                    hintText: Strings.txtCharacteristics,
                     filled: true,
                   ),
                 ),
@@ -347,8 +348,8 @@ class _AddProfileState extends State<AddProfile> {
                         style: BorderStyle.none,
                       ),
                     ),
-                    labelText: 'Behavior',
-                    hintText: 'Behavior',
+                    labelText: Strings.txtBehavior,
+                    hintText: Strings.txtBehavior,
                     filled: true,
                   ),
                 ),
@@ -366,8 +367,8 @@ class _AddProfileState extends State<AddProfile> {
                         style: BorderStyle.none,
                       ),
                     ),
-                    labelText: 'Special Characteristics',
-                    hintText: 'Special Characteristics',
+                    labelText: Strings.txtSpecialChar,
+                    hintText: Strings.txtSpecialChar,
                     filled: true,
                   ),
                 ),
@@ -378,12 +379,12 @@ class _AddProfileState extends State<AddProfile> {
         Step(
           state: _currentStep > 2 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 2,
-          title: const Text('Health Information'),
+          title: const Text(Strings.txtHealthInfo),
           content: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Here We Write Healths Information',
+                Strings.txtHealthInfoHint,
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.black,
@@ -405,8 +406,8 @@ class _AddProfileState extends State<AddProfile> {
                         style: BorderStyle.none,
                       ),
                     ),
-                    labelText: 'Diet',
-                    hintText: 'diet',
+                    labelText: Strings.txtDiet,
+                    hintText: Strings.txtDiet,
                     filled: true,
                   ),
                 ),
@@ -424,8 +425,8 @@ class _AddProfileState extends State<AddProfile> {
                         style: BorderStyle.none,
                       ),
                     ),
-                    labelText: 'Allergies',
-                    hintText: 'Allergies',
+                    labelText: Strings.txtAllergies,
+                    hintText: Strings.txtAllergies,
                     filled: true,
                   ),
                 ),
@@ -443,8 +444,8 @@ class _AddProfileState extends State<AddProfile> {
                         style: BorderStyle.none,
                       ),
                     ),
-                    labelText: 'Diseases',
-                    hintText: 'Diseases',
+                    labelText: Strings.txtDiseases,
+                    hintText: Strings.txtDiseases,
                     filled: true,
                   ),
                 ),
@@ -462,8 +463,8 @@ class _AddProfileState extends State<AddProfile> {
                         style: BorderStyle.none,
                       ),
                     ),
-                    labelText: 'Medicines',
-                    hintText: 'Medicines',
+                    labelText: Strings.txtMedicines,
+                    hintText: Strings.txtMedicines,
                     filled: true,
                   ),
                 ),
@@ -481,8 +482,8 @@ class _AddProfileState extends State<AddProfile> {
                         style: BorderStyle.none,
                       ),
                     ),
-                    labelText: 'Addition Information',
-                    hintText: 'Addition Information',
+                    labelText: Strings.txtAdditionInfo,
+                    hintText: Strings.txtAdditionInfo,
                     filled: true,
                   ),
                 ),
