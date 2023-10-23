@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:save_me/constants/settings.dart';
@@ -34,8 +36,9 @@ class LoginFormState extends State<LoginForm> {
         final user = await _apiClient.loginUser(
             _emailController.text, _passwordController.text);
 
+
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text('Progress Check Data'),
           backgroundColor: Colors.blueAccent,
         ));
