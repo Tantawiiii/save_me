@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../widget/login_form.dart';
 
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -19,9 +20,9 @@ class LoginScreen extends StatelessWidget {
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
-          elevation: 8,
+          elevation: 4,
         ),
-        body: const Center(
+        body: Center(
             child: LoginForm(),
         ),
       ),

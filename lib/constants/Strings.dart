@@ -2,9 +2,8 @@
 class Strings{
 
   static const String API_KEY = "AIzaSyA_jeHQ08KhBFEG2tZk3sr0JYbLdpWpWFw";
-
   static const String txtWelcomeLogin = "Welcome Back !";
-  static const String txtWelcomeLogin2= "Here We Can Help You To Find Your Lost Items";
+  static const String txtWelcomeLogin2= "Login to SaveMe to connect to your network";
 
   static const String txtEmail = "Email";
   static const String txtHintEmail = "tantawii@gmail.com";

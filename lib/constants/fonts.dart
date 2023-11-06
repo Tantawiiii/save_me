@@ -1,7 +1,7 @@
 
 
 
-class Settings{
+class Fonts{
 
   static getFontFamilyAbel(){
     return "abel";
