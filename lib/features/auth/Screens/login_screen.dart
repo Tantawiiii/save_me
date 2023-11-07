@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:save_me/constants/colors_code.dart';
 import '../widget/login_form.dart';
 
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
@@ -12,6 +13,10 @@ class LoginScreen extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarIconBrightness: Brightness.dark,
+          ),
           title: Image.asset(
             'assets/images/logo_save_me.png',
             fit: BoxFit.cover,
@@ -20,9 +25,10 @@ class LoginScreen extends StatelessWidget {
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
-          elevation: 4,
+          elevation: 2,
+          shadowColor: Colors.grey,
         ),
-        body: Center(
+        body: const Center(
             child: LoginForm(),
         ),
       ),

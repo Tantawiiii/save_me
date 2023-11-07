@@ -3,7 +3,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:save_me/constants/fonts.dart';
-
 import '../../../../constants/Strings.dart';
 import '../Screens/home_screen.dart';
 import '../Screens/register_screen.dart';
@@ -25,6 +24,14 @@ class LoginFormState extends State<LoginForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final ApiClient _apiClient = ApiClient();
+
+  bool passwordVisible=false;
+
+  @override
+  void initState(){
+    super.initState();
+    passwordVisible=true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +57,7 @@ class LoginFormState extends State<LoginForm> {
           }
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => HomePage()),
+            MaterialPageRoute(builder: (context) => const HomePage()),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -64,8 +71,8 @@ class LoginFormState extends State<LoginForm> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: const EdgeInsets.all(22.0),
-        margin: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(24.0),
+        //margin: const EdgeInsets.all(15.0),
         decoration: const BoxDecoration(
           color: Colors.white,
           // borderRadius: BorderRadius.circular(5), // Add rounded corners
@@ -83,14 +90,13 @@ class LoginFormState extends State<LoginForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 20,
+                height: 16,
               ),
               Text(
                 Strings.txtWelcomeLogin,
                 style: TextStyle(
                   fontSize: 24,
-                  fontFamily: Fonts.getFontFamilyCairo(),
-                  fontWeight: FontWeight.bold,
+                  fontFamily: Fonts.getFontFamilyTitillBold(),
                 ),
               ),
               const SizedBox(height: 5),
@@ -98,69 +104,124 @@ class LoginFormState extends State<LoginForm> {
                 Strings.txtWelcomeLogin2,
                 style: TextStyle(
                   fontSize: 14,
-                  fontFamily: Fonts.getFontFamilyCairo(),
+                  fontFamily: Fonts.getFontFamilyTitillRegular(),
+                  fontWeight: FontWeight.normal
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 40),
               Form(
                 key: _formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      TextFormField(
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          labelText: Strings.txtEmail,
-                          hintText: Strings.txtHintEmail,
-                          //isDense: true,
+                      Text(
+                        Strings.txtEmail,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: Fonts.getFontFamilyTitillRegular(),
+                          fontWeight: FontWeight.normal
                         ),
-                        validator: (value) {
-                          return Validation.validateEmail(value ?? "");
-                        },
                       ),
                       const SizedBox(
-                        height: 25,
+                        height: 8,
                       ),
-                      TextFormField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        //keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+                      SizedBox(
+                        height:56,
+                        child: TextFormField(
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.purple,
+                                )
+                            ),
+                            hintText: Strings.txtHintEmail,
+                            //isDense: true,
                           ),
-                          labelText: Strings.txtPassword,
-                          hintText: Strings.txtHintPassword,
+                          validator: (value) {
+                            return Validation.validateEmail(value ?? "");
+                          },
                         ),
-                        validator: (value) {
-                          return Validation.validatePassword(value ?? "");
-                        },
                       ),
                       const SizedBox(
-                        height: 60,
+                        height: 24,
+                      ),
+                      Text(
+                        Strings.txtPassword,
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: Fonts.getFontFamilyTitillRegular(),
+                            fontWeight: FontWeight.normal
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      SizedBox(
+                        height:56,
+                        child: TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          //keyboardType: TextInputType.visiblePassword,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            //labelText: Strings.txtPassword,
+                            hintText: Strings.txtHintPassword,
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.purple,
+                              )
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(passwordVisible
+                            ? Icons.visibility
+                                : Icons.visibility_off),
+                              onPressed: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                                },
+                            ),
+                          ),
+                          keyboardType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.done,
+                          validator: (value) {
+                            return Validation.validatePassword(value ?? "");
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 56,
                       ),
                       SizedBox(
                         width: double.infinity,
-                        height: 50,
+                        height: 56,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(4),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey.shade300,
+                              backgroundColor: Colors.black,
                             ),
                             onPressed: () {
-                              loginUserFun();
+                             // loginUserFun();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => const HomePage()),
+                              );
                             },
                             child: Text(
                               Strings.txtButtonLogin,
                               style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontFamily: Fonts.getFontFamilyAbel(),
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -168,21 +229,22 @@ class LoginFormState extends State<LoginForm> {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 24,
                       ),
                       Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
+                             Text(
                               Strings.txtDoNotHaveAcc,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
+                                fontFamily: Fonts.getFontFamilyTitillRegular(),
                               ),
                             ),
                             const SizedBox(
-                              width: 10,
+                              width: 8,
                             ),
                             GestureDetector(
                               onTap: () {
@@ -193,12 +255,13 @@ class LoginFormState extends State<LoginForm> {
                                           const RegisterScreen()),
                                 );
                               },
-                              child: const Text(
+                              child:  Text(
                                 Strings.txtButtonRegister,
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold),
+                                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                ),
                               ),
                             ),
                           ],

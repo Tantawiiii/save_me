@@ -2,8 +2,8 @@
 class Strings{
 
   static const String API_KEY = "AIzaSyA_jeHQ08KhBFEG2tZk3sr0JYbLdpWpWFw";
-  static const String txtWelcomeLogin = "Welcome Back !";
-  static const String txtWelcomeLogin2= "Login to SaveMe to connect to your network";
+  static const String txtWelcomeLogin = "Welcome Back!";
+  static const String txtWelcomeLogin2= "Login to SaveMe to connect to your network!";
 
   static const String txtEmail = "Email";
   static const String txtHintEmail = "tantawii@gmail.com";
@@ -21,9 +21,9 @@ class Strings{
   static const String txtPasswordMatch = "Password must be at least 6 characters.";
 
 
-  static const String txtButtonLogin = "Let's Go";
+  static const String txtButtonLogin = "Login";
 
-  static const String txtDoNotHaveAcc  = "Don't Have Account ?";
+  static const String txtDoNotHaveAcc  = "Don't have an account?";
   static const String txtButtonRegister = "Register";
 
   static const String txtWelcomeRegister = "Welcome to SaveMee";

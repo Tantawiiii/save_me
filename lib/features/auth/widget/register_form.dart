@@ -56,7 +56,7 @@ class _RegisterFormState extends State<RegisterForm> {
           print('location: $location');
         }
 
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Progress to Add Data'),
           backgroundColor: Colors.blueAccent,
         ));
@@ -75,7 +75,7 @@ class _RegisterFormState extends State<RegisterForm> {
         if (registerSuccessful) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+              context, MaterialPageRoute(builder: (context) => const HomePage()));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Error: $registerSuccessful'),
@@ -278,7 +278,7 @@ class _RegisterFormState extends State<RegisterForm> {
                             borderRadius: BorderRadius.circular(20),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.grey.shade300,
+                                backgroundColor: Colors.grey.shade300,
                               ),
                               onPressed: () async {
                                 _registerUserFun();
@@ -315,7 +315,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               borderRadius: BorderRadius.circular(24),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.black,
+                                  backgroundColor: Colors.black,
                                 ),
                                 onPressed: () {
                                   Navigator.push(

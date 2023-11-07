@@ -11,4 +11,17 @@ class Fonts{
     return "cairo";
   }
 
+  static getFontFamilyTitillBold(){
+    return "TitilliumWeb-Bold";
+  }
+
+  static getFontFamilyTitillSemiBold(){
+    return "TitilliumWeb-SemiBold";
+  }
+
+
+  static getFontFamilyTitillRegular(){
+    return "TitilliumWeb-Regular";
+  }
+
 }

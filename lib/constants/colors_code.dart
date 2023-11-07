@@ -7,7 +7,7 @@ class ColorsCode{
   static Color blackColor =  const Color(0x00000000);
   static Color blackColor100 =  const Color(0xFF1E1E1E);
   static Color blackColor700 =  const Color(0x00373737);
-  static Color whiteColor   = const Color(0x00FFFFFF);
+  static Color whiteColor   = const Color(0xFFFFFF);
   static Color whiteColor100 = const Color(0x00F1F1F1);
   static Color whiteColor300 = const Color(0x00E3E3E3);
   static Color grayColor = const Color(0x008A8A8A);
