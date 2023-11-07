@@ -2,7 +2,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:save_me/constants/Strings.dart';
-import 'package:save_me/src/features/home/screens/add_profile_screen.dart';
+
+import 'add_profile_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

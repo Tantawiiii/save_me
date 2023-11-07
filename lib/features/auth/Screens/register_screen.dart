@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
-import '../widget/login_form.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+import '../widget/register_form.dart';
+
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +27,9 @@ class LoginScreen extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 8,
+          iconTheme: const IconThemeData(color: Colors.black),
         ),
-        body: const Center(
-            child: LoginForm(),
-        ),
+        body: const RegisterForm(),
       ),
     );
   }

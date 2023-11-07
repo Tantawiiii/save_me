@@ -28,6 +28,10 @@ dependencies:
   status_change: ^2.0.0
   intl: ^0.17.0
   counter: ^0.2.2
+  flutter_bloc: ^8.1.3
+
+
+
 
 dev_dependencies:
   flutter_test:
@@ -49,10 +53,11 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/logo_save_me.png
-    - assets/images/logowithnobg.png
-    - assets/anim/anim_internet.json
-    - assets/anim/animation_connection.json
+    - assets/images/
+    - assets/anim/
+    - assets/fonts/
+    - assets/themes/
+
 
   fonts:
      - family: cairo
@@ -61,7 +66,15 @@ flutter:
      - family: abel
        fonts:
          - asset: assets/fonts/abel-regular.ttf
-
+     - family: TitilliumWeb-Bold
+       fonts:
+           - asset: assets/fonts/TitilliumWeb-Bold.ttf
+     - family: TitilliumWeb-Regular
+       fonts:
+         - asset: assets/fonts/TitilliumWeb-Regular.ttf
+     - family: TitilliumWeb-SemiBold
+       fonts:
+         - asset: assets/fonts/TitilliumWeb-SemiBold.ttf
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

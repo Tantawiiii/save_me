@@ -2,12 +2,12 @@
 
 class User{
 
-  late final String name;
-  late final String username;
-  late final String email;
-  late final String password;
-  late final String phoneNumber;
-  late final String location;
+   final String name;
+   final String username;
+   final String email;
+   final String password;
+   final String phoneNumber;
+   final String location;
 
   User({
     required this.name,

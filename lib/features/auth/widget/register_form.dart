@@ -2,14 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
-import 'package:save_me/constants/settings.dart';
-import 'package:save_me/src/features/authentication/Screens/login_screen.dart';
-import 'package:save_me/src/features/authentication/model/user_model.dart';
-import 'package:save_me/src/features/authentication/service/api_client.dart';
-
+import 'package:save_me/constants/fonts.dart';
 import '../../../../constants/Strings.dart';
-import '../../home/screens/home_screen.dart';
+import '../Screens/home_screen.dart';
+import '../Screens/login_screen.dart';
+import '../dataSource/api_client.dart';
+import '../models/user_model.dart';
 import '../utils/validation.dart';
+
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -56,10 +56,11 @@ class _RegisterFormState extends State<RegisterForm> {
           print('location: $location');
         }
 
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Progress to Add Data'),
           backgroundColor: Colors.blueAccent,
         ));
+
         final user = User(
           name: _nameController.text,
           username: _usernameController.text,
@@ -74,7 +75,7 @@ class _RegisterFormState extends State<RegisterForm> {
         if (registerSuccessful) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+              context, MaterialPageRoute(builder: (context) => const HomePage()));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Error: $registerSuccessful'),
@@ -277,7 +278,7 @@ class _RegisterFormState extends State<RegisterForm> {
                             borderRadius: BorderRadius.circular(20),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.grey.shade300,
+                                backgroundColor: Colors.grey.shade300,
                               ),
                               onPressed: () async {
                                 _registerUserFun();
@@ -287,7 +288,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
-                                  fontFamily: Settings.getFontFamilyAbel(),
+                                  fontFamily: Fonts.getFontFamilyAbel(),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -314,7 +315,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               borderRadius: BorderRadius.circular(24),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.black,
+                                  backgroundColor: Colors.black,
                                 ),
                                 onPressed: () {
                                   Navigator.push(
