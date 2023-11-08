@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:save_me/constants/fonts.dart';
+
 import '../../../../constants/Strings.dart';
 import '../Screens/home_screen.dart';
 import '../Screens/register_screen.dart';
@@ -25,12 +26,19 @@ class LoginFormState extends State<LoginForm> {
   final TextEditingController _passwordController = TextEditingController();
   final ApiClient _apiClient = ApiClient();
 
-  bool passwordVisible=false;
+  bool passwordVisible = true;
+  FocusNode _passwordFocusNode = FocusNode();
+  @override
+  void initState() {
+    super.initState();
+    passwordVisible = true;
+  }
+
 
   @override
-  void initState(){
-    super.initState();
-    passwordVisible=true;
+  void dispose() {
+    _passwordFocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -67,6 +75,7 @@ class LoginFormState extends State<LoginForm> {
         }
       }
     }
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -103,173 +112,177 @@ class LoginFormState extends State<LoginForm> {
               Text(
                 Strings.txtWelcomeLogin2,
                 style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: Fonts.getFontFamilyTitillRegular(),
-                  fontWeight: FontWeight.normal
-                ),
+                    fontSize: 16,
+                    fontFamily: Fonts.getFontFamilyTitillRegular(),
+                    fontWeight: FontWeight.normal),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 56),
               Form(
                 key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        Strings.txtEmail,
-                        style: TextStyle(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      Strings.txtEmail,
+                      style: TextStyle(
                           fontSize: 14,
                           fontFamily: Fonts.getFontFamilyTitillRegular(),
-                          fontWeight: FontWeight.normal
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      SizedBox(
-                        height:56,
-                        child: TextFormField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.purple,
-                                )
-                            ),
-                            hintText: Strings.txtHintEmail,
-                            //isDense: true,
+                          fontWeight: FontWeight.normal),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    SizedBox(
+                      height: 56,
+                      child: TextFormField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4),
                           ),
-                          validator: (value) {
-                            return Validation.validateEmail(value ?? "");
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Text(
-                        Strings.txtPassword,
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: Fonts.getFontFamilyTitillRegular(),
-                            fontWeight: FontWeight.normal
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      SizedBox(
-                        height:56,
-                        child: TextFormField(
-                          controller: _passwordController,
-                          obscureText: true,
-                          //keyboardType: TextInputType.visiblePassword,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            //labelText: Strings.txtPassword,
-                            hintText: Strings.txtHintPassword,
-                            focusedBorder: const OutlineInputBorder(
+                          focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.purple,
-                              )
+                            color: Colors.purple.shade100,
+                          )),
+                          hintText: Strings.txtHintEmail,
+                          //isDense: true,
+                        ),
+                        validator: (value) {
+                          return Validation.validateEmail(value ?? "");
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Text(
+                      Strings.txtPassword,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: Fonts.getFontFamilyTitillRegular(),
+                          fontWeight: FontWeight.normal),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    SizedBox(
+                      height: 56,
+                      child: TextFormField(
+                        controller: _passwordController,
+                        obscureText: passwordVisible,
+                        keyboardType: TextInputType.visiblePassword,
+                        focusNode: _passwordFocusNode,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          filled: true,
+                          //labelText: Strings.txtPassword,
+                          hintText: Strings.txtHintPassword,
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Colors.purple.shade100,
+                          )),
+                          suffixIcon: IconButton(
+                            icon: Icon(passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                              color: Colors.grey,
                             ),
-                            suffixIcon: IconButton(
-                              icon: Icon(passwordVisible
-                            ? Icons.visibility
-                                : Icons.visibility_off),
-                              onPressed: () {
-                                setState(() {
+
+                           // color: Colors.purple.shade100,
+                            onPressed: () {
+                              setState(
+                                () {
                                   passwordVisible = !passwordVisible;
-                                });
                                 },
+                              );
+                            },
+                          ),
+                        ),
+                        textInputAction: TextInputAction.done,
+                        validator: (value) {
+                          return Validation.validatePassword(value ?? "");
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 56,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                          ),
+                          onPressed: () {
+                            // loginUserFun();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()),
+                            );
+                          },
+                          child: Text(
+                            Strings.txtButtonLogin,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          keyboardType: TextInputType.visiblePassword,
-                          textInputAction: TextInputAction.done,
-                          validator: (value) {
-                            return Validation.validatePassword(value ?? "");
-                          },
                         ),
                       ),
-                      const SizedBox(
-                        height: 56,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 56,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            Strings.txtDoNotHaveAcc,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: Fonts.getFontFamilyTitillRegular(),
                             ),
-                            onPressed: () {
-                             // loginUserFun();
-                              Navigator.pushReplacement(
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const HomePage()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RegisterScreen()),
                               );
                             },
                             child: Text(
-                              Strings.txtButtonLogin,
+                              Strings.txtButtonRegister,
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
+                                color: Colors.black,
+                                fontSize: 18,
                                 fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                             Text(
-                              Strings.txtDoNotHaveAcc,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
-                                fontFamily: Fonts.getFontFamilyTitillRegular(),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegisterScreen()),
-                                );
-                              },
-                              child:  Text(
-                                Strings.txtButtonRegister,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:save_me/constants/colors_code.dart';
 import '../widget/login_form.dart';
 
 
@@ -25,7 +24,7 @@ class LoginScreen extends StatelessWidget {
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
-          elevation: 2,
+          elevation: 1,
           shadowColor: Colors.grey,
         ),
         body: const Center(
