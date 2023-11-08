@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:save_me/features/auth/Screens/splashScreen.dart';
-import 'package:save_me/themes/themes.dart';
 
-void main() => runApp(
-const SaveMe(),
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    const SaveMe(),
 
-);
+  );
+
+}
 
 class SaveMe extends StatelessWidget {
   const SaveMe({super.key});

@@ -6,14 +6,14 @@ class Strings{
   static const String txtWelcomeLogin2= "Login to SaveMe to connect to your network!";
 
   static const String txtEmail = "Email";
-  static const String txtHintEmail = "tantawii@gmail.com";
+  static const String txtHintEmail = "your-email@example.com";
   static const String patternEmail = r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+';
   static const String txtIsEmptyEmail = "Please enter a valid email address.";
   static const String txtNotValidEmail = "Your Email not valid address.";
 
 
   static const String txtPassword = "Password";
-  static const String txtHintPassword = "Please enter your password";
+  static const String txtHintPassword = "Create a password";
   static const String txtConfirmPassword = "Confirm Password";
   static const String txtHintConfirmPassword = "re-enter your password";
   static const String txtNotMatchPassword = "Password does not match";
@@ -26,8 +26,8 @@ class Strings{
   static const String txtDoNotHaveAcc  = "Don't have an account?";
   static const String txtButtonRegister = "Register";
 
-  static const String txtWelcomeRegister = "Welcome to SaveMee";
-  static const String txtWelcomeRegister2  =  "Here We Can Help You To Find Your Lost Items";
+  static const String txtWelcomeRegister = "Get Started with SaveMee";
+  static const String txtWelcomeRegister2  =  "Register now to keep in touch and for peace of mind.";
 
   static  const String txtName = "Name";
   static const String txtHintName = "Your Name";

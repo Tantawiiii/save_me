@@ -26,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
-          elevation: 8,
+          elevation: 1,
           iconTheme: const IconThemeData(color: Colors.black),
         ),
         body: const RegisterForm(),
