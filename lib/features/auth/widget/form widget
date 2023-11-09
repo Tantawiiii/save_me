@@ -105,21 +105,24 @@ class _RegisterFormState extends State<RegisterForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 40,
-                ),
-                const Text(
-                  Strings.txtWelcomeRegister,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  Strings.txtWelcomeRegister2,
-                  style: TextStyle(fontSize: 15),
-                ),
+                   const SizedBox(
+                                height: 40,
+                              ),
+                               Text(
+                                Strings.txtWelcomeRegister,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontFamily: Fonts.getFontFamilyTitillBold(),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                               Text(
+                                Strings.txtWelcomeRegister2,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                  fontFamily: Fonts.getFontFamilyTitillRegular(),
+                                ),
+                              ),
                 Form(
                     key: _formKey,
                     child: Column(

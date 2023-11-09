@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
@@ -44,7 +46,7 @@ class _RegisterFormState extends State<RegisterForm> {
       title: Text('Complete Profile'),
       content: _CompleteProfileForm(),
     ),
-  
+
   ];
 
   @override
@@ -98,59 +100,25 @@ class _RegisterFormState extends State<RegisterForm> {
       }
     }
 
-
-    return Scaffold(
-      body: Center(
+    return  Scaffold(
+      backgroundColor: Colors.white,
+      body: Theme(
+        data: ThemeData(
+          canvasColor: Colors.white,
+          //primarySwatch: Colors.cyan,
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+            primary: Colors.purple,
+            background: Colors.white38,
+            secondary: Colors.purple,
+          )
+        ),
         child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          padding: const EdgeInsets.all(24.0),
-         // margin: const EdgeInsets.all(15.0),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            //borderRadius: BorderRadius.circular(5), // Add rounded corners
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.grey.withOpacity(0.2),
-            //     spreadRadius: 3,
-            //     blurRadius: 3,
-            //     offset: const Offset(0, 3),
-            //   ),
-            // ],
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 16,
-                ),
-                Stepper(
-                  type: StepperType.horizontal             ,
-                  steps: _steps,
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                 Text(
-                  Strings.txtWelcomeRegister,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: Fonts.getFontFamilyTitillBold(),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                 Text(
-                  Strings.txtWelcomeRegister2,
-                  style: TextStyle(
-                      fontSize: 16,
-                    fontFamily: Fonts.getFontFamilyTitillRegular(),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          margin: const EdgeInsets.only(top: 16),
+          child: Stepper(
+            elevation: 0,
+                type: StepperType.horizontal,
+                steps: _steps,
+              ),
         ),
       ),
     );
@@ -174,8 +142,28 @@ class _RegisterNowFormState extends State<_RegisterNowForm> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(
+          height: 16,
+        ),
+        Text(
+          Strings.txtWelcomeRegister,
+          style: TextStyle(
+            fontSize: 24,
+            fontFamily: Fonts.getFontFamilyTitillBold(),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Text(
+          Strings.txtWelcomeRegister2,
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: Fonts.getFontFamilyTitillRegular(),
+          ),
+        ),
+        const SizedBox(height: 40),
         TextFormField(
           controller: _emailController,
           keyboardType: TextInputType.emailAddress,
