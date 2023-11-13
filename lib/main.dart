@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:save_me/features/auth/Screens/splashScreen.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     const SaveMe(),
-
   );
 
 }

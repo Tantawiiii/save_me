@@ -12,6 +12,8 @@ class LoginScreen extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          elevation: 5,
+          shadowColor: Colors.black12,
           systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.white,
             statusBarIconBrightness: Brightness.dark,
@@ -24,8 +26,7 @@ class LoginScreen extends StatelessWidget {
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
-          elevation: 1,
-          shadowColor: Colors.grey,
+
         ),
         body: const Center(
             child: LoginForm(),

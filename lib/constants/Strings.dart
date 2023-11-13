@@ -33,24 +33,22 @@ class Strings{
   static const String txtHintName = "Your Name";
   static const String txtIsEmptyName = "Please Enter Name";
 
-  static const String txtUserName = "User Name";
-  static const String txtHintUserName = "Your User Name";
+  static const String txtUserName = "My Name";
+  static const String txtHintUserName = "Enter your username";
 
   static const String txtPhoneNumber = "Phone Number";
-  static const String txtHintPhoneNumber = "010 **** ****";
-
-
-  static const String txtHintLocation = "Select Your location";
-  static const String txtLocation = "Location";
+  static const String txtHintPhoneNumber = "Enter your phone number";
+  static const String txtHintLocation = "Enter choose return location";
+  static const String txtLocation = "Choose Return Location";
 
   static const String txtBtnSubmit = "Submit";
 
-  static const String txtHaveAcc = "Already Have Account?";
+  static const String txtHaveAcc = "Already have an account?";
 
   static const String txtBtnLogin = "Login";
 
   static const String txtCanAddProfile = "You Can Add Profiles \n From Here";
-  static const String txtStartAddProfile = "Start Adding Profiles";
+  static const String txtStartAddProfile = "Start Adding Profiles +";
   static const String txtAddProfile = "Add Profile";
 
   static const String txtItemHomeMenu = "Home";
@@ -87,6 +85,15 @@ class Strings{
   static const String txtDiseases = "Diseases";
   static const String txtMedicines = "Medicines";
   static const String txtAdditionInfo = "Addition Information";
+
+  static const String txtAppBarHome = "Hello! Anonymous";
+  static const String txtAppBarWelcome = "Welcome to SaveMee";
+
+  static const String txtHomeTab = "Home";
+  static const String txtProfileTab = "Profile";
+  static const String txtLocationTab = "Location";
+  static const String txtSettingsTab = "Settings";
+
 
 
 
