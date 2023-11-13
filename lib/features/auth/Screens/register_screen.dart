@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../widget/register_form.dart';
 
@@ -18,16 +19,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          elevation: 5,
+          shadowColor: Colors.black12,
           title: Image.asset(
             'assets/images/logo_save_me.png',
             fit: BoxFit.cover,
             height: 16,
             width: 100,
           ),
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarIconBrightness: Brightness.dark,
+          ),
           centerTitle: true,
           backgroundColor: Colors.white,
-          elevation: 1,
-          iconTheme: const IconThemeData(color: Colors.black),
+          //iconTheme: const IconThemeData(color: Colors.black),
         ),
         body: const RegisterForm(),
       ),

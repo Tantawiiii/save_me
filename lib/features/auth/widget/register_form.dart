@@ -1,154 +1,195 @@
-import 'package:flutter/foundation.dart';
+// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
 import 'package:save_me/constants/fonts.dart';
+import 'package:save_me/features/auth/widget/complete_profile_form.dart';
+import 'package:save_me/features/auth/widget/register_now_form.dart';
 import '../../../../constants/Strings.dart';
-import '../Screens/home_screen.dart';
+import '../../home/home_screen.dart';
 import '../Screens/login_screen.dart';
-import '../dataSource/api_client.dart';
-import '../models/user_model.dart';
-import '../utils/validation.dart';
-
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
-
   static String id = 'RegisterScreen';
-
   @override
   State<RegisterForm> createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _phoneNumController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
+  int currentStep  = 0;
+  bool isCompleted = false; //check completeness of inputs
 
-  // Initialize Dio with ApiClient
-  final ApiClient _apiClient = ApiClient();
-
-
-  static const _steps = [
+ List <Step> _getSteps() => [
     Step(
-      title: Text('Register Now'),
-      content: _RegisterNowForm(),
+      title: const Text('Register Now'),
+      content: const RegisterNowForm() ,
+      isActive: currentStep >=0,
+      state: currentStep > 0 ? StepState.complete : StepState.indexed,
     ),
-    Step(
-      title: Text('Complete Profile'),
-      content: _CompleteProfileForm(),
+   Step(
+      isActive: currentStep >=1,
+      state: currentStep > 1 ? StepState.complete : StepState.indexed,
+      title: const Text('Complete Profile'),
+      content: const CompleteProfileForm(),
     ),
-  
   ];
+
+ // is Details Complete
+  bool _isDetailsComplete() {
+    if (currentStep == 0 ) {}
+    else if (currentStep == 1){
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const HomePage()),
+      );
+    }
+        return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     // ignore: no_leading_underscores_for_local_identifiers
-    Future<void> _registerUserFun() async {
-      // to implement a register
-      if (_formKey.currentState!.validate()) {
-        String name = _nameController.text;
-        String username = _usernameController.text;
-        String email = _emailController.text;
-        String password = _passwordController.text;
-        String phoneNumber = _phoneNumController.text;
-        String location = _locationController.text;
-
-        if (kDebugMode) {
-          print('Name: $name');
-          print('Username: $username');
-          print('Email: $email');
-          print('Password: $password');
-          print('PhoneNumber: $phoneNumber');
-          print('location: $location');
-        }
-
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Progress to Add Data'),
-          backgroundColor: Colors.blueAccent,
-        ));
-
-        final user = User(
-          name: _nameController.text,
-          username: _usernameController.text,
-          email: _emailController.text,
-          password: _passwordController.text,
-          phoneNumber: _phoneNumController.text,
-          location: _locationController.text,
-        );
-
-        final registerSuccessful = await _apiClient.registerUser(user);
-
-        if (registerSuccessful) {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => const HomePage()));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Error: $registerSuccessful'),
-            backgroundColor: Colors.red.shade300,
-          ));
-        }
-      }
-    }
-
 
     return Scaffold(
-      body: Center(
+      backgroundColor: Colors.white,
+      body: Theme(
+        data: ThemeData(
+            canvasColor: Colors.white,
+            //primarySwatch: Colors.cyan,
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+                  primary: Colors.purple,
+                  background: Colors.white38,
+                  secondary: Colors.purple,
+                )),
         child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          padding: const EdgeInsets.all(24.0),
-         // margin: const EdgeInsets.all(15.0),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            //borderRadius: BorderRadius.circular(5), // Add rounded corners
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.grey.withOpacity(0.2),
-            //     spreadRadius: 3,
-            //     blurRadius: 3,
-            //     offset: const Offset(0, 3),
-            //   ),
-            // ],
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 16,
-                ),
-                Stepper(
-                  type: StepperType.horizontal             ,
-                  steps: _steps,
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                 Text(
-                  Strings.txtWelcomeRegister,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: Fonts.getFontFamilyTitillBold(),
+          margin: const EdgeInsets.only(top: 16),
+          child: Form(
+            //key: formKey,
+            child: Stepper(
+              elevation: 0,
+              type: StepperType.horizontal,
+              steps: _getSteps(),
+              //  to Customise Stepper Buttons.
+              controlsBuilder: (BuildContext context, ControlsDetails details) {
+                final isLastStep = currentStep == _getSteps().length - 1;
+                return SingleChildScrollView(
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 56),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                                child: SizedBox(
+                                  height: 56,
+                                  child: ElevatedButton(
+                                    onPressed: details.onStepContinue,
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.black,
+                                      elevation: 0,
+                                    ),
+                                    child: Text(
+                                      isLastStep ? "Get Started" : "Next",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                    ),
+                                    ),
+                                  ),
+                                ),
+                            ),
+                            const SizedBox(width: 4),
+                            if (currentStep != 0)
+                            Expanded(
+                                child: SizedBox(
+                                  height: 56,
+                                  child: ElevatedButton(
+                                    onPressed: details.onStepCancel,
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.grey,
+                                      elevation: 0,
+                                    ),
+                                    child: const Text('Skip'),
+                                  ),
+                                ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 24,),
+                        Row (
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                             Text(
+                              Strings.txtHaveAcc,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                      const LoginScreen()),
+                                );
+                              },
+                              child: Text(
+                                Strings.txtButtonLogin,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                 Text(
-                  Strings.txtWelcomeRegister2,
-                  style: TextStyle(
-                      fontSize: 16,
-                    fontFamily: Fonts.getFontFamilyTitillRegular(),
-                  ),
-                ),
-              ],
+                );
+              },
+              currentStep: currentStep,
+              onStepTapped: (steps){
+                setState(() {
+                  currentStep = steps;
+                });
+              },
+              onStepContinue: (){
+                final isLastStep = currentStep == _getSteps().length - 1;
+                //this check if ok to move on to next screen
+                bool isDetailValid = _isDetailsComplete();
+                if (isDetailValid) {
+                  if (isLastStep) {
+                    setState(() {
+                      isCompleted = true;
+                    });
+                  } else {
+                    currentStep += 1;
+                  }
+                }
+
+                if (!isLastStep) {
+                  setState(() {
+                    currentStep += 1;
+                  });
+                }
+              },
+              onStepCancel: (){
+                if (currentStep == 0) {
+                  null;
+                }  else{
+                  setState(() {
+                    currentStep -= 1;
+                  });
+                }
+              },
             ),
           ),
         ),
@@ -156,162 +197,3 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 }
-
-class _RegisterNowForm extends StatefulWidget {
-  const _RegisterNowForm({super.key});
-
-  @override
-  State<_RegisterNowForm> createState() => _RegisterNowFormState();
-}
-
-class _RegisterNowFormState extends State<_RegisterNowForm> {
-
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =  TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  // Initialize Dio with ApiClient
-  final ApiClient _apiClient = ApiClient();
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextFormField(
-          controller: _emailController,
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            labelText: Strings.txtEmail,
-            hintText: Strings.txtHintEmail,
-            //isDense: true,
-          ),
-          validator: (value) {
-            return Validation.validatePassword(value ?? "");
-          },
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        TextFormField(
-          controller: _passwordController,
-          obscureText: true,
-          //keyboardType: TextInputType.visiblePassword,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            labelText: Strings.txtPassword,
-            hintText: Strings.txtHintPassword,
-          ),
-          validator: (value) {
-            return Validation.validatePassword(value ?? "");
-          },
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        TextFormField(
-          controller: _confirmPasswordController,
-          obscureText: true,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            labelText: Strings.txtConfirmPassword,
-            hintText: Strings.txtHintConfirmPassword,
-          ),
-          validator: (value) {
-            if (value!.isEmpty) {
-              return Strings.txtHintConfirmPassword;
-            }
-            if (_passwordController.text !=
-                _confirmPasswordController.text) {
-              return Strings.txtNotMatchPassword;
-            }
-            return null;
-          },
-        ),
-      ],
-    );
-  }
-}
-
-// _CompleteProfileForm
-class _CompleteProfileForm extends StatefulWidget {
-  const _CompleteProfileForm({super.key});
-
-  @override
-  State<_CompleteProfileForm> createState() => _CompleteProfileFormState();
-}
-
-class _CompleteProfileFormState extends State<_CompleteProfileForm> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextFormField(
-          //controller: _emailController,
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            labelText: Strings.txtEmail,
-            hintText: Strings.txtHintEmail,
-            //isDense: true,
-          ),
-          validator: (value) {
-            return Validation.validatePassword(value ?? "");
-          },
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        TextFormField(
-         // controller: _passwordController,
-          obscureText: true,
-          //keyboardType: TextInputType.visiblePassword,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            labelText: Strings.txtPassword,
-            hintText: Strings.txtHintPassword,
-          ),
-          validator: (value) {
-            return Validation.validatePassword(value ?? "");
-          },
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        TextFormField(
-          //controller: _confirmPasswordController,
-          obscureText: true,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            labelText: Strings.txtConfirmPassword,
-            hintText: Strings.txtHintConfirmPassword,
-          ),
-          validator: (value) {
-            if (value!.isEmpty) {
-              return Strings.txtHintConfirmPassword;
-            }
-            // if (_passwordController.text !=
-            //     _confirmPasswordController.text) {
-            //   return Strings.txtNotMatchPassword;
-            // }
-            return null;
-          },
-        ),
-      ],
-    );
-  }
-}
-
-

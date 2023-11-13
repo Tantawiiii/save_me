@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:save_me/constants/fonts.dart';
 
 import '../../../../constants/Strings.dart';
-import '../Screens/home_screen.dart';
+import '../../home/home_screen.dart';
 import '../Screens/register_screen.dart';
 import '../dataSource/api_client.dart';
 import '../utils/validation.dart';
@@ -123,8 +123,8 @@ class LoginFormState extends State<LoginForm> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      Strings.txtEmail,
+                   Text(
+                       Strings.txtEmail,
                       style: TextStyle(
                           fontSize: 14,
                           fontFamily: Fonts.getFontFamilyTitillRegular(),
