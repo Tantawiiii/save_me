@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:save_me/constants/Strings.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         child: currentScreen,
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: ColorsCode.purpleColorBright,
+          backgroundColor: ColorsCode.purpleColor,
           onPressed: () {
 
             // Handle the main FAB button press.
@@ -86,7 +87,9 @@ class _HomePageState extends State<HomePage> {
       // ) : null,
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
+        elevation: 14,
         notchMargin: 10,
+        shadowColor: ColorsCode.blackColor100,
         child: Container(
           height: 85,
           padding: const EdgeInsets.only(left: 16, right: 16),
@@ -94,10 +97,9 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.home),
+                    icon: const Icon(Icons.home_rounded),
                     onPressed: () {
                       setState(() {
                         currentTab = 0;
@@ -105,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                       });
                     },
                     color: currentTab == 0
-                        ? ColorsCode.purpleColorBright
+                        ? ColorsCode.purpleColor
                         : ColorsCode.grayColor300,
                   ),
                   Text(
@@ -115,15 +117,14 @@ class _HomePageState extends State<HomePage> {
                             ? ColorsCode.purpleColorBright
                             : ColorsCode.grayColor300,
                         fontSize: 12,
-                        fontFamily: Fonts.getFontFamilyTitillRegular()),
+                        fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                   ),
                 ],
               ),
               Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.person),
+                    icon: const Icon(Icons.person_2),
                     onPressed: () {
                       setState(() {
                         currentTab = 1;
@@ -141,15 +142,15 @@ class _HomePageState extends State<HomePage> {
                             ? ColorsCode.purpleColorBright
                             : ColorsCode.grayColor300,
                         fontSize: 12,
-                        fontFamily: Fonts.getFontFamilyTitillRegular()),
+                        fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                   ),
                 ],
               ),
+              const SizedBox(width: 60,),
               Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.my_location_outlined),
+                    icon: const Icon(Icons.my_location_rounded),
                     onPressed: () {
                       setState(() {
                         currentTab = 2;
@@ -167,12 +168,12 @@ class _HomePageState extends State<HomePage> {
                             ? ColorsCode.purpleColorBright
                             : ColorsCode.grayColor300,
                         fontSize: 12,
-                        fontFamily: Fonts.getFontFamilyTitillRegular()),
+                        fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                   ),
                 ],
               ),
               Column(
-                mainAxisSize: MainAxisSize.min,
+                //mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
                     icon: const Icon(Icons.settings),
@@ -193,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                             ? ColorsCode.purpleColorBright
                             : ColorsCode.grayColor300,
                         fontSize: 12,
-                        fontFamily: Fonts.getFontFamilyTitillRegular()),
+                        fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                   ),
                 ],
               ),

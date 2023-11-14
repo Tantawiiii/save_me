@@ -16,8 +16,7 @@ class RegisterNowForm extends StatefulWidget {
 class _RegisterNowFormState extends State<RegisterNowForm> {
 
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-  TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
   // Initialize Dio with ApiClient

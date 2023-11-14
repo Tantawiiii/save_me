@@ -141,6 +141,9 @@ class LoginFormState extends State<LoginForm> {
                         decoration: InputDecoration(
                           filled: true,
                           border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.white
+                            ),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -274,7 +277,7 @@ class LoginFormState extends State<LoginForm> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
-                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                fontFamily: Fonts.getFontFamilyTitillBold(),
                               ),
                             ),
                           ),
