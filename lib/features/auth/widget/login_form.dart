@@ -141,7 +141,10 @@ class LoginFormState extends State<LoginForm> {
                         decoration: InputDecoration(
                           filled: true,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4),
+
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide.none,
+                            
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -177,8 +180,8 @@ class LoginFormState extends State<LoginForm> {
                         focusNode: _passwordFocusNode,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-
                             borderRadius: BorderRadius.circular(4),
+                            borderSide: BorderSide.none,
                           ),
                           filled: true,
                           //labelText: Strings.txtPassword,
@@ -274,7 +277,7 @@ class LoginFormState extends State<LoginForm> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
-                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                fontFamily: Fonts.getFontFamilyTitillBold(),
                               ),
                             ),
                           ),

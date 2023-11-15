@@ -19,6 +19,8 @@ class Strings{
   static const String txtNotMatchPassword = "Password does not match";
   static const String patternPassword = r'^.{6,}$';
   static const String txtPasswordMatch = "Password must be at least 6 characters.";
+  static const String txtChangePassword = "Change Password";
+  static const String txtNewPassword = "Create a new password";
 
 
   static const String txtButtonLogin = "Login";
@@ -35,7 +37,7 @@ class Strings{
 
   static const String txtUserName = "My Name";
   static const String txtHintUserName = "Enter your username";
-
+  static const String txtIsEmptyUserName = " Tantawii  ";
   static const String txtPhoneNumber = "Phone Number";
   static const String txtHintPhoneNumber = "Enter your phone number";
   static const String txtHintLocation = "Enter choose return location";
@@ -46,6 +48,7 @@ class Strings{
   static const String txtHaveAcc = "Already have an account?";
 
   static const String txtBtnLogin = "Login";
+  static const String txtLogOut = "Logout";
 
   static const String txtCanAddProfile = "You Can Add Profiles \n From Here";
   static const String txtStartAddProfile = "Start Adding Profiles +";
@@ -93,6 +96,11 @@ class Strings{
   static const String txtProfileTab = "Profile";
   static const String txtLocationTab = "Location";
   static const String txtSettingsTab = "Settings";
+  static const String txtEnglish = "English";
+  static const String txtGermany = "Deutsch";
+  static const String txtAvatarOrPhoto = "Select your avatar or upload a photo";
+  static const String txtAddInfo = "Additional Information";
+
 
 
 

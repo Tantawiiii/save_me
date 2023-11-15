@@ -13,6 +13,7 @@ class ColorsCode{
   static Color  purpleColor = hexToColor('#BE0ED5');
   static Color purpleColorBright = hexToColor('#C426D9');
   static Color purpleColorLight = hexToColor('#F0DEF2');
+  static Color redColor = hexToColor('#EF0F30');
 
 }
 

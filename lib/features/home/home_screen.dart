@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:circular_menu/circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:save_me/constants/Strings.dart';
 import 'package:save_me/constants/colors_code.dart';
@@ -6,12 +9,10 @@ import 'package:save_me/features/home/pages/home_page.dart';
 import 'package:save_me/features/home/pages/location_page.dart';
 import 'package:save_me/features/home/pages/profile_page.dart';
 import 'package:save_me/features/home/pages/setting_page.dart';
-import 'package:save_me/features/home/widget/action_button.dart';
-import 'package:save_me/features/home/widget/expandable_fab.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
   static String id = 'HomeScreen';
 
   @override
@@ -34,59 +35,87 @@ class _HomePageState extends State<HomePage> {
   bool isCircularMenuOpen = false;
   IconData fabIcon = Icons.add; // Initial FAB icon
 
-  void toggleCircularMenu() {
-    setState(() {
-      isCircularMenuOpen = !isCircularMenuOpen;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Make the Floating Action Button to a fixed location when use Keyboard navigation
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: PageStorage(
         bucket: bucket,
         child: currentScreen,
       ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: ColorsCode.purpleColorBright,
-          onPressed: () {
-
-            // Handle the main FAB button press.
-            // You can implement a default action here.
-          },
-          child: Icon(fabIcon),
-        ),
+      floatingActionButton: SizedBox(
+        width: 80,
+        height: 80,
+        child: CircularMenu(
+            // menu alignment
+            alignment: Alignment.bottomCenter,
+            startingAngleInRadian: 1.2 * pi,
+            endingAngleInRadian: 1.67 * pi,
+            // menu radius
+            radius: 130,
+            // animation duration
+            animationDuration: const Duration(milliseconds: 400),
+            // animation curve in forward
+            curve: Curves.bounceOut,
+            // animation curve in reverse
+            reverseCurve: Curves.fastOutSlowIn,
+            // toggle button callback
+            toggleButtonOnPressed: () {
+              //callback
+            },
+            toggleButtonBoxShadow: const [
+              BoxShadow(
+                color: Colors.purpleAccent,
+                blurRadius: 25,
+              ),
+            ],
+            toggleButtonColor: ColorsCode.purpleColor,
+            toggleButtonIconColor: Colors.white,
+            toggleButtonSize: 42,
+            toggleButtonPadding: 10.0,
+            items: [
+              CircularMenuItem(
+                  //enableBadge: true,
+                  icon: Icons.search,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                  //enableBadge: true,
+                  icon: Icons.settings,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                  icon: Icons.star,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                  icon: Icons.pages,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                  icon: Icons.hail_rounded,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+            ]),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        // bottomSheet: isCircularMenuOpen ? CircularMenu(
-      //     alignment: Alignment.center,
-      //     startingAngleInRadian: 0,
-      //     endingAngleInRadian: 3 * 3.1416 / 2,
-      //     reverseCurve: Curves.bounceIn,
-      //   items: [
-      //     CircularMenuItem(
-      //       icon: Icons.add,
-      //       onTap: () {
-      //         // Implement action for the first circular menu item
-      //       },
-      //     ),
-      //     CircularMenuItem(
-      //       icon: Icons.edit,
-      //       onTap: () {
-      //         // Implement action for the second circular menu item
-      //       },
-      //     ),
-      //     CircularMenuItem(
-      //       icon: Icons.delete,
-      //       onTap: () {
-      //         // Implement action for the third circular menu item
-      //       },
-      //     ),
-      //   ],
-      // ) : null,
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
+        elevation: 14,
         notchMargin: 10,
+        shadowColor: ColorsCode.blackColor100,
         child: Container(
           height: 85,
           padding: const EdgeInsets.only(left: 16, right: 16),
@@ -94,10 +123,9 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.home),
+                    icon: const Icon(Icons.home_rounded),
                     onPressed: () {
                       setState(() {
                         currentTab = 0;
@@ -105,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                       });
                     },
                     color: currentTab == 0
-                        ? ColorsCode.purpleColorBright
+                        ? ColorsCode.purpleColor
                         : ColorsCode.grayColor300,
                   ),
                   Text(
@@ -115,15 +143,14 @@ class _HomePageState extends State<HomePage> {
                             ? ColorsCode.purpleColorBright
                             : ColorsCode.grayColor300,
                         fontSize: 12,
-                        fontFamily: Fonts.getFontFamilyTitillRegular()),
+                        fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                   ),
                 ],
               ),
               Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.person),
+                    icon: const Icon(Icons.person_2),
                     onPressed: () {
                       setState(() {
                         currentTab = 1;
@@ -141,15 +168,17 @@ class _HomePageState extends State<HomePage> {
                             ? ColorsCode.purpleColorBright
                             : ColorsCode.grayColor300,
                         fontSize: 12,
-                        fontFamily: Fonts.getFontFamilyTitillRegular()),
+                        fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                   ),
                 ],
               ),
+              const SizedBox(
+                width: 70,
+              ),
               Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.my_location_outlined),
+                    icon: const Icon(Icons.my_location_rounded),
                     onPressed: () {
                       setState(() {
                         currentTab = 2;
@@ -167,12 +196,12 @@ class _HomePageState extends State<HomePage> {
                             ? ColorsCode.purpleColorBright
                             : ColorsCode.grayColor300,
                         fontSize: 12,
-                        fontFamily: Fonts.getFontFamilyTitillRegular()),
+                        fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                   ),
                 ],
               ),
               Column(
-                mainAxisSize: MainAxisSize.min,
+                //mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
                     icon: const Icon(Icons.settings),
@@ -193,7 +222,7 @@ class _HomePageState extends State<HomePage> {
                             ? ColorsCode.purpleColorBright
                             : ColorsCode.grayColor300,
                         fontSize: 12,
-                        fontFamily: Fonts.getFontFamilyTitillRegular()),
+                        fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                   ),
                 ],
               ),
