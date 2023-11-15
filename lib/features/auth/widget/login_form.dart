@@ -141,10 +141,10 @@ class LoginFormState extends State<LoginForm> {
                         decoration: InputDecoration(
                           filled: true,
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.white
-                            ),
-                            borderRadius: BorderRadius.circular(4),
+
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide.none,
+                            
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -180,8 +180,8 @@ class LoginFormState extends State<LoginForm> {
                         focusNode: _passwordFocusNode,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-
                             borderRadius: BorderRadius.circular(4),
+                            borderSide: BorderSide.none,
                           ),
                           filled: true,
                           //labelText: Strings.txtPassword,

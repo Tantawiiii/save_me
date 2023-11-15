@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:save_me/constants/colors_code.dart';
 
 import '../../../constants/Strings.dart';
 import '../../../constants/fonts.dart';
@@ -101,10 +103,10 @@ class _ProfileState extends State<Profile> {
                         borderRadius: BorderRadius.circular(4),
                         borderSide: BorderSide.none,
                       ),
-                      // focusedBorder: OutlineInputBorder(
-                      //     borderSide: BorderSide(
-                      //       color: Colors.purple.shade100,
-                      //     )),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                        color: Colors.purple.shade100,
+                      )),
                       hintText: Strings.txtIsEmptyUserName,
                       //isDense: true,
                     ),
@@ -183,11 +185,12 @@ class _ProfileState extends State<Profile> {
                   height: 56,
                   child: TextFormField(
                     controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
+                        borderSide: BorderSide.none,
                       ),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -201,7 +204,6 @@ class _ProfileState extends State<Profile> {
                     },
                   ),
                 ),
-
                 const SizedBox(
                   height: 24,
                 ),
@@ -209,20 +211,90 @@ class _ProfileState extends State<Profile> {
                   Strings.txtAvatarOrPhoto,
                   style: TextStyle(
                       fontSize: 14,
-                      fontFamily: Fonts.getFontFamilyTitillSemiBold() ,
+                      fontFamily: Fonts.getFontFamilyTitillSemiBold(),
                       fontWeight: FontWeight.normal),
                 ),
                 const SizedBox(
                   height: 24,
                 ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    
-                  ],
+                Container(
+                  margin: const EdgeInsets.only(left: 24, right: 24, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SvgPicture.asset('assets/images/upload_img.svg'),
+                      Text(
+                        'OR',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                            fontWeight: FontWeight.normal),
+                      ),
+                      Column(
+                        children: <Widget>[
+                          SvgPicture.asset('assets/images/upload_img.svg'),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                            'Upload a photo',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                color: ColorsCode.purpleColor),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
+                const SizedBox(
+                  height: 56,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 24, right: 24, top: 10),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 150,
+                        height: 56,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black,
+                            ),
+                            onPressed: () {
+                            },
+                            child: Text(
+                              'Update',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
 
+                      Expanded(
+                        child: SizedBox(
+                          height: 56,
+                          child: ElevatedButton(
+                            onPressed: (){},
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.grey,
+                              elevation: 0,
+                            ),
+                            child: const Text('Rest and Cancel'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

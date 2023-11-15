@@ -1,10 +1,10 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-
 import '../../../constants/Strings.dart';
 import '../../../constants/fonts.dart';
 import '../dataSource/api_client.dart';
@@ -25,7 +25,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   // Initialize Dio with ApiClient
   final ApiClient _apiClient = ApiClient();
-  String initialCountry = 'NG';
+  String initialCountry = 'EG';
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
 
   @override
@@ -72,6 +72,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
               filled: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide.none,
               ),
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -102,6 +103,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             textEditingController: _locationController,
             googleAPIKey: Strings.API_KEY,
             inputDecoration:  InputDecoration(
+
               hintText: Strings.txtHintLocation,
               filled: true,
               prefixIcon: const Icon(
@@ -110,6 +112,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide.none,
+
               ),
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -117,21 +121,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   )),
              // labelText: Strings.txtLocation,
             ),
-            // itemBuilder: (context, index, Prediction prediction){
-            //   return Container(
-            //     padding: const EdgeInsets.all(0.0),
-            //     child: Row(
-            //       children: [
-            //         Icon(Icons.search),
-            //           const SizedBox(
-            //             width: 2,
-            //           ),
-            //           Expanded(child: Text(prediction.description??""))
-            //
-            //       ],
-            //     ),
-            //   );
-            // },
             debounceTime: 800,
             countries: const ["eg", "de"],
             isLatLngRequired: true,
@@ -160,7 +149,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         ),
         Container(
           height: 56,
-          padding: const EdgeInsets.only(left: 12),
+          padding: const EdgeInsets.only(left: 12,right: 5),
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.grey.shade100,
@@ -175,20 +164,21 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
               print(value);
             },
             selectorConfig: const SelectorConfig(
-              selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+              selectorType: PhoneInputSelectorType.DROPDOWN,
             ),
             ignoreBlank: false,
             autoValidateMode: AutovalidateMode.disabled,
             selectorTextStyle: const TextStyle(color: Colors.black),
             textFieldController: _phoneNumController,
             formatInput: false,
-            maxLength: 11,
-            spaceBetweenSelectorAndTextField: 2,
+            //maxLength: 11,
+            spaceBetweenSelectorAndTextField: 0,
             keyboardType:
             const TextInputType.numberWithOptions(signed: true, decimal: true),
             cursorColor: Colors.black,
-            inputDecoration: const InputDecoration(
-              contentPadding: EdgeInsets.only(bottom: 15, left: 0),
+            inputDecoration:  InputDecoration(
+              prefixIcon: SvgPicture.asset('assets/images/line.svg'),
+              //contentPadding: EdgeInsets.only(bottom: 15, left: 0),
               border: InputBorder.none,
               hintText:Strings.txtHintPhoneNumber,
               hintStyle: TextStyle(fontSize: 16, color: Colors.grey),

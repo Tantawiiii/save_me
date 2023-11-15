@@ -82,6 +82,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
               filled: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide.none,
               ),
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -114,10 +115,11 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
             controller: _passwordController,
             obscureText: passwordVisible,
             keyboardType: TextInputType.visiblePassword,
-            focusNode: _passwordFocusNode,
+            //focusNode: _passwordFocusNode,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide.none,
               ),
               filled: true,
               //labelText: Strings.txtPassword,
@@ -167,10 +169,11 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
             controller: _confirmPasswordController,
             obscureText: passwordVisible,
             keyboardType: TextInputType.visiblePassword,
-            focusNode: _passwordFocusNode,
+            //focusNode: _passwordFocusNode,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide.none,
               ),
               filled: true,
               //labelText: Strings.txtPassword,
