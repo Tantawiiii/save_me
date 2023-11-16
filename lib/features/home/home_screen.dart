@@ -29,7 +29,6 @@ class _HomePageState extends State<HomePage> {
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
-
   // current tab in Bottom Navigation
   Widget currentScreen = const HomeScreen();
   bool isCircularMenuOpen = false;
@@ -46,13 +45,13 @@ class _HomePageState extends State<HomePage> {
         child: currentScreen,
       ),
       floatingActionButton: SizedBox(
-        width: 80,
-        height: 80,
+        width: 85,
+        height: 85,
         child: CircularMenu(
-            // menu alignment
+          // menu alignment
             alignment: Alignment.bottomCenter,
             startingAngleInRadian: 1.2 * pi,
-            endingAngleInRadian: 1.67 * pi,
+            endingAngleInRadian: 1.8 * pi,
             // menu radius
             radius: 130,
             // animation duration
@@ -77,14 +76,14 @@ class _HomePageState extends State<HomePage> {
             toggleButtonPadding: 10.0,
             items: [
               CircularMenuItem(
-                  //enableBadge: true,
+                //enableBadge: true,
                   icon: Icons.search,
                   color: Colors.purple.shade300,
                   onTap: () {
                     //callback
                   }),
               CircularMenuItem(
-                  //enableBadge: true,
+                //enableBadge: true,
                   icon: Icons.settings,
                   color: Colors.purple.shade300,
                   onTap: () {
