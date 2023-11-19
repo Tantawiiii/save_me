@@ -1,0 +1,61 @@
+CircularMenu(
+          // menu alignment
+            alignment: Alignment.bottomCenter,
+            startingAngleInRadian: 1.2 * pi,
+            endingAngleInRadian: 1.8 * pi,
+            // menu radius
+            radius: 130,
+            // animation duration
+            animationDuration: const Duration(milliseconds: 400),
+            // animation curve in forward
+            curve: Curves.bounceOut,
+            // animation curve in reverse
+            reverseCurve: Curves.fastOutSlowIn,
+            // toggle button callback
+            toggleButtonOnPressed: () {
+              //callback
+            },
+            toggleButtonBoxShadow: const [
+              BoxShadow(
+                color: Colors.purpleAccent,
+                blurRadius: 25,
+              ),
+            ],
+            toggleButtonColor: ColorsCode.purpleColor,
+            toggleButtonIconColor: Colors.white,
+            toggleButtonSize: 42,
+            toggleButtonPadding: 10.0,
+            items: [
+              CircularMenuItem(
+                //enableBadge: true,
+                  icon: Icons.search,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                //enableBadge: true,
+                  icon: Icons.settings,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                  icon: Icons.star,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                  icon: Icons.pages,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                  icon: Icons.hail_rounded,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+            ]),

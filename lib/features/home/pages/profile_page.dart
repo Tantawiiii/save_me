@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:save_me/constants/colors_code.dart';
@@ -24,51 +23,6 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.white,
-          statusBarIconBrightness: Brightness.dark,
-        ),
-        title: Column(
-          children: [
-            Text(
-              Strings.txtAppBarHome,
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                fontSize: 16,
-              ),
-            ),
-            Text(
-              Strings.txtAppBarWelcome,
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Fonts.getFontFamilyTitillRegular(),
-                fontSize: 10,
-              ),
-            ),
-          ],
-        ),
-        toolbarHeight: 70,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_active),
-            padding: const EdgeInsets.only(right: 12),
-            onPressed: () {},
-          ),
-        ],
-        elevation: 5,
-        shadowColor: Colors.black12,
-        leading: const Padding(
-          padding: EdgeInsets.only(left: 4.0),
-          child: Image(
-            image: AssetImage('assets/images/logowithnobg.png'),
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black),
-      ),
       body: Center(
         child: Container(
           width: double.infinity,
@@ -249,23 +203,22 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 const SizedBox(
-                  height: 56,
+                  height: 46,
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 24, right: 24, top: 10),
                   child: Row(
                     children: [
                       SizedBox(
-                        width: 150,
                         height: 56,
+                        width: 160,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
                             ),
-                            onPressed: () {
-                            },
+                            onPressed: () {},
                             child: Text(
                               'Update',
                               style: TextStyle(
@@ -278,12 +231,14 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                       ),
-
+                      const SizedBox(
+                        width: 6,
+                      ),
                       Expanded(
                         child: SizedBox(
                           height: 56,
                           child: ElevatedButton(
-                            onPressed: (){},
+                            onPressed: () {},
                             style: ElevatedButton.styleFrom(
                               primary: Colors.grey,
                               elevation: 0,
