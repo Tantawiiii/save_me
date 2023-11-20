@@ -14,6 +14,7 @@ class SaveMe extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
+      //theme:ThemeClass.lightTheme,
       home: SplashScreen(),
     );
   }

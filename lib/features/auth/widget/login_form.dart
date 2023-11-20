@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
 
 import '../../../../constants/Strings.dart';
@@ -140,8 +141,8 @@ class LoginFormState extends State<LoginForm> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           filled: true,
+                          fillColor: ColorsCode.whiteColor100,
                           border: OutlineInputBorder(
-
                               borderRadius: BorderRadius.circular(4),
                               borderSide: BorderSide.none,
                             
@@ -151,6 +152,11 @@ class LoginFormState extends State<LoginForm> {
                             color: Colors.purple.shade100,
                           )),
                           hintText: Strings.txtHintEmail,
+                          hintStyle: TextStyle(
+                            fontSize: 14,
+                            fontFamily: Fonts.getFontFamilyTitillRegular(),
+                            color: ColorsCode.grayColor,
+                          ),
                           //isDense: true,
                         ),
                         validator: (value) {
@@ -184,8 +190,14 @@ class LoginFormState extends State<LoginForm> {
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
+                          fillColor: ColorsCode.whiteColor100,
                           //labelText: Strings.txtPassword,
                           hintText: Strings.txtHintPassword,
+                          hintStyle: TextStyle(
+                            fontSize: 14,
+                            fontFamily: Fonts.getFontFamilyTitillRegular(),
+                            color: ColorsCode.grayColor,
+                          ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                             color: Colors.purple.shade100,
@@ -224,6 +236,9 @@ class LoginFormState extends State<LoginForm> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
                           ),
                           onPressed: () {
                             // loginUserFun();

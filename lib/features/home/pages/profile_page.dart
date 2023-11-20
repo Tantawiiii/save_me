@@ -19,6 +19,18 @@ class _ProfileState extends State<Profile> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
+  String? _selected;
+   final List<Map> _myList = [
+    {'id': '1', 'image': 'assets/images/young_woman_white.svg'},
+    {'id': '2', 'image': 'assets/images/young_woman_black.svg'},
+    {'id': '3', 'image': 'assets/images/young_man_white.svg'},
+    {'id': '4', 'image': 'assets/images/young_man_black.svg'},
+    {'id': '5', 'image': 'assets/images/old_woman_white.svg'},
+    {'id': '6', 'image':'assets/images/old_woman_black.svg'},
+    {'id': '7', 'image': 'assets/images/old_man_black.svg'},
+    {'id': '8', 'image': 'assets/images/old_man _white.svg'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +65,7 @@ class _ProfileState extends State<Profile> {
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                       filled: true,
+                      fillColor: ColorsCode.whiteColor100,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
                         borderSide: BorderSide.none,
@@ -62,6 +75,11 @@ class _ProfileState extends State<Profile> {
                         color: Colors.purple.shade100,
                       )),
                       hintText: Strings.txtIsEmptyUserName,
+                      hintStyle: TextStyle(
+                        fontSize: 14,
+                        fontFamily: Fonts.getFontFamilyTitillRegular(),
+                        color: ColorsCode.grayColor,
+                      ),
                       //isDense: true,
                     ),
                     validator: (value) {
@@ -87,7 +105,9 @@ class _ProfileState extends State<Profile> {
                   padding: const EdgeInsets.only(left: 12),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
+                    color: ColorsCode.whiteColor100,
+                    //llColor: ColorsCode.whiteColor100,
+
                     borderRadius: BorderRadius.circular(4),
                     border: Border.all(color: Colors.black.withOpacity(0.13)),
                   ),
@@ -99,7 +119,7 @@ class _ProfileState extends State<Profile> {
                       print(value);
                     },
                     selectorConfig: const SelectorConfig(
-                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                      selectorType: PhoneInputSelectorType.DROPDOWN,
                     ),
                     ignoreBlank: false,
                     autoValidateMode: AutovalidateMode.disabled,
@@ -109,13 +129,20 @@ class _ProfileState extends State<Profile> {
                     maxLength: 11,
                     spaceBetweenSelectorAndTextField: 2,
                     keyboardType: const TextInputType.numberWithOptions(
-                        signed: true, decimal: true),
+                      signed: true,
+                      decimal: true,
+                    ),
                     cursorColor: Colors.black,
-                    inputDecoration: const InputDecoration(
-                      contentPadding: EdgeInsets.only(bottom: 15, left: 0),
+                    inputDecoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.only(bottom: 15, left: 8),
                       border: InputBorder.none,
                       hintText: Strings.txtHintPhoneNumber,
-                      hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                      hintStyle: TextStyle(
+                        fontSize: 14,
+                        fontFamily: Fonts.getFontFamilyTitillRegular(),
+                        color: ColorsCode.grayColor,
+                      ),
                     ),
                     onSaved: (PhoneNumber number) {
                       print('On Saved: $number');
@@ -142,6 +169,7 @@ class _ProfileState extends State<Profile> {
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                       filled: true,
+                      fillColor: ColorsCode.whiteColor100,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4),
                         borderSide: BorderSide.none,
@@ -151,6 +179,11 @@ class _ProfileState extends State<Profile> {
                         color: Colors.purple.shade100,
                       )),
                       hintText: Strings.txtHintEmail,
+                      hintStyle: TextStyle(
+                        fontSize: 14,
+                        fontFamily: Fonts.getFontFamilyTitillRegular(),
+                        color: ColorsCode.grayColor,
+                      ),
                       //isDense: true,
                     ),
                     validator: (value) {
@@ -176,7 +209,38 @@ class _ProfileState extends State<Profile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SvgPicture.asset('assets/images/upload_img.svg'),
+
+                      DropdownButtonHideUnderline(
+                        child: ButtonTheme(
+                          alignedDropdown: true,
+                          child: DropdownButton(
+                            value: _selected,
+                            onChanged: (newValue){
+                              setState(() {
+                                _selected = newValue;
+                              });
+                            },
+                            items: _myList.map((Map imgItem){
+                              return DropdownMenuItem(
+                                value: imgItem['id'].toString(),
+                                  child: Column(
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height:25,
+                                          width: 25,
+                                          child: SvgPicture.asset(
+                                            imgItem['image'],
+                                            width: 25,
+                                            color: Colors.black,
+                                          ),
+                                      ),
+                                    ],
+                                  ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
                       Text(
                         'OR',
                         style: TextStyle(
@@ -194,7 +258,7 @@ class _ProfileState extends State<Profile> {
                             'Upload a photo',
                             style: TextStyle(
                                 fontSize: 16,
-                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                fontFamily: Fonts.getFontFamilyTitillRegular(),
                                 color: ColorsCode.purpleColor),
                           ),
                         ],
@@ -208,6 +272,8 @@ class _ProfileState extends State<Profile> {
                 Container(
                   margin: const EdgeInsets.only(left: 24, right: 24, top: 10),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
                         height: 56,
@@ -217,6 +283,9 @@ class _ProfileState extends State<Profile> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
                             ),
                             onPressed: () {},
                             child: Text(
@@ -242,8 +311,19 @@ class _ProfileState extends State<Profile> {
                             style: ElevatedButton.styleFrom(
                               primary: Colors.grey,
                               elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
                             ),
-                            child: const Text('Rest and Cancel'),
+                            child: Text(
+                              'Rest and Cancel',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                       ),

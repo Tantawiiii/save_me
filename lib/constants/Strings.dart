@@ -116,6 +116,9 @@ class Strings{
   static const String txtCreatedDone = "You have just created a profile for this profile";
   static const String txtCreatedNewBtn = "Create New Profile";
   static const String txtBackToHomeBtn = "Back To Home";
+  static const String txtRegisterNow = "Register Now";
+  static const String txtCompleteProfile = "Complete Profile";
+  static const String txtSkip = "Skip";
 
 
 

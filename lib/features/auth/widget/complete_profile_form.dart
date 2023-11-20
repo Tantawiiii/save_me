@@ -1,11 +1,11 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import '../../../constants/Strings.dart';
+import '../../../constants/colors_code.dart';
 import '../../../constants/fonts.dart';
 import '../dataSource/api_client.dart';
 import '../utils/validation.dart';
@@ -70,6 +70,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             keyboardType: TextInputType.name,
             decoration: InputDecoration(
               filled: true,
+              fillColor: ColorsCode.whiteColor100,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide.none,
@@ -79,6 +80,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                     color: Colors.purple.shade100,
                   )),
               hintText: Strings.txtHintUserName,
+              hintStyle: TextStyle(
+                fontSize: 14,
+                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                color: ColorsCode.grayColor,
+              ),
               //isDense: true,
             ),
             validator: (value) {
@@ -103,9 +109,14 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             textEditingController: _locationController,
             googleAPIKey: Strings.API_KEY,
             inputDecoration:  InputDecoration(
-
               hintText: Strings.txtHintLocation,
+              hintStyle: TextStyle(
+                fontSize: 14,
+                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                color: ColorsCode.grayColor,
+              ),
               filled: true,
+              fillColor: ColorsCode.whiteColor100,
               prefixIcon: const Icon(
                 Icons.search_rounded,
                 color: Colors.grey,
@@ -177,11 +188,15 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             const TextInputType.numberWithOptions(signed: true, decimal: true),
             cursorColor: Colors.black,
             inputDecoration:  InputDecoration(
-              prefixIcon: SvgPicture.asset('assets/images/line.svg'),
-              //contentPadding: EdgeInsets.only(bottom: 15, left: 0),
+              //prefixIcon: SvgPicture.asset('assets/images/line.svg'),
+              contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
               border: InputBorder.none,
               hintText:Strings.txtHintPhoneNumber,
-              hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+              hintStyle: TextStyle(
+                fontSize: 14,
+                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                color: ColorsCode.grayColor,
+              ),
 
             ),
             onSaved: (PhoneNumber number) {

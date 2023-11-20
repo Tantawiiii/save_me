@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../constants/Strings.dart';
+import '../../../constants/colors_code.dart';
 import '../../../constants/fonts.dart';
 import '../dataSource/api_client.dart';
 import '../utils/validation.dart';
@@ -14,9 +14,9 @@ class RegisterNowForm extends StatefulWidget {
 }
 
 class _RegisterNowFormState extends State<RegisterNowForm> {
-
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
   // Initialize Dio with ApiClient
@@ -37,16 +37,12 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 16,
-        ),
         Text(
           Strings.txtWelcomeRegister,
           style: TextStyle(
@@ -58,7 +54,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
         Text(
           Strings.txtWelcomeRegister2,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 14,
             fontFamily: Fonts.getFontFamilyTitillRegular(),
           ),
         ),
@@ -80,15 +76,21 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               filled: true,
+              fillColor: ColorsCode.whiteColor100,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide.none,
               ),
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Colors.purple.shade100,
-                  )),
+                color: Colors.purple.shade100,
+              )),
               hintText: Strings.txtHintEmail,
+              hintStyle: TextStyle(
+                fontSize: 14,
+                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                color: ColorsCode.grayColor,
+              ),
               //isDense: true,
             ),
             validator: (value) {
@@ -122,12 +124,18 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
                 borderSide: BorderSide.none,
               ),
               filled: true,
+              fillColor: ColorsCode.whiteColor100,
               //labelText: Strings.txtPassword,
               hintText: Strings.txtHintPassword,
+              hintStyle: TextStyle(
+                fontSize: 14,
+                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                color: ColorsCode.grayColor,
+              ),
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Colors.purple.shade100,
-                  )),
+                color: Colors.purple.shade100,
+              )),
               suffixIcon: IconButton(
                 icon: Icon(
                   passwordVisible ? Icons.visibility : Icons.visibility_off,
@@ -137,7 +145,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
                 // color: Colors.purple.shade100,
                 onPressed: () {
                   setState(
-                        () {
+                    () {
                       passwordVisible = !passwordVisible;
                     },
                   );
@@ -176,12 +184,19 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
                 borderSide: BorderSide.none,
               ),
               filled: true,
+              fillColor: ColorsCode.whiteColor100,
+
               //labelText: Strings.txtPassword,
               hintText: Strings.txtHintConfirmPassword,
+              hintStyle: TextStyle(
+                fontSize: 14,
+                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                color: ColorsCode.grayColor,
+              ),
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Colors.purple.shade100,
-                  )),
+                color: Colors.purple.shade100,
+              )),
               suffixIcon: IconButton(
                 icon: Icon(
                   passwordVisible ? Icons.visibility : Icons.visibility_off,
@@ -191,7 +206,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
                 // color: Colors.purple.shade100,
                 onPressed: () {
                   setState(
-                        () {
+                    () {
                       passwordVisible = !passwordVisible;
                     },
                   );
