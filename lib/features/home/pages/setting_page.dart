@@ -25,14 +25,11 @@ class _SettingState extends State<Setting> {
     super.initState();
     passwordVisible = true;
   }
-
-
   @override
   void dispose() {
     _passwordFocusNode.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

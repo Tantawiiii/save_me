@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../constants/colors_code.dart';
 import '../widget/register_form.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -16,11 +17,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme:  ColorScheme(
+          brightness: Brightness.light,
+          primary: ColorsCode.whiteColor,
+          onPrimary: ColorsCode.blackColor,
+          secondary: Colors.white,
+          onSecondary: Colors.grey,
+          background: Colors.white,
+          onBackground: Colors.grey,
+          error: Colors.red,
+          onError: ColorsCode.grayColor,
+          surface: Colors.white,
+          onSurface: Colors.black,
+
+        ),
+      ),
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          elevation: 5,
-          shadowColor: Colors.black12,
+          elevation:12,
+          shadowColor: Colors.black45,
           title: Image.asset(
             'assets/images/logo_save_me.png',
             fit: BoxFit.cover,

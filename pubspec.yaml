@@ -34,7 +34,7 @@ dependencies:
 
   circular_menu: ^2.0.1
   image_picker: ^1.0.4
-
+  hexcolor: ^3.0.1
 
 dev_dependencies:
   flutter_test:

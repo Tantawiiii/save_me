@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:save_me/constants/Strings.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
-import 'package:save_me/features/home/cards/add_profile_screen.dart';
 import 'package:save_me/features/home/pages/home_page.dart';
 import 'package:save_me/features/home/pages/location_page.dart';
 import 'package:save_me/features/home/pages/profile_page.dart';
@@ -42,194 +41,206 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      
-      appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.white,
-          statusBarIconBrightness: Brightness.dark,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme:  ColorScheme(
+          brightness: Brightness.light,
+          primary: ColorsCode.whiteColor,
+          onPrimary: ColorsCode.blackColor,
+          secondary: Colors.white,
+          onSecondary: Colors.grey,
+          background: Colors.white,
+          onBackground: Colors.grey,
+          error: Colors.red,
+          onError: ColorsCode.grayColor,
+          surface: Colors.white,
+          onSurface: Colors.black,
+
         ),
-        title: Column(
-          children: [
-            Text(
-              Strings.txtAppBarHome,
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                fontSize: 16,
-              ),
-            ),
-            Text(
-              Strings.txtAppBarWelcome,
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Fonts.getFontFamilyTitillRegular(),
-                fontSize: 10,
-              ),
-            ),
-          ],
-        ),
-        toolbarHeight: 70,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_active),
-            padding: const EdgeInsets.only(right: 12),
-            onPressed: () {},
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarIconBrightness: Brightness.dark,
           ),
-        ],
-        elevation: 5,
-        shadowColor: Colors.black12,
-        leading: const Padding(
-          padding: EdgeInsets.only(left: 4.0),
-          child: Image(
-            image: AssetImage('assets/images/logowithnobg.png'),
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black),
-      ),
-      body: PageStorage(
-        bucket: bucket,
-        child: currentScreen,
-      ),
-      // Make the Floating Action Button to a fixed location when use Keyboard navigation
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      floatingActionButton: const SizedBox(
-        width: 85,
-        height: 85,
-        //child: MyExpandableFab()
-        child: CircleFab(),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        elevation: 14,
-        notchMargin: 10,
-        shadowColor: ColorsCode.blackColor100,
-        child: Container(
-          height: 85,
-          padding: const EdgeInsets.only(left: 16, right: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          title: Column(
             children: [
-              Flexible(
-                flex: 1,
-                child: Column(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.home_rounded),
-                      onPressed: () {
-                        setState(() {
-                          currentTab = 0;
-                          currentScreen = screens[currentTab];
-                        });
-                      },
-                      color: currentTab == 0
-                          ? ColorsCode.purpleColor
-                          : ColorsCode.grayColor300,
-                    ),
-                    Text(
-                      Strings.txtHomeTab,
-                      style: TextStyle(
-                          color: currentTab == 0
-                              ? ColorsCode.purpleColorBright
-                              : ColorsCode.grayColor300,
-                          fontSize: 12,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                    ),
-                  ],
+              Text(
+                Strings.txtAppBarHome,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                  fontSize: 16,
                 ),
               ),
-              Flexible(
-                flex: 1,
-                child: Column(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.person_2),
-                      onPressed: () {
-                        setState(() {
-                          currentTab = 1;
-                          currentScreen = screens[currentTab];
-                        });
-                      },
-                      color: currentTab == 1
-                          ? ColorsCode.purpleColorBright
-                          : ColorsCode.grayColor300,
-                    ),
-                    Text(
-                      Strings.txtProfileTab,
-                      style: TextStyle(
-                          color: currentTab == 1
-                              ? ColorsCode.purpleColorBright
-                              : ColorsCode.grayColor300,
-                          fontSize: 12,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                width: 70,
-              ),
-              Flexible(
-                flex: 1,
-                child: Column(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.my_location_rounded),
-                      onPressed: () {
-                        setState(() {
-                          currentTab = 2;
-                          currentScreen = screens[currentTab];
-                        });
-                      },
-                      color: currentTab == 2
-                          ? ColorsCode.purpleColorBright
-                          : ColorsCode.grayColor300,
-                    ),
-                    Text(
-                      Strings.txtLocationTab,
-                      style: TextStyle(
-                          color: currentTab == 2
-                              ? ColorsCode.purpleColorBright
-                              : ColorsCode.grayColor300,
-                          fontSize: 12,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                    ),
-                  ],
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: Column(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.settings),
-                      onPressed: () {
-                        setState(() {
-                          currentTab = 3;
-                          currentScreen = screens[currentTab];
-                        });
-                      },
-                      color: currentTab == 3
-                          ? ColorsCode.purpleColorBright
-                          : ColorsCode.grayColor300,
-                    ),
-                    Text(
-                      Strings.txtSettingsTab,
-                      style: TextStyle(
-                          color: currentTab == 3
-                              ? ColorsCode.purpleColorBright
-                              : ColorsCode.grayColor300,
-                          fontSize: 12,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                    ),
-                  ],
+              Text(
+                Strings.txtAppBarWelcome,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: Fonts.getFontFamilyTitillRegular(),
+                  fontSize: 10,
                 ),
               ),
             ],
+          ),
+          toolbarHeight: 70,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications_active),
+              padding: const EdgeInsets.only(right: 12),
+              onPressed: () {},
+            ),
+          ],
+          elevation:12,
+          shadowColor: Colors.black45,
+          leading: const Padding(
+            padding: EdgeInsets.only(left: 3.0),
+            child: Image(
+              image: AssetImage('assets/images/logowithnobg.png'),
+            ),
+          ),
+          centerTitle: true,
+         // backgroundColor: Theme.of(context).colorScheme.primary,
+          iconTheme: const IconThemeData(color: Colors.black),
+          
+        ),
+        body: PageStorage(
+          bucket: bucket,
+          child: currentScreen,
+        ),
+        // Make the Floating Action Button to a fixed location when use Keyboard navigation
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        floatingActionButton: const SizedBox(
+          width: 85,
+          height: 85,
+          //child: MyExpandableFab()
+          child: CircleFab(),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: SizedBox(
+          height: 95,
+          child: BottomAppBar(
+            shape: const CircularNotchedRectangle(),
+            elevation: 14,
+            notchMargin: 10,
+            shadowColor: ColorsCode.blackColor100,
+            child: Container(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.home_rounded,size: 28,),
+                        onPressed: () {
+                          setState(() {
+                            currentTab = 0;
+                            currentScreen = screens[currentTab];
+                          });
+                        },
+                        color: currentTab == 0
+                            ? ColorsCode.purpleColor
+                            : ColorsCode.grayColor300,
+                      ),
+                      Text(
+                        Strings.txtHomeTab,
+                        style: TextStyle(
+                            color: currentTab == 0
+                                ? ColorsCode.purpleColorBright
+                                : ColorsCode.grayColor300,
+                            fontSize: 14,
+                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.person_2,size: 28,),
+                        onPressed: () {
+                          setState(() {
+                            currentTab = 1;
+                            currentScreen = screens[currentTab];
+                          });
+                        },
+                        color: currentTab == 1
+                            ? ColorsCode.purpleColorBright
+                            : ColorsCode.grayColor300,
+                      ),
+                      Text(
+                        Strings.txtProfileTab,
+                        style: TextStyle(
+                            color: currentTab == 1
+                                ? ColorsCode.purpleColorBright
+                                : ColorsCode.grayColor300,
+                            fontSize: 14,
+                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 70,
+                  ),
+                  Column(
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                            Icons.my_location_rounded,
+                          size: 28,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            currentTab = 2;
+                            currentScreen = screens[currentTab];
+                          });
+                        },
+                        color: currentTab == 2
+                            ? ColorsCode.purpleColorBright
+                            : ColorsCode.grayColor300,
+                      ),
+                      Text(
+                        Strings.txtLocationTab,
+                        style: TextStyle(
+                            color: currentTab == 2
+                                ? ColorsCode.purpleColorBright
+                                : ColorsCode.grayColor300,
+                            fontSize: 14,
+                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.settings,size: 28,),
+                        onPressed: () {
+                          setState(() {
+                            currentTab = 3;
+                            currentScreen = screens[currentTab];
+                          });
+                        },
+                        color: currentTab == 3
+                            ? ColorsCode.purpleColorBright
+                            : ColorsCode.grayColor300,
+                      ),
+                      Text(
+                        Strings.txtSettingsTab,
+                        style: TextStyle(
+                            color: currentTab == 3
+                                ? ColorsCode.purpleColorBright
+                                : ColorsCode.grayColor300,
+                            fontSize: 14,
+                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -240,7 +251,6 @@ class _HomePageState extends State<HomePage> {
 // circular menu In Floating Button
 
 class CircleFab extends StatelessWidget {
-
 
   const CircleFab({super.key});
 
