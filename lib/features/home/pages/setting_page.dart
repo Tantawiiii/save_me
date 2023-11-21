@@ -75,6 +75,9 @@ class _SettingState extends State<Setting> {
                             style: ElevatedButton.styleFrom(
                               primary: ColorsCode.purpleColorLight,
                               elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
                             ),
                           ),
                         ),
@@ -99,7 +102,10 @@ class _SettingState extends State<Setting> {
                             //label text
                             style: ElevatedButton.styleFrom(
                                 primary: ColorsCode.whiteColor100,
-                                elevation: 0 //elevated btton background color
+                                elevation: 0, //elevated btton background color
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
                                 ),
                           ),
                         ),
@@ -161,13 +167,14 @@ class _SettingState extends State<Setting> {
                   width: double.infinity,
                   height: 56,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
                       ),
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                       child: Text(
                         Strings.txtChangePassword,
                         style: TextStyle(

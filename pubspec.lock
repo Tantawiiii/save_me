@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  bouncing_button:
+    dependency: "direct main"
+    description:
+      name: bouncing_button
+      sha256: e281c0af5e71ec53ffb1656060221930b121388ea21e3cb095b0bede8b596635
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1+2"
   build:
     dependency: transitive
     description:
@@ -302,6 +310,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
+  flutter_speed_dial:
+    dependency: "direct main"
+    description:
+      name: flutter_speed_dial
+      sha256: "698a037274a66dbae8697c265440e6acb6ab6cae9ac5f95c749e7944d8f28d41"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.0"
   flutter_svg:
     dependency: "direct main"
     description:

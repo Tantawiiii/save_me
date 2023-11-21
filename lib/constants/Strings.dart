@@ -119,6 +119,8 @@ class Strings{
   static const String txtRegisterNow = "Register Now";
   static const String txtCompleteProfile = "Complete Profile";
   static const String txtSkip = "Skip";
+  static const String txtRestCancel = "Reset and Cancel";
+  static const String txtUpdate = "Update";
 
 
 

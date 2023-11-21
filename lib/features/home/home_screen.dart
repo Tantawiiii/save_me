@@ -1,8 +1,9 @@
 import 'dart:math';
 
-import 'package:circular_menu/circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:save_me/constants/Strings.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
@@ -113,29 +114,133 @@ class _HomePageState extends State<HomePage> {
         // Make the Floating Action Button to a fixed location when use Keyboard navigation
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        floatingActionButton: const SizedBox(
-          width: 85,
-          height: 85,
-          //child: MyExpandableFab()
-          child: CircleFab(),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Container(
+          margin: const EdgeInsets.only(right: 8,left: 8),
+          child: SpeedDial(
+            backgroundColor: ColorsCode.purpleColor, //background color of button
+            foregroundColor: ColorsCode.whiteColor, //font color, icon color in button
+            activeBackgroundColor: Colors.black, //background color when menu is expanded
+            activeForegroundColor: Colors.white,
+            direction: SpeedDialDirection.up,
+            visible: true,
+            closeManually: false,
+            curve: Curves.bounceOut,
+            overlayColor: Colors.black,
+            overlayOpacity: 0.2,
+            spaceBetweenChildren: 4,
+            spacing: 5,
+            onOpen: () => print('OPENING DIAL'), // action when menu opens
+            onClose: () => print('DIAL CLOSED'), //action when menu closes
+            buttonSize: const Size(75.0, 75.0),
+            childrenButtonSize: const Size(60.0, 60.0),
+            childMargin: const EdgeInsets.all(20),
+            mini: false,
+            elevation: 8.0, //shadow elevation of button
+            shape:  CircleBorder(), //shape of button
+            children: [
+              SpeedDialChild( //speed dial child
+                child: IconButton(
+                  onPressed: () {  }, 
+                  icon: SvgPicture.asset("assets/images/Kids_black.svg",width: 30,height: 30,),
+                  
+                ),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                onTap: () => print('FIRST CHILD'),
+                onLongPress: () => print('FIRST CHILD LONG PRESS'),
+                shape: const CircleBorder(),
+              ),
+              SpeedDialChild(
+                child: IconButton(
+                  onPressed: () {  },
+                  icon: SvgPicture.asset("assets/images/Pets_black.svg",width: 30,height: 30,),
+
+                ),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                onTap: () => print('SECOND CHILD'),
+                onLongPress: () => print('SECOND CHILD LONG PRESS'),
+                shape: const CircleBorder(),
+              ),
+              SpeedDialChild(
+                child: IconButton(
+                  onPressed: () {  },
+                  icon: SvgPicture.asset("assets/images/Disabled_black.svg",width: 30,height: 30,),
+
+                ),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                onTap: () => print('THIRD CHILD'),
+                onLongPress: () => print('THIRD CHILD LONG PRESS'),
+                shape: const CircleBorder(),
+              ),
+              SpeedDialChild( //speed dial child
+                child: IconButton(
+                  onPressed: () {  },
+                  icon: SvgPicture.asset("assets/images/Seniors_black.svg",width: 30,height: 30,),
+
+                ),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                onTap: () => print('FIRST CHILD'),
+                onLongPress: () => print('FIRST CHILD LONG PRESS'),
+                shape: const CircleBorder(),
+              ),
+              SpeedDialChild( //speed dial child
+                child: IconButton(
+                  onPressed: () {  },
+                  icon: SvgPicture.asset("assets/images/Item_black.svg",width: 30,height: 30,),
+
+                ),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                onTap: () => print('FIRST CHILD'),
+                onLongPress: () => print('FIRST CHILD LONG PRESS'),
+                shape: const CircleBorder(),
+              ),
+
+            ],
+            activeChild:SvgPicture.asset(
+              'assets/images/close.svg',
+              color: Colors.white,
+              width: 24,
+              height: 24,
+            ),
+
+            child: SvgPicture.asset("assets/images/plus.svg",color: Colors.white,),
+          ),
+        ) ,
+
+        //to create a circle menu
+        // const SizedBox(
+        //   width: 95,
+        //   height: 95,
+        //   //child: MyExpandableFab()
+        //   child: CircleFab(),
+        // ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         bottomNavigationBar: SizedBox(
           height: 95,
           child: BottomAppBar(
             shape: const CircularNotchedRectangle(),
             elevation: 14,
-            notchMargin: 10,
+            notchMargin: 0,
             shadowColor: ColorsCode.blackColor100,
             child: Container(
-              padding: const EdgeInsets.only(left: 16, right: 16),
+              padding: const EdgeInsets.only(left: 6, right: 15),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Column(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.home_rounded,size: 28,),
+                        icon: SvgPicture.asset(
+                            "assets/images/home.svg",
+                            color: currentTab == 0
+                        ? ColorsCode.purpleColor
+                            : ColorsCode.grayColor300,
+                            semanticsLabel: 'Label'
+                        ),
                         onPressed: () {
                           setState(() {
                             currentTab = 0;
@@ -152,15 +257,23 @@ class _HomePageState extends State<HomePage> {
                             color: currentTab == 0
                                 ? ColorsCode.purpleColorBright
                                 : ColorsCode.grayColor300,
-                            fontSize: 14,
+                            fontSize: 13,
                             fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                       ),
                     ],
                   ),
+                  const SizedBox(width: 32,),
                   Column(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.person_2,size: 28,),
+
+                        icon: SvgPicture.asset(
+                            "assets/images/user_fill.svg",
+                            color: currentTab == 1
+                                ? ColorsCode.purpleColor
+                                : ColorsCode.grayColor300,
+                            semanticsLabel: 'Label'
+                        ),
                         onPressed: () {
                           setState(() {
                             currentTab = 1;
@@ -177,14 +290,12 @@ class _HomePageState extends State<HomePage> {
                             color: currentTab == 1
                                 ? ColorsCode.purpleColorBright
                                 : ColorsCode.grayColor300,
-                            fontSize: 14,
+                            fontSize: 13,
                             fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    width: 70,
-                  ),
+                  const SizedBox(width: 32,),
                   Column(
                     children: [
                       IconButton(
@@ -208,11 +319,12 @@ class _HomePageState extends State<HomePage> {
                             color: currentTab == 2
                                 ? ColorsCode.purpleColorBright
                                 : ColorsCode.grayColor300,
-                            fontSize: 14,
+                            fontSize: 13,
                             fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                       ),
                     ],
                   ),
+                  const SizedBox(width: 32,),
                   Column(
                     children: [
                       IconButton(
@@ -233,7 +345,7 @@ class _HomePageState extends State<HomePage> {
                             color: currentTab == 3
                                 ? ColorsCode.purpleColorBright
                                 : ColorsCode.grayColor300,
-                            fontSize: 14,
+                            fontSize: 13,
                             fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                       ),
                     ],
@@ -246,111 +358,14 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
-
-// circular menu In Floating Button
-
-class CircleFab extends StatelessWidget {
-
-  const CircleFab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return CircularMenu(
-        // menu alignment
-        alignment: Alignment.bottomCenter,
-        startingAngleInRadian: 1.2 * pi,
-        endingAngleInRadian: 1.8 * pi,
-        // menu radius
-        radius: 130,
-        // animation duration
-        animationDuration: const Duration(milliseconds: 400),
-        // animation curve in forward
-        curve: Curves.bounceOut,
-        // animation curve in reverse
-        reverseCurve: Curves.fastOutSlowIn,
-        // toggle button callback
-        toggleButtonOnPressed: () {
-          //callback
-        },
-        toggleButtonBoxShadow: const [
-          BoxShadow(
-            color: Colors.purpleAccent,
-            blurRadius: 25,
-          ),
-        ],
-        toggleButtonColor: ColorsCode.purpleColor,
-        toggleButtonIconColor: Colors.white,
-        toggleButtonSize: 42,
-        toggleButtonPadding: 10.0,
-        items: [
-          CircularMenuItem(
-              icon: Icons.search,
-              color: Colors.purple.shade300,
-              onTap: () {
-                //callback
-                _navigateToScreen(context,  SearchScreen());
-              }),
-          CircularMenuItem(
-              //enableBadge: true,
-              icon: Icons.settings,
-              color: Colors.purple.shade300,
-              onTap: () {
-                //callback
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const AddProfile()),
-                // );
-                print('badge on circular menu item');
-              }),
-          CircularMenuItem(
-              icon: Icons.star,
-              color: Colors.purple.shade300,
-              onTap: () {
-                //callback
-                print('badge on circular menu item');
-              }),
-          CircularMenuItem(
-              icon: Icons.pages,
-              color: Colors.purple.shade300,
-              onTap: () {
-                //callback
-                print('badge on circular menu item');
-              }),
-          CircularMenuItem(
-              icon: Icons.hail_rounded,
-              color: Colors.purple.shade300,
-              onTap: () {
-
-                setState(){
-
-                }
-                //callbak
-              }),
-        ]);
-  }
-
-  void _navigateToScreen(BuildContext context, Widget screen) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => screen),
-    );
+  void displayMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      duration: const Duration(milliseconds: 1000),
+    ));
   }
 }
 
-class SearchScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search Screen'),
-      ),
-      body: const Center(
-        child: Text('This is the Search Screen'),
-      ),
-    );
-  }
-}
 
 
 class MyExpandableFab extends StatelessWidget {
@@ -402,3 +417,161 @@ class ExpandableFabController with ChangeNotifier {
     notifyListeners();
   }
 }
+
+
+/**
+ *
+ * // circular menu In Floating Button
+    class CircleFab extends StatelessWidget {
+
+    const CircleFab({super.key});
+
+    @override
+    Widget build(BuildContext context) {
+    return CircularMenu(
+    // menu alignment
+    alignment: Alignment.bottomRight,
+    startingAngleInRadian: 1.2 * pi,
+    endingAngleInRadian: 1.8 * pi,
+    // menu radius
+    radius: 130,
+    // animation duration
+    animationDuration: const Duration(milliseconds: 600),
+    // animation curve in forward
+    curve: Curves.bounceOut,
+    // animation curve in reverse
+    reverseCurve: Curves.fastOutSlowIn,
+    // toggle button callback
+    toggleButtonOnPressed: () {
+    //callback
+    },
+    toggleButtonBoxShadow: const [
+    BoxShadow(
+    color: Colors.purpleAccent,
+    blurRadius: 15,
+    ),
+    ],
+    toggleButtonColor: ColorsCode.purpleColor,
+    toggleButtonIconColor: Colors.white,
+    toggleButtonSize: 52,
+    toggleButtonPadding: 12.0,
+    toggleButtonMargin: 0,
+    //toggleButtonIcon: Icons.menu, // Change the toggle button icon here
+    items: [
+    CircularMenuItem(
+    icon: Icons.search,
+    color: Colors.purple.shade300,
+    onTap: () {
+    //callback
+    /// _navigateToScreen(context,  SearchScreen());
+    }),
+    CircularMenuItem(
+    //enableBadge: true,
+    icon: Icons.settings,
+    color: Colors.purple.shade300,
+    onTap: () {
+    //callback
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => const AddProfile()),
+    // );
+    print('badge on circular menu item');
+    }),
+    CircularMenuItem(
+    icon: Icons.star,
+    color: Colors.purple.shade300,
+    onTap: () {
+    //callback
+    print('badge on circular menu item');
+    }),
+    CircularMenuItem(
+    icon: Icons.pages,
+    color: Colors.purple.shade300,
+    onTap: () {
+    //callback
+    print('badge on circular menu item');
+    }),
+    CircularMenuItem(
+    icon: Icons.hail_rounded,
+    color: Colors.purple.shade300,
+    onTap: () {
+
+    setState(){
+
+    }
+    //callbak
+    }),
+    ]);
+    }
+
+    void _navigateToScreen(BuildContext context, Widget screen) {
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => screen),
+    );
+    }
+    }
+
+ *
+ *
+
+
+ * FabCircularMenu(
+    alignment: Alignment.bottomRight,
+    ringColor: Colors.blue.withAlpha(25),
+    ringDiameter: 500.0,
+    ringWidth: 150.0,
+    fabSize: 90.0,
+    fabElevation: 8.0,
+    fabIconBorder: CircleBorder(),
+    children: <Widget> [
+    RawMaterialButton(
+    onPressed: () {
+    displayMessage(context, 'Home Clicked');
+    },
+    elevation: 10.0,
+    fillColor: Colors.green,
+    child: Icon(
+    Icons.home,
+    size: 30.0,
+    ),
+    padding: EdgeInsets.all(15.0),
+    shape: CircleBorder(),
+    ),
+    RawMaterialButton(
+    onPressed: () {
+    displayMessage(context, 'Search Clicked');
+    },
+    elevation: 10.0,
+    fillColor: Colors.orange,
+    child: Icon(
+    Icons.search,
+    size: 30.0,
+    ),
+    padding: EdgeInsets.all(15.0),
+    shape: CircleBorder(),
+    ),
+    CircleAvatar(
+    radius: 30,
+    backgroundColor: Colors.purple,
+    child: IconButton(
+    icon: Icon(
+    Icons.settings,
+    size: 30,
+    ),
+    onPressed: () {
+    displayMessage(context, 'Setting Clicked');
+    }),
+    ),
+    IconButton(
+    icon: Icon(
+    Icons.star,
+    color: Colors.brown,
+    size: 40,
+    ),
+    onPressed: () {
+    displayMessage(context, 'Favorite Clicked');
+    }),
+    ],
+    ),
+ */

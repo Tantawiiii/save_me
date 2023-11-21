@@ -35,6 +35,10 @@ dependencies:
   circular_menu: ^2.0.1
   image_picker: ^1.0.4
   hexcolor: ^3.0.1
+  bouncing_button: ^0.0.1+2
+  flutter_speed_dial: ^7.0.0
+  #fab_circular_menu: ^1.0.2
+
 
 dev_dependencies:
   flutter_test:
@@ -61,8 +65,6 @@ flutter:
     - assets/fonts/
     - assets/images/black_logo.svg
     - assets/images/black_icon.svg
-
-
 
   fonts:
      - family: cairo

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:save_me/constants/colors_code.dart';
 
@@ -21,8 +24,8 @@ class _ProfileState extends State<Profile> {
 
   String? _selected;
    final List<Map> _myList = [
-    {'id': '1', 'image': 'assets/images/young_woman_white.svg'},
-    {'id': '2', 'image': 'assets/images/young_woman_black.svg'},
+    {'id': '1', 'image': 'assets/images/Old_man_black.png'},
+    {'id': '2', 'image': 'assets/images/Old_man_white.png'},
     {'id': '3', 'image': 'assets/images/young_man_white.svg'},
     {'id': '4', 'image': 'assets/images/young_man_black.svg'},
     {'id': '5', 'image': 'assets/images/old_woman_white.svg'},
@@ -30,6 +33,19 @@ class _ProfileState extends State<Profile> {
     {'id': '7', 'image': 'assets/images/old_man_black.svg'},
     {'id': '8', 'image': 'assets/images/old_man _white.svg'},
   ];
+
+   // Image Picker for the new photo profile image
+  File? _image;
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +225,6 @@ class _ProfileState extends State<Profile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
                       DropdownButtonHideUnderline(
                         child: ButtonTheme(
                           alignedDropdown: true,
@@ -228,7 +243,7 @@ class _ProfileState extends State<Profile> {
                                       SizedBox(
                                         height:25,
                                           width: 25,
-                                          child: SvgPicture.asset(
+                                          child: Image.asset(
                                             imgItem['image'],
                                             width: 25,
                                             color: Colors.black,
@@ -246,11 +261,33 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                             fontSize: 16,
                             fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                            fontWeight: FontWeight.normal),
+                            fontWeight: FontWeight.normal,
+                          color: ColorsCode.grayColor100,
+                        ),
                       ),
                       Column(
                         children: <Widget>[
-                          SvgPicture.asset('assets/images/upload_img.svg'),
+                          GestureDetector(
+                            onTap: () {
+                              _pickImage();
+                            },
+                            child: Container(
+                              width: 148,
+                              height: 89,
+                              decoration: BoxDecoration(
+                                color: ColorsCode.whiteColor,
+                                borderRadius: const BorderRadius.all(Radius.circular(4)),
+                              ),
+                              child: _image == null
+                                  ? Center(
+                                child:  SvgPicture.asset('assets/images/upload_img.svg'),
+                              )
+                                  : Image.file(
+                                _image!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                           const SizedBox(
                             height: 4,
                           ),
@@ -269,66 +306,61 @@ class _ProfileState extends State<Profile> {
                 const SizedBox(
                   height: 46,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 24, right: 24, top: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: SizedBox(
                         height: 56,
-                        width: 160,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.black,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
                             ),
-                            onPressed: () {},
-                            child: Text(
-                              'Update',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                                fontWeight: FontWeight.bold,
-                              ),
+                          ),
+                          child: Text(
+                            Strings.txtUpdate,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          height: 56,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.grey,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
+                    ),
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 56,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
                             ),
-                            child: Text(
-                              'Rest and Cancel',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                                fontWeight: FontWeight.bold,
-                              ),
+                          ),
+                          child: Text(
+                            Strings.txtRestCancel,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
