@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:save_me/constants/Strings.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
-import 'package:save_me/features/home/cards/add_profile_screen.dart';
+import 'package:save_me/features/home/cards/add_kid_profile.dart';
+import 'package:save_me/features/home/home_screen.dart';
 
 class CreatedProfile extends StatelessWidget {
   const CreatedProfile({super.key});
@@ -13,20 +14,24 @@ class CreatedProfile extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorsCode.whiteColor,
       body: Container(
-        margin: const EdgeInsets.only(top:80, right: 28,left: 28),
+        margin: const EdgeInsets.only(top: 80, right: 28, left: 28),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 80),
-              SvgPicture.asset('assets/images/created.svg'),
+              Lottie.asset('assets/anim/create_done.json',
+                  animate: true,
+                  height: 200,
+                  width: 200,
+              ),
               const SizedBox(height: 44),
               Text(
                 Strings.txtCreatedDone,
                 style: TextStyle(
                   color: ColorsCode.blueDarkColor,
-                  fontSize: 16,
+                  fontSize: 18,
                   fontFamily: Fonts.getFontFamilyTitillSemiBold(),
                 ),
               ),
@@ -38,13 +43,10 @@ class CreatedProfile extends StatelessWidget {
                     height: 56,
                     //width: 155,
                     child: ElevatedButton(
-                      onPressed: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AddProfile()),
-                        );
+                      onPressed: () => {
+                        HomePage.homePageKey.currentState?.openSpeedDial()
                       },
-                      style:ElevatedButton.styleFrom(
+                      style: ElevatedButton.styleFrom(
                         primary: Colors.black,
                         elevation: 2,
                         shape: RoundedRectangleBorder(
@@ -55,23 +57,28 @@ class CreatedProfile extends StatelessWidget {
                         Strings.txtCreatedNewBtn,
                         style: TextStyle(
                           color: Colors.white,
-                          fontFamily:
-                          Fonts.getFontFamilyTitillSemiBold(),
+                          fontFamily: Fonts.getFontFamilyTitillSemiBold(),
                           fontSize: 16,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 18,),
+                  const SizedBox(
+                    width: 18,
+                  ),
                   InkWell(
-                    onTap:(){},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomePage()),
+                      );
+                    },
                     child: Text(
                       Strings.txtBackToHomeBtn,
                       style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                        color: ColorsCode.blueDarkColor
-                      ),
+                          fontSize: 16,
+                          fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                          color: ColorsCode.blueDarkColor),
                     ),
                   ),
                 ],

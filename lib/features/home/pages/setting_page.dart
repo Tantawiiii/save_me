@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/features/auth/Screens/login_screen.dart';
@@ -16,20 +15,26 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  final TextEditingController _oldPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =  TextEditingController();
+  final TextEditingController _newPasswordController =  TextEditingController();
+  bool isTextFieldVisible = false;
 
-  final TextEditingController _passwordController = TextEditingController();
   bool passwordVisible = true;
-  FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+
   @override
   void initState() {
     super.initState();
     passwordVisible = true;
   }
+
   @override
   void dispose() {
     _passwordFocusNode.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,12 +70,13 @@ class _SettingState extends State<Setting> {
                             icon: SvgPicture.asset('assets/images/English.svg'),
                             //icon data for elevated button
                             label: Text(
-                                Strings.txtEnglish,
+                              Strings.txtEnglish,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: Fonts.getFontFamilyTitillSemiBold(),
                                 fontSize: 16,
-                              ),),
+                              ),
+                            ),
                             //label text
                             style: ElevatedButton.styleFrom(
                               primary: ColorsCode.purpleColorLight,
@@ -101,12 +107,12 @@ class _SettingState extends State<Setting> {
                             ),
                             //label text
                             style: ElevatedButton.styleFrom(
-                                primary: ColorsCode.whiteColor100,
-                                elevation: 0, //elevated btton background color
+                              primary: ColorsCode.whiteColor100,
+                              elevation: 0, //elevated btton background color
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
                               ),
-                                ),
+                            ),
                           ),
                         ),
                       ),
@@ -116,53 +122,187 @@ class _SettingState extends State<Setting> {
                 const SizedBox(
                   height: 32,
                 ),
+                Visibility(
+                  visible: isTextFieldVisible,
+                  child: Column(
+                    //mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 56,
+                        child: TextFormField(
+                          controller: _oldPasswordController,
+                          obscureText: passwordVisible,
+                          keyboardType: TextInputType.visiblePassword,
+                          //focusNode: _passwordFocusNode,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: ColorsCode.whiteColor100,
+                            //labelText: Strings.txtPassword,
+                            hintText: Strings.txtHintOldPassword,
+                            hintStyle: TextStyle(
+                              fontSize: 14,
+                              fontFamily: Fonts.getFontFamilyTitillRegular(),
+                              color: ColorsCode.grayColor,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Colors.purple.shade100,
+                            )),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
 
-                // SizedBox(
-                //   height: 56,
-                //   child: TextFormField(
-                //     controller: _passwordController,
-                //     obscureText: passwordVisible,
-                //     keyboardType: TextInputType.visiblePassword,
-                //     focusNode: _passwordFocusNode,
-                //     decoration: InputDecoration(
-                //       border: OutlineInputBorder(
-                //
-                //         borderRadius: BorderRadius.circular(4),
-                //       ),
-                //       filled: true,
-                //       //labelText: Strings.txtPassword,
-                //       hintText: Strings.txtNewPassword,
-                //       focusedBorder: OutlineInputBorder(
-                //           borderSide: BorderSide(
-                //             color: Colors.purple.shade100,
-                //           )),
-                //       suffixIcon: IconButton(
-                //         icon: Icon(passwordVisible
-                //             ? Icons.visibility
-                //             : Icons.visibility_off,
-                //           color: Colors.grey,
-                //         ),
-                //
-                //         // color: Colors.purple.shade100,
-                //         onPressed: () {
-                //           setState(
-                //                 () {
-                //               passwordVisible = !passwordVisible;
-                //             },
-                //           );
-                //         },
-                //       ),
-                //     ),
-                //     textInputAction: TextInputAction.done,
-                //     validator: (value) {
-                //       return Validation.validatePassword(value ?? "");
-                //     },
-                //   ),
-                // ),
-                const SizedBox(
-                  height: 16,
+                              // color: Colors.purple.shade100,
+                              onPressed: () {
+                                setState(
+                                  () {
+                                    passwordVisible = !passwordVisible;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                          textInputAction: TextInputAction.done,
+                          validator: (value) {
+                            return Validation.validatePassword(value ?? "");
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      SizedBox(
+                        height: 56,
+                        child: TextFormField(
+                          controller: _newPasswordController,
+                          obscureText: passwordVisible,
+                          keyboardType: TextInputType.visiblePassword,
+                          //focusNode: _passwordFocusNode,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: ColorsCode.whiteColor100,
+
+                            //labelText: Strings.txtPassword,
+                            hintText: Strings.txtHintNewPassword,
+                            hintStyle: TextStyle(
+                              fontSize: 14,
+                              fontFamily: Fonts.getFontFamilyTitillRegular(),
+                              color: ColorsCode.grayColor,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Colors.purple.shade100,
+                            )),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+
+                              // color: Colors.purple.shade100,
+                              onPressed: () {
+                                setState(
+                                  () {
+                                    passwordVisible = !passwordVisible;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                          textInputAction: TextInputAction.done,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return Strings.txtHintConfirmPassword;
+                            }
+                            // if (_newPasswordController.text !=
+                            //     _confirmPasswordController.text) {
+                            //   return Strings.txtNotMatchPassword;
+                            // }
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      SizedBox(
+                        height: 56,
+                        child: TextFormField(
+                          controller: _confirmPasswordController,
+                          obscureText: passwordVisible,
+                          keyboardType: TextInputType.visiblePassword,
+                          //focusNode: _passwordFocusNode,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: ColorsCode.whiteColor100,
+
+                            //labelText: Strings.txtPassword,
+                            hintText: Strings.txtHintConfirmNewPassword,
+                            hintStyle: TextStyle(
+                              fontSize: 14,
+                              fontFamily: Fonts.getFontFamilyTitillRegular(),
+                              color: ColorsCode.grayColor,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Colors.purple.shade100,
+                            )),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+
+                              // color: Colors.purple.shade100,
+                              onPressed: () {
+                                setState(
+                                  () {
+                                    passwordVisible = !passwordVisible;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                          textInputAction: TextInputAction.done,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return Strings.txtHintConfirmPassword;
+                            }
+                            if (_newPasswordController.text !=
+                                _confirmPasswordController.text) {
+                              return Strings.txtNotMatchPassword;
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-
+                const SizedBox(
+                  height: 18,
+                ),
                 SizedBox(
                   width: double.infinity,
                   height: 56,
@@ -174,7 +314,16 @@ class _SettingState extends State<Setting> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        // Check if both text fields are not empty
+                        /*      if (_passwordController.text.isNotEmpty &&
+                            _passwordConfirmController.text.isNotEmpty) {*/
+                        setState(() {
+                          // Toggle the visibility state
+                          isTextFieldVisible = !isTextFieldVisible;
+                        });
+                        //}
+                      },
                       child: Text(
                         Strings.txtChangePassword,
                         style: TextStyle(
@@ -188,7 +337,7 @@ class _SettingState extends State<Setting> {
                   ),
                 ),
                 const SizedBox(
-                  height:32,
+                  height: 32,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -201,23 +350,18 @@ class _SettingState extends State<Setting> {
                         fontSize: 16,
                       ),
                     ),
-                    // const SizedBox(
-                    //   width: 120,
-                    // ),
                     InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
-                      },
-                      child: SvgPicture.asset('assets/images/Logout.svg')
-                    ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          );
+                        },
+                        child: SvgPicture.asset('assets/images/Logout.svg')),
                   ],
                 ),
-
               ],
             ),
           ),

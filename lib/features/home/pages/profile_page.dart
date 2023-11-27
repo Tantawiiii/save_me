@@ -5,10 +5,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:save_me/constants/colors_code.dart';
+import 'package:save_me/features/home/widgets/upload_bottom_sheet.dart';
 
 import '../../../constants/Strings.dart';
 import '../../../constants/fonts.dart';
 import '../../auth/utils/validation.dart';
+
+
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -22,20 +25,25 @@ class _ProfileState extends State<Profile> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
-  String? _selected;
-   final List<Map> _myList = [
-    {'id': '1', 'image': 'assets/images/Old_man_black.png'},
-    {'id': '2', 'image': 'assets/images/Old_man_white.png'},
-    {'id': '3', 'image': 'assets/images/young_man_white.svg'},
-    {'id': '4', 'image': 'assets/images/young_man_black.svg'},
-    {'id': '5', 'image': 'assets/images/old_woman_white.svg'},
-    {'id': '6', 'image':'assets/images/old_woman_black.svg'},
-    {'id': '7', 'image': 'assets/images/old_man_black.svg'},
-    {'id': '8', 'image': 'assets/images/old_man _white.svg'},
+  // initial Country Code value phone number
+  PhoneNumber number = PhoneNumber(isoCode: 'EG');
+
+  // Default selected image path
+  String?  _selectedImage;
+  List<Map> mySvgPaths = [
+    {"id": '1',"image":'assets/images/young_man_white.svg'},
+    {"id": '2',"image":'assets/images/young_man_white.svg'},
+    {"id": '3',"image":'assets/images/young_man_white.svg'},
+    {"id": '4',"image":'assets/images/young_man_white.svg'},
+    {"id": '5',"image":'assets/images/young_man_white.svg'},
+    {"id": '6',"image":'assets/images/young_man_white.svg'},
+    {"id": '7',"image":'assets/images/young_man_white.svg'},
+    {"id": '8',"image":'assets/images/young_man_white.svg'},
   ];
 
-   // Image Picker for the new photo profile image
+  // Image Picker for the new photo profile image
   File? _image;
+
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
@@ -123,7 +131,6 @@ class _ProfileState extends State<Profile> {
                   decoration: BoxDecoration(
                     color: ColorsCode.whiteColor100,
                     //llColor: ColorsCode.whiteColor100,
-
                     borderRadius: BorderRadius.circular(4),
                     border: Border.all(color: Colors.black.withOpacity(0.13)),
                   ),
@@ -135,7 +142,7 @@ class _ProfileState extends State<Profile> {
                       print(value);
                     },
                     selectorConfig: const SelectorConfig(
-                      selectorType: PhoneInputSelectorType.DROPDOWN,
+                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                     ),
                     ignoreBlank: false,
                     autoValidateMode: AutovalidateMode.disabled,
@@ -148,6 +155,7 @@ class _ProfileState extends State<Profile> {
                       signed: true,
                       decimal: true,
                     ),
+                    initialValue: number,
                     cursorColor: Colors.black,
                     inputDecoration: InputDecoration(
                       contentPadding:
@@ -225,43 +233,44 @@ class _ProfileState extends State<Profile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      DropdownButtonHideUnderline(
-                        child: ButtonTheme(
-                          alignedDropdown: true,
-                          child: DropdownButton(
-                            value: _selected,
-                            onChanged: (newValue){
-                              setState(() {
-                                _selected = newValue;
-                              });
-                            },
-                            items: _myList.map((Map imgItem){
-                              return DropdownMenuItem(
-                                value: imgItem['id'].toString(),
-                                  child: Column(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        height:25,
-                                          width: 25,
-                                          child: Image.asset(
-                                            imgItem['image'],
-                                            width: 25,
-                                            color: Colors.black,
-                                          ),
-                                      ),
-                                    ],
-                                  ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
+
+                      // Expanded(
+                      //   child: DropdownButtonHideUnderline(
+                      //     child: ButtonTheme(
+                      //       alignedDropdown: true,
+                      //       child: DropdownButton <String>(
+                      //         isDense: true,
+                      //         value: _selectedImage,
+                      //         onChanged: (String? newValue) {
+                      //           setState(() {
+                      //             _selectedImage = newValue!;
+                      //           });
+                      //         },
+                      //         items: mySvgPaths.map((Map map) {
+                      //           return DropdownMenuItem<String>(
+                      //             value: map["id"].toString(),
+                      //               child: Row(
+                      //                 children: [
+                      //                   SvgPicture.asset(
+                      //                     map["image"],
+                      //                     width: 48,
+                      //                     height: 48,
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //           );
+                      //         }).toList(),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+
                       Text(
                         'OR',
                         style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                            fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                          fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                          fontWeight: FontWeight.normal,
                           color: ColorsCode.grayColor100,
                         ),
                       ),
@@ -276,16 +285,18 @@ class _ProfileState extends State<Profile> {
                               height: 89,
                               decoration: BoxDecoration(
                                 color: ColorsCode.whiteColor,
-                                borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(4)),
                               ),
                               child: _image == null
                                   ? Center(
-                                child:  SvgPicture.asset('assets/images/upload_img.svg'),
-                              )
+                                      child: SvgPicture.asset(
+                                          'assets/images/upload_img.svg'),
+                                    )
                                   : Image.file(
-                                _image!,
-                                fit: BoxFit.cover,
-                              ),
+                                      _image!,
+                                      fit: BoxFit.cover,
+                                    ),
                             ),
                           ),
                           const SizedBox(
@@ -313,7 +324,9 @@ class _ProfileState extends State<Profile> {
                       child: SizedBox(
                         height: 56,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showBottomSheetDialog(context);
+                          },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.black,
                             elevation: 0,
@@ -359,6 +372,9 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                       ),
+                    ),
+                    const SizedBox(
+                      height: 46,
                     ),
                   ],
                 ),

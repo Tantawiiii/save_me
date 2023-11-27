@@ -20,8 +20,8 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   int currentStep = 0;
-  bool isCompleted = false; //check completeness of inputs
-
+  //check completeness of inputs
+  bool isCompleted = false;
   List<Step> _getSteps() => [
         Step(
           title: const Text(Strings.txtRegisterNow),
@@ -70,7 +70,10 @@ class _RegisterFormState extends State<RegisterForm> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Container(
+              // this is the visible a skip text in second Step
+              //if (currentStep >= 1)
+              currentStep >= 1
+              ?Container(
                 margin: const EdgeInsets.only(right: 24),
                 child: InkWell(
                   onTap: () {
@@ -89,7 +92,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                   ),
                 ),
-              ),
+              ):
               const SizedBox(height: 24,),
               Expanded(
                 child: Stepper(
@@ -132,32 +135,6 @@ class _RegisterFormState extends State<RegisterForm> {
                                     ),
                                   ),
                                 ),
-                                // const SizedBox(width: 4),
-                                // if (currentStep != 0)
-                                //   Expanded(
-                                //     child: SizedBox(
-                                //       height: 56,
-                                //       child: ElevatedButton(
-                                //         onPressed: details.onStepCancel,
-                                //         style: ElevatedButton.styleFrom(
-                                //           primary: Colors.grey,
-                                //           elevation: 0,
-                                //           shape: RoundedRectangleBorder(
-                                //             borderRadius: BorderRadius.circular(4),
-                                //           ),
-                                //         ),
-                                //         child: Text(
-                                //           'Skip',
-                                //           style: TextStyle(
-                                //             fontSize: 16,
-                                //             fontFamily:
-                                //                 Fonts.getFontFamilyTitillSemiBold(),
-                                //             color: Colors.black,
-                                //           ),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ),
                               ],
                             ),
                             const SizedBox(

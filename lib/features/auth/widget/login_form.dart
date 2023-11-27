@@ -1,9 +1,16 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
+
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
+import 'package:save_me/features/internet/connectivity_check.dart';
+import 'package:save_me/features/internet/no_internet.dart';
 
 import '../../../../constants/Strings.dart';
 import '../../home/home_screen.dart';
@@ -28,12 +35,17 @@ class LoginFormState extends State<LoginForm> {
   final ApiClient _apiClient = ApiClient();
 
   bool passwordVisible = true;
-  FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+
+
+
   @override
   void initState() {
     super.initState();
     passwordVisible = true;
+
   }
+
 
 
   @override
@@ -85,15 +97,6 @@ class LoginFormState extends State<LoginForm> {
         //margin: const EdgeInsets.all(15.0),
         decoration: const BoxDecoration(
           color: Colors.white,
-          // borderRadius: BorderRadius.circular(5), // Add rounded corners
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.grey.withOpacity(0.2),
-          //     spreadRadius: 3,
-          //     blurRadius: 3,
-          //     offset: const Offset(0, 3),
-          //   ),
-          // ],
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -124,8 +127,8 @@ class LoginFormState extends State<LoginForm> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                   Text(
-                       Strings.txtEmail,
+                    Text(
+                      Strings.txtEmail,
                       style: TextStyle(
                           fontSize: 14,
                           fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -143,9 +146,8 @@ class LoginFormState extends State<LoginForm> {
                           filled: true,
                           fillColor: ColorsCode.whiteColor100,
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4),
-                              borderSide: BorderSide.none,
-                            
+                            borderRadius: BorderRadius.circular(4),
+                            borderSide: BorderSide.none,
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -203,13 +205,14 @@ class LoginFormState extends State<LoginForm> {
                             color: Colors.purple.shade100,
                           )),
                           suffixIcon: IconButton(
-                            icon: Icon(passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                            icon: Icon(
+                              passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: Colors.grey,
                             ),
 
-                           // color: Colors.purple.shade100,
+                            // color: Colors.purple.shade100,
                             onPressed: () {
                               setState(
                                 () {
@@ -306,6 +309,7 @@ class LoginFormState extends State<LoginForm> {
           ),
         ),
       ),
+
     );
   }
 }

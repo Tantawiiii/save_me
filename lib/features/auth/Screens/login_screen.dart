@@ -1,11 +1,43 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../constants/colors_code.dart';
+import '../../internet/connectivity_check.dart';
+import '../../internet/no_internet.dart';
 import '../widget/login_form.dart';
 
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  // internet Connection
+  bool isOnline = true;
+  @override
+  void initState() {
+    super.initState();
+    // Listen to internet status changes
+    internetStatusController.stream.listen((bool online) {
+      setState(() {
+        isOnline = online;
+      });
+    });
+
+    // Initialize the UI with the current internet status
+    checkInternetStatus();
+  }
+  void _onStatusChange(bool online) {
+    setState(() {
+      isOnline = online;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
@@ -44,8 +76,18 @@ class LoginScreen extends StatelessWidget {
           backgroundColor: ColorsCode.whiteColor,
 
         ),
-        body: const Center(
-            child: LoginForm(),
+        body: Center(
+          child: StreamBuilder<bool>(
+            stream: internetStatusController.stream,
+            initialData: true,
+            builder: (context,snapshot){
+              if (snapshot.data == true) {
+                return const LoginForm();
+              }  else {
+                return NoInternet(onRefresh: () { refreshInternetStatus();},);
+              }
+            },
+          ),
         ),
       ),
     );

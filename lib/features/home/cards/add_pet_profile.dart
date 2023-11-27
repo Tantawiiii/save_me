@@ -11,14 +11,14 @@ import 'package:save_me/features/home/cards/craeted_done.dart';
 
 import '../../auth/utils/validation.dart';
 
-class AddProfile extends StatefulWidget {
-  const AddProfile({super.key});
+class AddPetProfile extends StatefulWidget {
+  const AddPetProfile({super.key});
 
   @override
-  State<AddProfile> createState() => _AddProfileState();
+  State<AddPetProfile> createState() => _AddPetProfileState();
 }
 
-class _AddProfileState extends State<AddProfile> {
+class _AddPetProfileState extends State<AddPetProfile> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
@@ -74,7 +74,7 @@ class _AddProfileState extends State<AddProfile> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      Strings.txtKidCard,
+                      Strings.txtPetCard,
                       style: TextStyle(
                         fontSize: 24,
                         fontFamily: Fonts.getFontFamilyTitillBold(),
@@ -85,7 +85,7 @@ class _AddProfileState extends State<AddProfile> {
                       height: 8.0,
                     ),
                     Text(
-                      Strings.txtKidCardHint,
+                      Strings.txtPetCardHint,
                       style: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -180,7 +180,7 @@ class _AddProfileState extends State<AddProfile> {
         Step(
           state: _currentStep > 0 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 0,
-          title: const Text(Strings.txtKidBasicInfo),
+          title: const Text(Strings.txtPetBasicInfo),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,7 +209,7 @@ class _AddProfileState extends State<AddProfile> {
                   ),
                   child: _image == null
                       ? Center(
-                          child: SvgPicture.asset('assets/images/plus.svg'),
+                          child: SvgPicture.asset('assets/images/plus_gray.svg'),
                         )
                       : Image.file(
                           _image!,
@@ -247,7 +247,7 @@ class _AddProfileState extends State<AddProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHintUserName,
+                    hintText: Strings.txtHintUserPet,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -306,6 +306,22 @@ class _AddProfileState extends State<AddProfile> {
                     initialDate: DateTime.now(),
                     firstDate: DateTime(1950),
                     lastDate: DateTime(2100),
+                      builder: (context,child){
+                        return Theme(
+                          data: Theme.of(context).copyWith(
+                            colorScheme: const ColorScheme.light(
+                              primary: Colors.black12,
+                              onPrimary: Colors.white,
+                              onSurface: Colors.black,
+                            ),
+                            textButtonTheme:TextButtonThemeData(
+                              style: TextButton.styleFrom(
+                                primary: Colors.black, // button text color
+                              ),
+                            ),
+                          ), child:child!,
+                        );
+                      }
                   );
 
                   if (pickedDate != null) {
@@ -352,7 +368,7 @@ class _AddProfileState extends State<AddProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtAgeHint,
+                    hintText: Strings.txtPetAgeHint,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -372,7 +388,7 @@ class _AddProfileState extends State<AddProfile> {
           // Body info Ui Design and Implementation
           state: _currentStep > 1 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 1,
-          title: const Text(Strings.txtBodyInfo),
+          title: const Text(Strings.txtPetBodyInfo),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -489,7 +505,7 @@ class _AddProfileState extends State<AddProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHintCharacteristics,
+                    hintText: Strings.txtPetHintCharacteristics,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -532,7 +548,7 @@ class _AddProfileState extends State<AddProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHintBehavior,
+                    hintText: Strings.txtPetHintBehavior,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -575,7 +591,7 @@ class _AddProfileState extends State<AddProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHintSpecialChar,
+                    hintText: Strings.txtPetHintSpecialChar,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -594,7 +610,7 @@ class _AddProfileState extends State<AddProfile> {
         Step(
           state: _currentStep > 2 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 2,
-          title: const Text(Strings.txtHealthInfo),
+          title: const Text(Strings.txtPetHealthInfo),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -625,7 +641,7 @@ class _AddProfileState extends State<AddProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHintMedicines,
+                    hintText: Strings.txtPetHintMedicines,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -668,7 +684,7 @@ class _AddProfileState extends State<AddProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHintAllergies,
+                    hintText: Strings.txtPetHintAllergies,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -711,7 +727,7 @@ class _AddProfileState extends State<AddProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHintDiet,
+                    hintText: Strings.txtPetHintDiet,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -754,7 +770,7 @@ class _AddProfileState extends State<AddProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHitDiseases,
+                    hintText: Strings.txtPetHitDiseases,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -797,7 +813,7 @@ class _AddProfileState extends State<AddProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHintAdditionInfo,
+                    hintText: Strings.txtPetHintAdditionInfo,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),

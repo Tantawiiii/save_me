@@ -20,7 +20,9 @@ class Strings{
   static const String patternPassword = r'^.{6,}$';
   static const String txtPasswordMatch = "Password must be at least 6 characters.";
   static const String txtChangePassword = "Change Password";
-  static const String txtNewPassword = "Create a new password";
+  static const String txtHintNewPassword = "Create a new password";
+  static const String txtHintOldPassword = "Enter the old password";
+  static const String txtHintConfirmNewPassword = "Confirm a new password";
 
 
   static const String txtButtonLogin = "Login";
@@ -64,18 +66,18 @@ class Strings{
   static const String txtKidBasicInfo = "Kid Basic Details";
   static const String txtBasicInfoHint = "Here We Write Basic Information First";
 
-  static const String txtDatePattern = "yyyy-mm-dd";
+  static const String txtDatePattern = "yyyy-MM-dd";
   static const String txtBirthday = "Birthday";
   static const String txtHintBirthday = "DD/MM/YYYY";
   static const String txtAge = "Age";
-  static const String txtAgeHint = "Enter your kid age";
+  static const String txtKidAgeHint = "Enter your kid age";
   static const String txtSize = "Size";
   static const String txtWeight = "Weight";
   static const String txtKg = "Kg";
   static const String txtHeight = "Height";
   static const String txtCm = "Cm";
 
-  static const String txtBodyInfo = "Kid Body Shape Information";
+  static const String txtKidBodyInfo = "Kid Body Shape Information";
   static const String txtBodyInfoHint = "Here We Write Body Information First";
 
   static const String txtCharacteristics = "Characteristics";
@@ -113,7 +115,7 @@ class Strings{
   static const String txtKidCardHint = "Please add your Kid information";
   static const String txtCancel = "Cancel";
   static const String txtPhoto = "Photo";
-  static const String txtCreatedDone = "You have just created a profile for this profile";
+  static const String txtCreatedDone = "You have just created a Successful profile.";
   static const String txtCreatedNewBtn = "Create New Profile";
   static const String txtBackToHomeBtn = "Back To Home";
   static const String txtRegisterNow = "Register Now";
@@ -121,7 +123,93 @@ class Strings{
   static const String txtSkip = "Skip";
   static const String txtRestCancel = "Reset and Cancel";
   static const String txtUpdate = "Update";
+  static const String txtHintReturnLocation = "Holzmarktstraße 51, 10243 Berlin";
+  static const String txtReturnLocation = "Choose Return Location";
+  static const String txtDragLocation = "Or drag and select your location manually";
+  static const String txtBottomDialog = "Profile has been updated";
+  static const String txtBtnRef = "Refresh";
+  static const String txtPleaseCheck = "Please check your connection. When you’re back online refresh the page or hit the button below.";
+  static const String txtOffline = "You’re Currently Offline";
+
+  /// Senior information Strings
+  static const String txtSeniorCard = "Senior Profile";
+  static const String txtSeniorCardHint = "Please add senior’s information ";
+  static const String txtSeniorBasicInfo = "Senior Basic Details";
+  static const String txtHintUserSenior = "Enter your username senior";
+  static const String txtSeniorAgeHint = "Enter your senior age";
+
+  static const String txtSeniorBodyInfo = "Senior Body Shape Information";
+
+  static const String txtSeniorHintCharacteristics = "Enter Your Senior’s Characteristics";
+  static const String txtSeniorHintSpecialChar = "Enter Your Senior’s Special Characteristics";
+  static const String txtSeniorHintBehavior = "Enter Senior’s Behaviour";
+
+  static const String txtSeniorHealthInfo = "Senior Medical Profile";
+
+  static const String txtSeniorHintDiet = "Enter your Senior’s diet";
+  static const String txtSeniorHintAllergies = "Enter your Senior’s allergies";
+  static const String txtSeniorHitDiseases = "Enter your Senior’s diseases";
+  static const String txtSeniorHintMedicines = "Enter your Senior’s medication";
+  static const String txtSeniorHintAdditionInfo = "Enter your Senior’s addition information";
+  static const String txtSeniorHome = "Senior’s Home";
+  static const String txtSeniorHomeInfo = "If senior lives in a special institute, Please enter the following data: ";
+  static const String txtSeniorAddLocation = "Add institute location";
+  static const String txtSeniorInstitute = "Institute Name";
+  static const String txtSeniorInstituteHint = "Enter institute name";
+  static const String txtSeniorCareAide = "Care Aide’s Name";
+  static const String txtSeniorCareAideHint = "Enter care aide name";
 
 
+  /// Pet information Strings
+  static const String txtPetCard = "Pet Profile";
+  static const String txtPetCardHint = "Please add Pet information ";
+  static const String txtPetBasicInfo = "Pet Basic Details";
+  static const String txtHintUserPet = "Enter your username Pet";
+  static const String txtPetAgeHint = "Enter your Pet age";
+
+  static const String txtPetBodyInfo = "Pet Body Shape Information";
+
+  static const String txtPetHintCharacteristics = "Enter Your Pet Characteristics";
+  static const String txtPetHintSpecialChar = "Enter Your Pet Special Characteristics";
+  static const String txtPetHintBehavior = "Enter Your Pet Behaviour";
+
+  static const String txtPetHealthInfo = "Pet Medical Profile";
+
+  static const String txtPetHintDiet = "Enter your Pet diet";
+  static const String txtPetHintAllergies = "Enter your Pet allergies";
+  static const String txtPetHitDiseases = "Enter your Pet diseases";
+  static const String txtPetHintMedicines = "Enter your Pet medication";
+  static const String txtPetHintAdditionInfo = "Enter your Pet addition information";
+
+
+  /// Disabled information Strings
+  static const String txtDisabledCard = "Disabled Person Profile";
+  static const String txtDisabledCardHint = "Please add disabled person’s information.";
+  static const String txtDisabledBasicInfo = "Disabled person basic details:";
+  static const String txtHintUserDisabled = "Enter your Disabled person name";
+  static const String txtDisabledAgeHint = "Enter your Disabled person age";
+
+  static const String txtDisabledBodyInfo = "Disable d Person Body Shape Information:";
+
+  static const String txtDisabledHintCharacteristics = "Enter Disabled person’s Characteristics";
+  static const String txtDisabledHintSpecialChar = "Enter Disabled person’s Special Characteristics";
+  static const String txtDisabledHintBehavior = "Enter Disabled person’s Behaviour";
+
+  static const String txtDisabledHealthInfo = "Disabled Person Medical Profile:";
+
+  static const String txtDisabledHintDiet = "Enter Disabled person’s diet";
+  static const String txtDisabledHintAllergies = "Enter Disabled person’s allergies";
+  static const String txtDisabledHitDiseases = "Enter Disabled person’s diseases";
+  static const String txtDisabledHintMedicines = "Enter Disabled person’s medication";
+  static const String txtDisabledHintAdditionInfo = "Enter Disabled person’s addition information";
+  static const String txtDisabledHome = "Disabled Person’s Home";
+  static const String txtDisabledHomeInfo = "If Disabled Person’s lives in a special institute, Please enter the following data:";
+
+  /// Item information Strings
+  static const String txtItemCard = "Item Profile";
+  static const String txtItemCardHint = "Please add your item information";
+  static const String txtItemBasicInfo = "Item Basic Details";
+  static const String txtHintUserItem = "Enter your name Item";
+  static const String txtItemHintAdditionInfo = "Enter Item addition information";
 
 }

@@ -34,9 +34,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 16,
-        ),
         Text(
           Strings.txtWelcomeRegister,
           style: TextStyle(
@@ -48,7 +45,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         Text(
           Strings.txtWelcomeRegister2,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 14,
             fontFamily: Fonts.getFontFamilyTitillRegular(),
           ),
         ),
@@ -175,8 +172,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
               print(value);
             },
             selectorConfig: const SelectorConfig(
-              selectorType: PhoneInputSelectorType.DROPDOWN,
+              selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
             ),
+            initialValue: number,
             ignoreBlank: false,
             autoValidateMode: AutovalidateMode.disabled,
             selectorTextStyle: const TextStyle(color: Colors.black),
