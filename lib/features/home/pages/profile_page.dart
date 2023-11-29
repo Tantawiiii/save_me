@@ -27,16 +27,16 @@ class _ProfileState extends State<Profile> {
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
 
   // Default selected image path
-  String?  _selectedImage;
-  List<Map<String,dynamic>> mySvgPaths = [
-    {"id": '1',"image":'assets/images/young_man_white.svg'},
-    {"id": '2',"image":'assets/images/young_man_white.svg'},
-    {"id": '3',"image":'assets/images/young_man_white.svg'},
-    {"id": '4',"image":'assets/images/young_man_white.svg'},
-    {"id": '5',"image":'assets/images/young_man_white.svg'},
-    {"id": '6',"image":'assets/images/young_man_white.svg'},
-    {"id": '7',"image":'assets/images/young_man_white.svg'},
-    {"id": '8',"image":'assets/images/young_man_white.svg'},
+  String? _selectedImage;
+  List<Map<String, dynamic>> mySvgPaths = [
+    {"id": '1', "image": 'assets/images/young_man_white.svg'},
+    {"id": '2', "image": 'assets/images/young_man_white.svg'},
+    {"id": '3', "image": 'assets/images/young_man_white.svg'},
+    {"id": '4', "image": 'assets/images/young_man_white.svg'},
+    {"id": '5', "image": 'assets/images/young_man_white.svg'},
+    {"id": '6', "image": 'assets/images/young_man_white.svg'},
+    {"id": '7', "image": 'assets/images/young_man_white.svg'},
+    {"id": '8', "image": 'assets/images/young_man_white.svg'},
   ];
 
   // Image Picker for the new photo profile image
@@ -56,16 +56,20 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          margin: const EdgeInsets.only(top: 40, right: 24, left: 24),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
-          child: SingleChildScrollView(
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Center(
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            margin: const EdgeInsets.only(top: 40, right: 24, left: 24),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +134,8 @@ class _ProfileState extends State<Profile> {
                     color: ColorsCode.whiteColor100,
                     //llColor: ColorsCode.whiteColor100,
                     borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Colors.black.withOpacity(0.13)),
+                    border:
+                        Border.all(color: Colors.black.withOpacity(0.13)),
                   ),
                   child: InternationalPhoneNumberInput(
                     onInputChanged: (PhoneNumber number) {
@@ -227,11 +232,11 @@ class _ProfileState extends State<Profile> {
                   height: 24,
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 24, right: 24, top: 10),
+                  margin:
+                      const EdgeInsets.only(left: 24, right: 24, top: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
                       // Expanded(
                       //   child: DropdownButtonHideUnderline(
                       //     child: ButtonTheme(
@@ -283,8 +288,8 @@ class _ProfileState extends State<Profile> {
                               height: 89,
                               decoration: BoxDecoration(
                                 color: ColorsCode.whiteColor,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(4)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(4)),
                               ),
                               child: _image == null
                                   ? Center(
@@ -304,7 +309,8 @@ class _ProfileState extends State<Profile> {
                             'Upload a photo',
                             style: TextStyle(
                                 fontSize: 16,
-                                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                                fontFamily:
+                                    Fonts.getFontFamilyTitillRegular(),
                                 color: ColorsCode.purpleColor),
                           ),
                         ],
@@ -337,7 +343,8 @@ class _ProfileState extends State<Profile> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
-                              fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                              fontFamily:
+                                  Fonts.getFontFamilyTitillSemiBold(),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -364,7 +371,8 @@ class _ProfileState extends State<Profile> {
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
-                              fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                              fontFamily:
+                                  Fonts.getFontFamilyTitillSemiBold(),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
