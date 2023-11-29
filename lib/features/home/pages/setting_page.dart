@@ -8,7 +8,7 @@ import '../../../constants/fonts.dart';
 import '../../auth/utils/validation.dart';
 
 class Setting extends StatefulWidget {
-  const Setting({super.key});
+  const Setting( {super.key});
 
   @override
   State<Setting> createState() => _SettingState();

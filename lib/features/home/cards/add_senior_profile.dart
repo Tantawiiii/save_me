@@ -113,7 +113,6 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                               _currentStep == getSteps().length - 1;
                           if (isLastStep) {
                             setState(() => isCompleted = true);
-                            print('Completed');
                           } else {
                             setState(() => _currentStep += 1);
                           }
@@ -309,11 +308,11 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 readOnly: true,
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1950),
-                    lastDate: DateTime(2100),
-                      builder: (context,child){
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1950),
+                      lastDate: DateTime(2100),
+                      builder: (context, child) {
                         return Theme(
                           data: Theme.of(context).copyWith(
                             colorScheme: const ColorScheme.light(
@@ -321,28 +320,23 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                               onPrimary: Colors.white,
                               onSurface: Colors.black,
                             ),
-                            textButtonTheme:TextButtonThemeData(
+                            textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
                                 primary: Colors.black, // button text color
                               ),
                             ),
-                          ), child:child!,
+                          ),
+                          child: child!,
                         );
-                      }
-                  );
+                      });
 
                   if (pickedDate != null) {
-                    print(pickedDate);
                     String formattedDate =
                         DateFormat(Strings.txtDatePattern).format(pickedDate);
-                    print(pickedDate);
-
                     setState(() {
                       _dateController.text = formattedDate;
                     });
-                  } else {
-                    print('Bug Formatted');
-                  }
+                  } else {}
                 },
               ),
               const SizedBox(
@@ -851,7 +845,6 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                     fontWeight: FontWeight.normal,
                     color: ColorsCode.blackColor100),
               ),
-
               const SizedBox(
                 height: 24,
               ),
@@ -873,7 +866,8 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
                     prefixIcon: Padding(
-                      padding: const EdgeInsets.only(left: 15.5,top: 3, bottom: 3,right:8),
+                      padding: const EdgeInsets.only(
+                          left: 15.5, top: 3, bottom: 3, right: 8),
                       child: SvgPicture.asset(
                         'assets/images/search.svg',
                         width: 18,
@@ -888,8 +882,8 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                     ),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.purple.shade100,
-                        )),
+                      color: Colors.purple.shade100,
+                    )),
                     hintText: Strings.txtSeniorAddLocation,
                     hintStyle: TextStyle(
                       fontSize: 14,
@@ -931,8 +925,8 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                     ),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.purple.shade100,
-                        )),
+                      color: Colors.purple.shade100,
+                    )),
                     hintText: Strings.txtSeniorInstituteHint,
                     hintStyle: TextStyle(
                       fontSize: 14,
@@ -946,7 +940,6 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                   },
                 ),
               ),
-
               const SizedBox(
                 height: 16,
               ),
@@ -975,8 +968,8 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                     ),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.purple.shade100,
-                        )),
+                      color: Colors.purple.shade100,
+                    )),
                     hintText: Strings.txtSeniorCareAideHint,
                     hintStyle: TextStyle(
                       fontSize: 14,
@@ -990,7 +983,6 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                   },
                 ),
               ),
-
               const SizedBox(
                 height: 24,
               ),
@@ -1015,12 +1007,8 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                   border: Border.all(color: Colors.black.withOpacity(0.13)),
                 ),
                 child: InternationalPhoneNumberInput(
-                  onInputChanged: (PhoneNumber number) {
-                    print(number.phoneNumber);
-                  },
-                  onInputValidated: (bool value) {
-                    print(value);
-                  },
+                  onInputChanged: (PhoneNumber number) {},
+                  onInputValidated: (bool value) {},
                   selectorConfig: const SelectorConfig(
                     selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                   ),
@@ -1038,8 +1026,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                   initialValue: number,
                   cursorColor: Colors.black,
                   inputDecoration: InputDecoration(
-                    contentPadding:
-                    const EdgeInsets.only(bottom: 15, left: 8),
+                    contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
                     border: InputBorder.none,
                     hintText: Strings.txtHintPhoneNumber,
                     hintStyle: TextStyle(
@@ -1048,12 +1035,9 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                       color: ColorsCode.grayColor,
                     ),
                   ),
-                  onSaved: (PhoneNumber number) {
-                    print('On Saved: $number');
-                  },
+                  onSaved: (PhoneNumber number) {},
                 ),
               ),
-
             ],
           ),
         ),

@@ -11,8 +11,6 @@ import '../../../constants/Strings.dart';
 import '../../../constants/fonts.dart';
 import '../../auth/utils/validation.dart';
 
-
-
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -30,7 +28,7 @@ class _ProfileState extends State<Profile> {
 
   // Default selected image path
   String?  _selectedImage;
-  List<Map> mySvgPaths = [
+  List<Map<String,dynamic>> mySvgPaths = [
     {"id": '1',"image":'assets/images/young_man_white.svg'},
     {"id": '2',"image":'assets/images/young_man_white.svg'},
     {"id": '3',"image":'assets/images/young_man_white.svg'},

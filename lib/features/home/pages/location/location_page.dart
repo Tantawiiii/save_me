@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:save_me/features/home/pages/location/web_services/network_utils.dart';
 
 import '../../../../constants/Strings.dart';
 import '../../../../constants/colors_code.dart';
@@ -14,6 +15,27 @@ class Location extends StatefulWidget {
 }
 
 class _LocationState extends State<Location> {
+
+  // function to autoComplete the location
+  void placeAutoComplete(String query) async {
+    Uri uri = Uri.http(
+      "maps.googleapis.com",
+      'maps/api/place/autocomplete/json',
+      {
+        "input" : query,
+        "key" : Strings.API_KEY,
+      }
+    );
+    // get request
+    String? response = await NetworkUtils.fetchUrl(uri);
+
+    if (response != null) {
+      print(response);
+
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +60,8 @@ class _LocationState extends State<Location> {
               SizedBox(
                 height: 56,
                 child: TextFormField(
-                  //controller: _nameController,
-                  keyboardType: TextInputType.name,
+                  textInputAction: TextInputAction.search,
+                  onChanged: (value){},
                   decoration: InputDecoration(
                     prefixIcon: Padding(
                       padding: const EdgeInsets.only(left: 15.5,top: 3, bottom: 3,right:8),
@@ -85,6 +107,14 @@ class _LocationState extends State<Location> {
               ),
 
               const SizedBox(
+                height: 16,
+              ),
+
+
+              ////////////////////////////Google Map Location  //////////////////////////
+
+
+              const SizedBox(
                 height: 48,
               ),
               Row(
@@ -98,7 +128,7 @@ class _LocationState extends State<Location> {
                           showBottomSheetDialog(context);
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
+                          backgroundColor: Colors.black,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
@@ -125,7 +155,7 @@ class _LocationState extends State<Location> {
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
+                          backgroundColor: Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),

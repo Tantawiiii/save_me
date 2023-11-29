@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -272,8 +273,8 @@ class _HomePageState extends State<HomePage> {
             ),
             child: SvgPicture.asset(
               mainIconPath,
-              width: 20,
-              height: 20,
+              width: 18,
+              height: 18,
               //color: Colors.white,
             ),
           ),
@@ -323,7 +324,8 @@ class _HomePageState extends State<HomePage> {
                   Column(
                     children: [
                       IconButton(
-                        icon: SvgPicture.asset("assets/images/user_fill.svg",
+                        icon: SvgPicture.asset(
+                            "assets/images/user_fill.svg",
                             color: currentTab == 1
                                 ? isActiveIconColor
                                 : ColorsCode.grayColor300,
@@ -427,6 +429,8 @@ class _HomePageState extends State<HomePage> {
       mainIconPath = newIconPath;
       mainBackColor = newBackColor;
     });
-    print('Child tapped. New main icon path: $newIconPath');
+    if (kDebugMode) {
+      print('Child tapped. New main icon path: $newIconPath');
+    }
   }
 }

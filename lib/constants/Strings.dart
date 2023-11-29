@@ -1,7 +1,9 @@
 //Login Screens Texts
+// ignore_for_file: constant_identifier_names
+
 class Strings{
 
-  static const String API_KEY = "AIzaSyA_jeHQ08KhBFEG2tZk3sr0JYbLdpWpWFw";
+  static const String API_KEY = "AIzaSyB_wFmdtRx-M0XdqAEpHF2vCfV2oWT9VC8";
   static const String txtWelcomeLogin = "Welcome Back!";
   static const String txtWelcomeLogin2= "Login to SaveMe to connect to your network!";
 

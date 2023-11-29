@@ -9,7 +9,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:http/http.dart' as http;
 
-import '../web_services/location_service.dart';
+import '../web_services/network_utils.dart';
 
 class LocationController extends GetxController{
 
@@ -34,6 +34,8 @@ class LocationController extends GetxController{
     }
     return _predictionList;
   }
+
+  getLocationData(String text) {}
 
 
 }
