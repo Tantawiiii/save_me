@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, library_private_types_in_public_api
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,29 +8,32 @@ import 'package:flutter_svg/svg.dart';
 import 'package:save_me/constants/Strings.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
-import 'package:save_me/features/home/cards/add_senior_profile.dart';
-import 'package:save_me/features/home/pages/home_page.dart';
-import 'package:save_me/features/home/pages/location/location_page.dart';
-import 'package:save_me/features/home/pages/profile_page.dart';
-import 'package:save_me/features/home/pages/setting_page.dart';
 
-import 'cards/add_disabled_profile.dart';
-import 'cards/add_item_profile.dart';
-import 'cards/add_kid_profile.dart';
-import 'cards/add_pet_profile.dart';
+import 'package:save_me/features/home/view/cards/add_disabled_profile.dart';
+import 'package:save_me/features/home/view/cards/add_item_profile.dart';
+import 'package:save_me/features/home/view/cards/add_kid_profile.dart';
+import 'package:save_me/features/home/view/cards/add_pet_profile.dart';
+import 'package:save_me/features/home/view/cards/add_senior_profile.dart';
+import 'package:save_me/features/home/view/pages/home_page.dart';
+import 'package:save_me/features/home/view/pages/location/location_page.dart';
+import 'package:save_me/features/home/view/pages/profile_page.dart';
+import 'package:save_me/features/home/view/pages/setting_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+import 'package:auto_route/auto_route.dart';
+
+
+@RoutePage()
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   static String id = 'HomeScreen';
-  static final GlobalKey<_HomePageState> homePageKey = GlobalKey<_HomePageState>();
+  static final GlobalKey<_HomeScreenState> homePageKey = GlobalKey<_HomeScreenState>();
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
-
+class _HomeScreenState extends State<HomeScreen> {
   // GlobalKey for accessing the SpeedDial widget
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   // Method to open the SpeedDial
@@ -38,17 +43,15 @@ class _HomePageState extends State<HomePage> {
 
   int currentTab = 0;
   final List<Widget> screens = [
-    const HomeScreen(),
+    const Home(),
     const Profile(),
     const Location(),
     const Setting(),
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
-
-
   // current tab in Bottom Navigation
-  Widget currentScreen = const HomeScreen();
+  Widget currentScreen = const Home();
   bool isCircularMenuOpen = false;
 
 // Default SVG icon path
@@ -136,7 +139,7 @@ class _HomePageState extends State<HomePage> {
             activeBackgroundColor: Colors.black,
             activeForegroundColor: Colors.white,
             direction: SpeedDialDirection.up,
-            visible: true,
+            visible:true,
             closeManually: false,
             curve: Curves.bounceOut,
             overlayColor: Colors.black,
@@ -160,18 +163,17 @@ class _HomePageState extends State<HomePage> {
                   //color: Colors.black,
                 ),
                 // backgroundColor: Colors.white,
-                onTap: () => {
+                onTap: ()  {
                   onChildTapped(
                     "assets/images/kids.svg",
                     Colors.white,
-                  ),
+                  );
                   setState(() {
                     currentScreen = const AddKidProfile();
                     isActiveIconColor = ColorsCode.grayColor300;
-                  }),
-
+                  });
                 // Close the SpeedDial after the button is pressed
-                _scaffoldKey.currentState!.openDrawer(),
+               // Provider.of<SpeedDialProvider>(context, listen: false).toggleDial();
                 },
                 shape: const CircleBorder(),
 

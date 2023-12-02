@@ -47,6 +47,9 @@ dependencies:
   google_maps_place_picker: ^2.0.0
   geolocator: ^7.0.1
 
+  flutter_screenutil: ^5.9.0
+  provider: ^5.0.0
+  auto_route: ^7.8.4
 
 dev_dependencies:
   flutter_test:
@@ -54,7 +57,7 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
 
-
+  auto_route_generator: ^7.3.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

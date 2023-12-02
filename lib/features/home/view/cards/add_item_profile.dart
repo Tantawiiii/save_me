@@ -1,11 +1,15 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:save_me/constants/Strings.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
-import 'package:save_me/features/home/cards/craeted_done.dart';
+import 'package:save_me/features/home/view/cards/created_done.dart';
 
-import '../../auth/utils/validation.dart';
+import '../../../auth/utils/validation.dart';
 
+
+@RoutePage()
 class AddItemProfile extends StatefulWidget {
   const AddItemProfile({super.key});
 
@@ -83,7 +87,9 @@ class _AddItemProfileState extends State<AddItemProfile> {
                           final isLastStep = _currentStep == 0;
                           if (isLastStep) {
                             setState(() => isCompleted = true);
-                            print('Completed');
+                            if (kDebugMode) {
+                              print('Completed');
+                            }
                           } else {
                             setState(() => _currentStep += 1);
                           }
@@ -102,7 +108,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                                   child: ElevatedButton(
                                     onPressed: details.onStepContinue,
                                     style: ElevatedButton.styleFrom(
-                                      primary: Colors.black,
+                                      backgroundColor: Colors.black,
                                       elevation: 2,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(4),

@@ -1,13 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:save_me/features/home/pages/location/web_services/network_utils.dart';
+import 'package:save_me/features/home/view/pages/location/web_services/network_utils.dart';
 
-import '../../../../constants/Strings.dart';
-import '../../../../constants/colors_code.dart';
-import '../../../../constants/fonts.dart';
+import '../../../../../constants/Strings.dart';
+import '../../../../../constants/colors_code.dart';
+import '../../../../../constants/fonts.dart';
 import '../../widgets/upload_bottom_sheet.dart';
 
+import 'package:auto_route/auto_route.dart';
+
+
+@RoutePage()
 class Location extends StatefulWidget {
   const Location({super.key});
 
@@ -31,17 +36,30 @@ class _LocationState extends State<Location> {
     String? response = await NetworkUtils.fetchUrl(uri);
 
     if (response != null) {
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
 
     }
+  }
 
+  Set<Marker> _createMarker() {
+    return {
+      const Marker(
+        markerId: MarkerId("mark1"),
+        position: _kMapCenter,
+        infoWindow: InfoWindow(title: "Marker 1"),
+        rotation: 0,
+      )
+    };
   }
 
 
   static const LatLng _kMapCenter = LatLng(30.648090,31.133470);
+  CameraPosition? cameraPosition;
 
   static const CameraPosition _kInitialPosition =
-  CameraPosition(target: _kMapCenter, zoom: 11.0, tilt: 0, bearing: 0);
+  CameraPosition(target: _kMapCenter, zoom: 12.0, tilt: 0, bearing: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -125,16 +143,24 @@ class _LocationState extends State<Location> {
                   const SizedBox(
                     height: 24,
                   ),
-                  ////////////////////////////Google Map Location  //////////////////////////
-                  Container(
-                    height: 350,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: const SizedBox(
-                      child: GoogleMap(
-                        initialCameraPosition: _kInitialPosition ,
+
+                  Flexible(
+                    child: Container(
+                      height: 350,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child:  SizedBox(
+                        child: GoogleMap(
+                          initialCameraPosition: _kInitialPosition ,
+                          mapType: MapType.hybrid,
+                          zoomControlsEnabled: true,
+                          zoomGesturesEnabled: true,
+                          trafficEnabled: true,
+                          markers: _createMarker(),
+                          liteModeEnabled: true,
+                        ),
                       ),
                     ),
                   ),

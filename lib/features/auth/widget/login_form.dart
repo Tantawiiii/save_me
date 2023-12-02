@@ -2,15 +2,10 @@
 
 import 'dart:async';
 
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:provider/provider.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
-import 'package:save_me/features/internet/connectivity_check.dart';
-import 'package:save_me/features/internet/no_internet.dart';
 
 import '../../../../constants/Strings.dart';
 import '../../home/home_screen.dart';
@@ -37,16 +32,11 @@ class LoginFormState extends State<LoginForm> {
   bool passwordVisible = true;
   final FocusNode _passwordFocusNode = FocusNode();
 
-
-
   @override
   void initState() {
     super.initState();
     passwordVisible = true;
-
   }
-
-
 
   @override
   void dispose() {
@@ -78,7 +68,7 @@ class LoginFormState extends State<LoginForm> {
           }
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -248,7 +238,7 @@ class LoginFormState extends State<LoginForm> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
+                                  builder: (context) => const HomeScreen()),
                             );
                           },
                           child: Text(
@@ -309,7 +299,6 @@ class LoginFormState extends State<LoginForm> {
           ),
         ),
       ),
-
     );
   }
 }

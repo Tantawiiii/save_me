@@ -47,6 +47,6 @@ void showBottomSheetDialog(BuildContext context) {
   });
   // Close the bottom sheet automatically after 5 seconds
   Future.delayed(const Duration(milliseconds: 4000), () {
-    Navigator.pop(context); // Close the bottom sheet
+    Navigator.of(context).pop(); // Close the bottom sheet
   });
 }

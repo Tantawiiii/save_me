@@ -1,11 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:save_me/constants/Strings.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
-import 'package:save_me/features/home/cards/add_kid_profile.dart';
 import 'package:save_me/features/home/home_screen.dart';
 
+
+@RoutePage()
 class CreatedProfile extends StatelessWidget {
   const CreatedProfile({super.key});
 
@@ -44,10 +46,10 @@ class CreatedProfile extends StatelessWidget {
                     //width: 155,
                     child: ElevatedButton(
                       onPressed: () => {
-                        HomePage.homePageKey.currentState?.openSpeedDial()
+                        HomeScreen.homePageKey.currentState?.openSpeedDial()
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.black,
+                        backgroundColor: Colors.black,
                         elevation: 2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
@@ -70,7 +72,7 @@ class CreatedProfile extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const HomePage()),
+                        MaterialPageRoute(builder: (context) => const HomeScreen()),
                       );
                     },
                     child: Text(

@@ -1,12 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/features/auth/Screens/login_screen.dart';
 
-import '../../../constants/Strings.dart';
-import '../../../constants/fonts.dart';
-import '../../auth/utils/validation.dart';
+import '../../../../constants/Strings.dart';
+import '../../../../constants/fonts.dart';
+import '../../../auth/utils/validation.dart';
 
+import 'package:auto_route/auto_route.dart';
+
+
+@RoutePage()
 class Setting extends StatefulWidget {
   const Setting( {super.key});
 
@@ -66,7 +71,9 @@ class _SettingState extends State<Setting> {
                           height: double.infinity,
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              print("You pressed Icon Elevated Button");
+                              if (kDebugMode) {
+                                print("You pressed Icon Elevated Button");
+                              }
                             },
                             icon: SvgPicture.asset('assets/images/English.svg'),
                             //icon data for elevated button
@@ -80,7 +87,7 @@ class _SettingState extends State<Setting> {
                             ),
                             //label text
                             style: ElevatedButton.styleFrom(
-                              primary: ColorsCode.purpleColorLight,
+                              backgroundColor: ColorsCode.purpleColorLight,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
@@ -94,7 +101,9 @@ class _SettingState extends State<Setting> {
                           height: double.infinity,
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              print("You pressed Icon Elevated Button");
+                              if (kDebugMode) {
+                                print("You pressed Icon Elevated Button");
+                              }
                             },
                             icon: SvgPicture.asset('assets/images/Deutsch.svg'),
                             //icon data for elevated button
@@ -108,8 +117,8 @@ class _SettingState extends State<Setting> {
                             ),
                             //label text
                             style: ElevatedButton.styleFrom(
-                              primary: ColorsCode.whiteColor100,
-                              elevation: 0, //elevated btton background color
+                              backgroundColor: ColorsCode.whiteColor100,
+                              elevation: 0, //elevated button background color
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
                               ),

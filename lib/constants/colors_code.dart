@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 class ColorsCode{
+
   static Color  blackColor = hexToColor('#00000000');
   static Color  blackColor100 = hexToColor('#1E1E1E');
   static Color  blackColor700 = hexToColor('#373737');
@@ -16,8 +17,8 @@ class ColorsCode{
   static Color redColor = hexToColor('#EF0F30');
   static Color blueDarkColor = hexToColor('#170F49');
 
-}
 
+}
 Color hexToColor(String hex) {
   assert(RegExp(r'^#([0-9a-fA-F]{6})|([0-9a-fA-F]{8})$').hasMatch(hex),
   'hex color must be #rrggbb or #rrggbbaa');

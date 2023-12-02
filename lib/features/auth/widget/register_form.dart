@@ -43,7 +43,7 @@ class _RegisterFormState extends State<RegisterForm> {
     } else if (currentStep == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     }
     return false;
@@ -79,7 +79,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      MaterialPageRoute(builder: (context) => const HomeScreen()),
                     );
                   },
                   child: Text(

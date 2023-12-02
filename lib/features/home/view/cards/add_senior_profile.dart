@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,10 +9,12 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:save_me/constants/Strings.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
-import 'package:save_me/features/home/cards/craeted_done.dart';
+import 'package:save_me/features/home/view/cards/created_done.dart';
 
-import '../../auth/utils/validation.dart';
+import '../../../auth/utils/validation.dart';
 
+
+@RoutePage()
 class AddSeniorProfile extends StatefulWidget {
   const AddSeniorProfile({super.key});
 
@@ -137,7 +140,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                                   child: ElevatedButton(
                                     onPressed: details.onStepContinue,
                                     style: ElevatedButton.styleFrom(
-                                      primary: Colors.black,
+                                      backgroundColor: Colors.black,
                                       elevation: 2,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(4),
@@ -322,7 +325,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                             ),
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
-                                primary: Colors.black, // button text color
+                                foregroundColor: Colors.black, // button text color
                               ),
                             ),
                           ),

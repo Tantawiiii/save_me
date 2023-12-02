@@ -1,16 +1,21 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:save_me/constants/colors_code.dart';
-import 'package:save_me/features/home/widgets/upload_bottom_sheet.dart';
 
-import '../../../constants/Strings.dart';
-import '../../../constants/fonts.dart';
-import '../../auth/utils/validation.dart';
+import '../../../../constants/Strings.dart';
+import '../../../../constants/fonts.dart';
+import '../../../auth/utils/validation.dart';
+import '../widgets/upload_bottom_sheet.dart';
 
+import 'package:auto_route/auto_route.dart';
+
+
+@RoutePage()
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -27,7 +32,7 @@ class _ProfileState extends State<Profile> {
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
 
   // Default selected image path
-  String? _selectedImage;
+  final SvgPicture _selectedImage =SvgPicture.asset('assets/images/young_man_white.svg');
   List<Map<String, dynamic>> mySvgPaths = [
     {"id": '1', "image": 'assets/images/young_man_white.svg'},
     {"id": '2', "image": 'assets/images/young_man_white.svg'},
@@ -139,10 +144,14 @@ class _ProfileState extends State<Profile> {
                   ),
                   child: InternationalPhoneNumberInput(
                     onInputChanged: (PhoneNumber number) {
-                      print(number.phoneNumber);
+                      if (kDebugMode) {
+                        print(number.phoneNumber);
+                      }
                     },
                     onInputValidated: (bool value) {
-                      print(value);
+                      if (kDebugMode) {
+                        print(value);
+                      }
                     },
                     selectorConfig: const SelectorConfig(
                       selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
@@ -172,7 +181,9 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     onSaved: (PhoneNumber number) {
-                      print('On Saved: $number');
+                      if (kDebugMode) {
+                        print('On Saved: $number');
+                      }
                     },
                   ),
                 ),
@@ -237,36 +248,21 @@ class _ProfileState extends State<Profile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Expanded(
-                      //   child: DropdownButtonHideUnderline(
-                      //     child: ButtonTheme(
-                      //       alignedDropdown: true,
-                      //       child: DropdownButton <String>(
+
+                      // DropdownButton(
                       //         isDense: true,
                       //         value: _selectedImage,
-                      //         onChanged: (String? newValue) {
-                      //           setState(() {
-                      //             _selectedImage = newValue!;
-                      //           });
-                      //         },
-                      //         items: mySvgPaths.map((Map map) {
-                      //           return DropdownMenuItem<String>(
-                      //             value: map["id"].toString(),
-                      //               child: Row(
-                      //                 children: [
-                      //                   SvgPicture.asset(
-                      //                     map["image"],
-                      //                     width: 48,
-                      //                     height: 48,
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //           );
-                      //         }).toList(),
+                      //         onChanged: null,
+                      //         items: [
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //         ],
                       //       ),
-                      //     ),
-                      //   ),
-                      // ),
 
                       Text(
                         'OR',
@@ -332,7 +328,7 @@ class _ProfileState extends State<Profile> {
                             showBottomSheetDialog(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.black,
+                            backgroundColor: Colors.black,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4),
@@ -360,7 +356,7 @@ class _ProfileState extends State<Profile> {
                         child: ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
+                            backgroundColor: Colors.white,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4),

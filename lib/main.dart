@@ -1,12 +1,18 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:save_me/features/auth/Screens/splashScreen.dart';
-import 'features/internet/no_internet.dart';
+import 'package:save_me/features/home/provider/speed_dial_provider.dart';
+import 'package:save_me/routes/app_router.dart';
 
 void main() {
   runApp(
-    const SaveMe(),
+    ChangeNotifierProvider(
+      create: (context) => SpeedDialProvider(),
+      child: const SaveMe(),
+    ),
   );
-
 }
 
 class SaveMe extends StatelessWidget {
@@ -14,11 +20,19 @@ class SaveMe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        //theme:ThemeClass.lightTheme,
-        home: SplashScreen(),
+    AppRouter appRouter = AppRouter();
 
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder:  (BuildContext context,
+          child){
+        return const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: SplashScreen(),
+        );
+      },
     );
   }
 }
