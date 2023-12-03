@@ -11,11 +11,11 @@ import 'package:http/http.dart' as http;
 
 import '../web_services/network_utils.dart';
 
-class LocationController extends GetxController{
+class LocationSearch extends GetxController{
 
 
   // To controller a Search TextField with a picked location from Maps.
-  Placemark _pickPlaceMark = Placemark();
+  final Placemark _pickPlaceMark = Placemark();
   Placemark get pickPlaceMark => _pickPlaceMark;
   List <Prediction> _predictionList = [];
   Future<List<Prediction>> searchLocation(BuildContext context, String text) async {

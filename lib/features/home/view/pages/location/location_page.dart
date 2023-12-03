@@ -29,7 +29,7 @@ class _LocationState extends State<Location> {
       'maps/api/place/autocomplete/json',
       {
         "input" : query,
-        "key" : Strings.API_KEY,
+        "key" : Strings.API_KEY_Google,
       }
     );
     // get request

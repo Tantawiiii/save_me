@@ -3,7 +3,7 @@
 
 class Strings{
 
-  static const String API_KEY = "AIzaSyB_wFmdtRx-M0XdqAEpHF2vCfV2oWT9VC8";
+  static const String API_KEY_Google = "AIzaSyB_wFmdtRx-M0XdqAEpHF2vCfV2oWT9VC8";
   static const String txtWelcomeLogin = "Welcome Back!";
   static const String txtWelcomeLogin2= "Login to SaveMe to connect to your network!";
 
