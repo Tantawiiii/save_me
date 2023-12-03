@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import '../../../constants/Strings.dart';
+import '../../../constants/strings/Strings_en.dart';
 import '../../../constants/colors_code.dart';
 import '../../../constants/fonts.dart';
 import '../dataSource/api_client.dart';
@@ -40,7 +40,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.txtWelcomeRegister,
+            StringsEn.txtWelcomeRegister,
             style: TextStyle(
               fontSize: 24,
               fontFamily: Fonts.getFontFamilyTitillBold(),
@@ -48,7 +48,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 16),
           Text(
-            Strings.txtWelcomeRegister2,
+            StringsEn.txtWelcomeRegister2,
             style: TextStyle(
               fontSize: 14,
               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -56,7 +56,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 40),
           Text(
-            Strings.txtUserName,
+            StringsEn.txtUserName,
             style: TextStyle(
                 fontSize: 14,
                 fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -81,7 +81,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                     borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                hintText: Strings.txtHintUserName,
+                hintText: StringsEn.txtHintUserName,
                 hintStyle: TextStyle(
                   fontSize: 14,
                   fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -96,7 +96,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 24),
           Text(
-            Strings.txtLocation,
+            StringsEn.txtLocation,
             style: TextStyle(
                 fontSize: 14,
                 fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -134,7 +134,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                     borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                hintText: Strings.txtHintLocation,
+                hintText: StringsEn.txtHintLocation,
                 hintStyle: TextStyle(
                   fontSize: 14,
                   fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -149,7 +149,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 24),
           Text(
-            Strings.txtPhoneNumber,
+            StringsEn.txtPhoneNumber,
             style: TextStyle(
                 fontSize: 14,
                 fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -192,7 +192,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 //prefixIcon: SvgPicture.asset('assets/images/line.svg'),
                 contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
                 border: InputBorder.none,
-                hintText:Strings.txtHintPhoneNumber,
+                hintText:StringsEn.txtHintPhoneNumber,
                 hintStyle: TextStyle(
                   fontSize: 14,
                   fontFamily: Fonts.getFontFamilyTitillRegular(),

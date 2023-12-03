@@ -5,7 +5,7 @@ import 'package:save_me/constants/fonts.dart';
 import 'package:save_me/features/auth/widget/complete_profile_form.dart';
 import 'package:save_me/features/auth/widget/register_now_form.dart';
 
-import '../../../../constants/Strings.dart';
+import '../../../constants/strings/Strings_en.dart';
 import '../../home/home_screen.dart';
 import '../Screens/login_screen.dart';
 
@@ -24,7 +24,7 @@ class _RegisterFormState extends State<RegisterForm> {
   bool isCompleted = false;
   List<Step> _getSteps() => [
         Step(
-          title: const Text(Strings.txtRegisterNow),
+          title: const Text(StringsEn.txtRegisterNow),
           content: const RegisterNowForm(),
           isActive: currentStep >= 0,
           state: currentStep > 0 ? StepState.complete : StepState.indexed,
@@ -32,7 +32,7 @@ class _RegisterFormState extends State<RegisterForm> {
         Step(
           isActive: currentStep >= 1,
           state: currentStep > 1 ? StepState.complete : StepState.indexed,
-          title: const Text(Strings.txtCompleteProfile),
+          title: const Text(StringsEn.txtCompleteProfile),
           content: const CompleteProfileForm(),
         ),
       ];
@@ -83,7 +83,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     );
                   },
                   child: Text(
-                    Strings.txtSkip,
+                    StringsEn.txtSkip,
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -144,7 +144,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  Strings.txtHaveAcc,
+                                  StringsEn.txtHaveAcc,
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontFamily:
@@ -164,7 +164,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                     );
                                   },
                                   child: Text(
-                                    Strings.txtButtonLogin,
+                                    StringsEn.txtButtonLogin,
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,

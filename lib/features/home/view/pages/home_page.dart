@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:save_me/constants/Strings.dart';
+import 'package:save_me/constants/strings/Strings_en.dart';
 import 'package:save_me/constants/fonts.dart';
 
 import '../../provider/speed_dial_provider.dart';
@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
             Provider.of<SpeedDialProvider>(context, listen: false).toggleDial();
           },
           child: Text(
-            Strings.txtStartAddProfile,
+            StringsEn.txtStartAddProfile,
             style: TextStyle(
               fontSize: 24,
               fontFamily: Fonts.getFontFamilyTitillBold(),

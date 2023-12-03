@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:save_me/constants/Strings.dart';
+import 'package:save_me/constants/strings/Strings_en.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
 import 'package:save_me/features/home/view/cards/created_done.dart';
@@ -78,7 +78,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      Strings.txtPetCard,
+                      StringsEn.txtPetCard,
                       style: TextStyle(
                         fontSize: 24,
                         fontFamily: Fonts.getFontFamilyTitillBold(),
@@ -89,7 +89,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       height: 8.0,
                     ),
                     Text(
-                      Strings.txtPetCardHint,
+                      StringsEn.txtPetCardHint,
                       style: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -161,7 +161,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                             InkWell(
                               onTap: details.onStepCancel,
                               child: Text(
-                                Strings.txtCancel,
+                                StringsEn.txtCancel,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily:
@@ -186,13 +186,13 @@ class _AddPetProfileState extends State<AddPetProfile> {
         Step(
           state: _currentStep > 0 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 0,
-          title: const Text(Strings.txtPetBasicInfo),
+          title: const Text(StringsEn.txtPetBasicInfo),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                Strings.txtPhoto,
+                StringsEn.txtPhoto,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -227,7 +227,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtName,
+                StringsEn.txtName,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -253,7 +253,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHintUserPet,
+                    hintText: StringsEn.txtHintUserPet,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -270,7 +270,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtBirthday,
+                StringsEn.txtBirthday,
                 style: TextStyle(
                     fontSize: 14,
                     color: ColorsCode.grayColor100,
@@ -297,7 +297,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       borderSide: BorderSide(
                     color: Colors.purple.shade100,
                   )),
-                  hintText: Strings.txtHintBirthday,
+                  hintText: StringsEn.txtHintBirthday,
                   hintStyle: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -335,7 +335,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       print(pickedDate);
                     }
                     String formattedDate =
-                        DateFormat(Strings.txtDatePattern).format(pickedDate);
+                        DateFormat(StringsEn.txtDatePattern).format(pickedDate);
 
                     setState(() {
                       _dateController.text = formattedDate;
@@ -351,7 +351,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtAge,
+                StringsEn.txtAge,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -377,7 +377,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtPetAgeHint,
+                    hintText: StringsEn.txtPetAgeHint,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -397,12 +397,12 @@ class _AddPetProfileState extends State<AddPetProfile> {
           // Body info Ui Design and Implementation
           state: _currentStep > 1 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 1,
-          title: const Text(Strings.txtPetBodyInfo),
+          title: const Text(StringsEn.txtPetBodyInfo),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                Strings.txtWeight,
+                StringsEn.txtWeight,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -428,7 +428,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtKg,
+                    hintText: StringsEn.txtKg,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -445,7 +445,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtHeight,
+                StringsEn.txtHeight,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -471,7 +471,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtCm,
+                    hintText: StringsEn.txtCm,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -488,7 +488,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtCharacteristics,
+                StringsEn.txtCharacteristics,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -514,7 +514,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtPetHintCharacteristics,
+                    hintText: StringsEn.txtPetHintCharacteristics,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -531,7 +531,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtBehavior,
+                StringsEn.txtBehavior,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -557,7 +557,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtPetHintBehavior,
+                    hintText: StringsEn.txtPetHintBehavior,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -574,7 +574,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtSpecialChar,
+                StringsEn.txtSpecialChar,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -600,7 +600,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtPetHintSpecialChar,
+                    hintText: StringsEn.txtPetHintSpecialChar,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -619,12 +619,12 @@ class _AddPetProfileState extends State<AddPetProfile> {
         Step(
           state: _currentStep > 2 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 2,
-          title: const Text(Strings.txtPetHealthInfo),
+          title: const Text(StringsEn.txtPetHealthInfo),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                Strings.txtMedicines,
+                StringsEn.txtMedicines,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -650,7 +650,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtPetHintMedicines,
+                    hintText: StringsEn.txtPetHintMedicines,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -667,7 +667,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtAllergies,
+                StringsEn.txtAllergies,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -693,7 +693,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtPetHintAllergies,
+                    hintText: StringsEn.txtPetHintAllergies,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -710,7 +710,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtDiet,
+                StringsEn.txtDiet,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -736,7 +736,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtPetHintDiet,
+                    hintText: StringsEn.txtPetHintDiet,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -753,7 +753,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtDiseases,
+                StringsEn.txtDiseases,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -779,7 +779,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtPetHitDiseases,
+                    hintText: StringsEn.txtPetHitDiseases,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -796,7 +796,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtAdditionInfo,
+                StringsEn.txtAdditionInfo,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -822,7 +822,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtPetHintAdditionInfo,
+                    hintText: StringsEn.txtPetHintAdditionInfo,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:save_me/constants/Strings.dart';
+import 'package:save_me/constants/strings/Strings_en.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
 import 'package:save_me/features/home/home_screen.dart';
@@ -30,7 +30,7 @@ class CreatedProfile extends StatelessWidget {
               ),
               const SizedBox(height: 44),
               Text(
-                Strings.txtCreatedDone,
+                StringsEn.txtCreatedDone,
                 style: TextStyle(
                   color: ColorsCode.blueDarkColor,
                   fontSize: 18,
@@ -56,7 +56,7 @@ class CreatedProfile extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        Strings.txtCreatedNewBtn,
+                        StringsEn.txtCreatedNewBtn,
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -76,7 +76,7 @@ class CreatedProfile extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      Strings.txtBackToHomeBtn,
+                      StringsEn.txtBackToHomeBtn,
                       style: TextStyle(
                           fontSize: 16,
                           fontFamily: Fonts.getFontFamilyTitillSemiBold(),

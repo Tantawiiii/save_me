@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/features/auth/Screens/login_screen.dart';
 
-import '../../../../constants/Strings.dart';
+import '../../../../constants/strings/Strings_en.dart';
 import '../../../../constants/fonts.dart';
 import '../../../auth/utils/validation.dart';
 
@@ -78,7 +78,7 @@ class _SettingState extends State<Setting> {
                             icon: SvgPicture.asset('assets/images/English.svg'),
                             //icon data for elevated button
                             label: Text(
-                              Strings.txtEnglish,
+                              StringsEn.txtEnglish,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -108,7 +108,7 @@ class _SettingState extends State<Setting> {
                             icon: SvgPicture.asset('assets/images/Deutsch.svg'),
                             //icon data for elevated button
                             label: Text(
-                              Strings.txtGermany,
+                              StringsEn.txtGermany,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -153,7 +153,7 @@ class _SettingState extends State<Setting> {
                             filled: true,
                             fillColor: ColorsCode.whiteColor100,
                             //labelText: Strings.txtPassword,
-                            hintText: Strings.txtHintOldPassword,
+                            hintText: StringsEn.txtHintOldPassword,
                             hintStyle: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -206,7 +206,7 @@ class _SettingState extends State<Setting> {
                             fillColor: ColorsCode.whiteColor100,
 
                             //labelText: Strings.txtPassword,
-                            hintText: Strings.txtHintNewPassword,
+                            hintText: StringsEn.txtHintNewPassword,
                             hintStyle: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -237,7 +237,7 @@ class _SettingState extends State<Setting> {
                           textInputAction: TextInputAction.done,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return Strings.txtHintConfirmPassword;
+                              return StringsEn.txtHintConfirmPassword;
                             }
                             // if (_newPasswordController.text !=
                             //     _confirmPasswordController.text) {
@@ -266,7 +266,7 @@ class _SettingState extends State<Setting> {
                             fillColor: ColorsCode.whiteColor100,
 
                             //labelText: Strings.txtPassword,
-                            hintText: Strings.txtHintConfirmNewPassword,
+                            hintText: StringsEn.txtHintConfirmNewPassword,
                             hintStyle: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -297,11 +297,11 @@ class _SettingState extends State<Setting> {
                           textInputAction: TextInputAction.done,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return Strings.txtHintConfirmPassword;
+                              return StringsEn.txtHintConfirmPassword;
                             }
                             if (_newPasswordController.text !=
                                 _confirmPasswordController.text) {
-                              return Strings.txtNotMatchPassword;
+                              return StringsEn.txtNotMatchPassword;
                             }
                             return null;
                           },
@@ -335,7 +335,7 @@ class _SettingState extends State<Setting> {
                         //}
                       },
                       child: Text(
-                        Strings.txtChangePassword,
+                        StringsEn.txtChangePassword,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -353,7 +353,7 @@ class _SettingState extends State<Setting> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      Strings.txtLogOut,
+                      StringsEn.txtLogOut,
                       style: TextStyle(
                         color: ColorsCode.redColor,
                         fontFamily: Fonts.getFontFamilyTitillSemiBold(),

@@ -29,12 +29,11 @@ dependencies:
   intl_phone_number_input: ^0.7.3+1
   flutter_svg: ^2.0.9
 
-  # circular_menu: ^2.0.1
   image_picker: ^1.0.4
   hexcolor: ^3.0.1
   bouncing_button: ^0.0.1+2
   flutter_speed_dial: ^7.0.0
-  #fab_circular_menu: ^1.0.2
+
 
   google_maps_webservice: ^0.0.19
   google_maps_place_picker: ^2.0.0
@@ -54,6 +53,9 @@ dependencies:
   flutter_screenutil: ^5.9.0
   provider: ^5.0.0
   auto_route: ^7.8.4
+
+  spincircle_bottom_bar: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:

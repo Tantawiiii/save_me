@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:save_me/constants/colors_code.dart';
 
-import '../../../../constants/Strings.dart';
+import '../../../../constants/strings/Strings_en.dart';
 import '../../../../constants/fonts.dart';
 import '../../../auth/utils/validation.dart';
 import '../widgets/upload_bottom_sheet.dart';
@@ -80,7 +80,7 @@ class _ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Strings.txtUserName,
+                  StringsEn.txtUserName,
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -105,7 +105,7 @@ class _ProfileState extends State<Profile> {
                           borderSide: BorderSide(
                         color: Colors.purple.shade100,
                       )),
-                      hintText: Strings.txtIsEmptyUserName,
+                      hintText: StringsEn.txtIsEmptyUserName,
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -122,7 +122,7 @@ class _ProfileState extends State<Profile> {
                   height: 24,
                 ),
                 Text(
-                  Strings.txtPhoneNumber,
+                  StringsEn.txtPhoneNumber,
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -173,7 +173,7 @@ class _ProfileState extends State<Profile> {
                       contentPadding:
                           const EdgeInsets.only(bottom: 15, left: 8),
                       border: InputBorder.none,
-                      hintText: Strings.txtHintPhoneNumber,
+                      hintText: StringsEn.txtHintPhoneNumber,
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -191,7 +191,7 @@ class _ProfileState extends State<Profile> {
                   height: 24,
                 ),
                 Text(
-                  Strings.txtAddInfo,
+                  StringsEn.txtAddInfo,
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -216,7 +216,7 @@ class _ProfileState extends State<Profile> {
                           borderSide: BorderSide(
                         color: Colors.purple.shade100,
                       )),
-                      hintText: Strings.txtHintEmail,
+                      hintText: StringsEn.txtHintEmail,
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -233,7 +233,7 @@ class _ProfileState extends State<Profile> {
                   height: 24,
                 ),
                 Text(
-                  Strings.txtAvatarOrPhoto,
+                  StringsEn.txtAvatarOrPhoto,
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -335,7 +335,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                           child: Text(
-                            Strings.txtUpdate,
+                            StringsEn.txtUpdate,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -363,7 +363,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                           child: Text(
-                            Strings.txtRestCancel,
+                            StringsEn.txtRestCancel,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,

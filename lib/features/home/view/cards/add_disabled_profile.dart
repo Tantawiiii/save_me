@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:save_me/constants/Strings.dart';
+import 'package:save_me/constants/strings/Strings_en.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
 import 'package:save_me/features/home/view/cards/created_done.dart';
@@ -80,7 +80,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            Strings.txtDisabledCard,
+                            StringsEn.txtDisabledCard,
                             style: TextStyle(
                               fontSize: 24,
                               fontFamily: Fonts.getFontFamilyTitillBold(),
@@ -91,7 +91,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                             height: 8.0,
                           ),
                           Text(
-                            Strings.txtDisabledCardHint,
+                            StringsEn.txtDisabledCardHint,
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -167,7 +167,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                                   InkWell(
                                     onTap: details.onStepCancel,
                                     child: Text(
-                                      Strings.txtCancel,
+                                      StringsEn.txtCancel,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily:
@@ -192,13 +192,13 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
         Step(
           state: _currentStep > 0 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 0,
-          title: const Text(Strings.txtDisabledBasicInfo),
+          title: const Text(StringsEn.txtDisabledBasicInfo),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                Strings.txtPhoto,
+                StringsEn.txtPhoto,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -234,7 +234,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtName,
+                StringsEn.txtName,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -260,7 +260,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHintUserDisabled,
+                    hintText: StringsEn.txtHintUserDisabled,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -277,7 +277,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtBirthday,
+                StringsEn.txtBirthday,
                 style: TextStyle(
                     fontSize: 14,
                     color: ColorsCode.grayColor100,
@@ -304,7 +304,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                       borderSide: BorderSide(
                     color: Colors.purple.shade100,
                   )),
-                  hintText: Strings.txtHintBirthday,
+                  hintText: StringsEn.txtHintBirthday,
                   hintStyle: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -343,7 +343,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                       print(pickedDate);
                     }
                     String formattedDate =
-                        DateFormat(Strings.txtDatePattern).format(pickedDate);
+                        DateFormat(StringsEn.txtDatePattern).format(pickedDate);
                     if (kDebugMode) {
                       print(pickedDate);
                     }
@@ -362,7 +362,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtAge,
+                StringsEn.txtAge,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -388,7 +388,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtDisabledAgeHint,
+                    hintText: StringsEn.txtDisabledAgeHint,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -408,12 +408,12 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
           // Body info Ui Design and Implementation
           state: _currentStep > 1 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 1,
-          title: const Text(Strings.txtDisabledBodyInfo),
+          title: const Text(StringsEn.txtDisabledBodyInfo),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                Strings.txtWeight,
+                StringsEn.txtWeight,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -439,7 +439,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtKg,
+                    hintText: StringsEn.txtKg,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -456,7 +456,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtHeight,
+                StringsEn.txtHeight,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -482,7 +482,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtCm,
+                    hintText: StringsEn.txtCm,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -499,7 +499,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtCharacteristics,
+                StringsEn.txtCharacteristics,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -525,7 +525,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtDisabledHintCharacteristics,
+                    hintText: StringsEn.txtDisabledHintCharacteristics,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -542,7 +542,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtBehavior,
+                StringsEn.txtBehavior,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -568,7 +568,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtDisabledHintBehavior,
+                    hintText: StringsEn.txtDisabledHintBehavior,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -585,7 +585,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtSpecialChar,
+                StringsEn.txtSpecialChar,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -611,7 +611,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtDisabledHintSpecialChar,
+                    hintText: StringsEn.txtDisabledHintSpecialChar,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -630,12 +630,12 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
         Step(
           state: _currentStep > 2 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 2,
-          title: const Text(Strings.txtDisabledHealthInfo),
+          title: const Text(StringsEn.txtDisabledHealthInfo),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                Strings.txtMedicines,
+                StringsEn.txtMedicines,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -661,7 +661,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtDisabledHintMedicines,
+                    hintText: StringsEn.txtDisabledHintMedicines,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -678,7 +678,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtAllergies,
+                StringsEn.txtAllergies,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -704,7 +704,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtDisabledHintAllergies,
+                    hintText: StringsEn.txtDisabledHintAllergies,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -721,7 +721,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtDiet,
+                StringsEn.txtDiet,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -747,7 +747,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtDisabledHintDiet,
+                    hintText: StringsEn.txtDisabledHintDiet,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -764,7 +764,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtDiseases,
+                StringsEn.txtDiseases,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -790,7 +790,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtDisabledHitDiseases,
+                    hintText: StringsEn.txtDisabledHitDiseases,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -807,7 +807,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtAdditionInfo,
+                StringsEn.txtAdditionInfo,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -833,7 +833,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtDisabledHintAdditionInfo,
+                    hintText: StringsEn.txtDisabledHintAdditionInfo,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -852,12 +852,12 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
         Step(
           state: _currentStep > 3 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 3,
-          title: const Text(Strings.txtDisabledHome),
+          title: const Text(StringsEn.txtDisabledHome),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                Strings.txtDisabledHomeInfo,
+                StringsEn.txtDisabledHomeInfo,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -869,7 +869,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 24,
               ),
               Text(
-                Strings.txtSeniorAddLocation,
+                StringsEn.txtSeniorAddLocation,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -903,7 +903,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                           color: Colors.purple.shade100,
                         )),
-                    hintText: Strings.txtSeniorAddLocation,
+                    hintText: StringsEn.txtSeniorAddLocation,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -920,7 +920,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtSeniorInstitute,
+                StringsEn.txtSeniorInstitute,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -946,7 +946,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                           color: Colors.purple.shade100,
                         )),
-                    hintText: Strings.txtSeniorInstituteHint,
+                    hintText: StringsEn.txtSeniorInstituteHint,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -964,7 +964,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtSeniorCareAide,
+                StringsEn.txtSeniorCareAide,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -990,7 +990,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                           color: Colors.purple.shade100,
                         )),
-                    hintText: Strings.txtSeniorCareAideHint,
+                    hintText: StringsEn.txtSeniorCareAideHint,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -1008,7 +1008,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 height: 24,
               ),
               Text(
-                Strings.txtPhoneNumber,
+                StringsEn.txtPhoneNumber,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -1058,7 +1058,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                     contentPadding:
                     const EdgeInsets.only(bottom: 15, left: 8),
                     border: InputBorder.none,
-                    hintText: Strings.txtHintPhoneNumber,
+                    hintText: StringsEn.txtHintPhoneNumber,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),

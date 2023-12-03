@@ -10,7 +10,7 @@ import 'package:save_me/constants/fonts.dart';
 import 'package:save_me/routes/app_router.dart';
 import 'package:save_me/routes/app_router.gr.dart';
 
-import '../../../../constants/Strings.dart';
+import '../../../constants/strings/Strings_en.dart';
 import '../../home/home_screen.dart';
 import '../Screens/register_screen.dart';
 import '../dataSource/api_client.dart';
@@ -104,7 +104,7 @@ class LoginFormState extends State<LoginForm> {
                   height: 16,
                 ),
                 Text(
-                  Strings.txtWelcomeLogin,
+                  StringsEn.txtWelcomeLogin,
                   style: TextStyle(
                     fontSize: 24,
                     fontFamily: Fonts.getFontFamilyTitillBold(),
@@ -112,7 +112,7 @@ class LoginFormState extends State<LoginForm> {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  Strings.txtWelcomeLogin2,
+                  StringsEn.txtWelcomeLogin2,
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -126,7 +126,7 @@ class LoginFormState extends State<LoginForm> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        Strings.txtEmail,
+                        StringsEn.txtEmail,
                         style: TextStyle(
                             fontSize: 14,
                             fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -151,7 +151,7 @@ class LoginFormState extends State<LoginForm> {
                                 borderSide: BorderSide(
                                   color: Colors.purple.shade100,
                                 )),
-                            hintText: Strings.txtHintEmail,
+                            hintText: StringsEn.txtHintEmail,
                             hintStyle: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -168,7 +168,7 @@ class LoginFormState extends State<LoginForm> {
                         height: 24,
                       ),
                       Text(
-                        Strings.txtPassword,
+                        StringsEn.txtPassword,
                         style: TextStyle(
                             fontSize: 14,
                             fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -192,7 +192,7 @@ class LoginFormState extends State<LoginForm> {
                             filled: true,
                             fillColor: ColorsCode.whiteColor100,
                             //labelText: Strings.txtPassword,
-                            hintText: Strings.txtHintPassword,
+                            hintText: StringsEn.txtHintPassword,
                             hintStyle: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -250,7 +250,7 @@ class LoginFormState extends State<LoginForm> {
                               );
                             },
                             child: Text(
-                              Strings.txtButtonLogin,
+                              StringsEn.txtButtonLogin,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -269,7 +269,7 @@ class LoginFormState extends State<LoginForm> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              Strings.txtDoNotHaveAcc,
+                              StringsEn.txtDoNotHaveAcc,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
@@ -291,7 +291,7 @@ class LoginFormState extends State<LoginForm> {
                                 );
                               },
                               child: Text(
-                                Strings.txtButtonRegister,
+                                StringsEn.txtButtonRegister,
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,

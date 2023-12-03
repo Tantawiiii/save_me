@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:save_me/constants/Strings.dart';
+import 'package:save_me/constants/strings/Strings_en.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
 import 'package:save_me/features/home/view/cards/created_done.dart';
@@ -51,7 +51,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            Strings.txtItemCard,
+                            StringsEn.txtItemCard,
                             style: TextStyle(
                               fontSize: 24,
                               fontFamily: Fonts.getFontFamilyTitillBold(),
@@ -62,7 +62,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                             height: 8.0,
                           ),
                           Text(
-                            Strings.txtItemCardHint,
+                            StringsEn.txtItemCardHint,
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -129,7 +129,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                                   InkWell(
                                     onTap: details.onStepCancel,
                                     child: Text(
-                                      Strings.txtCancel,
+                                      StringsEn.txtCancel,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily:
@@ -153,13 +153,13 @@ class _AddItemProfileState extends State<AddItemProfile> {
   List<Step> getSteps() => [
         Step(
           isActive: _currentStep == 0,
-          title: const Text(Strings.txtItemBasicInfo),
+          title: const Text(StringsEn.txtItemBasicInfo),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                Strings.txtName,
+                StringsEn.txtName,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -185,7 +185,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtHintUserItem,
+                    hintText: StringsEn.txtHintUserItem,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -202,7 +202,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                 height: 16,
               ),
               Text(
-                Strings.txtAdditionInfo,
+                StringsEn.txtAdditionInfo,
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -228,7 +228,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Strings.txtItemHintAdditionInfo,
+                    hintText: StringsEn.txtItemHintAdditionInfo,
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),

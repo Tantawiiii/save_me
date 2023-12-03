@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:save_me/constants/Strings.dart';
+import 'package:save_me/constants/strings/Strings_en.dart';
 import 'package:save_me/constants/fonts.dart';
 
 void showBottomSheetDialog(BuildContext context) {
@@ -30,7 +30,7 @@ void showBottomSheetDialog(BuildContext context) {
             ),
             //const SizedBox(height:16,),
             Text(
-              Strings.txtBottomDialog,
+              StringsEn.txtBottomDialog,
               style: TextStyle(
                 fontSize:20,
                 fontFamily: Fonts.getFontFamilyTitillSemiBold(),

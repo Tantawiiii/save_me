@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:save_me/features/home/view/pages/location/web_services/network_utils.dart';
 
-import '../../../../../constants/Strings.dart';
+import '../../../../../constants/strings/Strings_en.dart';
 import '../../../../../constants/colors_code.dart';
 import '../../../../../constants/fonts.dart';
 import '../../widgets/upload_bottom_sheet.dart';
@@ -29,7 +29,7 @@ class _LocationState extends State<Location> {
       'maps/api/place/autocomplete/json',
       {
         "input" : query,
-        "key" : Strings.API_KEY_Google,
+        "key" : StringsEn.API_KEY_Google,
       }
     );
     // get request
@@ -77,7 +77,7 @@ class _LocationState extends State<Location> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    Strings.txtReturnLocation,
+                    StringsEn.txtReturnLocation,
                     style: TextStyle(
                         fontSize: 16,
                         fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -115,7 +115,7 @@ class _LocationState extends State<Location> {
                             borderSide: BorderSide(
                           color: Colors.purple.shade100,
                         )),
-                        hintText: Strings.txtHintReturnLocation,
+                        hintText: StringsEn.txtHintReturnLocation,
                         hintStyle: TextStyle(
                           fontSize: 14,
                           fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -132,7 +132,7 @@ class _LocationState extends State<Location> {
                     height: 24,
                   ),
                   Text(
-                    Strings.txtDragLocation,
+                    StringsEn.txtDragLocation,
                     style: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -186,7 +186,7 @@ class _LocationState extends State<Location> {
                               ),
                             ),
                             child: Text(
-                              Strings.txtUpdate,
+                              StringsEn.txtUpdate,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -213,7 +213,7 @@ class _LocationState extends State<Location> {
                               ),
                             ),
                             child: Text(
-                              Strings.txtRestCancel,
+                              StringsEn.txtRestCancel,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,

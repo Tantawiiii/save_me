@@ -1,7 +1,7 @@
 //Login Screens Texts
 // ignore_for_file: constant_identifier_names
 
-class Strings{
+class StringsEn{
 
   static const String API_KEY_Google = "AIzaSyB_wFmdtRx-M0XdqAEpHF2vCfV2oWT9VC8";
   static const String txtWelcomeLogin = "Welcome Back!";

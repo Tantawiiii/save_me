@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/Strings.dart';
+import '../../../constants/strings/Strings_en.dart';
 import '../../../constants/colors_code.dart';
 import '../../../constants/fonts.dart';
 import '../dataSource/api_client.dart';
@@ -44,7 +44,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          Strings.txtWelcomeRegister,
+          StringsEn.txtWelcomeRegister,
           style: TextStyle(
             fontSize: 24,
             fontFamily: Fonts.getFontFamilyTitillBold(),
@@ -52,7 +52,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
         ),
         const SizedBox(height: 16),
         Text(
-          Strings.txtWelcomeRegister2,
+          StringsEn.txtWelcomeRegister2,
           style: TextStyle(
             fontSize: 14,
             fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -60,7 +60,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
         ),
         const SizedBox(height: 40),
         Text(
-          Strings.txtEmail,
+          StringsEn.txtEmail,
           style: TextStyle(
               fontSize: 14,
               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -85,7 +85,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
                   borderSide: BorderSide(
                 color: Colors.purple.shade100,
               )),
-              hintText: Strings.txtHintEmail,
+              hintText: StringsEn.txtHintEmail,
               hintStyle: TextStyle(
                 fontSize: 14,
                 fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -102,7 +102,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
           height: 24,
         ),
         Text(
-          Strings.txtPassword,
+          StringsEn.txtPassword,
           style: TextStyle(
               fontSize: 14,
               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -126,7 +126,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
               filled: true,
               fillColor: ColorsCode.whiteColor100,
               //labelText: Strings.txtPassword,
-              hintText: Strings.txtHintPassword,
+              hintText: StringsEn.txtHintPassword,
               hintStyle: TextStyle(
                 fontSize: 14,
                 fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -162,7 +162,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
           height: 24,
         ),
         Text(
-          Strings.txtConfirmPassword,
+          StringsEn.txtConfirmPassword,
           style: TextStyle(
               fontSize: 14,
               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -187,7 +187,7 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
               fillColor: ColorsCode.whiteColor100,
 
               //labelText: Strings.txtPassword,
-              hintText: Strings.txtHintConfirmPassword,
+              hintText: StringsEn.txtHintConfirmPassword,
               hintStyle: TextStyle(
                 fontSize: 14,
                 fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -216,10 +216,10 @@ class _RegisterNowFormState extends State<RegisterNowForm> {
             textInputAction: TextInputAction.done,
             validator: (value) {
               if (value!.isEmpty) {
-                return Strings.txtHintConfirmPassword;
+                return StringsEn.txtHintConfirmPassword;
               }
               if (_passwordController.text != _confirmPasswordController.text) {
-                return Strings.txtNotMatchPassword;
+                return StringsEn.txtNotMatchPassword;
               }
               return null;
             },
