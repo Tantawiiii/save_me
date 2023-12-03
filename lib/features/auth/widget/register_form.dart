@@ -5,7 +5,7 @@ import 'package:save_me/constants/fonts.dart';
 import 'package:save_me/features/auth/widget/complete_profile_form.dart';
 import 'package:save_me/features/auth/widget/register_now_form.dart';
 
-import '../../../../constants/Strings.dart';
+import '../../../constants/strings/Strings_en.dart';
 import '../../home/home_screen.dart';
 import '../Screens/login_screen.dart';
 
@@ -20,11 +20,11 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   int currentStep = 0;
-  bool isCompleted = false; //check completeness of inputs
-
+  //check completeness of inputs
+  bool isCompleted = false;
   List<Step> _getSteps() => [
         Step(
-          title: const Text(Strings.txtRegisterNow),
+          title: const Text(StringsEn.txtRegisterNow),
           content: const RegisterNowForm(),
           isActive: currentStep >= 0,
           state: currentStep > 0 ? StepState.complete : StepState.indexed,
@@ -32,7 +32,7 @@ class _RegisterFormState extends State<RegisterForm> {
         Step(
           isActive: currentStep >= 1,
           state: currentStep > 1 ? StepState.complete : StepState.indexed,
-          title: const Text(Strings.txtCompleteProfile),
+          title: const Text(StringsEn.txtCompleteProfile),
           content: const CompleteProfileForm(),
         ),
       ];
@@ -43,7 +43,7 @@ class _RegisterFormState extends State<RegisterForm> {
     } else if (currentStep == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     }
     return false;
@@ -70,17 +70,20 @@ class _RegisterFormState extends State<RegisterForm> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Container(
+              // this is the visible a skip text in second Step
+              //if (currentStep >= 1)
+              currentStep >= 1
+              ?Container(
                 margin: const EdgeInsets.only(right: 24),
                 child: InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      MaterialPageRoute(builder: (context) => const HomeScreen()),
                     );
                   },
                   child: Text(
-                    Strings.txtSkip,
+                    StringsEn.txtSkip,
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -89,7 +92,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                   ),
                 ),
-              ),
+              ):
               const SizedBox(height: 24,),
               Expanded(
                 child: Stepper(
@@ -132,32 +135,6 @@ class _RegisterFormState extends State<RegisterForm> {
                                     ),
                                   ),
                                 ),
-                                // const SizedBox(width: 4),
-                                // if (currentStep != 0)
-                                //   Expanded(
-                                //     child: SizedBox(
-                                //       height: 56,
-                                //       child: ElevatedButton(
-                                //         onPressed: details.onStepCancel,
-                                //         style: ElevatedButton.styleFrom(
-                                //           primary: Colors.grey,
-                                //           elevation: 0,
-                                //           shape: RoundedRectangleBorder(
-                                //             borderRadius: BorderRadius.circular(4),
-                                //           ),
-                                //         ),
-                                //         child: Text(
-                                //           'Skip',
-                                //           style: TextStyle(
-                                //             fontSize: 16,
-                                //             fontFamily:
-                                //                 Fonts.getFontFamilyTitillSemiBold(),
-                                //             color: Colors.black,
-                                //           ),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ),
                               ],
                             ),
                             const SizedBox(
@@ -167,7 +144,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  Strings.txtHaveAcc,
+                                  StringsEn.txtHaveAcc,
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontFamily:
@@ -187,7 +164,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                     );
                                   },
                                   child: Text(
-                                    Strings.txtButtonLogin,
+                                    StringsEn.txtButtonLogin,
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,

@@ -1,0 +1,271 @@
+CircularMenu(
+          // menu alignment
+            alignment: Alignment.bottomCenter,
+            startingAngleInRadian: 1.2 * pi,
+            endingAngleInRadian: 1.8 * pi,
+            // menu radius
+            radius: 130,
+            // animation duration
+            animationDuration: const Duration(milliseconds: 400),
+            // animation curve in forward
+            curve: Curves.bounceOut,
+            // animation curve in reverse
+            reverseCurve: Curves.fastOutSlowIn,
+            // toggle button callback
+            toggleButtonOnPressed: () {
+              //callback
+            },
+            toggleButtonBoxShadow: const [
+              BoxShadow(
+                color: Colors.purpleAccent,
+                blurRadius: 25,
+              ),
+            ],
+            toggleButtonColor: ColorsCode.purpleColor,
+            toggleButtonIconColor: Colors.white,
+            toggleButtonSize: 42,
+            toggleButtonPadding: 10.0,
+            items: [
+              CircularMenuItem(
+                //enableBadge: true,
+                  icon: Icons.search,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                //enableBadge: true,
+                  icon: Icons.settings,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                  icon: Icons.star,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                  icon: Icons.pages,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+              CircularMenuItem(
+                  icon: Icons.hail_rounded,
+                  color: Colors.purple.shade300,
+                  onTap: () {
+                    //callback
+                  }),
+            ]),
+
+
+
+class MyExpandableFab extends StatelessWidget {
+  const MyExpandableFab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpandableFab(
+      distance: 112.0,
+      children: [
+        ActionButton(
+          icon: const Icon(
+            Icons.person,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            print('person');
+          },
+        ),
+        ActionButton(
+          icon: const Icon(
+            Icons.settings,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            print('settings');
+          },
+        ),
+        ActionButton(
+          icon: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            print('add');
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class ExpandableFabController with ChangeNotifier {
+  bool _isExpanded = false;
+
+  bool get isExpanded => _isExpanded;
+
+  void toggleExpanded() {
+    _isExpanded = !_isExpanded;
+    notifyListeners();
+  }
+}
+
+/**
+ *
+ * // circular menu In Floating Button
+    class CircleFab extends StatelessWidget {
+
+    const CircleFab({super.key});
+
+    @override
+    Widget build(BuildContext context) {
+    return CircularMenu(
+    // menu alignment
+    alignment: Alignment.bottomRight,
+    startingAngleInRadian: 1.2 * pi,
+    endingAngleInRadian: 1.8 * pi,
+    // menu radius
+    radius: 130,
+    // animation duration
+    animationDuration: const Duration(milliseconds: 600),
+    // animation curve in forward
+    curve: Curves.bounceOut,
+    // animation curve in reverse
+    reverseCurve: Curves.fastOutSlowIn,
+    // toggle button callback
+    toggleButtonOnPressed: () {
+    //callback
+    },
+    toggleButtonBoxShadow: const [
+    BoxShadow(
+    color: Colors.purpleAccent,
+    blurRadius: 15,
+    ),
+    ],
+    toggleButtonColor: ColorsCode.purpleColor,
+    toggleButtonIconColor: Colors.white,
+    toggleButtonSize: 52,
+    toggleButtonPadding: 12.0,
+    toggleButtonMargin: 0,
+    //toggleButtonIcon: Icons.menu, // Change the toggle button icon here
+    items: [
+    CircularMenuItem(
+    icon: Icons.search,
+    color: Colors.purple.shade300,
+    onTap: () {
+    //callback
+    /// _navigateToScreen(context,  SearchScreen());
+    }),
+    CircularMenuItem(
+    //enableBadge: true,
+    icon: Icons.settings,
+    color: Colors.purple.shade300,
+    onTap: () {
+    //callback
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => const AddProfile()),
+    // );
+    print('badge on circular menu item');
+    }),
+    CircularMenuItem(
+    icon: Icons.star,
+    color: Colors.purple.shade300,
+    onTap: () {
+    //callback
+    print('badge on circular menu item');
+    }),
+    CircularMenuItem(
+    icon: Icons.pages,
+    color: Colors.purple.shade300,
+    onTap: () {
+    //callback
+    print('badge on circular menu item');
+    }),
+    CircularMenuItem(
+    icon: Icons.hail_rounded,
+    color: Colors.purple.shade300,
+    onTap: () {
+
+    setState(){
+
+    }
+    //callbak
+    }),
+    ]);
+    }
+
+    void _navigateToScreen(BuildContext context, Widget screen) {
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => screen),
+    );
+    }
+    }
+
+ *
+ *
+
+
+ * FabCircularMenu(
+    alignment: Alignment.bottomRight,
+    ringColor: Colors.blue.withAlpha(25),
+    ringDiameter: 500.0,
+    ringWidth: 150.0,
+    fabSize: 90.0,
+    fabElevation: 8.0,
+    fabIconBorder: CircleBorder(),
+    children: <Widget> [
+    RawMaterialButton(
+    onPressed: () {
+    displayMessage(context, 'Home Clicked');
+    },
+    elevation: 10.0,
+    fillColor: Colors.green,
+    child: Icon(
+    Icons.home,
+    size: 30.0,
+    ),
+    padding: EdgeInsets.all(15.0),
+    shape: CircleBorder(),
+    ),
+    RawMaterialButton(
+    onPressed: () {
+    displayMessage(context, 'Search Clicked');
+    },
+    elevation: 10.0,
+    fillColor: Colors.orange,
+    child: Icon(
+    Icons.search,
+    size: 30.0,
+    ),
+    padding: EdgeInsets.all(15.0),
+    shape: CircleBorder(),
+    ),
+    CircleAvatar(
+    radius: 30,
+    backgroundColor: Colors.purple,
+    child: IconButton(
+    icon: Icon(
+    Icons.settings,
+    size: 30,
+    ),
+    onPressed: () {
+    displayMessage(context, 'Setting Clicked');
+    }),
+    ),
+    IconButton(
+    icon: Icon(
+    Icons.star,
+    color: Colors.brown,
+    size: 40,
+    ),
+    onPressed: () {
+    displayMessage(context, 'Favorite Clicked');
+    }),
+    ],
+    ),
+ */

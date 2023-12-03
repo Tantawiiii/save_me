@@ -1,12 +1,21 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:save_me/constants/colors_code.dart';
 
-import '../../../constants/Strings.dart';
-import '../../../constants/fonts.dart';
-import '../../auth/utils/validation.dart';
+import '../../../../constants/strings/Strings_en.dart';
+import '../../../../constants/fonts.dart';
+import '../../../auth/utils/validation.dart';
+import '../widgets/upload_bottom_sheet.dart';
 
+import 'package:auto_route/auto_route.dart';
+
+
+@RoutePage()
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -19,37 +28,59 @@ class _ProfileState extends State<Profile> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
-  String? _selected;
-   final List<Map> _myList = [
-    {'id': '1', 'image': 'assets/images/young_woman_white.svg'},
-    {'id': '2', 'image': 'assets/images/young_woman_black.svg'},
-    {'id': '3', 'image': 'assets/images/young_man_white.svg'},
-    {'id': '4', 'image': 'assets/images/young_man_black.svg'},
-    {'id': '5', 'image': 'assets/images/old_woman_white.svg'},
-    {'id': '6', 'image':'assets/images/old_woman_black.svg'},
-    {'id': '7', 'image': 'assets/images/old_man_black.svg'},
-    {'id': '8', 'image': 'assets/images/old_man _white.svg'},
+  // initial Country Code value phone number
+  PhoneNumber number = PhoneNumber(isoCode: 'EG');
+
+  // Default selected image path
+  final SvgPicture _selectedImage =SvgPicture.asset('assets/images/young_man_white.svg');
+  List<Map<String, dynamic>> mySvgPaths = [
+    {"id": '1', "image": 'assets/images/young_man_white.svg'},
+    {"id": '2', "image": 'assets/images/young_man_white.svg'},
+    {"id": '3', "image": 'assets/images/young_man_white.svg'},
+    {"id": '4', "image": 'assets/images/young_man_white.svg'},
+    {"id": '5', "image": 'assets/images/young_man_white.svg'},
+    {"id": '6', "image": 'assets/images/young_man_white.svg'},
+    {"id": '7', "image": 'assets/images/young_man_white.svg'},
+    {"id": '8', "image": 'assets/images/young_man_white.svg'},
   ];
+
+  // Image Picker for the new photo profile image
+  File? _image;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          margin: const EdgeInsets.only(top: 40, right: 24, left: 24),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
-          child: SingleChildScrollView(
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Center(
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            margin: const EdgeInsets.only(top: 40, right: 24, left: 24),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Strings.txtUserName,
+                  StringsEn.txtUserName,
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -74,7 +105,7 @@ class _ProfileState extends State<Profile> {
                           borderSide: BorderSide(
                         color: Colors.purple.shade100,
                       )),
-                      hintText: Strings.txtIsEmptyUserName,
+                      hintText: StringsEn.txtIsEmptyUserName,
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -91,7 +122,7 @@ class _ProfileState extends State<Profile> {
                   height: 24,
                 ),
                 Text(
-                  Strings.txtPhoneNumber,
+                  StringsEn.txtPhoneNumber,
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -107,19 +138,23 @@ class _ProfileState extends State<Profile> {
                   decoration: BoxDecoration(
                     color: ColorsCode.whiteColor100,
                     //llColor: ColorsCode.whiteColor100,
-
                     borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: Colors.black.withOpacity(0.13)),
+                    border:
+                        Border.all(color: Colors.black.withOpacity(0.13)),
                   ),
                   child: InternationalPhoneNumberInput(
                     onInputChanged: (PhoneNumber number) {
-                      print(number.phoneNumber);
+                      if (kDebugMode) {
+                        print(number.phoneNumber);
+                      }
                     },
                     onInputValidated: (bool value) {
-                      print(value);
+                      if (kDebugMode) {
+                        print(value);
+                      }
                     },
                     selectorConfig: const SelectorConfig(
-                      selectorType: PhoneInputSelectorType.DROPDOWN,
+                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                     ),
                     ignoreBlank: false,
                     autoValidateMode: AutovalidateMode.disabled,
@@ -132,12 +167,13 @@ class _ProfileState extends State<Profile> {
                       signed: true,
                       decimal: true,
                     ),
+                    initialValue: number,
                     cursorColor: Colors.black,
                     inputDecoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.only(bottom: 15, left: 8),
                       border: InputBorder.none,
-                      hintText: Strings.txtHintPhoneNumber,
+                      hintText: StringsEn.txtHintPhoneNumber,
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -145,7 +181,9 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     onSaved: (PhoneNumber number) {
-                      print('On Saved: $number');
+                      if (kDebugMode) {
+                        print('On Saved: $number');
+                      }
                     },
                   ),
                 ),
@@ -153,7 +191,7 @@ class _ProfileState extends State<Profile> {
                   height: 24,
                 ),
                 Text(
-                  Strings.txtAddInfo,
+                  StringsEn.txtAddInfo,
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -178,7 +216,7 @@ class _ProfileState extends State<Profile> {
                           borderSide: BorderSide(
                         color: Colors.purple.shade100,
                       )),
-                      hintText: Strings.txtHintEmail,
+                      hintText: StringsEn.txtHintEmail,
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -195,7 +233,7 @@ class _ProfileState extends State<Profile> {
                   height: 24,
                 ),
                 Text(
-                  Strings.txtAvatarOrPhoto,
+                  StringsEn.txtAvatarOrPhoto,
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -205,52 +243,61 @@ class _ProfileState extends State<Profile> {
                   height: 24,
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 24, right: 24, top: 10),
+                  margin:
+                      const EdgeInsets.only(left: 24, right: 24, top: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
 
-                      DropdownButtonHideUnderline(
-                        child: ButtonTheme(
-                          alignedDropdown: true,
-                          child: DropdownButton(
-                            value: _selected,
-                            onChanged: (newValue){
-                              setState(() {
-                                _selected = newValue;
-                              });
-                            },
-                            items: _myList.map((Map imgItem){
-                              return DropdownMenuItem(
-                                value: imgItem['id'].toString(),
-                                  child: Column(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        height:25,
-                                          width: 25,
-                                          child: SvgPicture.asset(
-                                            imgItem['image'],
-                                            width: 25,
-                                            color: Colors.black,
-                                          ),
-                                      ),
-                                    ],
-                                  ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
+                      // DropdownButton(
+                      //         isDense: true,
+                      //         value: _selectedImage,
+                      //         onChanged: null,
+                      //         items: [
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
+                      //         ],
+                      //       ),
+
                       Text(
                         'OR',
                         style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                            fontWeight: FontWeight.normal),
+                          fontSize: 16,
+                          fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                          fontWeight: FontWeight.normal,
+                          color: ColorsCode.grayColor100,
+                        ),
                       ),
                       Column(
                         children: <Widget>[
-                          SvgPicture.asset('assets/images/upload_img.svg'),
+                          GestureDetector(
+                            onTap: () {
+                              _pickImage();
+                            },
+                            child: Container(
+                              width: 148,
+                              height: 89,
+                              decoration: BoxDecoration(
+                                color: ColorsCode.whiteColor,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(4)),
+                              ),
+                              child: _image == null
+                                  ? Center(
+                                      child: SvgPicture.asset(
+                                          'assets/images/upload_img.svg'),
+                                    )
+                                  : Image.file(
+                                      _image!,
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                          ),
                           const SizedBox(
                             height: 4,
                           ),
@@ -258,7 +305,8 @@ class _ProfileState extends State<Profile> {
                             'Upload a photo',
                             style: TextStyle(
                                 fontSize: 16,
-                                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                                fontFamily:
+                                    Fonts.getFontFamilyTitillRegular(),
                                 color: ColorsCode.purpleColor),
                           ),
                         ],
@@ -269,66 +317,68 @@ class _ProfileState extends State<Profile> {
                 const SizedBox(
                   height: 46,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 24, right: 24, top: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: SizedBox(
                         height: 56,
-                        width: 160,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            showBottomSheetDialog(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
                             ),
-                            onPressed: () {},
-                            child: Text(
-                              'Update',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                                fontWeight: FontWeight.bold,
-                              ),
+                          ),
+                          child: Text(
+                            StringsEn.txtUpdate,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily:
+                                  Fonts.getFontFamilyTitillSemiBold(),
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 6,
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          height: 56,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.grey,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
+                    ),
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 56,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
                             ),
-                            child: Text(
-                              'Rest and Cancel',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                                fontWeight: FontWeight.bold,
-                              ),
+                          ),
+                          child: Text(
+                            StringsEn.txtRestCancel,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily:
+                                  Fonts.getFontFamilyTitillSemiBold(),
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 46,
+                    ),
+                  ],
                 ),
               ],
             ),

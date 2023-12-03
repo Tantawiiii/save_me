@@ -7,6 +7,9 @@ import 'package:page_transition/page_transition.dart' show PageTransitionType;
 
 import 'login_screen.dart';
 
+
+import 'package:auto_route/auto_route.dart';
+@RoutePage()
 class SplashScreen  extends StatelessWidget {
   const SplashScreen ({super.key});
 
