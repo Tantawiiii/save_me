@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../constants/strings/Strings_en.dart';
 import '../../../constants/colors_code.dart';
 import '../../../constants/fonts.dart';
-import '../dataSource/api_client.dart';
+import '../../api_helper/api_client.dart';
 import '../utils/validation.dart';
 
 class RegisterNowForm extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/features/auth/Screens/login_screen.dart';
 
@@ -40,21 +41,24 @@ class _SettingState extends State<Setting> {
     super.dispose();
   }
 
+
+  String _selectedLang = 'en';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          margin: const EdgeInsets.only(top: 36, right: 24, left: 24),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        margin: const EdgeInsets.only(top: 30, right: 24, left: 24),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: ListView(
+          children: [
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -72,8 +76,12 @@ class _SettingState extends State<Setting> {
                           child: ElevatedButton.icon(
                             onPressed: () {
                               if (kDebugMode) {
-                                print("You pressed Icon Elevated Button");
+                                print("You pressed to translation of the English");
                               }
+                              setState(() {
+                                _selectedLang = 'en';
+                              });
+                              Get.updateLocale(Locale(_selectedLang));
                             },
                             icon: SvgPicture.asset('assets/images/English.svg'),
                             //icon data for elevated button
@@ -102,8 +110,13 @@ class _SettingState extends State<Setting> {
                           child: ElevatedButton.icon(
                             onPressed: () {
                               if (kDebugMode) {
-                                print("You pressed Icon Elevated Button");
+                                print("You pressed to translation of the De");
                               }
+                              setState(() {
+                                _selectedLang = 'de';
+                              });
+
+                              Get.updateLocale(Locale(_selectedLang));
                             },
                             icon: SvgPicture.asset('assets/images/Deutsch.svg'),
                             //icon data for elevated button
@@ -374,7 +387,7 @@ class _SettingState extends State<Setting> {
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );

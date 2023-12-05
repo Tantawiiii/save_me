@@ -11,6 +11,26 @@ Future<bool> checkInternetStatus() async {
   return isOnline;
 }
 
+
+class ConnectionChecker {
+  static Future<void> checkConnection(Function(bool) onConnectionChanged) async {
+    ConnectivityResult connectivityResult = await _checkNetworkConnection();
+    bool isOnline;
+
+    if (connectivityResult == ConnectivityResult.wifi || connectivityResult == ConnectivityResult.mobile) {
+      isOnline = true;
+    } else {
+      isOnline = false;
+    }
+
+    onConnectionChanged(isOnline);
+  }
+
+  static Future<ConnectivityResult> _checkNetworkConnection() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    return connectivityResult;
+  }
+}
 Future<bool> refreshInternetStatus() async {
   bool online = await checkInternetStatus();
   return online;

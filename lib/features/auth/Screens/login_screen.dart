@@ -19,58 +19,43 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // internet Connection
-  // bool isOnline = true;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Listen to internet status changes
-  //   internetStatusController.stream.listen((bool online) {
-  //     setState(() {
-  //       isOnline = online;
-  //     });
-  //   });
-  //
-  //   // Initialize the UI with the current internet status
-  //   checkInternetStatus();
-  // }
-  // void _onStatusChange(bool online) {
-  //   setState(() {
-  //     isOnline = online;
-  //   });
-  // }
-  //
-
-  bool _isConnected = true;
-
+  //internet Connection
+  bool isOnline = true;
   @override
   void initState() {
     super.initState();
-    // Check for initial connectivity status
-    _checkConnectivity();
-    // Subscribe to changes in connectivity
-    Connectivity().onConnectivityChanged.listen((result) {
-      _handleConnectivityChange(result);
+    // Listen to internet status changes
+    internetStatusController.stream.listen((bool online) {
+      setState(() {
+        isOnline = online;
+      });
     });
+
+    // Initialize the UI with the current internet status
+    checkInternetStatus();
   }
-
-  // Function to check the current connectivity status
-  Future<void> _checkConnectivity() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    _handleConnectivityChange(connectivityResult);
-  }
-
-  // Function to handle changes in connectivity status
-  void _handleConnectivityChange(ConnectivityResult result) {
-
+  void _onStatusChange(bool online) {
     setState(() {
-      _isConnected = result != ConnectivityResult.none;
-      // _isConnected = result != ConnectivityResult.wifi;
-     //  _isConnected = result != ConnectivityResult.mobile;
+      isOnline = online;
     });
-
-
   }
+
+
+  // bool isOnline = true;
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   checkConnection();
+  // }
+  //
+  // Future<void> checkConnection() async {
+  //   await ConnectionChecker.checkConnection((bool isConnected) {
+  //     setState(() {
+  //       isOnline = isConnected;
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -110,25 +95,13 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: ColorsCode.whiteColor,
         ),
         body: Center(
-          child: _isConnected
+          child: isOnline
               ? const LoginForm()
               : NoInternet(
                   onRefresh: () {
                     refreshInternetStatus();
                   },
                 ),
-
-          // StreamBuilder<bool>(
-          //         stream: internetStatusController.stream,
-          //         initialData: true,
-          //         builder: (context,snapshot){
-          //           if (snapshot.data == true) {
-          //             return const LoginForm();
-          //           }  else {
-          //             return NoInternet(onRefresh: () { refreshInternetStatus();},);
-          //           }
-          //         },
-          //      ),
         ),
       ),
     );

@@ -63,19 +63,13 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: Center(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            margin: const EdgeInsets.only(top: 40, right: 24, left: 24),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Column(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        margin: const EdgeInsets.only(top: 30, right: 24, left: 24),
+        child: ListView(
+          children: [
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -133,57 +127,48 @@ class _ProfileState extends State<Profile> {
                 ),
                 Container(
                   height: 56,
-                  padding: const EdgeInsets.only(left: 12),
+                  padding: const EdgeInsets.only(left: 12,right: 5),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: ColorsCode.whiteColor100,
-                    //llColor: ColorsCode.whiteColor100,
+                    color: Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(4),
-                    border:
-                        Border.all(color: Colors.black.withOpacity(0.13)),
+                    border: Border.all(color: Colors.black.withOpacity(0.13)),
                   ),
                   child: InternationalPhoneNumberInput(
                     onInputChanged: (PhoneNumber number) {
-                      if (kDebugMode) {
-                        print(number.phoneNumber);
-                      }
+                      print(number.phoneNumber);
                     },
                     onInputValidated: (bool value) {
-                      if (kDebugMode) {
-                        print(value);
-                      }
+                      print(value);
                     },
                     selectorConfig: const SelectorConfig(
                       selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                     ),
+                    initialValue: number,
                     ignoreBlank: false,
                     autoValidateMode: AutovalidateMode.disabled,
                     selectorTextStyle: const TextStyle(color: Colors.black),
                     textFieldController: _phoneNumController,
                     formatInput: false,
-                    maxLength: 11,
-                    spaceBetweenSelectorAndTextField: 2,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      signed: true,
-                      decimal: true,
-                    ),
-                    initialValue: number,
+                    //maxLength: 11,
+                    spaceBetweenSelectorAndTextField: 0,
+                    keyboardType:
+                    const TextInputType.numberWithOptions(signed: true, decimal: true),
                     cursorColor: Colors.black,
-                    inputDecoration: InputDecoration(
-                      contentPadding:
-                          const EdgeInsets.only(bottom: 15, left: 8),
+                    inputDecoration:  InputDecoration(
+                      //prefixIcon: SvgPicture.asset('assets/images/line.svg'),
+                      contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
                       border: InputBorder.none,
-                      hintText: StringsEn.txtHintPhoneNumber,
+                      hintText:StringsEn.txtHintPhoneNumber,
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
                         color: ColorsCode.grayColor,
                       ),
+
                     ),
                     onSaved: (PhoneNumber number) {
-                      if (kDebugMode) {
-                        print('On Saved: $number');
-                      }
+                      print('On Saved: $number');
                     },
                   ),
                 ),
@@ -382,7 +367,8 @@ class _ProfileState extends State<Profile> {
                 ),
               ],
             ),
-          ),
+            const SizedBox(height: 100,)
+          ],
         ),
       ),
     );

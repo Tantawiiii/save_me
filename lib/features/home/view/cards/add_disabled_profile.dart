@@ -56,6 +56,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsCode.whiteColor,
+      resizeToAvoidBottomInset: false,
       body: isCompleted
           ? const Center(
               child: CreatedProfile(),

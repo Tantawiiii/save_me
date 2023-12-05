@@ -7,14 +7,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
-import 'package:save_me/routes/app_router.dart';
-import 'package:save_me/routes/app_router.gr.dart';
 
 import '../../../constants/strings/Strings_en.dart';
 import '../../home/home_screen.dart';
 import '../Screens/register_screen.dart';
-import '../dataSource/api_client.dart';
+import '../../api_helper/api_client.dart';
 import '../utils/validation.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -104,6 +107,7 @@ class LoginFormState extends State<LoginForm> {
                   height: 16,
                 ),
                 Text(
+                       // AppLocalizations.of(context)!.txtWelcomeLogin,
                   StringsEn.txtWelcomeLogin,
                   style: TextStyle(
                     fontSize: 24,
@@ -150,7 +154,8 @@ class LoginFormState extends State<LoginForm> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Colors.purple.shade100,
-                                )),
+                                ),
+                            ),
                             hintText: StringsEn.txtHintEmail,
                             hintStyle: TextStyle(
                               fontSize: 14,

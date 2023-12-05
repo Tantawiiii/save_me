@@ -54,8 +54,9 @@ class _AddKidProfileState extends State<AddKidProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsCode.whiteColor,
-      body: isCompleted ?
-      const Center(
+      resizeToAvoidBottomInset: false,
+      body: isCompleted
+          ? const Center(
         child: CreatedProfile(),
       )
           : Container(

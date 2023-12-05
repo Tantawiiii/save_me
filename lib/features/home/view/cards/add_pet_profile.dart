@@ -53,6 +53,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: ColorsCode.whiteColor,
       body: isCompleted ?
       const Center(

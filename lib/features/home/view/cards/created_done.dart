@@ -14,6 +14,7 @@ class CreatedProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: ColorsCode.whiteColor,
       body: Container(
         margin: const EdgeInsets.only(top: 80, right: 28, left: 28),

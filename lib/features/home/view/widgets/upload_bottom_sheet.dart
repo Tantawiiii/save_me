@@ -4,7 +4,12 @@ import 'package:save_me/constants/strings/Strings_en.dart';
 import 'package:save_me/constants/fonts.dart';
 
 void showBottomSheetDialog(BuildContext context) {
+
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+
   showModalBottomSheet(
+
     context: context,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
@@ -45,8 +50,8 @@ void showBottomSheetDialog(BuildContext context) {
     // The bottom sheet is closed
     print('Bottom sheet closed');
   });
-  // Close the bottom sheet automatically after 5 seconds
+  // Close the bottom sheet automatically
   Future.delayed(const Duration(milliseconds: 4000), () {
-    Navigator.of(context).pop(); // Close the bottom sheet
+    Navigator.pop(context); // Close the bottom sheet
   });
 }

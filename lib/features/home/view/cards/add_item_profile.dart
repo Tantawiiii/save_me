@@ -27,6 +27,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsCode.whiteColor,
+      resizeToAvoidBottomInset: false,
       body: isCompleted ?
       const Center(
               child: CreatedProfile(),
