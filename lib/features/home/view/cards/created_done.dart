@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:save_me/constants/strings/Strings_en.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
 import 'package:save_me/features/home/home_screen.dart';
 
+import '../../../../constants/strings/utils/Language.dart';
+import '../widgets/item_card.dart';
 
 @RoutePage()
 class CreatedProfile extends StatelessWidget {
@@ -24,14 +25,15 @@ class CreatedProfile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 80),
-              Lottie.asset('assets/anim/create_done.json',
-                  animate: true,
-                  height: 200,
-                  width: 200,
+              Lottie.asset(
+                'assets/anim/create_done.json',
+                animate: true,
+                height: 200,
+                width: 200,
               ),
               const SizedBox(height: 44),
               Text(
-                StringsEn.txtCreatedDone,
+                Language.instance.txtCreatedDone(),
                 style: TextStyle(
                   color: ColorsCode.blueDarkColor,
                   fontSize: 18,
@@ -57,7 +59,7 @@ class CreatedProfile extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        StringsEn.txtCreatedNewBtn,
+                        Language.instance.txtCreatedNewBtn(),
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -73,11 +75,12 @@ class CreatedProfile extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const HomeScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => const ItemCard()),
                       );
                     },
                     child: Text(
-                      StringsEn.txtBackToHomeBtn,
+                      Language.instance.txtBackToHomeBtn(),
                       style: TextStyle(
                           fontSize: 16,
                           fontFamily: Fonts.getFontFamilyTitillSemiBold(),

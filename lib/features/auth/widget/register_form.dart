@@ -6,6 +6,7 @@ import 'package:save_me/features/auth/widget/complete_profile_form.dart';
 import 'package:save_me/features/auth/widget/register_now_form.dart';
 
 import '../../../constants/strings/Strings_en.dart';
+import '../../../constants/strings/utils/Language.dart';
 import '../../home/home_screen.dart';
 import '../Screens/login_screen.dart';
 
@@ -24,7 +25,7 @@ class _RegisterFormState extends State<RegisterForm> {
   bool isCompleted = false;
   List<Step> _getSteps() => [
         Step(
-          title: const Text(StringsEn.txtRegisterNow),
+          title:  Text(Language.instance.txtRegisterNow()),
           content: const RegisterNowForm(),
           isActive: currentStep >= 0,
           state: currentStep > 0 ? StepState.complete : StepState.indexed,
@@ -32,7 +33,7 @@ class _RegisterFormState extends State<RegisterForm> {
         Step(
           isActive: currentStep >= 1,
           state: currentStep > 1 ? StepState.complete : StepState.indexed,
-          title: const Text(StringsEn.txtCompleteProfile),
+          title:  Text(Language.instance.txtCompleteProfile()),
           content: const CompleteProfileForm(),
         ),
       ];
@@ -43,7 +44,7 @@ class _RegisterFormState extends State<RegisterForm> {
     } else if (currentStep == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     }
     return false;
@@ -83,7 +84,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     );
                   },
                   child: Text(
-                    StringsEn.txtSkip,
+                    Language.instance.txtSkip(),
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -144,7 +145,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  StringsEn.txtHaveAcc,
+                                  Language.instance.txtHaveAcc(),
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontFamily:
@@ -164,7 +165,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                     );
                                   },
                                   child: Text(
-                                    StringsEn.txtButtonLogin,
+                                    Language.instance.txtButtonLogin(),
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,

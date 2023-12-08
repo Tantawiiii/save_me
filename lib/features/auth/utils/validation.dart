@@ -31,6 +31,7 @@ class Validation {
     if(value.isEmpty){
       return StringsEn.txtHintPassword;
     }
+
     if (!regex.hasMatch(value)) {
       return StringsEn.txtPasswordMatch;
     } else {
@@ -48,7 +49,6 @@ class Validation {
     }
 
   }
-
 
 
 

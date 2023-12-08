@@ -6,11 +6,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:save_me/constants/strings/Strings_en.dart';
+
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
 import 'package:save_me/features/home/view/cards/created_done.dart';
 
+import '../../../../constants/strings/utils/Language.dart';
 import '../../../auth/utils/validation.dart';
 
 
@@ -80,7 +81,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            StringsEn.txtSeniorCard,
+                            Language.instance.txtSeniorCard(),
                             style: TextStyle(
                               fontSize: 24,
                               fontFamily: Fonts.getFontFamilyTitillBold(),
@@ -91,7 +92,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                             height: 8.0,
                           ),
                           Text(
-                            StringsEn.txtSeniorCardHint,
+                            Language.instance.txtSeniorCardHint(),
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -164,7 +165,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                                   InkWell(
                                     onTap: details.onStepCancel,
                                     child: Text(
-                                      StringsEn.txtCancel,
+                                      Language.instance.txtCancel(),
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily:
@@ -189,13 +190,13 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
         Step(
           state: _currentStep > 0 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 0,
-          title: const Text(StringsEn.txtSeniorBasicInfo),
+          title:  Text(Language.instance.txtSeniorBasicInfo()),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                StringsEn.txtPhoto,
+                Language.instance.txtPhoto(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -231,7 +232,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtName,
+                Language.instance.txtName(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -257,7 +258,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtHintUserSenior,
+                    hintText: Language.instance.txtHintUserSenior(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -274,7 +275,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtBirthday,
+                Language.instance.txtBirthday(),
                 style: TextStyle(
                     fontSize: 14,
                     color: ColorsCode.grayColor100,
@@ -301,7 +302,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                       borderSide: BorderSide(
                     color: Colors.purple.shade100,
                   )),
-                  hintText: StringsEn.txtHintBirthday,
+                  hintText: Language.instance.txtHintBirthday(),
                   hintStyle: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -336,7 +337,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
 
                   if (pickedDate != null) {
                     String formattedDate =
-                        DateFormat(StringsEn.txtDatePattern).format(pickedDate);
+                        DateFormat(Language.instance.txtDatePattern()).format(pickedDate);
                     setState(() {
                       _dateController.text = formattedDate;
                     });
@@ -347,7 +348,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtAge,
+                Language.instance.txtAge(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -373,7 +374,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorAgeHint,
+                    hintText: Language.instance.txtSeniorAgeHint(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -393,12 +394,12 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
           // Body info Ui Design and Implementation
           state: _currentStep > 1 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 1,
-          title: const Text(StringsEn.txtSeniorBodyInfo),
+          title:  Text(Language.instance.txtSeniorBodyInfo()),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                StringsEn.txtWeight,
+                Language.instance.txtWeight(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -424,7 +425,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtKg,
+                    hintText: Language.instance.txtKg(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -441,7 +442,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtHeight,
+                Language.instance.txtHeight(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -467,7 +468,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtCm,
+                    hintText: Language.instance.txtCm(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -484,7 +485,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtCharacteristics,
+                Language.instance.txtCharacteristics(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -510,7 +511,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorHintCharacteristics,
+                    hintText: Language.instance.txtSeniorHintCharacteristics(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -527,7 +528,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtBehavior,
+                Language.instance.txtBehavior(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -553,7 +554,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorHintBehavior,
+                    hintText: Language.instance.txtSeniorHintBehavior(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -570,7 +571,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtSpecialChar,
+                Language.instance.txtSpecialChar(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -596,7 +597,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorHintSpecialChar,
+                    hintText: Language.instance.txtSeniorHintSpecialChar(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -615,12 +616,12 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
         Step(
           state: _currentStep > 2 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 2,
-          title: const Text(StringsEn.txtSeniorHealthInfo),
+          title:  Text(Language.instance.txtSeniorHealthInfo()),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                StringsEn.txtMedicines,
+                Language.instance.txtMedicines(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -646,7 +647,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorHintMedicines,
+                    hintText: Language.instance.txtSeniorHintMedicines(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -663,7 +664,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtAllergies,
+                Language.instance.txtAllergies(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -689,7 +690,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorHintAllergies,
+                    hintText: Language.instance.txtSeniorHintAllergies(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -706,7 +707,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtDiet,
+                Language.instance.txtDiet(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -732,7 +733,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorHintDiet,
+                    hintText: Language.instance.txtSeniorHintDiet(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -749,7 +750,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtDiseases,
+                Language.instance.txtDiseases(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -775,7 +776,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorHitDiseases,
+                    hintText: Language.instance.txtSeniorHitDiseases(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -792,7 +793,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtAdditionInfo,
+                Language.instance.txtAdditionInfo(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -818,7 +819,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorHintAdditionInfo,
+                    hintText: Language.instance.txtSeniorHintAdditionInfo(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -837,12 +838,12 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
         Step(
           state: _currentStep > 3 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 3,
-          title: const Text(StringsEn.txtSeniorHome),
+          title:  Text(Language.instance.txtSeniorHome()),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                StringsEn.txtSeniorHomeInfo,
+                Language.instance.txtSeniorHomeInfo(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -853,7 +854,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 24,
               ),
               Text(
-                StringsEn.txtSeniorAddLocation,
+                Language.instance.txtSeniorAddLocation(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -888,7 +889,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorAddLocation,
+                    hintText: Language.instance.txtSeniorAddLocation(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -905,7 +906,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtSeniorInstitute,
+                Language.instance.txtSeniorInstitute(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -931,7 +932,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorInstituteHint,
+                    hintText: Language.instance.txtSeniorInstituteHint(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -948,7 +949,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtSeniorCareAide,
+                Language.instance.txtSeniorCareAide(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -974,7 +975,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtSeniorCareAideHint,
+                    hintText: Language.instance.txtSeniorCareAideHint(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -991,7 +992,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 24,
               ),
               Text(
-                StringsEn.txtPhoneNumber,
+                Language.instance.txtPhoneNumber(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -1032,7 +1033,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                   inputDecoration: InputDecoration(
                     contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
                     border: InputBorder.none,
-                    hintText: StringsEn.txtHintPhoneNumber,
+                    hintText: Language.instance.txtHintPhoneNumber(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),

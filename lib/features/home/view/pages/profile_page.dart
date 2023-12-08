@@ -1,14 +1,15 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:save_me/constants/colors_code.dart';
 
-import '../../../../constants/strings/Strings_en.dart';
+
 import '../../../../constants/fonts.dart';
+import '../../../../constants/strings/utils/Language.dart';
 import '../../../auth/utils/validation.dart';
 import '../widgets/upload_bottom_sheet.dart';
 
@@ -74,7 +75,7 @@ class _ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  StringsEn.txtUserName,
+                  Language.instance.txtUserName(),
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -99,7 +100,7 @@ class _ProfileState extends State<Profile> {
                           borderSide: BorderSide(
                         color: Colors.purple.shade100,
                       )),
-                      hintText: StringsEn.txtIsEmptyUserName,
+                      hintText: Language.instance.txtIsEmptyUserName(),
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -116,7 +117,7 @@ class _ProfileState extends State<Profile> {
                   height: 24,
                 ),
                 Text(
-                  StringsEn.txtPhoneNumber,
+                  Language.instance.txtPhoneNumber(),
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -159,7 +160,7 @@ class _ProfileState extends State<Profile> {
                       //prefixIcon: SvgPicture.asset('assets/images/line.svg'),
                       contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
                       border: InputBorder.none,
-                      hintText:StringsEn.txtHintPhoneNumber,
+                      hintText:Language.instance.txtHintPhoneNumber(),
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -176,7 +177,7 @@ class _ProfileState extends State<Profile> {
                   height: 24,
                 ),
                 Text(
-                  StringsEn.txtAddInfo,
+                  Language.instance.txtAddInfo(),
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -201,7 +202,7 @@ class _ProfileState extends State<Profile> {
                           borderSide: BorderSide(
                         color: Colors.purple.shade100,
                       )),
-                      hintText: StringsEn.txtHintEmail,
+                      hintText: Language.instance.txtHintEmail(),
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -218,7 +219,7 @@ class _ProfileState extends State<Profile> {
                   height: 24,
                 ),
                 Text(
-                  StringsEn.txtAvatarOrPhoto,
+                  Language.instance.txtAvatarOrPhoto(),
                   style: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -248,16 +249,16 @@ class _ProfileState extends State<Profile> {
                       //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
                       //         ],
                       //       ),
-
-                      Text(
-                        'OR',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                          fontWeight: FontWeight.normal,
-                          color: ColorsCode.grayColor100,
-                        ),
-                      ),
+                      //
+                      // Text(
+                      //   'OR',
+                      //   style: TextStyle(
+                      //     fontSize: 16,
+                      //     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                      //     fontWeight: FontWeight.normal,
+                      //     color: ColorsCode.grayColor100,
+                      //   ),
+                      // ),
                       Column(
                         children: <Widget>[
                           GestureDetector(
@@ -320,7 +321,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                           child: Text(
-                            StringsEn.txtUpdate,
+                            Language.instance.txtUpdate(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -348,7 +349,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                           child: Text(
-                            StringsEn.txtRestCancel,
+                            Language.instance.txtRestCancel(),
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../constants/colors_code.dart';
-import '../../internet/connectivity_check.dart';
-import '../../internet/no_internet.dart';
 import '../widget/login_form.dart';
 
 import 'package:auto_route/auto_route.dart';
@@ -20,43 +18,25 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   //internet Connection
-  bool isOnline = true;
-  @override
-  void initState() {
-    super.initState();
-    // Listen to internet status changes
-    internetStatusController.stream.listen((bool online) {
-      setState(() {
-        isOnline = online;
-      });
-    });
-
-    // Initialize the UI with the current internet status
-    checkInternetStatus();
-  }
-  void _onStatusChange(bool online) {
-    setState(() {
-      isOnline = online;
-    });
-  }
-
-
   // bool isOnline = true;
-  //
   // @override
   // void initState() {
   //   super.initState();
-  //   checkConnection();
-  // }
-  //
-  // Future<void> checkConnection() async {
-  //   await ConnectionChecker.checkConnection((bool isConnected) {
+  //   // Listen to internet status changes
+  //   internetStatusController.stream.listen((bool online) {
   //     setState(() {
-  //       isOnline = isConnected;
+  //       isOnline = online;
   //     });
   //   });
+  //
+  //   // Initialize the UI with the current internet status
+  //   checkInternetStatus();
   // }
-
+  // void _onStatusChange(bool online) {
+  //   setState(() {
+  //     isOnline = online;
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -94,16 +74,21 @@ class _LoginScreenState extends State<LoginScreen> {
           centerTitle: true,
           backgroundColor: ColorsCode.whiteColor,
         ),
-        body: Center(
-          child: isOnline
-              ? const LoginForm()
-              : NoInternet(
-                  onRefresh: () {
-                    refreshInternetStatus();
-                  },
-                ),
+        body: const Center(
+          child:LoginForm() ,
         ),
       ),
     );
   }
 }
+
+
+/**
+ * isOnline
+    ? const LoginForm()
+    : NoInternet(
+    onRefresh: () {
+    refreshInternetStatus();
+    },
+    ),
+ */

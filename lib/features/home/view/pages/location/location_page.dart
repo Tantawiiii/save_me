@@ -8,7 +8,8 @@ import 'package:save_me/features/home/view/pages/location/web_services/network_u
 
 import '../../../../../constants/colors_code.dart';
 import '../../../../../constants/fonts.dart';
-import '../../../../../constants/strings/Strings_en.dart';
+
+import '../../../../../constants/strings/utils/Language.dart';
 import '../../widgets/upload_bottom_sheet.dart';
 
 @RoutePage()
@@ -25,7 +26,7 @@ class _LocationState extends State<Location> {
     Uri uri =
         Uri.http("maps.googleapis.com", 'maps/api/place/autocomplete/json', {
       "input": query,
-      "key": StringsEn.API_KEY_Google,
+      "key": Language.instance.API_KEY_Google(),
     });
     // get request
     String? response = await NetworkUtils.fetchUrl(uri);
@@ -54,7 +55,7 @@ class _LocationState extends State<Location> {
   static const LatLng _kMapCenter = LatLng(  29.9674624, 31.3154334);
   CameraPosition? cameraPosition;
   GoogleMapController? mapController;
-  String location =  StringsEn.txtHintReturnLocation;
+  String location =  Language.instance.txtHintReturnLocation();
 
   static const CameraPosition _kInitialPosition =
       CameraPosition(target: _kMapCenter, zoom: 12.0, tilt: 0, bearing: 0);
@@ -73,7 +74,7 @@ class _LocationState extends State<Location> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              StringsEn.txtReturnLocation,
+              Language.instance.txtReturnLocation(),
               style: TextStyle(
                   fontSize: 16,
                   fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -112,7 +113,7 @@ class _LocationState extends State<Location> {
                       borderSide: BorderSide(
                     color: Colors.purple.shade100,
                   )),
-                  hintText: StringsEn.txtHintReturnLocation,
+                  hintText: Language.instance.txtHintReturnLocation(),
                   hintStyle: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -129,7 +130,7 @@ class _LocationState extends State<Location> {
               height: 24,
             ),
             Text(
-              StringsEn.txtDragLocation,
+              Language.instance.txtDragLocation(),
               style: TextStyle(
                   fontSize: 14,
                   fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -234,7 +235,7 @@ class _LocationState extends State<Location> {
                         ),
                       ),
                       child: Text(
-                        StringsEn.txtUpdate,
+                        Language.instance.txtUpdate(),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -261,7 +262,7 @@ class _LocationState extends State<Location> {
                         ),
                       ),
                       child: Text(
-                        StringsEn.txtRestCancel,
+                        Language.instance.txtRestCancel(),
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,

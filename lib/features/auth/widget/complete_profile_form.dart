@@ -8,6 +8,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import '../../../constants/strings/Strings_en.dart';
 import '../../../constants/colors_code.dart';
 import '../../../constants/fonts.dart';
+import '../../../constants/strings/utils/Language.dart';
 import '../../api_helper/api_client.dart';
 import '../utils/validation.dart';
 
@@ -40,7 +41,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            StringsEn.txtWelcomeRegister,
+            Language.instance.txtWelcomeRegister(),
             style: TextStyle(
               fontSize: 24,
               fontFamily: Fonts.getFontFamilyTitillBold(),
@@ -48,7 +49,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 16),
           Text(
-            StringsEn.txtWelcomeRegister2,
+            Language.instance.txtWelcomeRegister2(),
             style: TextStyle(
               fontSize: 14,
               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -56,7 +57,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 40),
           Text(
-            StringsEn.txtUserName,
+            Language.instance.txtUserName(),
             style: TextStyle(
                 fontSize: 14,
                 fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -81,7 +82,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                     borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                hintText: StringsEn.txtHintUserName,
+                hintText: Language.instance.txtHintUserName(),
                 hintStyle: TextStyle(
                   fontSize: 14,
                   fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -96,7 +97,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 24),
           Text(
-            StringsEn.txtLocation,
+            Language.instance.txtLocation(),
             style: TextStyle(
                 fontSize: 14,
                 fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -112,17 +113,16 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
               textInputAction: TextInputAction.search,
               onChanged: (value){
                 // to search  a location automatically
-
-
               },
               decoration: InputDecoration(
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 15.5,top: 3, bottom: 3,right:8),
-                  child: SvgPicture.asset(
-                    'assets/images/search.svg',
-                    width: 20,
-                    height: 20,
-                  ),
+                prefixIcon: const Padding(
+                  padding: EdgeInsets.only(left: 15.5,top: 3, bottom: 3,right:8),
+                  child: Icon(Icons.my_location_outlined,size: 24,) ,
+                  // SvgPicture.asset(
+                  //   'assets/images/search.svg',
+                  //   width: 20,
+                  //   height: 20,
+                  // ),
                 ),
                 filled: true,
                 fillColor: ColorsCode.whiteColor100,
@@ -134,7 +134,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                     borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                hintText: StringsEn.txtHintLocation,
+                hintText: Language.instance.txtHintLocation(),
                 hintStyle: TextStyle(
                   fontSize: 14,
                   fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -149,7 +149,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 24),
           Text(
-            StringsEn.txtPhoneNumber,
+            Language.instance.txtPhoneNumber(),
             style: TextStyle(
                 fontSize: 14,
                 fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -192,7 +192,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 //prefixIcon: SvgPicture.asset('assets/images/line.svg'),
                 contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
                 border: InputBorder.none,
-                hintText:StringsEn.txtHintPhoneNumber,
+                hintText:Language.instance.txtHintPhoneNumber(),
                 hintStyle: TextStyle(
                   fontSize: 14,
                   fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -212,3 +212,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     );
   }
 }
+
+
+
