@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:save_me/constants/strings/Strings_en.dart';
+
 import 'package:save_me/constants/fonts.dart';
+
+import '../../../../constants/strings/utils/Language.dart';
 
 void showBottomSheetDialog(BuildContext context) {
   showModalBottomSheet(
@@ -30,7 +33,7 @@ void showBottomSheetDialog(BuildContext context) {
             ),
             //const SizedBox(height:16,),
             Text(
-              StringsEn.txtBottomDialog,
+              Language.instance.txtBottomDialog(),
               style: TextStyle(
                 fontSize:20,
                 fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -43,10 +46,12 @@ void showBottomSheetDialog(BuildContext context) {
     },
   ).whenComplete(() {
     // The bottom sheet is closed
-    print('Bottom sheet closed');
+    if (kDebugMode) {
+      print('Bottom sheet closed');
+    }
   });
-  // Close the bottom sheet automatically after 5 seconds
+  // Close the bottom sheet automatically
   Future.delayed(const Duration(milliseconds: 4000), () {
-    Navigator.of(context).pop(); // Close the bottom sheet
+    Navigator.pop(context); // Close the bottom sheet
   });
 }

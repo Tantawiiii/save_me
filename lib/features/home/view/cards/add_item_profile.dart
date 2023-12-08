@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:save_me/constants/strings/Strings_en.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/constants/fonts.dart';
 import 'package:save_me/features/home/view/cards/created_done.dart';
 
+import '../../../../constants/strings/utils/Language.dart';
 import '../../../auth/utils/validation.dart';
 
 
@@ -27,6 +27,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsCode.whiteColor,
+      resizeToAvoidBottomInset: false,
       body: isCompleted ?
       const Center(
               child: CreatedProfile(),
@@ -51,7 +52,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            StringsEn.txtItemCard,
+                            Language.instance.txtItemCard(),
                             style: TextStyle(
                               fontSize: 24,
                               fontFamily: Fonts.getFontFamilyTitillBold(),
@@ -62,7 +63,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                             height: 8.0,
                           ),
                           Text(
-                            StringsEn.txtItemCardHint,
+                            Language.instance.txtItemCardHint(),
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -129,7 +130,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                                   InkWell(
                                     onTap: details.onStepCancel,
                                     child: Text(
-                                      StringsEn.txtCancel,
+                                      Language.instance.txtCancel(),
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily:
@@ -153,13 +154,13 @@ class _AddItemProfileState extends State<AddItemProfile> {
   List<Step> getSteps() => [
         Step(
           isActive: _currentStep == 0,
-          title: const Text(StringsEn.txtItemBasicInfo),
+          title:  Text(Language.instance.txtItemBasicInfo()),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                StringsEn.txtName,
+                Language.instance.txtName(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -185,7 +186,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtHintUserItem,
+                    hintText: Language.instance.txtHintUserItem(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -202,7 +203,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                 height: 16,
               ),
               Text(
-                StringsEn.txtAdditionInfo,
+                Language.instance.txtAdditionInfo(),
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -228,7 +229,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: StringsEn.txtItemHintAdditionInfo,
+                    hintText: Language.instance.txtItemHintAdditionInfo(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),

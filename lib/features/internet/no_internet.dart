@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:save_me/constants/fonts.dart';
 
-import '../../constants/strings/Strings_en.dart';
+
+import '../../constants/strings/utils/Language.dart';
 
 class NoInternet extends StatelessWidget {
 
@@ -31,7 +32,7 @@ class NoInternet extends StatelessWidget {
                 width: 300),
             const SizedBox(height: 32,),
              Text(
-                 StringsEn.txtOffline,
+                 Language.instance.txtOffline(),
                style: TextStyle(
                  fontSize: 32,
                  fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -40,7 +41,7 @@ class NoInternet extends StatelessWidget {
              ),
             const SizedBox(height: 32,),
             Text(
-              StringsEn.txtPleaseCheck,
+              Language.instance.txtPleaseCheck(),
                style: TextStyle(
                  fontSize: 14,
                  fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -62,7 +63,7 @@ class NoInternet extends StatelessWidget {
                   ),
                   onPressed: onRefresh,
                   child: Text(
-                    StringsEn.txtBtnRef,
+                    Language.instance.txtBtnRef(),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,

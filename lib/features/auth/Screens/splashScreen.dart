@@ -16,14 +16,14 @@ class SplashScreen  extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-        splashIconSize: 350,
+        splashIconSize: 400,
         duration: 1000,
-      animationDuration: const Duration(seconds: 1),
+      animationDuration: const Duration(milliseconds: 3000),
       backgroundColor: Colors.white,
         pageTransitionType: PageTransitionType.topToBottom,
-        splashTransition: SplashTransition.rotationTransition,
+        splashTransition: SplashTransition.fadeTransition,
         splash: const CircleAvatar(
-          radius: 110,
+          radius: 150,
           backgroundImage: AssetImage("assets/images/logowithnobg.png"),
           backgroundColor: Colors.white,
         ),

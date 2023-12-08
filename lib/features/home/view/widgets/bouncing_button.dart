@@ -22,7 +22,7 @@ class _BouncingState extends State<Bouncing>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 100),
       lowerBound: 0.0,
       upperBound: 0.1,
     );

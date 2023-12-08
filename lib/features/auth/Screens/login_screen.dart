@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../constants/colors_code.dart';
-import '../../internet/connectivity_check.dart';
-import '../../internet/no_internet.dart';
 import '../widget/login_form.dart';
 
 import 'package:auto_route/auto_route.dart';
@@ -19,7 +17,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // internet Connection
+  //internet Connection
   // bool isOnline = true;
   // @override
   // void initState() {
@@ -39,39 +37,6 @@ class _LoginScreenState extends State<LoginScreen> {
   //     isOnline = online;
   //   });
   // }
-  //
-
-  bool _isConnected = true;
-
-  @override
-  void initState() {
-    super.initState();
-    // Check for initial connectivity status
-    _checkConnectivity();
-    // Subscribe to changes in connectivity
-    Connectivity().onConnectivityChanged.listen((result) {
-      _handleConnectivityChange(result);
-    });
-  }
-
-  // Function to check the current connectivity status
-  Future<void> _checkConnectivity() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    _handleConnectivityChange(connectivityResult);
-  }
-
-  // Function to handle changes in connectivity status
-  void _handleConnectivityChange(ConnectivityResult result) {
-
-    setState(() {
-      _isConnected = result != ConnectivityResult.none;
-      // _isConnected = result != ConnectivityResult.wifi;
-     //  _isConnected = result != ConnectivityResult.mobile;
-    });
-
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -109,28 +74,21 @@ class _LoginScreenState extends State<LoginScreen> {
           centerTitle: true,
           backgroundColor: ColorsCode.whiteColor,
         ),
-        body: Center(
-          child: _isConnected
-              ? const LoginForm()
-              : NoInternet(
-                  onRefresh: () {
-                    refreshInternetStatus();
-                  },
-                ),
-
-          // StreamBuilder<bool>(
-          //         stream: internetStatusController.stream,
-          //         initialData: true,
-          //         builder: (context,snapshot){
-          //           if (snapshot.data == true) {
-          //             return const LoginForm();
-          //           }  else {
-          //             return NoInternet(onRefresh: () { refreshInternetStatus();},);
-          //           }
-          //         },
-          //      ),
+        body: const Center(
+          child:LoginForm() ,
         ),
       ),
     );
   }
 }
+
+
+/**
+ * isOnline
+    ? const LoginForm()
+    : NoInternet(
+    onRefresh: () {
+    refreshInternetStatus();
+    },
+    ),
+ */

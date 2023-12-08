@@ -1,10 +1,17 @@
-import 'package:flutter/foundation.dart';
+
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:save_me/constants/strings/utils/Language.dart';
 import 'package:save_me/constants/colors_code.dart';
 import 'package:save_me/features/auth/Screens/login_screen.dart';
+import 'package:save_me/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../constants/strings/Strings_en.dart';
+
 import '../../../../constants/fonts.dart';
 import '../../../auth/utils/validation.dart';
 
@@ -45,16 +52,16 @@ class _SettingState extends State<Setting> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          margin: const EdgeInsets.only(top: 36, right: 24, left: 24),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        margin: const EdgeInsets.only(top: 30, right: 24, left: 24),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: ListView(
+          children: [
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -71,14 +78,20 @@ class _SettingState extends State<Setting> {
                           height: double.infinity,
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              if (kDebugMode) {
-                                print("You pressed Icon Elevated Button");
-                              }
+                              changeLanguage("en");
+
+                              // if (kDebugMode) {
+                              //   print("You pressed to translation of the English");
+                              // }
+                              // setState(() {
+                              //   _selectedLang = 'en';
+                              // });
+                              // Get.updateLocale(Locale(_selectedLang));
                             },
                             icon: SvgPicture.asset('assets/images/English.svg'),
                             //icon data for elevated button
                             label: Text(
-                              StringsEn.txtEnglish,
+                              Language.instance.txtEnglish(),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -101,14 +114,14 @@ class _SettingState extends State<Setting> {
                           height: double.infinity,
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              if (kDebugMode) {
-                                print("You pressed Icon Elevated Button");
-                              }
+
+                              changeLanguage("de");
+
                             },
                             icon: SvgPicture.asset('assets/images/Deutsch.svg'),
                             //icon data for elevated button
                             label: Text(
-                              StringsEn.txtGermany,
+                              Language.instance.txtGermany(),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -153,7 +166,7 @@ class _SettingState extends State<Setting> {
                             filled: true,
                             fillColor: ColorsCode.whiteColor100,
                             //labelText: Strings.txtPassword,
-                            hintText: StringsEn.txtHintOldPassword,
+                            hintText: Language.instance.txtHintOldPassword(),
                             hintStyle: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -206,7 +219,7 @@ class _SettingState extends State<Setting> {
                             fillColor: ColorsCode.whiteColor100,
 
                             //labelText: Strings.txtPassword,
-                            hintText: StringsEn.txtHintNewPassword,
+                            hintText: Language.instance.txtHintNewPassword(),
                             hintStyle: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -237,7 +250,7 @@ class _SettingState extends State<Setting> {
                           textInputAction: TextInputAction.done,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return StringsEn.txtHintConfirmPassword;
+                              return Language.instance.txtHintConfirmPassword();
                             }
                             // if (_newPasswordController.text !=
                             //     _confirmPasswordController.text) {
@@ -266,7 +279,7 @@ class _SettingState extends State<Setting> {
                             fillColor: ColorsCode.whiteColor100,
 
                             //labelText: Strings.txtPassword,
-                            hintText: StringsEn.txtHintConfirmNewPassword,
+                            hintText: Language.instance.txtHintConfirmNewPassword(),
                             hintStyle: TextStyle(
                               fontSize: 14,
                               fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -297,11 +310,11 @@ class _SettingState extends State<Setting> {
                           textInputAction: TextInputAction.done,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return StringsEn.txtHintConfirmPassword;
+                              return Language.instance.txtHintConfirmPassword();
                             }
                             if (_newPasswordController.text !=
                                 _confirmPasswordController.text) {
-                              return StringsEn.txtNotMatchPassword;
+                              return Language.instance.txtNotMatchPassword();
                             }
                             return null;
                           },
@@ -325,9 +338,6 @@ class _SettingState extends State<Setting> {
                         ),
                       ),
                       onPressed: () {
-                        // Check if both text fields are not empty
-                        /*      if (_passwordController.text.isNotEmpty &&
-                            _passwordConfirmController.text.isNotEmpty) {*/
                         setState(() {
                           // Toggle the visibility state
                           isTextFieldVisible = !isTextFieldVisible;
@@ -335,7 +345,7 @@ class _SettingState extends State<Setting> {
                         //}
                       },
                       child: Text(
-                        StringsEn.txtChangePassword,
+                        Language.instance.txtChangePassword(),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -353,7 +363,7 @@ class _SettingState extends State<Setting> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      StringsEn.txtLogOut,
+                      Language.instance.txtLogOut(),
                       style: TextStyle(
                         color: ColorsCode.redColor,
                         fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -374,9 +384,35 @@ class _SettingState extends State<Setting> {
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );
   }
+
+  changeLanguage(lang) async {
+    if (SaveMe.getLocal(context).languageCode == 'de') {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("language", "EN");
+
+      Language.instance.setLanguage("EN");
+
+      Locale newLocale = const Locale('en');
+      SaveMe.setLocale(context, newLocale);
+    } else {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("language", "DE");
+
+      Language.instance.setLanguage("DE");
+
+      Locale newLocale = const Locale('de');
+      SaveMe.setLocale(context, newLocale);
+    }
+
+    setState(() {
+      //EasyLoading.showSuccess("Changed");
+      Phoenix.rebirth(context);
+    });
+  }
+
 }

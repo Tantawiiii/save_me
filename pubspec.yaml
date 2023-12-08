@@ -13,17 +13,15 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.6
-
   fluttertoast: ^8.2.4
-  # network_info_plus: request
+
   json_annotation: ^4.8.1
-  google_places_flutter: ^2.0.6
   http: any
   shared_preferences: ^2.2.2
   connectivity_plus: ^5.0.2
   lottie: ^2.6.0
   status_change: ^2.0.0
-  intl: ^0.18.1
+
   counter: ^0.2.2
   flutter_bloc: ^7.1.0
   intl_phone_number_input: ^0.7.3+1
@@ -34,28 +32,25 @@ dependencies:
   bouncing_button: ^0.0.1+2
   flutter_speed_dial: ^7.0.0
 
-
+  google_places_flutter: ^2.0.6
   google_maps_webservice: ^0.0.19
   google_maps_place_picker: ^2.0.0
   geolocator: ^7.0.1
   geocoding: ^2.1.1
   google_maps_flutter: ^2.5.0
-  flutter_typeahead: ^5.0.1
-
+  flutter_typeahead: ^4.0.2
 
   get: ^4.6.6
   connectivity: ^3.0.6
   internet_connection_checker: ^1.0.0+1
 
-  flutter_localization: ^0.1.14
-
-
   flutter_screenutil: ^5.9.0
   provider: ^5.0.0
   auto_route: ^7.8.4
 
-  spincircle_bottom_bar: ^2.0.0
-
+  maps_places_autocomplete: ^0.0.2
+  flutter_phoenix: ^1.1.1
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -63,14 +58,12 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
 
-  auto_route_generator: ^7.3.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -99,6 +92,7 @@ flutter:
      - family: TitilliumWeb-SemiBold
        fonts:
          - asset: assets/fonts/TitilliumWeb-SemiBold.ttf
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

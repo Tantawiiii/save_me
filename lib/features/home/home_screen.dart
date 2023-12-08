@@ -21,6 +21,8 @@ import 'package:save_me/features/home/view/pages/setting_page.dart';
 
 import 'package:auto_route/auto_route.dart';
 
+import '../../constants/strings/utils/Language.dart';
+
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -87,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Column(
             children: [
               Text(
-                StringsEn.txtAppBarHome,
+                Language.instance.txtAppBarHome(),
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -95,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Text(
-                StringsEn.txtAppBarWelcome,
+                Language.instance.txtAppBarWelcome(),
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -290,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
             notchMargin: 0,
             shadowColor: ColorsCode.blackColor100,
             child: Container(
-              padding: const EdgeInsets.only(left: 6, right: 15),
+              padding: const EdgeInsets.only(left: 0, right: 26),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -310,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       Text(
-                        StringsEn.txtHomeTab,
+                        Language.instance.txtHomeTab(),
                         style: TextStyle(
                             color: currentTab == 0
                                 ?  isActiveIconColor
@@ -343,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       Text(
-                        StringsEn.txtProfileTab,
+                        Language.instance.txtProfileTab(),
                         style: TextStyle(
                             color: currentTab == 1
                                 ? isActiveIconColor
@@ -374,7 +376,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             : ColorsCode.grayColor300,
                       ),
                       Text(
-                        StringsEn.txtLocationTab,
+                        Language.instance.txtLocationTab(),
                         style: TextStyle(
                             color: currentTab == 2
                                 ? isActiveIconColor
@@ -385,7 +387,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   const SizedBox(
-                    width: 32,
+                    width: 26,
                   ),
                   Column(
                     children: [
@@ -405,7 +407,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             : ColorsCode.grayColor300,
                       ),
                       Text(
-                        StringsEn.txtSettingsTab,
+                        Language.instance.txtSettingsTab(),
                         style: TextStyle(
                             color: currentTab == 3
                                 ? isActiveIconColor
