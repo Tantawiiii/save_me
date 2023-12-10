@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:save_me/constants/fonts.dart';
+
+import '../../utils/constants/fonts.dart';
+import '../../utils/strings/Language.dart';
 
 
-import '../../constants/strings/utils/Language.dart';
 
 class NoInternet extends StatelessWidget {
 

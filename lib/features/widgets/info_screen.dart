@@ -3,9 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../constants/colors_code.dart';
-import '../../../../constants/fonts.dart';
-import '../../../../constants/strings/Strings_en.dart';
+import '../../utils/constants/colors_code.dart';
+import '../../utils/constants/fonts.dart';
+import '../../utils/strings/Strings_en.dart';
+
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});

@@ -6,11 +6,12 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:save_me/features/home/view/pages/location/web_services/network_utils.dart';
 
-import '../../../../../constants/colors_code.dart';
-import '../../../../../constants/fonts.dart';
 
-import '../../../../../constants/strings/utils/Language.dart';
-import '../../widgets/upload_bottom_sheet.dart';
+import '../../../../../utils/constants/colors_code.dart';
+import '../../../../../utils/constants/fonts.dart';
+import '../../../../../utils/strings/Language.dart';
+import '../../../../widgets/upload_bottom_sheet.dart';
+
 
 @RoutePage()
 class Location extends StatefulWidget {

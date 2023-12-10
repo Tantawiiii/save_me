@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:save_me/constants/colors_code.dart';
-import 'package:save_me/constants/fonts.dart';
-import 'package:save_me/features/home/view/widgets/info_screen.dart';
 
-import '../../../../constants/strings/Strings_en.dart';
+
+import '../../utils/constants/colors_code.dart';
+import '../../utils/constants/fonts.dart';
+import '../../utils/strings/Strings_en.dart';
+import 'info_screen.dart';
 
 class ItemCard extends StatelessWidget {
   const ItemCard({super.key});
@@ -124,11 +124,6 @@ class ItemCard extends StatelessWidget {
                   width: 120,
                   height: 35,
                   alignment: Alignment.topRight,
-                  child: Center(
-                    child: Text('Kid',style: TextStyle(
-                      color: Colors.white,
-                    ),),
-                  ),
                   decoration: BoxDecoration(
                     color: ColorsCode.purpleColor,
                     borderRadius: const BorderRadius.only(
@@ -136,6 +131,11 @@ class ItemCard extends StatelessWidget {
                       bottomLeft: Radius.circular(12.0),
                     ),
         
+                  ),
+                  child: const Center(
+                    child: Text('Kid',style: TextStyle(
+                      color: Colors.white,
+                    ),),
                   ),
                 ),
               ],

@@ -1,12 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:save_me/constants/colors_code.dart';
-import 'package:save_me/constants/fonts.dart';
 import 'package:save_me/features/home/home_screen.dart';
 
-import '../../../../constants/strings/utils/Language.dart';
-import '../widgets/item_card.dart';
+import '../../../../utils/constants/colors_code.dart';
+import '../../../../utils/constants/fonts.dart';
+import '../../../../utils/strings/Language.dart';
 
 @RoutePage()
 class CreatedProfile extends StatelessWidget {
@@ -76,7 +75,8 @@ class CreatedProfile extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const ItemCard()),
+                            builder: (context) => const HomeScreen()),
+                        //accesstoken: "",
                       );
                     },
                     child: Text(
