@@ -2,9 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:save_me/constants/fonts.dart';
-
-import '../../../../constants/strings/utils/Language.dart';
+import '../../utils/constants/fonts.dart';
+import '../../utils/strings/Language.dart';
 
 void showBottomSheetDialog(BuildContext context) {
   showModalBottomSheet(

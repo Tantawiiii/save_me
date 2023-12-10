@@ -1,19 +1,20 @@
 import 'dart:io';
 
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:save_me/constants/colors_code.dart';
 
-
-import '../../../../constants/fonts.dart';
-import '../../../../constants/strings/utils/Language.dart';
+import '../../../../utils/constants/colors_code.dart';
+import '../../../../utils/constants/fonts.dart';
+import '../../../../utils/strings/Language.dart';
 import '../../../auth/utils/validation.dart';
-import '../widgets/upload_bottom_sheet.dart';
 
 import 'package:auto_route/auto_route.dart';
+
+import '../../../widgets/upload_bottom_sheet.dart';
 
 
 @RoutePage()
@@ -137,10 +138,14 @@ class _ProfileState extends State<Profile> {
                   ),
                   child: InternationalPhoneNumberInput(
                     onInputChanged: (PhoneNumber number) {
-                      print(number.phoneNumber);
+                      if (kDebugMode) {
+                        print(number.phoneNumber);
+                      }
                     },
                     onInputValidated: (bool value) {
-                      print(value);
+                      if (kDebugMode) {
+                        print(value);
+                      }
                     },
                     selectorConfig: const SelectorConfig(
                       selectorType: PhoneInputSelectorType.BOTTOM_SHEET,

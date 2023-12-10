@@ -1,15 +1,10 @@
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import '../../../constants/strings/Strings_en.dart';
-import '../../../constants/colors_code.dart';
-import '../../../constants/fonts.dart';
-import '../../../constants/strings/utils/Language.dart';
-import '../../api_helper/api_client.dart';
+
+import '../../../data/api_client.dart';
+import '../../../utils/constants/colors_code.dart';
+import '../../../utils/constants/fonts.dart';
+import '../../../utils/strings/Language.dart';
 import '../utils/validation.dart';
 
 class CompleteProfileForm extends StatefulWidget {
@@ -20,7 +15,6 @@ class CompleteProfileForm extends StatefulWidget {
 }
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
-
   final TextEditingController _phoneNumController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
@@ -33,9 +27,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,9 +73,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   borderSide: BorderSide.none,
                 ),
                 focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.purple.shade100,
-                    )),
+                  borderSide: BorderSide(
+                    color: Colors.purple.shade100,
+                  ),
+                ),
                 hintText: Language.instance.txtHintUserName(),
                 hintStyle: TextStyle(
                   fontSize: 14,
@@ -91,7 +86,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 //isDense: true,
               ),
               validator: (value) {
-                return Validation.validateEmail(value ?? "");
+                return Validation.validateName(value ?? "");
               },
             ),
           ),
@@ -110,19 +105,16 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           SizedBox(
             height: 56,
             child: TextFormField(
+              controller: _locationController,
               textInputAction: TextInputAction.search,
-              onChanged: (value){
-                // to search  a location automatically
-              },
               decoration: InputDecoration(
                 prefixIcon: const Padding(
-                  padding: EdgeInsets.only(left: 15.5,top: 3, bottom: 3,right:8),
-                  child: Icon(Icons.my_location_outlined,size: 24,) ,
-                  // SvgPicture.asset(
-                  //   'assets/images/search.svg',
-                  //   width: 20,
-                  //   height: 20,
-                  // ),
+                  padding:
+                      EdgeInsets.only(left: 15.5, top: 3, bottom: 3, right: 8),
+                  child: Icon(
+                    Icons.my_location_outlined,
+                    size: 24,
+                  ),
                 ),
                 filled: true,
                 fillColor: ColorsCode.whiteColor100,
@@ -132,8 +124,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 ),
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.purple.shade100,
-                    )),
+                  color: Colors.purple.shade100,
+                )),
                 hintText: Language.instance.txtHintLocation(),
                 hintStyle: TextStyle(
                   fontSize: 14,
@@ -160,7 +152,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           Container(
             height: 56,
-            padding: const EdgeInsets.only(left: 12,right: 5),
+            padding: const EdgeInsets.only(left: 12, right: 5),
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.grey.shade100,
@@ -185,20 +177,19 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
               formatInput: false,
               //maxLength: 11,
               spaceBetweenSelectorAndTextField: 0,
-              keyboardType:
-              const TextInputType.numberWithOptions(signed: true, decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                  signed: true, decimal: true),
               cursorColor: Colors.black,
-              inputDecoration:  InputDecoration(
+              inputDecoration: InputDecoration(
                 //prefixIcon: SvgPicture.asset('assets/images/line.svg'),
                 contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
                 border: InputBorder.none,
-                hintText:Language.instance.txtHintPhoneNumber(),
+                hintText: Language.instance.txtHintPhoneNumber(),
                 hintStyle: TextStyle(
                   fontSize: 14,
                   fontFamily: Fonts.getFontFamilyTitillRegular(),
                   color: ColorsCode.grayColor,
                 ),
-
               ),
               onSaved: (PhoneNumber number) {
                 print('On Saved: $number');
@@ -206,12 +197,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             ),
           ),
           /////////////////////////////
-
         ],
       ),
     );
   }
 }
-
-
-

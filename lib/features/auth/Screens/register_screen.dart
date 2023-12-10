@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../constants/colors_code.dart';
-import '../widget/register_form.dart';
+import '../../../utils/constants/colors_code.dart';
 
 import 'package:auto_route/auto_route.dart';
+
+import '../widget/register_form.dart';
 
 
 @RoutePage()

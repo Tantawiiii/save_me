@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:save_me/constants/fonts.dart';
 
-import '../../../../constants/strings/utils/Language.dart';
+import '../../../../utils/constants/fonts.dart';
+import '../../../../utils/strings/Language.dart';
 import '../../provider/speed_dial_provider.dart';
 import 'package:auto_route/auto_route.dart';
 

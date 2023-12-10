@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:save_me/constants/strings/Strings_en.dart';
-import 'package:save_me/constants/colors_code.dart';
-import 'package:save_me/constants/fonts.dart';
+
 
 import 'package:save_me/features/home/view/cards/add_disabled_profile.dart';
 import 'package:save_me/features/home/view/cards/add_item_profile.dart';
@@ -21,12 +19,15 @@ import 'package:save_me/features/home/view/pages/setting_page.dart';
 
 import 'package:auto_route/auto_route.dart';
 
-import '../../constants/strings/utils/Language.dart';
+import '../../utils/constants/colors_code.dart';
+import '../../utils/constants/fonts.dart';
+import '../../utils/strings/Language.dart';
 
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+ // final String accesstoken;
+  const HomeScreen({Key? key,}) : super(key: key);
 
   static String id = 'HomeScreen';
   static final GlobalKey<_HomeScreenState> homePageKey = GlobalKey<_HomeScreenState>();

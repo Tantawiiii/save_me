@@ -2,7 +2,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../constants/colors_code.dart';
+import '../../../utils/constants/colors_code.dart';
 import '../widget/login_form.dart';
 
 import 'package:auto_route/auto_route.dart';

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:save_me/constants/colors_code.dart';
 
-import '../constants/constants.dart';
+import '../../utils/constants/colors_code.dart';
+import '../../utils/constants/constants.dart';
+
 
 class ThemeClass {
   Color lightPrimaryColor = ColorsCode.whiteColor;
@@ -33,7 +34,6 @@ class ThemeClass {
         MaterialStateProperty.all<Color>(Colors.white), //actual text color
       ),
     ),
-    // - - - - - - - - - - - - - - -  - - - - -
   );
 }
    ThemeClass _themeClass = ThemeClass();
