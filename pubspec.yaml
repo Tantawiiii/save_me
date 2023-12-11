@@ -51,6 +51,8 @@ dependencies:
   maps_places_autocomplete: ^0.0.2
   flutter_phoenix: ^1.1.1
   intl: ^0.18.1
+  flutter_bounce: ^1.1.0
+  bounceable_effect: ^0.0.1
 
 dev_dependencies:
   flutter_test:

@@ -26,7 +26,6 @@ import '../../utils/strings/Language.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
- // final String accesstoken;
   const HomeScreen({Key? key,}) : super(key: key);
 
   static String id = 'HomeScreen';

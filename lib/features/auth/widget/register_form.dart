@@ -75,7 +75,6 @@ class _RegisterFormState extends State<RegisterForm> {
 
     // Simulate a 1-second delay
     Future.delayed(const Duration(milliseconds: 1500), () {
-      // Set loading to false to hide the loading indicator after the delay
       setState(() {
         isLoading = false;
       });
