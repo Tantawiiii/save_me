@@ -153,7 +153,9 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                                       ),
                                     ),
                                     child: Text(
-                                      isLastStep ? "Create" : "Next",
+                                      isLastStep
+                                          ? Language.instance.txtCreate()
+                                          : Language.instance.txtNext(),
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontFamily:

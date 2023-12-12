@@ -72,12 +72,11 @@ class CreatedProfile extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => const HomeScreen(user: null,)),
-                      //   //accesstoken: "",
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()),
+                      );
                     },
                     child: Text(
                       Language.instance.txtBackToHomeBtn(),

@@ -150,7 +150,9 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                                       ),
                                     ),
                                     child: Text(
-                                      isLastStep ? "Create" : "Next",
+                                      isLastStep
+                                          ? Language.instance.txtCreate()
+                                          : Language.instance.txtNext(),
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontFamily:

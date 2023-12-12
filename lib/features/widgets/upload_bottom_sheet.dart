@@ -6,6 +6,7 @@ import '../../utils/constants/fonts.dart';
 import '../../utils/strings/Language.dart';
 
 void showBottomSheetDialog(BuildContext context) {
+
   showModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
@@ -43,12 +44,7 @@ void showBottomSheetDialog(BuildContext context) {
         ),
       );
     },
-  ).whenComplete(() {
-    // The bottom sheet is closed
-    if (kDebugMode) {
-      print('Bottom sheet closed');
-    }
-  });
+  );
   // Close the bottom sheet automatically
   Future.delayed(const Duration(milliseconds: 4000), () {
     Navigator.pop(context); // Close the bottom sheet

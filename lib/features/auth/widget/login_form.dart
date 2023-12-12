@@ -296,7 +296,6 @@ class LoginFormState extends State<LoginForm> {
       String password = _passwordController.text;
 
       dynamic user = await ApiClient.loginUser(
-        context,
         _emailController.text,
         _passwordController.text,
       );

@@ -6,6 +6,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:save_me/features/auth/Screens/login_screen.dart';
+import 'package:save_me/features/auth/Screens/splashScreen.dart';
 import 'package:save_me/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -401,10 +402,13 @@ class _SettingState extends State<Setting> {
                         ),
                         InkWell(
                             onTap: () {
+
+                              // to remove an access Token and logout
+                              setToken();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const LoginScreen(),
+                                  builder: (context) => const SplashScreen(),
                                 ),
                               );
                             },
@@ -422,6 +426,12 @@ class _SettingState extends State<Setting> {
         ],
       ),
     );
+  }
+
+
+  static Future<bool> setToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return await prefs.setString("access_token", '');
   }
 
   changeLanguage(lang) async {

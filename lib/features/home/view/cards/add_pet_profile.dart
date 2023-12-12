@@ -149,7 +149,9 @@ class _AddPetProfileState extends State<AddPetProfile> {
                                 ),
                               ),
                               child: Text(
-                                isLastStep ? "Create" : "Next",
+                                isLastStep
+                                    ? Language.instance.txtCreate()
+                                    : Language.instance.txtNext(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontFamily:
