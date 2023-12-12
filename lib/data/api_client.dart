@@ -46,13 +46,12 @@ class ApiClient {
     );
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> userData = json.decode(response.body);
-      final User user = User.fromJson(userData);
-
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
       // Store the user data token using shared_preferences
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('access_token', user.toString());
-
+      prefs.setString('access_token', responseData['access_token']);
+      final user = await getUserProfileData(responseData['access_token']);
+      prefs.setString('user', jsonEncode(user.toJson()));
       return "Login Successful!";
     } else {
       if (kDebugMode) {

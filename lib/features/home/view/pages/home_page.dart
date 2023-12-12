@@ -21,21 +21,18 @@ class _HomeState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body:  Center(
-        child: GestureDetector(
-          onTap: (){
-            Provider.of<SpeedDialProvider>(context, listen: false).toggleDial();
-          },
-          child: Text(
-            Language.instance.txtStartAddProfile(),
-            style: TextStyle(
-              fontSize: 24,
-              fontFamily: Fonts.getFontFamilyTitillBold(),
-              fontWeight: FontWeight.bold,
-            ),
+      body:
+      Center(
+        child: Text(
+          Language.instance.txtStartAddProfile(),
+          style: TextStyle(
+            fontSize: 24,
+            fontFamily: Fonts.getFontFamilyTitillBold(),
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
     );
   }
+
 }
