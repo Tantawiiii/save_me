@@ -1,56 +1,64 @@
+// user_model.dart
 
-
-class User{
-
-   final String? name;
-   final String? photoUrl;
-   final String email;
-   final String password;
-   final String? phoneNumber;
-   final String? location;
-   final String? contactInfo;
-   final String? id;
-
+class User {
+  final String? name;
+  final String email;
+  final String password;
+  final Location? location;
+  final String? phoneNumber;
+  final String? contactInfo;
 
   User({
-    this.id,
     this.name,
     required this.email,
     required this.password,
-     this.phoneNumber,
      this.location,
-     this.photoUrl,
+     this.phoneNumber,
      this.contactInfo,
   });
 
-  //create a User object from a JSON map
-  factory User.fromJson(Map<String, dynamic> json){
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'email': email,
+      'password': password,
+      'location': location?.toJson(),
+      'phoneNumber': phoneNumber,
+      'contactInfo': contactInfo,
+    };
+  }
+  factory User.fromJson(Map<String, dynamic> json) {
     return User(
-        name: json['name'].toString(),
-        email: json['email'].toString(),
-        password: json['password'].toString(),
-        phoneNumber: json['phoneNumber'].toString(),
-        location: json['location'].toString(),
-      photoUrl:  json['photoUrl'].toString(),
-      contactInfo:  json['contactInfo'].toString(),
-      id:  json['id'].toString(),
+      name: json['name'].toString(),
+      email: json['email'].toString(),
+      password: json['password'].toString(),
+      location: Location.fromJson(json['location']),
+      phoneNumber: json['phoneNumber'].toString(),
+      contactInfo: json['contactInfo'].toString(),
     );
   }
 
-  // Convert the User to a JSON for API requests
-  Map<String, dynamic> toJson()  {
-    final Map<String,dynamic> data = <String,dynamic>{};
-    data['name'] = name;
-    data['email'] = email;
-    data['password'] = password;
-    data['phoneNumber'] = phoneNumber;
-    data['location'] = location;
-    data['photoUrl'] = photoUrl;
-    data['contactInfo'] = contactInfo;
-    data['id'] = id;
-    return data;
+}
+
+class Location {
+  final String? name;
+  final String? latitude;
+  final String? longitude;
+
+  Location({ this.name,  this.latitude,  this.longitude});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'latitude': latitude,
+      'longitude': longitude,
+    };
   }
-
-
-
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      name: json['name'].toString(),
+      latitude: json['latitude'].toString(),
+      longitude: json['longitude'].toString(),
+    );
+  }
 }

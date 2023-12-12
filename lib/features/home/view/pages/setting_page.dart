@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
@@ -15,6 +14,7 @@ import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
 import '../../../auth/utils/validation.dart';
 import '../../../widgets/loading_dialog.dart';
+
 
 @RoutePage()
 class Setting extends StatefulWidget {
@@ -33,6 +33,7 @@ class _SettingState extends State<Setting> {
 
   bool passwordVisible = true;
   final FocusNode _passwordFocusNode = FocusNode();
+
 
   @override
   void initState() {
@@ -98,7 +99,6 @@ class _SettingState extends State<Setting> {
                                 onPressed: () {
                                   setState(() {
                                     changeLanguage("en");
-
                                     _handleButtonClick();
                                   });
                                 },

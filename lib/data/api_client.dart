@@ -10,10 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../features/auth/models/user_model.dart';
 
 class ApiClient {
-
-
   // register User Api request
-  Future<bool> registerUser(User user) async {
+  Future<String> registerUser(User user) async {
     const url = Endpoints.register;
     var headers = {
       'Content-Type': 'application/json',
@@ -24,58 +22,44 @@ class ApiClient {
       headers: headers,
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
-      if (kDebugMode) {
-        print("Success Response");
-      }
-      return true;
+      return "Registration Successful!";
     } else {
-      if (kDebugMode) {
-        print("Error Failed Response ${response.statusCode}");
-      }
+      throw Exception('Failed to register user');
     }
-    return false;
   }
 
   // login User Api request
-  static Future<User?> loginUser(
-    String email,
-    String password,
-  ) async {
+  static Future<String> loginUser(String email, String password) async {
     const url = Endpoints.login;
     final body = jsonEncode({
       'email': email,
       'password': password,
     });
 
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        body: body,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      );
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> userData = json.decode(response.body);
-        final User user = User.fromJson(userData);
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    final response = await http.post(
+      Uri.parse(url),
+      body: body,
+      headers: headers,
+    );
 
-       // Store the user data token using shared_preferences
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString( 'access_token', user.toString());
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> userData = json.decode(response.body);
+      final User user = User.fromJson(userData);
 
-        return user;
-      } else {
-        if (kDebugMode) {
-          print("Error: ${response.statusCode}");
-          print("Error Body: ${response.body}");
-        }
-        throw Exception("Login failed with status code ${response.statusCode}");
-      }
-    } catch (e) {
+      // Store the user data token using shared_preferences
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('access_token', user.toString());
+
+      return "Login Successful!";
+    } else {
       if (kDebugMode) {
-        print("Exception during login request: $e");
+        print("Error: ${response.statusCode}");
+        print("Error Body: ${response.body}");
       }
-      return null; // or handle the exception as needed
+      throw Exception("Login failed with status code ${response.statusCode}");
     }
   }
 
@@ -128,7 +112,4 @@ class ApiClient {
       return {'error': 'Failed to update user profile'};
     }
   }
-
-
-
 }
