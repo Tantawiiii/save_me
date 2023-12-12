@@ -35,6 +35,8 @@ class _RegisterFormState extends State<RegisterForm> {
   final _confirmPasswordController = TextEditingController();
   final _nameController = TextEditingController();
   final _locationController = TextEditingController();
+  double locationLatitude = 0.0;
+  double locationLongitude = 0.0;
   final _phoneNumberController = TextEditingController();
 
   String initialCountry = 'EG';
@@ -486,6 +488,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         _locationController.selection =
                             TextSelection.fromPosition(TextPosition(
                                 offset: prediction.description!.length));
+
                       },
                     ),
                   ),
@@ -557,51 +560,54 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   void _register() async {
-    // Implement your registration logic here
-    final email = _emailController.text;
-    final password = _passwordController.text;
-    final name = _nameController.text;
-    final location = _locationController.text;
-    final phoneNumber = _phoneNumberController.text;
 
-    if (kDebugMode) {
-      print('Name: $name');
-      print('Email: $email');
-      print('Password: $password');
-      print('PhoneNumber: $phoneNumber');
-      print('location: $location');
+    try {
+
+      // Implement your registration logic here
+      final email = _emailController.text;
+      final password = _passwordController.text;
+      final name = _nameController.text;
+      final location = _locationController.text;
+      final phoneNumber = _phoneNumberController.text;
+
+      if (kDebugMode) {
+        print('Name: $name');
+        print('Email: $email');
+        print('Password: $password');
+        print('PhoneNumber: $phoneNumber');
+        print('location: $location');
+        print('lat: $locationLatitude');
+        print('long: $locationLongitude');
+
+      }
+
+      LoadingDialog(isLoading: isLoading);
+      final user = User(
+        name: _nameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+        location: Location(
+          name: _locationController.text,
+          latitude: '0.0',
+          longitude: '0.0',
+        ),
+        phoneNumber: _phoneNumberController.text,
+        contactInfo: '<string>',
+      );
+
+      String registerSuccessful = await ApiClient().registerUser(user);
+
+      print(registerSuccessful);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder:
+            (context) =>  const LoginScreen()),
+      );
+    } catch (e)  {
+      print("Register failed: $e "  );
     }
 
-    LoadingDialog(isLoading: isLoading);
 
-    // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //   content: Text('Progress to Add Data'),
-    //   backgroundColor: Colors.blueAccent,
-    // ));
 
-    final user = User(
-      id: '<uuid>',
-      photoUrl: '<string>',
-      name: _nameController.text,
-      email: _emailController.text,
-      password: _passwordController.text,
-      phoneNumber: _phoneNumberController.text,
-      location: _locationController.text,
-      contactInfo: '<string>',
-    );
-
-    final registerSuccessful = await ApiClient().registerUser(user);
-
-    if (registerSuccessful) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Error: $registerSuccessful'),
-        backgroundColor: Colors.red.shade300,
-      ));
-    }
   }
 }

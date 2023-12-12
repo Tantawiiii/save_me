@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -15,6 +14,8 @@ import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
 import '../../models/profile_info.dart';
+
+
 
 @RoutePage()
 class AddKidProfile extends StatefulWidget {
@@ -136,7 +137,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                       }
                       print('Success added to state');
                       _addChildProfile();
-
                     } else {
                       setState(() => _currentStep += 1);
                     }
@@ -823,7 +823,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
             ],
           ),
         ),
-
       ];
 
 

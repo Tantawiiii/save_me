@@ -1,9 +1,7 @@
-// ignore_for_file: depend_on_referenced_packages
 import 'package:flutter/material.dart';
-import 'package:save_me/features/auth/Screens/login_screen.dart';
 import 'package:save_me/features/auth/Screens/splashScreen.dart';
-import 'package:save_me/features/home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 String language = "EN";
 late Locale _locale;
