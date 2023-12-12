@@ -827,8 +827,9 @@ class _AddKidProfileState extends State<AddKidProfile> {
 
 
   void _addChildProfile() async {
+
     // Implement your Profile logic here
-    final photo = _image;
+    final photo = "_image";
     final name = _nameController.text;
     final birthday = _birthdayController.text;
     final age = _ageController.text;

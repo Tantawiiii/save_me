@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../data/api_endpoints.dart';
 import '../models/profile_info.dart';
-import 'package:http/http.dart' as http;
 
 Future<bool> postProfileData(ProfileInfo profileInfo) async {
   const url = Endpoints.profiles;
@@ -33,10 +33,41 @@ Future<bool> postProfileData(ProfileInfo profileInfo) async {
       print("Error Failed Response: ${response.statusCode}");
       print("url: $url");
       print("asss: $accessToken");
-
     }
   }
   return false;
+}
+
+// get profile data
+
+Future<List<ProfileInfo>> getUserProfileData(String accessToken) async {
+  const url = Endpoints.profiles;
+  List<ProfileInfo> profiles = [];
+
+  try {
+    final http.Response response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+      responseData.forEach((key, value) {
+        profiles.add(ProfileInfo.fromJson(value));
+      });
+
+      print('Successfully Getting Profiles...');
+
+      return profiles;
+    } else {
+      throw Exception('Failed to load user profile data');
+    }
+  } catch (error) {
+    print('Error: $error');
+    throw Exception('Failed to load user profile data');
+  }
 }
 
 // Function to get the access token from SharedPreferences
