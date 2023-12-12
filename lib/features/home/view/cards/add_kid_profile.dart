@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -6,12 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:save_me/features/home/api_helper/api_helper.dart';
 
 import 'package:save_me/features/home/view/cards/created_done.dart';
 import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
 import '../../../auth/utils/validation.dart';
+import '../../../widgets/loading_dialog.dart';
+import '../../models/profile_info.dart';
 
 @RoutePage()
 class AddKidProfile extends StatefulWidget {
@@ -22,18 +27,33 @@ class AddKidProfile extends StatefulWidget {
 }
 
 class _AddKidProfileState extends State<AddKidProfile> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
+  File? _image;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _birthdayController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _charController = TextEditingController();
+  final TextEditingController _behaviorController = TextEditingController();
+  final TextEditingController _specialCharController = TextEditingController();
+  final TextEditingController _medicinesController = TextEditingController();
+  final TextEditingController _allergiesController = TextEditingController();
+  final TextEditingController _diseasesController = TextEditingController();
+  final TextEditingController _dietController = TextEditingController();
+  final TextEditingController _addInfoController = TextEditingController();
+
+
+
+
   int _currentStep = 0;
   bool isCompleted = false;
-  File? _image;
 
   @override
   void initState() {
     // TODO: implement initState
-    _dateController.text = "";
+    _birthdayController.text = "";
     super.initState();
   }
 
@@ -146,7 +166,9 @@ class _AddKidProfileState extends State<AddKidProfile> {
                                 ),
                               ),
                               child: Text(
-                                isLastStep ? "Create" : "Next",
+                                isLastStep
+                                    ? Language.instance.txtCreate()
+                                    : Language.instance.txtNext(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontFamily:
@@ -261,9 +283,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
-                  },
                 ),
               ),
               const SizedBox(
@@ -281,7 +300,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
                 height: 8,
               ),
               TextField(
-                controller: _dateController,
+                controller: _birthdayController,
                 style: const TextStyle(
                   color: Colors.black,
                 ),
@@ -337,7 +356,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     String formattedDate =
                         DateFormat(Language.instance.txtDatePattern()).format(pickedDate);
                     setState(() {
-                      _dateController.text = formattedDate;
+                      _birthdayController.text = formattedDate;
                     });
                   } else {
                     if (kDebugMode) {
@@ -384,9 +403,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
-                  },
                 ),
               ),
             ],
@@ -414,7 +430,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
               SizedBox(
                 height: 56,
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _weightController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     filled: true,
@@ -435,9 +451,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
-                  },
                 ),
               ),
               const SizedBox(
@@ -457,7 +470,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
               SizedBox(
                 height: 56,
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _heightController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     filled: true,
@@ -478,9 +491,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
-                  },
                 ),
               ),
               const SizedBox(
@@ -499,7 +509,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _charController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -521,9 +531,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -542,7 +549,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _behaviorController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -564,9 +571,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -585,7 +589,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _specialCharController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -607,9 +611,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
             ],
@@ -635,7 +636,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _medicinesController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -657,9 +658,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -678,7 +676,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _allergiesController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -700,9 +698,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -721,7 +716,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _dietController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -743,9 +738,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -764,7 +756,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _diseasesController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -786,9 +778,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -807,7 +796,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _addInfoController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -829,13 +818,88 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     ),
                     //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
             ],
           ),
         ),
       ];
+
+
+  void _addChildProfile() async {
+    // Implement your Profile logic here
+    final photo = _image.toString();
+    final name = _nameController.text;
+    final birthday = _birthdayController.text;
+    final age = _ageController.text;
+    final weight = _weightController.text;
+    final height = _heightController.text;
+    final character = _charController.text;
+    final behavior = _behaviorController.text;
+    final specialChar = _specialCharController.text;
+    final medication = _medicinesController.text;
+    final allergies = _allergiesController.text;
+    final diet = _dietController.text;
+    final diseases = _diseasesController.text;
+    final addInfo = _addInfoController.text;
+
+    if (kDebugMode) {
+      print('photo: $photo');
+      print('Name: $name');
+      print('birthday: $birthday');
+      print('age: $age');
+      print('weight: $weight');
+      print('height: $height');
+      print('character: $character');
+      print('behavior: $behavior');
+      print('specialChar: $specialChar');
+      print('medication: $medication');
+      print('allergies: $allergies');
+      print('diet: $diet');
+      print('diseases: $diseases');
+      print('addInfo: $addInfo');
+    }
+
+   // LoadingDialog(isLoading: isLoading);
+
+    // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    //   content: Text('Progress to Add Data'),
+    //   backgroundColor: Colors.blueAccent,
+    // ));
+
+    final profileInfo = ProfileInfo(
+      photoUrl: photo,
+      name: name,
+      birthdate: birthday,
+      age: age,
+      weight: weight,
+      height: height,
+      characteristics: character,
+      behavior: behavior,
+      specialCharacteristics: specialChar,
+      medicines: medication,
+      allergies: allergies,
+      diet: diet,
+      diseases: diseases,
+      additionalInformation: addInfo
+    );
+
+
+    final createProfileSuccess = await postProfileData(profileInfo);
+
+    if (createProfileSuccess) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+      print("Success Uploading profile information's and added it to Home");
+
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const CreatedProfile()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: $createProfileSuccess'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
+
 }

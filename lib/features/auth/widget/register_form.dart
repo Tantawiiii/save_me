@@ -1,13 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-
-import 'package:save_me/features/auth/widget/complete_profile_form.dart';
 import 'package:save_me/features/home/home_screen.dart';
 import 'package:save_me/utils/strings/Strings_en.dart';
 
@@ -31,7 +28,6 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-
   final _formKey1 = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
   final _emailController = TextEditingController();
@@ -58,11 +54,10 @@ class _RegisterFormState extends State<RegisterForm> {
     super.dispose();
   }
 
-
   int _currentStep = 0;
+
   //check completeness of inputs
   bool isCompleted = false;
-
 
   // Handel a Loading bar when the translate a language.
   bool isLoading = false;
@@ -75,12 +70,12 @@ class _RegisterFormState extends State<RegisterForm> {
 
     // Simulate a 1-second delay
     Future.delayed(const Duration(milliseconds: 1500), () {
-      // Set loading to false to hide the loading indicator after the delay
       setState(() {
         isLoading = false;
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     // ignore: no_leading_underscores_for_local_identifiers
@@ -106,28 +101,32 @@ class _RegisterFormState extends State<RegisterForm> {
                 children: [
                   // this is the visible a skip text in second Step
                   _currentStep >= 1
-                  ? Container(
-                    margin: const EdgeInsets.only(right: 24),
-                    child: InkWell(
-                      onTap: () {
-                        _handleButtonClick();
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (
-                                context) => const HomeScreen()));
-                        // _register();
-                      },
-                      child: Text(
-                        Language.instance.txtSkip(),
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: Fonts.getFontFamilyTitillRegular(),
-                          color: Colors.black,
-                          decoration: TextDecoration.underline,
+                      ? Container(
+                          margin: const EdgeInsets.only(right: 24),
+                          child: InkWell(
+                            onTap: () {
+                              _handleButtonClick();
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HomeScreen()));
+                              // _register();
+                            },
+                            child: Text(
+                              Language.instance.txtSkip(),
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                                color: Colors.black,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox(
+                          height: 24,
                         ),
-                      ),
-                    ),
-                  ):
-                  const SizedBox(height: 24,),
                   Expanded(
                     child: Stepper(
                       elevation: 0,
@@ -135,7 +134,8 @@ class _RegisterFormState extends State<RegisterForm> {
                       steps: _getSteps(),
                       controlsBuilder:
                           (BuildContext context, ControlsDetails details) {
-                        final isLastStep = _currentStep == _getSteps().length - 1;
+                        final isLastStep =
+                            _currentStep == _getSteps().length - 1;
                         return SingleChildScrollView(
                           child: Container(
                             margin: const EdgeInsets.only(top: 56),
@@ -157,9 +157,10 @@ class _RegisterFormState extends State<RegisterForm> {
                                             ),
                                           ),
                                           child: Text(
-                                            isLastStep ?
-                                            Language.instance.txtGetStarted() :
-                                            Language.instance.txtNext(),
+                                            isLastStep
+                                                ? Language.instance
+                                                    .txtGetStarted()
+                                                : Language.instance.txtNext(),
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 16,
@@ -189,8 +190,10 @@ class _RegisterFormState extends State<RegisterForm> {
                                     const SizedBox(
                                       width: 8,
                                     ),
-                                    GestureDetector(
-                                      onTap: () {
+                                    Bounce(
+                                      duration:
+                                          const Duration(milliseconds: 150),
+                                      onPressed: () {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -203,8 +206,8 @@ class _RegisterFormState extends State<RegisterForm> {
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 18,
-                                            fontFamily:
-                                                Fonts.getFontFamilyTitillSemiBold(),
+                                            fontFamily: Fonts
+                                                .getFontFamilyTitillSemiBold(),
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
@@ -223,13 +226,14 @@ class _RegisterFormState extends State<RegisterForm> {
                       },
                       onStepContinue: () {
                         setState(() {
-                          if (_currentStep < 2) {
+                          if (_currentStep < 1) {
                             if (_validateCurrentStep()) {
                               _currentStep += 1;
                               print('register step 1');
                             }
                             print('register step 2');
-                          } else{
+                          } else {
+                            print('register step 3');
                             _handleButtonClick();
                             _register();
                           }
@@ -255,284 +259,298 @@ class _RegisterFormState extends State<RegisterForm> {
       ),
     );
   }
+
   List<Step> _getSteps() => [
-    Step(
-      title:  Text(Language.instance.txtRegisterNow()),
-      content: Form(
-        autovalidateMode: AutovalidateMode.always,
-        key: _formKey1,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              Language.instance.txtWelcomeRegister(),
-              style: TextStyle(
-                fontSize: 24,
-                fontFamily: Fonts.getFontFamilyTitillBold(),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              Language.instance.txtWelcomeRegister2(),
-              style: TextStyle(
-                fontSize: 14,
-                fontFamily: Fonts.getFontFamilyTitillRegular(),
-              ),
-            ),
-            const SizedBox(height: 30),
-            CustomTextField(
-              controller: _emailController,
-              labelText: Language.instance.txtEmail(),
-              hintText: Language.instance.txtHintEmail(),
-              keyboardType: TextInputType.emailAddress,
-              validator: (value) {
-                return Validation.validateEmail(value ?? "");
-              },
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
-              controller: _passwordController,
-              labelText: Language.instance.txtPassword(),
-              hintText: Language.instance.txtHintPassword(),
-              obscureText: passwordVisible,
-              keyboardType: TextInputType.visiblePassword,
-              suffixIcon: IconButton(
-                icon: Icon(
-                  passwordVisible ? Icons.visibility : Icons.visibility_off,
-                  color: Colors.grey,
+        Step(
+          title: Text(Language.instance.txtRegisterNow()),
+          content: Form(
+            autovalidateMode: AutovalidateMode.always,
+            key: _formKey1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  Language.instance.txtWelcomeRegister(),
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontFamily: Fonts.getFontFamilyTitillBold(),
+                  ),
                 ),
-                onPressed: () {
-                  setState(() {
-                    passwordVisible = !passwordVisible;
-                  });
-                },
-              ),
-              validator: (value) {
-                return Validation.validatePassword(value ?? "");
-              },
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
-              controller: _confirmPasswordController,
-              labelText: Language.instance.txtConfirmPassword(),
-              hintText: Language.instance.txtHintConfirmPassword(),
-              obscureText: passwordVisible,
-              keyboardType: TextInputType.visiblePassword,
-              suffixIcon: IconButton(
-                icon: Icon(
-                  passwordVisible ? Icons.visibility : Icons.visibility_off,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  setState(() {
-                    passwordVisible = !passwordVisible;
-                  });
-                },
-              ),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return Language.instance.txtHintConfirmPassword();
-                }
-                if (_passwordController.text != _confirmPasswordController.text) {
-                  return Language.instance.txtNotMatchPassword();
-                }
-                return null;
-              },
-            ),
-          ],
-        ),
-      ),
-      isActive: _currentStep >= 0,
-      state: _currentStep > 0 ? StepState.complete : StepState.indexed,
-    ),
-    Step(
-      isActive: _currentStep >= 1,
-      state: _currentStep > 1 ? StepState.complete : StepState.indexed,
-      title:  Text(Language.instance.txtCompleteProfile()),
-      content: Form(
-        key: _formKey2,
-        child:GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                Language.instance.txtWelcomeRegister(),
-                style: TextStyle(
-                  fontSize: 24,
-                  fontFamily: Fonts.getFontFamilyTitillBold(),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                Language.instance.txtWelcomeRegister2(),
-                style: TextStyle(
-                  fontSize: 14,
-                  fontFamily: Fonts.getFontFamilyTitillRegular(),
-                ),
-              ),
-              const SizedBox(height: 40),
-              Text(
-                Language.instance.txtUserName(),
-                style: TextStyle(
+                const SizedBox(height: 16),
+                Text(
+                  Language.instance.txtWelcomeRegister2(),
+                  style: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillRegular(),
-                    fontWeight: FontWeight.normal),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                height: 56,
-                child: TextFormField(
-                  controller: _nameController,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical: 15,horizontal: 8),
-                    filled: true,
-                    fillColor: ColorsCode.whiteColor100,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4),
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.purple.shade100,
-                      ),
-                    ),
-                    hintText: Language.instance.txtHintUserName(),
-                    hintStyle: TextStyle(
-                      fontSize: 14,
-                      fontFamily: Fonts.getFontFamilyTitillRegular(),
-                      color: ColorsCode.grayColor,
-                    ),
-                    //isDense: true,
-                  ),
-                  // validator: (value) {
-                  //   return Validation.validateName(value ?? "");
-                  // },
-                ),
-              ),
-              const SizedBox(height: 24),
-              Text(
-                Language.instance.txtLocation(),
-                style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: Fonts.getFontFamilyTitillRegular(),
-                    fontWeight: FontWeight.normal),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              // Auto Located Place
-              GooglePlaceAutoCompleteTextField(
-                isCrossBtnShown: true,
-                textEditingController: _locationController,
-                googleAPIKey: StringsEn.API_KEY_Google,
-                inputDecoration:  InputDecoration(
-                  contentPadding:  const EdgeInsets.symmetric(vertical: 15,horizontal: 8),
-                  prefixIcon: const Padding(
-                    padding:
-                    EdgeInsets.only(left: 15.5, top: 3, bottom: 3, right: 8),
-                    child: Icon(
-                      Icons.my_location_outlined,
-                      size: 24,
-                    ),
-                  ),
-                  filled: true,
-                  fillColor: ColorsCode.whiteColor100,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.purple.shade100,
-                      )),
-                  hintText: Language.instance.txtHintLocation(),
-                  hintStyle: TextStyle(
-                    fontSize: 14,
-                    fontFamily: Fonts.getFontFamilyTitillRegular(),
-                    color: ColorsCode.grayColor,
                   ),
                 ),
-                debounceTime: 800,
-                countries: const ["eg", "de"],
-                isLatLngRequired: true,
-                getPlaceDetailWithLatLng: (Prediction prediction) {
-                  if (kDebugMode) {
-                    print("placeDetails${prediction.lng}");
-                  }
-                },
-                itemClick: (Prediction prediction) {
-                  _locationController.text = prediction.description!;
-                  _locationController.selection =
-                      TextSelection.fromPosition(TextPosition(
-                          offset: prediction.description!.length));
-                },
-              ),
-              const SizedBox(height: 24),
-              Text(
-                Language.instance.txtPhoneNumber(),
-                style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: Fonts.getFontFamilyTitillRegular(),
-                    fontWeight: FontWeight.normal),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Container(
-                height: 56,
-                padding: const EdgeInsets.only(left: 12, right: 5),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: Colors.black.withOpacity(0.13)),
+                const SizedBox(height: 30),
+                CustomTextField(
+                  controller: _emailController,
+                  labelText: Language.instance.txtEmail(),
+                  hintText: Language.instance.txtHintEmail(),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    return Validation.validateEmail(value ?? "");
+                  },
                 ),
-                child: InternationalPhoneNumberInput(
-                  selectorConfig: const SelectorConfig(
-                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                  ),
-                  initialValue: number,
-                  ignoreBlank: false,
-                  selectorTextStyle: const TextStyle(color: Colors.black),
-                  textFieldController: _phoneNumberController,
-                  formatInput: false,
-                  //maxLength: 11,
-                  spaceBetweenSelectorAndTextField: 0,
-                  keyboardType: const TextInputType.numberWithOptions(
-                      signed: true, decimal: true),
-                  cursorColor: Colors.black,
-                  inputDecoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
-                    border: InputBorder.none,
-                    hintText: Language.instance.txtHintPhoneNumber(),
-                    hintStyle: TextStyle(
-                      fontSize: 14,
-                      fontFamily: Fonts.getFontFamilyTitillRegular(),
-                      color: ColorsCode.grayColor,
+                const SizedBox(height: 16),
+                CustomTextField(
+                  controller: _passwordController,
+                  labelText: Language.instance.txtPassword(),
+                  hintText: Language.instance.txtHintPassword(),
+                  obscureText: passwordVisible,
+                  keyboardType: TextInputType.visiblePassword,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.grey,
                     ),
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
                   ),
-                  onInputChanged: (PhoneNumber value) {  },
+                  validator: (value) {
+                    return Validation.validatePassword(value ?? "");
+                  },
                 ),
-              ),
-            ],
+                const SizedBox(height: 16),
+                CustomTextField(
+                  controller: _confirmPasswordController,
+                  labelText: Language.instance.txtConfirmPassword(),
+                  hintText: Language.instance.txtHintConfirmPassword(),
+                  obscureText: passwordVisible,
+                  keyboardType: TextInputType.visiblePassword,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return Language.instance.txtHintConfirmPassword();
+                    }
+                    if (_passwordController.text !=
+                        _confirmPasswordController.text) {
+                      return Language.instance.txtNotMatchPassword();
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
           ),
-        ) ,
-      ),
-    ),
-  ];
+          isActive: _currentStep >= 0,
+          state: _currentStep > 0 ? StepState.complete : StepState.indexed,
+        ),
+        Step(
+          isActive: _currentStep >= 1,
+          state: _currentStep > 1 ? StepState.complete : StepState.indexed,
+          title: Text(Language.instance.txtCompleteProfile()),
+          content: Form(
+            key: _formKey2,
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    Language.instance.txtWelcomeRegister(),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontFamily: Fonts.getFontFamilyTitillBold(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    Language.instance.txtWelcomeRegister2(),
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: Fonts.getFontFamilyTitillRegular(),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  Text(
+                    Language.instance.txtUserName(),
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: Fonts.getFontFamilyTitillRegular(),
+                        fontWeight: FontWeight.normal),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  SizedBox(
+                    height: 56,
+                    child: TextFormField(
+                      controller: _nameController,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 8),
+                        filled: true,
+                        fillColor: ColorsCode.whiteColor100,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.purple.shade100,
+                          ),
+                        ),
+                        hintText: Language.instance.txtHintUserName(),
+                        hintStyle: TextStyle(
+                          fontSize: 14,
+                          fontFamily: Fonts.getFontFamilyTitillRegular(),
+                          color: ColorsCode.grayColor,
+                        ),
+                        //isDense: true,
+                      ),
+                      // validator: (value) {
+                      //   return Validation.validateName(value ?? "");
+                      // },
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    Language.instance.txtLocation(),
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: Fonts.getFontFamilyTitillRegular(),
+                        fontWeight: FontWeight.normal),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  // Auto Located Place
+                  SizedBox(
+                    height: 56,
+                    child: GooglePlaceAutoCompleteTextField(
+                      isCrossBtnShown: false,
+                      textEditingController: _locationController,
+                      googleAPIKey: StringsEn.API_KEY_Google,
+                      boxDecoration: BoxDecoration(
+                        color: ColorsCode.whiteColor100,
+                      ),
+                      inputDecoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 4),
+                        prefixIcon: const Padding(
+                          padding: EdgeInsets.only(
+                              left: 0.0, top: 3, bottom: 3, right: 8),
+                          child: Icon(
+                            Icons.my_location_outlined,
+                            size: 24,
+                          ),
+                        ),
+                        filled: true,
+                        fillColor: ColorsCode.whiteColor100,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                          color: Colors.purple.shade100,
+                        )),
+                        hintText: Language.instance.txtHintLocation(),
+                        hintStyle: TextStyle(
+                          fontSize: 14,
+                          fontFamily: Fonts.getFontFamilyTitillRegular(),
+                          color: ColorsCode.grayColor,
+                        ),
+                      ),
+                      debounceTime: 800,
+                      countries: const ["eg", "de"],
+                      isLatLngRequired: true,
+                      getPlaceDetailWithLatLng: (Prediction prediction) {
+                        if (kDebugMode) {
+                          print("placeDetails${prediction.lng}");
+                        }
+                      },
+                      itemClick: (Prediction prediction) {
+                        _locationController.text = prediction.description!;
+                        _locationController.selection =
+                            TextSelection.fromPosition(TextPosition(
+                                offset: prediction.description!.length));
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    Language.instance.txtPhoneNumber(),
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: Fonts.getFontFamilyTitillRegular(),
+                        fontWeight: FontWeight.normal),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    height: 56,
+                    padding: const EdgeInsets.only(left: 12, right: 5),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: Colors.black.withOpacity(0.13)),
+                    ),
+                    child: InternationalPhoneNumberInput(
+                      selectorConfig: const SelectorConfig(
+                        selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                      ),
+                      initialValue: number,
+                      ignoreBlank: false,
+                      selectorTextStyle: const TextStyle(color: Colors.black),
+                      textFieldController: _phoneNumberController,
+                      formatInput: false,
+                      //maxLength: 11,
+                      spaceBetweenSelectorAndTextField: 0,
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: true, decimal: true),
+                      cursorColor: Colors.black,
+                      inputDecoration: InputDecoration(
+                        contentPadding:
+                            const EdgeInsets.only(bottom: 15, left: 8),
+                        border: InputBorder.none,
+                        hintText: Language.instance.txtHintPhoneNumber(),
+                        hintStyle: TextStyle(
+                          fontSize: 14,
+                          fontFamily: Fonts.getFontFamilyTitillRegular(),
+                          color: ColorsCode.grayColor,
+                        ),
+                      ),
+                      onInputChanged: (PhoneNumber value) {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ];
 
   bool _validateCurrentStep() {
     switch (_currentStep) {
       case 0:
         return _formKey1.currentState?.validate() ?? false;
+      case 1:
+        return _formKey2.currentState?.validate() ?? false;
+
       default:
         return false;
     }
@@ -552,11 +570,14 @@ class _RegisterFormState extends State<RegisterForm> {
       print('Password: $password');
       print('PhoneNumber: $phoneNumber');
       print('location: $location');
-      print('phoneNumber: $phoneNumber');
-
     }
 
     LoadingDialog(isLoading: isLoading);
+
+    // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    //   content: Text('Progress to Add Data'),
+    //   backgroundColor: Colors.blueAccent,
+    // ));
 
     final user = User(
       id: '<uuid>',
@@ -571,7 +592,9 @@ class _RegisterFormState extends State<RegisterForm> {
 
     final registerSuccessful = await ApiClient().registerUser(user);
 
-    if ( registerSuccessful) {
+    if (registerSuccessful) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const LoginScreen()));
     } else {
@@ -580,7 +603,5 @@ class _RegisterFormState extends State<RegisterForm> {
         backgroundColor: Colors.red.shade300,
       ));
     }
-
   }
-
 }

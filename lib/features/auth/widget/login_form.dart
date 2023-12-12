@@ -2,9 +2,9 @@
 
 import 'dart:async';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
 
 import '../../../data/api_client.dart';
 import '../../../utils/constants/colors_code.dart';
@@ -29,7 +29,6 @@ class LoginFormState extends State<LoginForm> {
   final _formKey1 = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final ApiClient _apiClient = ApiClient();
 
   bool passwordVisible = true;
   final FocusNode _passwordFocusNode = FocusNode();
@@ -209,30 +208,29 @@ class LoginFormState extends State<LoginForm> {
                         const SizedBox(
                           height: 56,
                         ),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 56,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                              ),
-                              onPressed: () {
-                                _handleButtonClick();
-                                 loginUserFun();
-                              },
+                        Bounce(
+                          duration: const Duration(milliseconds:200),
+                            onPressed: (){
+                              _handleButtonClick();
+                              loginUserFun();
+                            },
+                          child: Container(
+                            width: double.infinity,
+                            height: 56,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(4)),
+                              color: Colors.black,
+                              shape: BoxShape.rectangle,
+                            ),
+                            child: Center(
                               child: Text(
                                 Language.instance.txtButtonLogin(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                               ),
                             ),
                           ),
@@ -255,10 +253,9 @@ class LoginFormState extends State<LoginForm> {
                               const SizedBox(
                                 width: 8,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  //AutoRouter.of(context).push(const RegisterRoute());
-
+                              Bounce(
+                                duration: const Duration(milliseconds: 150),
+                                onPressed: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -294,14 +291,11 @@ class LoginFormState extends State<LoginForm> {
   }
 
   Future<void> loginUserFun() async {
-
-
     if ( _formKey1.currentState?.validate() ?? false ) {
-
       String email = _emailController.text;
       String password = _passwordController.text;
 
-      dynamic user = await _apiClient.loginUser(
+      dynamic user = await ApiClient.loginUser(
         _emailController.text,
         _passwordController.text,
       );
@@ -318,7 +312,7 @@ class LoginFormState extends State<LoginForm> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder:
-              (context) => const HomeScreen()),
+              (context) =>  const HomeScreen()),
         );
 
         //print('accessToken: $accessToken');

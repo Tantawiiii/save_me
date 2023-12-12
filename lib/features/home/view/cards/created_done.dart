@@ -76,7 +76,6 @@ class CreatedProfile extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const HomeScreen()),
-                        //accesstoken: "",
                       );
                     },
                     child: Text(

@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:save_me/data/api_client.dart';
+import 'package:save_me/features/auth/models/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
@@ -60,6 +63,27 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+  // Fetch a user  Data from token
+ late  User userData;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    SharedPreferences.getInstance().then((prefs) {
+      final String? token = prefs.getString('access_token');
+
+      //Fetch a user Data from token
+      ApiClient.getUserProfileData(token!).then((data) {
+        setState(() {
+          userData = data;
+        });
+      });
+
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,7 +125,11 @@ class _ProfileState extends State<Profile> {
                           borderSide: BorderSide(
                         color: Colors.purple.shade100,
                       )),
-                      hintText: Language.instance.txtIsEmptyUserName(),
+                      hintText:
+                          // userData != null ?
+                          //     userData.name :
+                      Language.instance.txtIsEmptyUserName(),
+
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -239,7 +267,6 @@ class _ProfileState extends State<Profile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
                       // DropdownButton(
                       //         isDense: true,
                       //         value: _selectedImage,

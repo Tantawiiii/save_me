@@ -117,7 +117,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                                       ),
                                     ),
                                     child: Text(
-                                       "Create",
+                                     Language.instance.txtCreate(),
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontFamily:

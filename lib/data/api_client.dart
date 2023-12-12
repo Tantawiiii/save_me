@@ -1,14 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
-import 'dart:io';
+
 import 'package:flutter/foundation.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:http/http.dart' as http;
 import 'package:save_me/data/api_endpoints.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../features/auth/models/user_model.dart';
 
-
 class ApiClient {
+
 
   // register User Api request
   Future<bool> registerUser(User user) async {
@@ -18,7 +20,7 @@ class ApiClient {
     };
     final response = await http.post(
       Uri.parse(url),
-      body:jsonEncode(user.toJson()),
+      body: jsonEncode(user.toJson()),
       headers: headers,
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -33,33 +35,51 @@ class ApiClient {
     }
     return false;
   }
+
   // login User Api request
-  Future<User?> loginUser(String email, String password) async {
+  static Future<User?> loginUser(
+    String email,
+    String password,
+  ) async {
     const url = Endpoints.login;
     final body = jsonEncode({
       'email': email,
       'password': password,
     });
-    final response = await http.post(
-      Uri.parse(url),
-      body: body,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> userData = json.decode(response.body);
-      final user = User.fromJson(userData);
-      return user;
 
-    } else {
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        body: body,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> userData = json.decode(response.body);
+        final User user = User.fromJson(userData);
+
+       // Store the user data token using shared_preferences
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString( 'access_token', user.toString());
+
+        return user;
+      } else {
         if (kDebugMode) {
-          print("Error ");
+          print("Error: ${response.statusCode}");
+          print("Error Body: ${response.body}");
         }
-        return null;
+        throw Exception("Login failed with status code ${response.statusCode}");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Exception during login request: $e");
+      }
+      return null; // or handle the exception as needed
     }
   }
-  Future<dynamic> getUserProfileData(String accessToken) async {
+
+  static Future<User> getUserProfileData(String accessToken) async {
     const url = Endpoints.register;
     try {
       final http.Response response = await http.get(
@@ -70,13 +90,14 @@ class ApiClient {
       );
 
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        return User.fromJson(responseData);
       } else {
         throw Exception('Failed to load user profile data');
       }
     } catch (error) {
       print('Error: $error');
-      return {'error': 'Failed to load user profile data'};
+      throw Exception('Failed to load user profile data');
     }
   }
 
@@ -84,7 +105,7 @@ class ApiClient {
     required String accessToken,
     required Map<String, dynamic> data,
   }) async {
-    const String apiUrl = Endpoints.register ;
+    const String apiUrl = Endpoints.register;
 
     try {
       final http.Response response = await http.put(
@@ -107,8 +128,6 @@ class ApiClient {
       return {'error': 'Failed to update user profile'};
     }
   }
-
-
 
 
 
