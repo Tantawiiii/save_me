@@ -14,8 +14,6 @@ import 'package:save_me/features/home/view/cards/created_done.dart';
 import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
-import '../../../auth/utils/validation.dart';
-import '../../../widgets/loading_dialog.dart';
 import '../../models/profile_info.dart';
 
 @RoutePage()
@@ -29,6 +27,8 @@ class AddKidProfile extends StatefulWidget {
 class _AddKidProfileState extends State<AddKidProfile> {
 
   final formKey = GlobalKey<FormState>();
+
+
   File? _image;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
@@ -43,9 +43,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
   final TextEditingController _diseasesController = TextEditingController();
   final TextEditingController _dietController = TextEditingController();
   final TextEditingController _addInfoController = TextEditingController();
-
-
-
 
   int _currentStep = 0;
   bool isCompleted = false;
@@ -137,6 +134,9 @@ class _AddKidProfileState extends State<AddKidProfile> {
                       if (kDebugMode) {
                         print('Completed');
                       }
+                      print('Success added to state');
+                      _addChildProfile();
+
                     } else {
                       setState(() => _currentStep += 1);
                     }
@@ -823,12 +823,13 @@ class _AddKidProfileState extends State<AddKidProfile> {
             ],
           ),
         ),
+
       ];
 
 
   void _addChildProfile() async {
     // Implement your Profile logic here
-    final photo = _image.toString();
+    final photo = _image;
     final name = _nameController.text;
     final birthday = _birthdayController.text;
     final age = _ageController.text;
@@ -868,7 +869,8 @@ class _AddKidProfileState extends State<AddKidProfile> {
     // ));
 
     final profileInfo = ProfileInfo(
-      photoUrl: photo,
+      profileType: "KID",
+      photoUrl: _image,
       name: name,
       birthdate: birthday,
       age: age,
@@ -889,11 +891,9 @@ class _AddKidProfileState extends State<AddKidProfile> {
 
     if (createProfileSuccess) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-      print("Success Uploading profile information's and added it to Home");
-
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const CreatedProfile()));
+      if (kDebugMode) {
+        print("Success Uploading profile information's and added it to Home");
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error: $createProfileSuccess'),
