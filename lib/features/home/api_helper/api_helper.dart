@@ -40,10 +40,10 @@ Future<bool> postProfileData(ProfileInfo profileInfo) async {
 
 // get profile data
 
-Future<List<ProfileInfo>> getUserProfileData(String accessToken) async {
+Future<List<ProfileInfo>> getUserProfileData() async {
+  String? accessToken = await getAccessToken();
   const url = Endpoints.profiles;
   List<ProfileInfo> profiles = [];
-
   try {
     final http.Response response = await http.get(
       Uri.parse(url),
@@ -51,11 +51,10 @@ Future<List<ProfileInfo>> getUserProfileData(String accessToken) async {
         'Authorization': 'Bearer $accessToken',
       },
     );
-
     if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      responseData.forEach((key, value) {
-        profiles.add(ProfileInfo.fromJson(value));
+      final responseData = jsonDecode(response.body);
+      responseData.forEach((profile) {
+        profiles.add(ProfileInfo.fromJson(profile));
       });
 
       print('Successfully Getting Profiles...');

@@ -73,7 +73,7 @@ class ProfileInfo {
       diseases: json['diseases'].toString(),
       medicines: json['medicines'].toString(),
       race: json['race'].toString(),
-      neutered: json['neutered'] as bool,
+      neutered: json['neutered'] as bool?,
     );
   }
 
