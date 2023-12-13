@@ -26,11 +26,10 @@ class AddKidProfile extends StatefulWidget {
 }
 
 class _AddKidProfileState extends State<AddKidProfile> {
-
-  final formKey = GlobalKey<FormState>();
-
-
-  File? _image;
+  final formKey = GlobalKey<FormState>(
+  );
+bool uploading = false;
+  File? image;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
@@ -59,11 +58,14 @@ class _AddKidProfileState extends State<AddKidProfile> {
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-
     if (pickedImage != null) {
       setState(() {
-        _image = File(pickedImage.path);
+        image = File(pickedImage.path);
+
+
       });
+
+
     }
   }
 
@@ -132,10 +134,7 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     final isLastStep = _currentStep == getSteps().length - 1;
                     if (isLastStep) {
                       setState(() => isCompleted = true);
-                      if (kDebugMode) {
-                        print('Completed');
-                      }
-                      print('Success added to state');
+                      print('Success added to state Kid');
                       _addChildProfile();
                     } else {
                       setState(() => _currentStep += 1);
@@ -235,12 +234,12 @@ class _AddKidProfileState extends State<AddKidProfile> {
                     color: ColorsCode.whiteColor100,
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
                   ),
-                  child: _image == null
+                  child: image == null
                       ? Center(
                           child: SvgPicture.asset('assets/images/plus_gray.svg'),
                         )
-                      : Image.file(
-                          _image!,
+                      :uploading? const CircularProgressIndicator():Image.file(
+                          image!,
                           fit: BoxFit.cover,
                         ),
                 ),
@@ -827,7 +826,6 @@ class _AddKidProfileState extends State<AddKidProfile> {
 
 
   void _addChildProfile() async {
-
     // Implement your Profile logic here
     final photo = "_image";
     final name = _nameController.text;
@@ -861,16 +859,9 @@ class _AddKidProfileState extends State<AddKidProfile> {
       print('addInfo: $addInfo');
     }
 
-   // LoadingDialog(isLoading: isLoading);
-
-    // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //   content: Text('Progress to Add Data'),
-    //   backgroundColor: Colors.blueAccent,
-    // ));
-
     final profileInfo = ProfileInfo(
       profileType: "KID",
-      photoUrl: _image,
+      photoUrl: "",
       name: name,
       birthdate: birthday,
       age: age,
@@ -889,7 +880,17 @@ class _AddKidProfileState extends State<AddKidProfile> {
 
     final createProfileSuccess = await postProfileData(profileInfo);
 
-    if (createProfileSuccess) {
+    if (createProfileSuccess!=null) {
+      if(image != null) {
+        setState((){
+          uploading= true;
+        });
+
+        uploadProfileImage(profileId: createProfileSuccess.id!, image: image!,)
+            .whenComplete(() => setState((){
+          uploading=false;
+        }));
+      }
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       if (kDebugMode) {
         print("Success Uploading profile information's and added it to Home");

@@ -47,7 +47,10 @@ class _HomeState extends State<Home> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   final profile = snapshot.data![index];
-                  return ItemCard(profileInfo: profile);
+                  return Container(
+                    margin: const EdgeInsets.all(14),
+                      child: ItemCard(profileInfo: profile),
+                  );
                 },
               );
             }

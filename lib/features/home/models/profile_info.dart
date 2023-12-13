@@ -4,7 +4,7 @@ import 'dart:io';
 class ProfileInfo {
   final String? id;
   final String? profileType;
-  final File? photoUrl;
+  final String? photoUrl;
   final String? name;
   final String? birthdate;
   final String? age;

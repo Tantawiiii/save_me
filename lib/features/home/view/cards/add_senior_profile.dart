@@ -1,8 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -13,7 +18,10 @@ import 'package:save_me/features/home/view/cards/created_done.dart';
 import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
+import '../../../../utils/strings/Strings_en.dart';
 import '../../../auth/utils/validation.dart';
+import '../../api_helper/api_helper.dart';
+import '../../models/profile_info.dart';
 
 
 @RoutePage()
@@ -25,19 +33,34 @@ class AddSeniorProfile extends StatefulWidget {
 }
 
 class _AddSeniorProfileState extends State<AddSeniorProfile> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  File? _image;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _birthdayController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _charController = TextEditingController();
+  final TextEditingController _behaviorController = TextEditingController();
+  final TextEditingController _specialCharController = TextEditingController();
+  final TextEditingController _medicinesController = TextEditingController();
+  final TextEditingController _allergiesController = TextEditingController();
+  final TextEditingController _diseasesController = TextEditingController();
+  final TextEditingController _dietController = TextEditingController();
+  final TextEditingController _addInfoController = TextEditingController();
+  final TextEditingController _insituLocationController = TextEditingController();
+  final TextEditingController _insituNameController = TextEditingController();
+  final TextEditingController _careAideController = TextEditingController();
+  final TextEditingController _insituPhoneController = TextEditingController();
+
   int _currentStep = 0;
   bool isCompleted = false;
-  File? _image;
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
 
   @override
   void initState() {
     // TODO: implement initState
-    _dateController.text = "";
+    _birthdayController.text = "";
     super.initState();
   }
 
@@ -119,6 +142,8 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                               _currentStep == getSteps().length - 1;
                           if (isLastStep) {
                             setState(() => isCompleted = true);
+                            print('Success added to state Senior');
+                            _addSeniorProfile();
                           } else {
                             setState(() => _currentStep += 1);
                           }
@@ -188,7 +213,6 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
             ),
     );
   }
-
   List<Step> getSteps() => [
         Step(
           state: _currentStep > 0 ? StepState.complete : StepState.indexed,
@@ -289,7 +313,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 height: 8,
               ),
               TextField(
-                controller: _dateController,
+                controller: _birthdayController,
                 style: const TextStyle(
                   color: Colors.black,
                 ),
@@ -342,7 +366,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                     String formattedDate =
                         DateFormat(Language.instance.txtDatePattern()).format(pickedDate);
                     setState(() {
-                      _dateController.text = formattedDate;
+                      _birthdayController.text = formattedDate;
                     });
                   } else {}
                 },
@@ -415,7 +439,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               SizedBox(
                 height: 56,
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _weightController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     filled: true,
@@ -458,7 +482,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               SizedBox(
                 height: 56,
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _heightController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     filled: true,
@@ -500,7 +524,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _charController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -543,7 +567,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _behaviorController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -586,7 +610,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _specialCharController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -636,7 +660,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _medicinesController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -658,9 +682,6 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                     ),
                     //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -679,7 +700,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _allergiesController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -699,11 +720,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -722,7 +739,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _dietController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -742,11 +759,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -765,7 +778,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _diseasesController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -785,11 +798,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -808,7 +817,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _addInfoController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -828,11 +837,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
             ],
@@ -869,17 +874,22 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               ),
               SizedBox(
                 height: 56,
-                child: TextFormField(
-                  //controller: _nameController,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 15.5, top: 3, bottom: 3, right: 8),
-                      child: SvgPicture.asset(
-                        'assets/images/search.svg',
-                        width: 18,
-                        height: 18,
+                child: GooglePlaceAutoCompleteTextField(
+                  isCrossBtnShown: false,
+                  textEditingController: _insituLocationController,
+                  googleAPIKey: StringsEn.API_KEY_Google,
+                  boxDecoration: BoxDecoration(
+                    color: ColorsCode.whiteColor100,
+                  ),
+                  inputDecoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 4),
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.only(
+                          left: 0.0, top: 3, bottom: 3, right: 8),
+                      child: Icon(
+                        Icons.my_location_outlined,
+                        size: 24,
                       ),
                     ),
                     filled: true,
@@ -890,19 +900,30 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                     ),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                      color: Colors.purple.shade100,
-                    )),
-                    hintText: Language.instance.txtSeniorAddLocation(),
+                          color: Colors.purple.shade100,
+                        )),
+                    hintText: Language.instance.txtHintLocation(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
+                  debounceTime: 800,
+                  countries: const ["eg", "de"],
+                  isLatLngRequired: true,
+                  getPlaceDetailWithLatLng: (Prediction prediction) {
+                    if (kDebugMode) {
+                      print("placeDetails${prediction.lng}");
+                    }
+                  },
+                  itemClick: (Prediction prediction) {
+                    _insituLocationController.text = prediction.description!;
+                    _insituLocationController.selection =
+                        TextSelection.fromPosition(TextPosition(
+                            offset: prediction.description!.length));
+
+                  },
                 ),
               ),
               const SizedBox(
@@ -922,7 +943,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               SizedBox(
                 height: 56,
                 child: TextFormField(
-                  controller: _nameController,
+                  controller: _insituNameController,
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
                     filled: true,
@@ -941,11 +962,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
-                  },
                 ),
               ),
               const SizedBox(
@@ -965,7 +982,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
               SizedBox(
                 height: 56,
                 child: TextFormField(
-                  controller: _nameController,
+                  controller: _careAideController,
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
                     filled: true,
@@ -984,11 +1001,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
-                  },
                 ),
               ),
               const SizedBox(
@@ -1023,7 +1036,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                   ignoreBlank: false,
                   autoValidateMode: AutovalidateMode.disabled,
                   selectorTextStyle: const TextStyle(color: Colors.black),
-                  //textFieldController: _phoneNumController,
+                  textFieldController: _insituPhoneController,
                   formatInput: false,
                   maxLength: 11,
                   spaceBetweenSelectorAndTextField: 2,
@@ -1050,4 +1063,77 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
           ),
         ),
       ];
+
+  void _addSeniorProfile() async {
+    // Implement your Profile logic here
+    final photo = "";
+    final name = _nameController.text;
+    final birthday = _birthdayController.text;
+    final age = _ageController.text;
+    final weight = _weightController.text;
+    final height = _heightController.text;
+    final character = _charController.text;
+    final behavior = _behaviorController.text;
+    final specialChar = _specialCharController.text;
+    final medication = _medicinesController.text;
+    final allergies = _allergiesController.text;
+    final diet = _dietController.text;
+    final diseases = _diseasesController.text;
+    final addInfo = _addInfoController.text;
+    final location = _insituLocationController.text;
+    final instituteName = _insituNameController.text;
+    final careAide = _careAideController.text;
+    final institutePhone = _insituPhoneController.text;
+
+    if (kDebugMode) {
+      print('photo: $photo');
+      print('Name: $name');
+      print('birthday: $birthday');
+      print('age: $age');
+      print('weight: $weight');
+      print('height: $height');
+      print('character: $character');
+      print('behavior: $behavior');
+      print('specialChar: $specialChar');
+      print('medication: $medication');
+      print('allergies: $allergies');
+      print('diet: $diet');
+      print('diseases: $diseases');
+      print('addInfo: $addInfo');
+    }
+
+    final profileInfo = ProfileInfo(
+        profileType: "SENIOR",
+        photoUrl: "",
+        name: name,
+        birthdate: birthday,
+        age: age,
+        weight: weight,
+        height: height,
+        characteristics: character,
+        behavior: behavior,
+        specialCharacteristics: specialChar,
+        medicines: medication,
+        allergies: allergies,
+        diet: diet,
+        diseases: diseases,
+        additionalInformation: addInfo
+    );
+
+
+    final createProfileSuccess = await postProfileData(profileInfo);
+
+    if (createProfileSuccess!= null) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      if (kDebugMode) {
+        print("Success Uploading profile information's and added it to Home");
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: $createProfileSuccess'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
+
 }

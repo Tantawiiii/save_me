@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -14,6 +16,8 @@ import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
 import '../../../auth/utils/validation.dart';
+import '../../api_helper/api_helper.dart';
+import '../../models/profile_info.dart';
 
 
 @RoutePage()
@@ -25,18 +29,27 @@ class AddPetProfile extends StatefulWidget {
 }
 
 class _AddPetProfileState extends State<AddPetProfile> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  File? image;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _birthdayController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _charController = TextEditingController();
+  final TextEditingController _behaviorController = TextEditingController();
+  final TextEditingController _specialCharController = TextEditingController();
+  final TextEditingController _medicinesController = TextEditingController();
+  final TextEditingController _allergiesController = TextEditingController();
+  final TextEditingController _diseasesController = TextEditingController();
+  final TextEditingController _dietController = TextEditingController();
+  final TextEditingController _addInfoController = TextEditingController();
   int _currentStep = 0;
   bool isCompleted = false;
-  File? _image;
-
   @override
   void initState() {
     // TODO: implement initState
-    _dateController.text = "";
+    _birthdayController.text = "";
     super.initState();
   }
 
@@ -47,7 +60,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
 
     if (pickedImage != null) {
       setState(() {
-        _image = File(pickedImage.path);
+        image = File(pickedImage.path);
       });
     }
   }
@@ -120,6 +133,8 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       if (kDebugMode) {
                         print('Completed');
                       }
+                      _addPetProfile();
+
                     } else {
                       setState(() => _currentStep += 1);
                     }
@@ -218,12 +233,12 @@ class _AddPetProfileState extends State<AddPetProfile> {
                     color: ColorsCode.whiteColor100,
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
                   ),
-                  child: _image == null
+                  child: image == null
                       ? Center(
                           child: SvgPicture.asset('assets/images/plus_gray.svg'),
                         )
                       : Image.file(
-                          _image!,
+                          image!,
                           fit: BoxFit.cover,
                         ),
                 ),
@@ -266,9 +281,6 @@ class _AddPetProfileState extends State<AddPetProfile> {
                     ),
                     //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
-                  },
                 ),
               ),
               const SizedBox(
@@ -286,7 +298,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                 height: 8,
               ),
               TextField(
-                controller: _dateController,
+                controller: _birthdayController,
                 style: const TextStyle(
                   color: Colors.black,
                 ),
@@ -343,7 +355,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         DateFormat(Language.instance.txtDatePattern()).format(pickedDate);
 
                     setState(() {
-                      _dateController.text = formattedDate;
+                      _birthdayController.text = formattedDate;
                     });
                   } else {
                     if (kDebugMode) {
@@ -388,11 +400,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
-                  },
                 ),
               ),
             ],
@@ -420,7 +428,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
               SizedBox(
                 height: 56,
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _weightController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     filled: true,
@@ -439,11 +447,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
-                  },
                 ),
               ),
               const SizedBox(
@@ -463,7 +467,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
               SizedBox(
                 height: 56,
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _heightController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     filled: true,
@@ -482,11 +486,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
-                  },
                 ),
               ),
               const SizedBox(
@@ -505,7 +505,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _charController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -525,11 +525,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -548,7 +544,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _behaviorController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -568,11 +564,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -591,7 +583,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _specialCharController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -611,11 +603,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
             ],
@@ -641,7 +629,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _medicinesController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -663,9 +651,6 @@ class _AddPetProfileState extends State<AddPetProfile> {
                     ),
                     //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -684,7 +669,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _allergiesController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -704,11 +689,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -727,7 +708,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _dietController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -747,11 +728,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -770,7 +747,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _diseasesController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -790,11 +767,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
               const SizedBox(
@@ -813,7 +786,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _addInfoController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: InputDecoration(
@@ -833,15 +806,81 @@ class _AddPetProfileState extends State<AddPetProfile> {
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
                       color: ColorsCode.grayColor,
                     ),
-                    //isDense: true,
                   ),
-                  // validator: (value) {
-                  //   return Validation.validateEmail(value ?? "");
-                  // },
                 ),
               ),
             ],
           ),
         ),
       ];
+
+  void _addPetProfile() async {
+    // Implement your Profile logic here
+    final photo = "_image";
+    final name = _nameController.text;
+    final birthday = _birthdayController.text;
+    final age = _ageController.text;
+    final weight = _weightController.text;
+    final height = _heightController.text;
+    final character = _charController.text;
+    final behavior = _behaviorController.text;
+    final specialChar = _specialCharController.text;
+    final medication = _medicinesController.text;
+    final allergies = _allergiesController.text;
+    final diet = _dietController.text;
+    final diseases = _diseasesController.text;
+    final addInfo = _addInfoController.text;
+
+    if (kDebugMode) {
+      print('photo: $photo');
+      print('Name: $name');
+      print('birthday: $birthday');
+      print('age: $age');
+      print('weight: $weight');
+      print('height: $height');
+      print('character: $character');
+      print('behavior: $behavior');
+      print('specialChar: $specialChar');
+      print('medication: $medication');
+      print('allergies: $allergies');
+      print('diet: $diet');
+      print('diseases: $diseases');
+      print('addInfo: $addInfo');
+    }
+
+    final profileInfo = ProfileInfo(
+        profileType: "PET",
+        photoUrl: "",
+        name: name,
+        birthdate: birthday,
+        age: age,
+        weight: weight,
+        height: height,
+        characteristics: character,
+        behavior: behavior,
+        specialCharacteristics: specialChar,
+        medicines: medication,
+        allergies: allergies,
+        diet: diet,
+        diseases: diseases,
+        additionalInformation: addInfo
+    );
+
+
+    final createProfileSuccess = await postProfileData(profileInfo);
+
+    if (createProfileSuccess != null) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      if (kDebugMode) {
+        print("Success Uploading profile information's and added it to Home");
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: $createProfileSuccess'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
+
+
 }

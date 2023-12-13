@@ -326,6 +326,13 @@ class Language extends ChangeNotifier {
     }
   }
 
+  txtProfileInfo() {
+    if (getLanguage() == 'EN') {
+      return "Profile Information is Empty";
+    } else if (getLanguage() == 'DE') {
+      return "Profilinformationen sind leer";
+    }
+  }
   txtStartAddProfile() {
     if (getLanguage() == 'EN') {
       return "Start Adding Profiles +";
@@ -1336,5 +1343,12 @@ class Language extends ChangeNotifier {
     }
   }
 
+  txtCreateData() {
+    if (getLanguage() == 'EN') {
+      return "Creation Date: ";
+    } else if (getLanguage() == 'DE') {
+      return "Erstellungsdatum: ";
+    }
+  }
 
 }
