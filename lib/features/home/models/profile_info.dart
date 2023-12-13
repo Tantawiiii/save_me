@@ -25,6 +25,8 @@ class ProfileInfo {
   final String? race;
   final bool? neutered;
 
+  final String? createdDate;
+
   ProfileInfo({
     this.id,
     this.profileType,
@@ -48,11 +50,13 @@ class ProfileInfo {
     this.medicines,
     this.race,
     this.neutered,
+    this.createdDate,
   });
 
   factory ProfileInfo.fromJson(Map<String?, dynamic> json) {
     return ProfileInfo(
       id: json['id'].toString(),
+      createdDate: json['createdAt'].toString(),
       profileType: json['profileType'].toString(),
       photoUrl: json['photoUrl'],
       name: json['name'].toString(),
@@ -80,6 +84,7 @@ class ProfileInfo {
   Map<String?, dynamic> toJson() {
     return {
       'id': id,
+      'createdAt': createdDate,
       'profileType': profileType,
       'photoUrl': photoUrl,
       'name': name,

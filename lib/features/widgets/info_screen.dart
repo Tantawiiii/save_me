@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:save_me/features/home/models/profile_info.dart';
 
 import '../../utils/constants/colors_code.dart';
 import '../../utils/constants/fonts.dart';
@@ -9,27 +10,13 @@ import '../../utils/strings/Strings_en.dart';
 
 
 class InfoScreen extends StatelessWidget {
-  const InfoScreen({super.key});
+  const InfoScreen({super.key, required this.profileInfo});
+
+  final ProfileInfo profileInfo;
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme(
-          brightness: Brightness.light,
-          primary: ColorsCode.whiteColor,
-          onPrimary: ColorsCode.blackColor,
-          secondary: Colors.white,
-          onSecondary: Colors.grey,
-          background: Colors.white,
-          onBackground: Colors.grey,
-          error: Colors.red,
-          onError: ColorsCode.grayColor,
-          surface: Colors.white,
-          onSurface: Colors.black,
-        ),
-      ),
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.white,
@@ -200,7 +187,6 @@ class InfoScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }

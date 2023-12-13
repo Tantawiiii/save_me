@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:save_me/features/home/api_helper/api_helper.dart';
 import 'package:save_me/features/home/models/profile_info.dart';
+import 'package:save_me/features/widgets/item_card.dart';
 
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
@@ -46,12 +47,7 @@ class _HomeState extends State<Home> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   final profile = snapshot.data![index];
-                  return Card(
-                    child: ListTile(
-                      title: Text(profile.name!),
-                      subtitle: Text(profile.birthdate!),
-                    ),
-                  );
+                  return ItemCard(profileInfo: profile);
                 },
               );
             }

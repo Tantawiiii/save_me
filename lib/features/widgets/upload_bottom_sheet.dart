@@ -6,7 +6,6 @@ import '../../utils/constants/fonts.dart';
 import '../../utils/strings/Language.dart';
 
 void showBottomSheetDialog(BuildContext context) {
-
   showModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(

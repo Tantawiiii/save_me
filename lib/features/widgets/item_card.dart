@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:save_me/features/home/models/profile_info.dart';
 
 
 import '../../utils/constants/colors_code.dart';
@@ -8,67 +9,24 @@ import '../../utils/strings/Strings_en.dart';
 import 'info_screen.dart';
 
 class ItemCard extends StatelessWidget {
-  const ItemCard({super.key});
+  const ItemCard({super.key, required this.profileInfo});
+
+  final ProfileInfo profileInfo ;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.white,
-          statusBarIconBrightness: Brightness.dark,
-        ),
-        title: Column(
-          children: [
-            Text(
-              StringsEn.txtAppBarHome,
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                fontSize: 16,
-              ),
-            ),
-            Text(
-              StringsEn.txtAppBarWelcome,
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Fonts.getFontFamilyTitillRegular(),
-                fontSize: 10,
-              ),
-            ),
-          ],
-        ),
-        toolbarHeight: 70,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_active),
-            padding: const EdgeInsets.only(right: 12),
-            onPressed: () {},
-          ),
-        ],
-        elevation: 12,
-        shadowColor: Colors.black45,
-        leading: const Padding(
-          padding: EdgeInsets.only(left: 3.0),
-          child: Image(
-            image: AssetImage('assets/images/logowithnobg.png'),
-          ),
-        ),
-        centerTitle: true,
-        // backgroundColor: Theme.of(context).colorScheme.primary,
-        iconTheme: const IconThemeData(color: Colors.black),
-      ),
-      body: InkWell(
+    return InkWell(
         onTap: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const InfoScreen()),
+            MaterialPageRoute(builder: (context)
+            =>  InfoScreen(profileInfo: profileInfo,)),
           );
         },
         child: Container(
           margin: const EdgeInsets.all(25),
-          width: 180,
-          height: 280,
+          width: 156,
+          height: 217,
           decoration: const BoxDecoration(color: Colors.white),
           child: Card(
             elevation: 2,
@@ -87,15 +45,15 @@ class ItemCard extends StatelessWidget {
                       const SizedBox(height: 20,),
                       Image.asset(
                         'assets/images/image.png',
-                        width: 133,
-                        height: 160,
-                        fit: BoxFit.fill,
+                        width: 124,
+                        height: 122,
+                        fit: BoxFit.cover,
                       ),
                       const SizedBox(
-                        height: 16,
+                        height: 4,
                       ),
                       Text(
-                        'Adam Doe',
+                        profileInfo.name!,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -108,21 +66,20 @@ class ItemCard extends StatelessWidget {
                       ),
         
                       Text(
-                        'creation data 6/12/2023',
+                        profileInfo.createdDate!,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 11,
                           fontFamily: Fonts.getFontFamilyTitillSemiBold(),
                         ),
                       ),
-        
-        
+
                     ],
                   ),
                 ),
                 Container(
                   width: 120,
-                  height: 35,
+                  height: 31,
                   alignment: Alignment.topRight,
                   decoration: BoxDecoration(
                     color: ColorsCode.purpleColor,
@@ -132,8 +89,10 @@ class ItemCard extends StatelessWidget {
                     ),
         
                   ),
-                  child: const Center(
-                    child: Text('Kid',style: TextStyle(
+                  child:  Center(
+                    child: Text(
+                      profileInfo.profileType!
+                      ,style: const TextStyle(
                       color: Colors.white,
                     ),),
                   ),
@@ -142,7 +101,7 @@ class ItemCard extends StatelessWidget {
             ),
           ),
         ),
-      ),
+
     );
   }
 }
