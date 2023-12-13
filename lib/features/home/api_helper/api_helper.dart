@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -79,4 +80,51 @@ Future<String?> getAccessToken() async {
 Future<void> setAccessToken(String accessToken) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('access_token', accessToken);
+}
+
+Future<void> uploadProfileImage({required String profileId, required File image}) async {
+  String? accessToken = await getAccessToken();
+  final url = Endpoints.profilePhotoUplaod(profileId);
+  try {
+    // upload image as multipart
+    final body = <String, dynamic>{
+      'file': await http.MultipartFile.fromPath('file', image.path),
+    };
+    final http.Response response = await http.put(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+      body: body,
+    );
+    if (response.statusCode == 200) {
+      print('Successfully Uploaded Image...');
+    } else {
+      throw Exception('Failed to upload image');
+    }
+  } catch (error) {
+    print('Error: $error');
+    throw Exception('Failed to upload image');
+  }
+}
+
+Future<void> deleteProfileImage({required String profileId}) async {
+  String? accessToken = await getAccessToken();
+  final url = Endpoints.profilePhotoUplaod(profileId);
+  try {
+    final http.Response response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+    if (response.statusCode == 200) {
+      print('Successfully Deleted Image...');
+    } else {
+      throw Exception('Failed to delete image');
+    }
+  } catch (error) {
+    print('Error: $error');
+    throw Exception('Failed to delete image');
+  }
 }

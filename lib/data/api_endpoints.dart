@@ -1,8 +1,5 @@
-
-abstract class Endpoints{
-
+abstract class Endpoints {
   Endpoints._();
-
 
   // http://portal-saveme.preprod.fillflix.de
   // http://portal-saveme.qa.fillflix.de
@@ -13,4 +10,6 @@ abstract class Endpoints{
   static const profiles = '$baseUrl/api/v1/profiles';
   static const profileId = '$baseUrl/api/v1/profiles/:profileId';
 
+  /// {{baseUrl}}/api/v1/profiles/:profileId/photo
+  static profilePhotoUplaod(String profileId) => '$baseUrl/api/v1/profiles/$profileId/photo';
 }
