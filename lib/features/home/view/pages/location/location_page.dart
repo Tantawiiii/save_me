@@ -92,6 +92,7 @@ class _LocationState extends State<Location> {
                 keyboardType: TextInputType.streetAddress,
                 controller: locationController,
                 textInputAction: TextInputAction.search,
+
                 decoration: InputDecoration(
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(
