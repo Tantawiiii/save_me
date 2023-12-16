@@ -136,7 +136,7 @@ class Language extends ChangeNotifier {
 
   txtPasswordMatch() {
     if (getLanguage() == 'EN') {
-      return "The password must have at least 6 characters.";
+      return "must have at least {8 , A/a ,!@# } characters.";
     } else if (getLanguage() == 'DE') {
       return "Das Passwort muss mindestens aus 6 Zeichen.";
     }
@@ -326,6 +326,13 @@ class Language extends ChangeNotifier {
     }
   }
 
+  txtProfileInfo() {
+    if (getLanguage() == 'EN') {
+      return "Profile Information is Empty";
+    } else if (getLanguage() == 'DE') {
+      return "Profilinformationen sind leer";
+    }
+  }
   txtStartAddProfile() {
     if (getLanguage() == 'EN') {
       return "Start Adding Profiles +";
@@ -1336,5 +1343,12 @@ class Language extends ChangeNotifier {
     }
   }
 
+  txtCreateData() {
+    if (getLanguage() == 'EN') {
+      return "Creation Date: ";
+    } else if (getLanguage() == 'DE') {
+      return "Erstellungsdatum: ";
+    }
+  }
 
 }

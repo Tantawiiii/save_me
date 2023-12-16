@@ -4,7 +4,7 @@ import 'dart:io';
 class ProfileInfo {
   final String? id;
   final String? profileType;
-  final File? photoUrl;
+  final String? photoUrl;
   final String? name;
   final String? birthdate;
   final String? age;
@@ -24,6 +24,8 @@ class ProfileInfo {
   final String? medicines;
   final String? race;
   final bool? neutered;
+
+  final String? createdDate;
 
   ProfileInfo({
     this.id,
@@ -48,11 +50,13 @@ class ProfileInfo {
     this.medicines,
     this.race,
     this.neutered,
+    this.createdDate,
   });
 
   factory ProfileInfo.fromJson(Map<String?, dynamic> json) {
     return ProfileInfo(
       id: json['id'].toString(),
+      createdDate: json['createdAt'].toString(),
       profileType: json['profileType'].toString(),
       photoUrl: json['photoUrl'],
       name: json['name'].toString(),
@@ -73,13 +77,14 @@ class ProfileInfo {
       diseases: json['diseases'].toString(),
       medicines: json['medicines'].toString(),
       race: json['race'].toString(),
-      neutered: json['neutered'] as bool,
+      neutered: json['neutered'] as bool?,
     );
   }
 
   Map<String?, dynamic> toJson() {
     return {
       'id': id,
+      'createdAt': createdDate,
       'profileType': profileType,
       'photoUrl': photoUrl,
       'name': name,

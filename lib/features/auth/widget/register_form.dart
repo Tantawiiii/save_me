@@ -108,12 +108,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           child: InkWell(
                             onTap: () {
                               _handleButtonClick();
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const HomeScreen()));
-                              // _register();
+                              _register();
                             },
                             child: Text(
                               Language.instance.txtSkip(),
@@ -421,9 +416,6 @@ class _RegisterFormState extends State<RegisterForm> {
                         ),
                         //isDense: true,
                       ),
-                      // validator: (value) {
-                      //   return Validation.validateName(value ?? "");
-                      // },
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -449,7 +441,9 @@ class _RegisterFormState extends State<RegisterForm> {
                       ),
                       inputDecoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 4),
+                          vertical: 15,
+                          horizontal: 6,
+                        ),
                         prefixIcon: const Padding(
                           padding: EdgeInsets.only(
                               left: 0.0, top: 3, bottom: 3, right: 8),
@@ -488,7 +482,6 @@ class _RegisterFormState extends State<RegisterForm> {
                         _locationController.selection =
                             TextSelection.fromPosition(TextPosition(
                                 offset: prediction.description!.length));
-
                       },
                     ),
                   ),
@@ -553,16 +546,13 @@ class _RegisterFormState extends State<RegisterForm> {
         return _formKey1.currentState?.validate() ?? false;
       case 1:
         return _formKey2.currentState?.validate() ?? false;
-
       default:
         return false;
     }
   }
 
   void _register() async {
-
     try {
-
       // Implement your registration logic here
       final email = _emailController.text;
       final password = _passwordController.text;
@@ -578,7 +568,6 @@ class _RegisterFormState extends State<RegisterForm> {
         print('location: $location');
         print('lat: $locationLatitude');
         print('long: $locationLongitude');
-
       }
 
       LoadingDialog(isLoading: isLoading);
@@ -600,14 +589,10 @@ class _RegisterFormState extends State<RegisterForm> {
       print(registerSuccessful);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder:
-            (context) =>  const LoginScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
-    } catch (e)  {
-      print("Register failed: $e "  );
+    } catch (e) {
+      print("Register failed: $e ");
     }
-
-
-
   }
 }

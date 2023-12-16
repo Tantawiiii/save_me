@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,8 @@ import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
 import '../../../auth/utils/validation.dart';
+import '../../api_helper/api_helper.dart';
+import '../../models/profile_info.dart';
 
 
 @RoutePage()
@@ -20,6 +24,7 @@ class AddItemProfile extends StatefulWidget {
 
 class _AddItemProfileState extends State<AddItemProfile> {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _addInfoController = TextEditingController();
   final formKey = GlobalKey<FormState>();
    int _currentStep = 0;
   bool isCompleted = false;
@@ -92,6 +97,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                             if (kDebugMode) {
                               print('Completed');
                             }
+                            _addItemProfile();
                           } else {
                             setState(() => _currentStep += 1);
                           }
@@ -247,4 +253,39 @@ class _AddItemProfileState extends State<AddItemProfile> {
           ),
         ),
       ];
+
+
+
+  void _addItemProfile() async {
+    // Implement your Profile logic here
+    final name = _nameController.text;
+    final addInfo = _addInfoController.text;
+
+
+    if (kDebugMode) {
+      print('Name: $name');
+      print('addInfo: $addInfo');
+    }
+
+    final profileInfo = ProfileInfo(
+        profileType: "ITEM",
+        name: name,
+        additionalInformation: addInfo
+    );
+
+
+    final createProfileSuccess = await postProfileData(profileInfo);
+
+    if (createProfileSuccess!= null) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      if (kDebugMode) {
+        print("Success Uploading profile information's and added it to Home");
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: $createProfileSuccess'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
+  }
 }

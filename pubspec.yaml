@@ -53,6 +53,7 @@ dependencies:
   intl: ^0.18.1
   flutter_bounce: ^1.1.0
   bounceable_effect: ^0.0.1
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/icons/
     - assets/images/
     - assets/anim/
     - assets/fonts/

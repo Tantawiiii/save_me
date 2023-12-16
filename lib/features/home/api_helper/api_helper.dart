@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -7,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../data/api_endpoints.dart';
 import '../models/profile_info.dart';
 
-Future<bool> postProfileData(ProfileInfo profileInfo) async {
+Future<ProfileInfo?> postProfileData(ProfileInfo profileInfo) async {
   const url = Endpoints.profiles;
   String? accessToken = await getAccessToken();
 
@@ -27,7 +28,9 @@ Future<bool> postProfileData(ProfileInfo profileInfo) async {
     if (kDebugMode) {
       print("Success Response");
     }
-    return true;
+    final data = jsonDecode(response.body);
+    final profile= ProfileInfo.fromJson(data);
+    return profile;
   } else {
     if (kDebugMode) {
       print("Error Failed Response: ${response.statusCode}");
@@ -35,15 +38,15 @@ Future<bool> postProfileData(ProfileInfo profileInfo) async {
       print("asss: $accessToken");
     }
   }
-  return false;
+  return null;
 }
 
 // get profile data
 
-Future<List<ProfileInfo>> getUserProfileData(String accessToken) async {
+Future<List<ProfileInfo>> getUserProfileData() async {
+  String? accessToken = await getAccessToken();
   const url = Endpoints.profiles;
   List<ProfileInfo> profiles = [];
-
   try {
     final http.Response response = await http.get(
       Uri.parse(url),
@@ -51,11 +54,10 @@ Future<List<ProfileInfo>> getUserProfileData(String accessToken) async {
         'Authorization': 'Bearer $accessToken',
       },
     );
-
     if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      responseData.forEach((key, value) {
-        profiles.add(ProfileInfo.fromJson(value));
+      final responseData = jsonDecode(response.body);
+      responseData.forEach((profile) {
+        profiles.add(ProfileInfo.fromJson(profile));
       });
 
       print('Successfully Getting Profiles...');
@@ -67,6 +69,95 @@ Future<List<ProfileInfo>> getUserProfileData(String accessToken) async {
   } catch (error) {
     print('Error: $error');
     throw Exception('Failed to load user profile data');
+  }
+}
+
+Future<List<ProfileInfo>> getPublicProfileId() async {
+  String? accessToken = await getAccessToken();
+  const url = Endpoints.profileId;
+  List<ProfileInfo> profiles = [];
+  try {
+    final http.Response response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      responseData.forEach((profile) {
+        profiles.add(ProfileInfo.fromJson(profile));
+      });
+
+      print('Successfully Getting Profiles Id ...');
+
+      return profiles;
+    } else {
+      throw Exception('Failed to load user profile data');
+    }
+  } catch (error) {
+    print('Error: $error');
+    throw Exception('Failed to load user profile data');
+  }
+}
+
+Future<void> uploadProfileImage({required String profileId,
+  required File image}) async {
+  String? accessToken = await getAccessToken();
+
+  final url = Endpoints.profilePhotoUplaod(profileId);
+  var postUri = Uri.parse(url);
+  var request =  http.MultipartRequest("PUT", postUri);
+  request.headers.addAll({
+    'Authorization': 'Bearer $accessToken',
+  });
+  request.files.add( http.MultipartFile.fromBytes('file', await File.fromUri(image.uri).readAsBytes()));
+
+
+  try {
+    // upload image as multipart
+    // final body = <String, dynamic>{
+    //   'file': await http.MultipartFile.fromPath('file', image.path),
+    // };
+    // final http.Response response = await http.put(
+    //   Uri.parse(url),
+    //   headers: {
+    //     'Authorization': 'Bearer $accessToken',
+    //   },
+    //   body: jsonEncode(body),
+    // );
+    final response = await request.send();
+    // FIXME:
+    // TODO:
+    if (response.statusCode == 200) {
+      print('Successfully Uploaded Image...');
+    } else {
+      throw Exception('Failed to upload image');
+    }
+  } catch (error) {
+    print('Error: $error');
+    throw Exception('Failed to upload image');
+  }
+}
+
+Future<void> deleteProfileImage({required String profileId}) async {
+  String? accessToken = await getAccessToken();
+  final url = Endpoints.profilePhotoUplaod(profileId);
+  try {
+    final http.Response response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+    if (response.statusCode == 200) {
+      print('Successfully Deleted Image...');
+    } else {
+      throw Exception('Failed to delete image');
+    }
+  } catch (error) {
+    print('Error: $error');
+    throw Exception('Failed to delete image');
   }
 }
 
