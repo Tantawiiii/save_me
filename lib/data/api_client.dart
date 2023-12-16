@@ -111,4 +111,49 @@ class ApiClient {
       return {'error': 'Failed to update user profile'};
     }
   }
+
+  // Change the password for the user profile.
+    Future <String> changePassword(String oldPassword, String newPassword) async {
+    String? accessToken = await getAccessToken();
+    const url = Endpoints.changePassword;
+
+    final body = jsonEncode({
+      'oldPassword' : oldPassword,
+      'newPassword' : newPassword
+    });
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+      'Accept': '*/*'
+    };
+
+    try {
+      final response = await http.patch(
+        Uri.parse(url),
+        headers: headers,
+        body: body,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print('Password changed successfully');
+        return "Password changed successfully";
+      } else {
+        print('Failed to change password. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+
+    } catch(e){
+      print('Error changing password: $e');
+    }
+    return "Failed to change password...}";
+  }
+
+
+  Future<String?> getAccessToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('access_token');
+  }
+
+
 }

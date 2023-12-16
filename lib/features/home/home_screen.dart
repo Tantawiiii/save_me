@@ -81,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       home: Scaffold(
+        extendBody:true,
         appBar: AppBar(
           systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.white,

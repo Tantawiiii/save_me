@@ -21,7 +21,9 @@ class StringsEn{
   static const String txtNotMatchPassword = "Password does not match";
 
   // ^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\\d]){1,})(?=(.*[_\\W]){1,})(?!.*\\s).{8,}$
-  static const String patternPassword = r'^.{6,}$';
+ // static const String patternPassword = r'^.{6,}$';
+  static const String patternPassword = r'^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[_\W]){1,})(?!.*\s).{8,}$';
+
   static const String txtPasswordMatch = "Password must be at least 6 characters.";
   static const String txtChangePassword = "Change Password";
   static const String txtHintNewPassword = "Create a new password";

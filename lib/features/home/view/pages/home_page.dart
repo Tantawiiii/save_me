@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:save_me/features/home/api_helper/api_helper.dart';
 import 'package:save_me/features/home/models/profile_info.dart';
-import 'package:save_me/features/widgets/item_card.dart';
 
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
-import '../../provider/speed_dial_provider.dart';
 import 'package:auto_route/auto_route.dart';
+
+import '../ui/item_card.dart';
 
 @RoutePage()
 class Home extends StatefulWidget {

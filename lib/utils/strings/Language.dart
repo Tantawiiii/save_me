@@ -136,7 +136,7 @@ class Language extends ChangeNotifier {
 
   txtPasswordMatch() {
     if (getLanguage() == 'EN') {
-      return "The password must have at least 6 characters.";
+      return "must have at least {8 , A/a ,!@# } characters.";
     } else if (getLanguage() == 'DE') {
       return "Das Passwort muss mindestens aus 6 Zeichen.";
     }
