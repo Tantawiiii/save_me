@@ -171,8 +171,6 @@ class _LocationState extends State<Location> {
                               await placemarkFromCoordinates(
                                   cameraPosition!.target.latitude,
                                   cameraPosition!.target.longitude);
-
-
                           //get place name from lat and lang
                           setState(() {
                             location =

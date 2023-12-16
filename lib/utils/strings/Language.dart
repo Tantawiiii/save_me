@@ -65,9 +65,9 @@ class Language extends ChangeNotifier {
   txtHintEmail() {
     if (getLanguage() == 'EN') {
       return "Enter your email";
-    } else if (getLanguage() == 'DE') {
-      return "Gib deine E-Mail-Adresse ein";
-    }
+  } else if (getLanguage() == 'DE') {
+  return "Gib deine E-Mail-Adresse ein";
+  }
   }
 
   txtIsEmptyEmail() {

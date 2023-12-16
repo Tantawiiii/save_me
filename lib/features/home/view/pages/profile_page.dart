@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 
@@ -31,7 +33,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final TextEditingController _phoneNumController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _addInfoController = TextEditingController();
 
   // initial Country Code value phone number
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
@@ -51,7 +53,6 @@ class _ProfileState extends State<Profile> {
 
   // Image Picker for the new photo profile image
   File? _image;
-
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
@@ -63,16 +64,15 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+  // TODO: Fixed Get Profile
   // Fetch a user  Data from token
- late  User userData;
+  User? userData;
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
 
+    super.initState();
     SharedPreferences.getInstance().then((prefs) {
       final String? token = prefs.getString('access_token');
-
       //Fetch a user Data from token
       ApiClient.getUserProfileData(token!).then((data) {
         setState(() {
@@ -126,16 +126,15 @@ class _ProfileState extends State<Profile> {
                         color: Colors.purple.shade100,
                       )),
                       hintText:
-                          // userData != null ?
-                          //     userData.name :
+                          userData != null ?
+                              userData!.name :
                       Language.instance.txtIsEmptyUserName(),
 
                       hintStyle: TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
-                        color: ColorsCode.grayColor,
+                        color: ColorsCode.blackColor700,
                       ),
-                      //isDense: true,
                     ),
                     validator: (value) {
                       return Validation.validateEmail(value ?? "");
@@ -184,7 +183,6 @@ class _ProfileState extends State<Profile> {
                     selectorTextStyle: const TextStyle(color: Colors.black),
                     textFieldController: _phoneNumController,
                     formatInput: false,
-                    //maxLength: 11,
                     spaceBetweenSelectorAndTextField: 0,
                     keyboardType:
                     const TextInputType.numberWithOptions(signed: true, decimal: true),
@@ -193,13 +191,15 @@ class _ProfileState extends State<Profile> {
                       //prefixIcon: SvgPicture.asset('assets/images/line.svg'),
                       contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
                       border: InputBorder.none,
-                      hintText:Language.instance.txtHintPhoneNumber(),
+                      hintText:
+                      userData != null ?
+                      userData!.phoneNumber :
+                      Language.instance.txtHintPhoneNumber(),
                       hintStyle: TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
-                        color: ColorsCode.grayColor,
+                        color: ColorsCode.blackColor700,
                       ),
-
                     ),
                     onSaved: (PhoneNumber number) {
                       print('On Saved: $number');
@@ -222,7 +222,7 @@ class _ProfileState extends State<Profile> {
                 SizedBox(
                   height: 56,
                   child: TextFormField(
-                    controller: _emailController,
+                    controller: _addInfoController,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                       filled: true,
@@ -235,17 +235,17 @@ class _ProfileState extends State<Profile> {
                           borderSide: BorderSide(
                         color: Colors.purple.shade100,
                       )),
-                      hintText: Language.instance.txtHintEmail(),
+                      hintText:
+                      userData != null ?
+                      userData!.contactInfo :
+                      Language.instance.txtAddInfo(),
                       hintStyle: TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                         fontFamily: Fonts.getFontFamilyTitillRegular(),
-                        color: ColorsCode.grayColor,
+                        color: ColorsCode.blackColor700,
                       ),
                       //isDense: true,
                     ),
-                    validator: (value) {
-                      return Validation.validateEmail(value ?? "");
-                    },
                   ),
                 ),
                 const SizedBox(
@@ -343,7 +343,8 @@ class _ProfileState extends State<Profile> {
                         height: 56,
                         child: ElevatedButton(
                           onPressed: () {
-                            showBottomSheetDialog(context);
+                           // showBottomSheetDialog(context);
+                            updateDataInProfile();
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
@@ -406,4 +407,42 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
+
+void updateDataInProfile() async {
+
+    try {
+      final name = _nameController.text;
+      final phone = _phoneNumController.text;
+      final addInfo = _addInfoController.text;
+
+      final user = User(
+        name:  name,
+        phoneNumber: phone,
+        contactInfo:  addInfo,
+      );
+
+      String successUpdate  = await ApiClient().updateUserProfile(user);
+
+      if (successUpdate != null) {
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Update Date Info Successfully'),
+          backgroundColor: Colors.blue.shade200,
+        ));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Failed to Update Date Info.'),
+          backgroundColor: Colors.red.shade300,
+        ));
+      }
+
+      print("Success update :$successUpdate");
+
+    } catch ( e ) {
+      print("Register failed: $e ");
+  }
+
+
+}
+
 }

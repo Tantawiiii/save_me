@@ -28,7 +28,6 @@ class ApiClient {
     }
   }
 
-  // login User Api request
   static Future<String> loginUser(String email, String password) async {
     const url = Endpoints.login;
     final body = jsonEncode({
@@ -84,43 +83,64 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> updateUserProfile({
-    required String accessToken,
-    required Map<String, dynamic> data,
-  }) async {
-    const String apiUrl = Endpoints.register;
+  Future<String> updateUserProfile(User user) async {
+    String? accessToken = await getAccessToken();
+    const url = Endpoints.register;
 
-    try {
-      final http.Response response = await http.put(
-        Uri.parse(apiUrl),
-        headers: {
-          'Authorization': 'Bearer $accessToken',
-          'Content-Type': 'application/json',
-        },
-        body: json.encode(data),
-      );
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+      'Accept': '*/*'
+    };
 
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
-      } else {
-        throw Exception('Failed to update user profile');
-      }
-    } catch (error) {
-      // Handle errors here
-      print('Error: $error');
-      return {'error': 'Failed to update user profile'};
+    final response = await http.put(
+      Uri.parse(url),
+      headers: headers,
+      body: jsonEncode(user.toJson()),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201)  {
+      return "Success update data info";
+    } else {
+      throw Exception('Failed to load user profile data');
     }
   }
 
+  // Future<dynamic> updateUserProfile({
+  //   required String accessToken,
+  //   required Map<String, dynamic> data,
+  // }) async {
+  //   const String apiUrl = Endpoints.register;
+  //
+  //   try {
+  //     final http.Response response = await http.put(
+  //       Uri.parse(apiUrl),
+  //       headers: {
+  //         'Authorization': 'Bearer $accessToken',
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: json.encode(data),
+  //     );
+  //
+  //     if (response.statusCode == 200) {
+  //       return json.decode(response.body);
+  //     } else {
+  //       throw Exception('Failed to update user profile');
+  //     }
+  //   } catch (error) {
+  //     // Handle errors here
+  //     print('Error: $error');
+  //     return {'error': 'Failed to update user profile'};
+  //   }
+  // }
+
   // Change the password for the user profile.
-    Future <String> changePassword(String oldPassword, String newPassword) async {
+  Future<String> changePassword(String oldPassword, String newPassword) async {
     String? accessToken = await getAccessToken();
     const url = Endpoints.changePassword;
 
-    final body = jsonEncode({
-      'oldPassword' : oldPassword,
-      'newPassword' : newPassword
-    });
+    final body =
+        jsonEncode({'oldPassword': oldPassword, 'newPassword': newPassword});
 
     var headers = {
       'Content-Type': 'application/json',
@@ -142,18 +162,14 @@ class ApiClient {
         print('Failed to change password. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
       }
-
-    } catch(e){
+    } catch (e) {
       print('Error changing password: $e');
     }
     return "Failed to change password...}";
   }
 
-
   Future<String?> getAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('access_token');
   }
-
-
 }
