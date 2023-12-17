@@ -615,7 +615,6 @@ class _RegisterFormState extends State<RegisterForm> {
           longitude: longitude.toString(),
         ),
         phoneNumber: parsedPhoneNumber,
-        contactInfo: '<string>',
       );
 
       String registerSuccessful = await ApiClient().registerUser(user);

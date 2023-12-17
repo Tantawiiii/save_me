@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:save_me/data/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,7 +52,9 @@ class ApiClient {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('access_token', responseData['access_token']);
       final user = await getUserProfileData(responseData['access_token']);
-      prefs.setString('user', jsonEncode(user.toJson()));
+      if (user != null) {
+        prefs.setString('user', jsonEncode(user.toJson()));
+      }
       return "Login Successful!";
     } else {
       if (kDebugMode) {
@@ -62,7 +65,7 @@ class ApiClient {
     }
   }
 
-  static Future<User> getUserProfileData(String accessToken) async {
+  static Future<User?> getUserProfileData(String accessToken) async {
     const url = Endpoints.register;
     try {
       final http.Response response = await http.get(
@@ -76,10 +79,10 @@ class ApiClient {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         return User.fromJson(responseData);
       } else {
-        throw Exception('Failed to load user profile data');
+        return null;
       }
     } catch (error) {
-      print('Error: $error');
+      Fluttertoast.showToast(msg: "$error");
       throw Exception('Failed to load user profile data');
     }
   }
