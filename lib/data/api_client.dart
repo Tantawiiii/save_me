@@ -38,6 +38,7 @@ class ApiClient {
     var headers = {
       'Content-Type': 'application/json',
     };
+
     final response = await http.post(
       Uri.parse(url),
       body: body,
@@ -57,7 +58,7 @@ class ApiClient {
         print("Error: ${response.statusCode}");
         print("Error Body: ${response.body}");
       }
-      throw Exception("Login failed with status code ${response.statusCode}");
+     return ("Login failed with status code ${response.statusCode}");
     }
   }
 
@@ -71,7 +72,7 @@ class ApiClient {
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 ) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         return User.fromJson(responseData);
       } else {
@@ -102,39 +103,11 @@ class ApiClient {
     if (response.statusCode == 200 || response.statusCode == 201)  {
       return "Success update data info";
     } else {
-      throw Exception('Failed to load user profile data');
+     return 'Failed to load user profile data' ;
     }
   }
 
-  // Future<dynamic> updateUserProfile({
-  //   required String accessToken,
-  //   required Map<String, dynamic> data,
-  // }) async {
-  //   const String apiUrl = Endpoints.register;
-  //
-  //   try {
-  //     final http.Response response = await http.put(
-  //       Uri.parse(apiUrl),
-  //       headers: {
-  //         'Authorization': 'Bearer $accessToken',
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: json.encode(data),
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       return json.decode(response.body);
-  //     } else {
-  //       throw Exception('Failed to update user profile');
-  //     }
-  //   } catch (error) {
-  //     // Handle errors here
-  //     print('Error: $error');
-  //     return {'error': 'Failed to update user profile'};
-  //   }
-  // }
 
-  // Change the password for the user profile.
   Future<String> changePassword(String oldPassword, String newPassword) async {
     String? accessToken = await getAccessToken();
     const url = Endpoints.changePassword;
