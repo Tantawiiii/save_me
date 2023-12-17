@@ -500,6 +500,22 @@ class Language extends ChangeNotifier {
     }
   }
 
+  txtHey() {
+    if (getLanguage() == 'EN') {
+      return "Hey I am  ";
+    } else if (getLanguage() == 'DE') {
+      return "Hey, das bin ich ";
+    }
+  }
+
+  txtYear() {
+    if (getLanguage() == 'EN') {
+      return " Years Old";
+    } else if (getLanguage() == 'DE') {
+      return " Jahre alt";
+    }
+  }
+
   txtKidBodyInfo() {
     if (getLanguage() == 'EN') {
       return "Child Body Shape Information's";
@@ -654,9 +670,9 @@ class Language extends ChangeNotifier {
 
   txtAppBarHome() {
     if (getLanguage() == 'EN') {
-      return "Hello! Anonymous";
+      return "Hello!  ";
     } else if (getLanguage() == 'DE') {
-      return "Hallo! Anonym";
+      return "Hallo!  ";
     }
   }
 

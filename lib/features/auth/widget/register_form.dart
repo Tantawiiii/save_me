@@ -5,7 +5,6 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:save_me/features/home/home_screen.dart';
 import 'package:save_me/utils/strings/Strings_en.dart';
 
 import '../../../data/api_client.dart';
@@ -35,10 +34,14 @@ class _RegisterFormState extends State<RegisterForm> {
   final _confirmPasswordController = TextEditingController();
   final _nameController = TextEditingController();
   final _locationController = TextEditingController();
-  double locationLatitude = 0.0;
-  double locationLongitude = 0.0;
-  final _phoneNumberController = TextEditingController();
 
+  // to get a location data when user change here location
+  String locationName = "";
+  double latitude = 0.0;
+  double longitude = 0.0;
+
+  final _phoneNumberController = TextEditingController();
+  String parsedPhoneNumber = '';
   String initialCountry = 'EG';
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
   bool passwordVisible = true;
@@ -146,7 +149,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                         child: ElevatedButton(
                                           onPressed: details.onStepContinue,
                                           style: ElevatedButton.styleFrom(
-                                            primary: Colors.black,
+                                            backgroundColor: Colors.black,
                                             elevation: 0,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
@@ -226,11 +229,17 @@ class _RegisterFormState extends State<RegisterForm> {
                           if (_currentStep < 1) {
                             if (_validateCurrentStep()) {
                               _currentStep += 1;
-                              print('register step 1');
+                              if (kDebugMode) {
+                                print('register step 1');
+                              }
                             }
-                            print('register step 2');
+                            if (kDebugMode) {
+                              print('register step 2');
+                            }
                           } else {
-                            print('register step 3');
+                            if (kDebugMode) {
+                              print('register step 3');
+                            }
                             _handleButtonClick();
                             _register();
                           }
@@ -478,10 +487,31 @@ class _RegisterFormState extends State<RegisterForm> {
                         }
                       },
                       itemClick: (Prediction prediction) {
-                        _locationController.text = prediction.description!;
-                        _locationController.selection =
-                            TextSelection.fromPosition(TextPosition(
-                                offset: prediction.description!.length));
+                        // TODO: Error Location Lat , Long
+                        // Handle the location details directly in the itemClick callback
+                        locationName = prediction.description ?? "";
+                        // Use try-catch to handle potential casting errors
+                        try {
+                          // Attempt to parse lat and lng as double
+                          latitude = double.parse(prediction.lat?.toString() ?? "0.0");
+                          longitude = double.parse(prediction.lng?.toString() ?? "0.0");
+
+                        } catch (e) {
+                          if (kDebugMode) {
+                            print("Error parsing lat/lng: $e");
+                            print("Problematic values - lat: ${prediction.lat}, lng: ${prediction.lng}");
+
+                          }
+                          // Handle the error case, set default values if needed
+                          latitude = 0.0;
+                          longitude = 0.0;
+                        }
+
+                        _locationController.text = locationName;
+                        _locationController.selection = TextSelection.fromPosition(
+                          TextPosition(offset: locationName.length),
+                        );
+
                       },
                     ),
                   ),
@@ -517,7 +547,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       //maxLength: 11,
                       spaceBetweenSelectorAndTextField: 0,
                       keyboardType: const TextInputType.numberWithOptions(
-                          signed: true, decimal: true),
+                          signed: true, decimal: true,),
                       cursorColor: Colors.black,
                       inputDecoration: InputDecoration(
                         contentPadding:
@@ -530,7 +560,12 @@ class _RegisterFormState extends State<RegisterForm> {
                           color: ColorsCode.grayColor,
                         ),
                       ),
-                      onInputChanged: (PhoneNumber value) {},
+                      onInputChanged: (PhoneNumber value) {
+                       // String countryCode = value.dialCode ?? " ";
+                        // TODO: Fixed to get country code with entered Phone number
+                        parsedPhoneNumber = value.phoneNumber ?? "";
+
+                      },
                     ),
                   ),
                 ],
@@ -558,16 +593,15 @@ class _RegisterFormState extends State<RegisterForm> {
       final password = _passwordController.text;
       final name = _nameController.text;
       final location = _locationController.text;
-      final phoneNumber = _phoneNumberController.text;
 
       if (kDebugMode) {
         print('Name: $name');
         print('Email: $email');
         print('Password: $password');
-        print('PhoneNumber: $phoneNumber');
-        print('location: $location');
-        print('lat: $locationLatitude');
-        print('long: $locationLongitude');
+        print('PhoneNumber: $parsedPhoneNumber');
+        print('location: $locationName');
+        print('lat: $latitude');
+        print('long: $longitude');
       }
 
       LoadingDialog(isLoading: isLoading);
@@ -576,23 +610,27 @@ class _RegisterFormState extends State<RegisterForm> {
         email: _emailController.text,
         password: _passwordController.text,
         location: Location(
-          name: _locationController.text,
-          latitude: '0.0',
-          longitude: '0.0',
+          name: locationName,
+          latitude: latitude.toString(),
+          longitude: longitude.toString(),
         ),
-        phoneNumber: _phoneNumberController.text,
+        phoneNumber: parsedPhoneNumber,
         contactInfo: '<string>',
       );
 
       String registerSuccessful = await ApiClient().registerUser(user);
 
-      print(registerSuccessful);
+      if (kDebugMode) {
+        print(registerSuccessful);
+      }
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     } catch (e) {
-      print("Register failed: $e ");
+      if (kDebugMode) {
+        print("Register failed: $e ");
+      }
     }
   }
 }
