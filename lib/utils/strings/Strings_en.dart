@@ -106,7 +106,7 @@ class StringsEn{
   static const String txtAdditionInfo = "Addition Information";
   static const String txtHintAdditionInfo = "Enter your kid addition information";
 
-  static const String txtAppBarHome = "Hello! Ahmed";
+  static const String txtAppBarHome = "Hello! ";
   static const String txtAppBarWelcome = "Welcome to SaveMee";
 
   static const String txtHomeTab = "Home";

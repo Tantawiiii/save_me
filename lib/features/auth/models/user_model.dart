@@ -2,16 +2,16 @@
 
 class User {
   final String? name;
-  final String email;
-  final String password;
+  final String? email;
+  final String? password;
   final Location? location;
   final String? phoneNumber;
   final String? contactInfo;
 
   User({
     this.name,
-    required this.email,
-    required this.password,
+     this.email,
+     this.password,
      this.location,
      this.phoneNumber,
      this.contactInfo,
