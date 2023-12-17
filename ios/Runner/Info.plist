@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>AIzaSyB_wFmdtRx-M0XdqAEpHF2vCfV2oWT9VC8</key>
-    <string>The app needs location permission</string>
-    <key>io.flutter.embedded_views_preview</key>
-    <true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -49,12 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-
-	<key>CFBundleLocalizations</key>
-	<array>
-	    <string>en</string>
-	    <string>de_DE</string>
-	</array>
-
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>This app needs access to location when open.</string>
+<!-- <key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to location when in the background.</string> -->
 </dict>
 </plist>
