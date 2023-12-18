@@ -61,7 +61,7 @@ class ApiClient {
         print("Error: ${response.statusCode}");
         print("Error Body: ${response.body}");
       }
-     return ("Login failed with status code ${response.statusCode}");
+      return ("Login failed with status code ${response.statusCode}");
     }
   }
 
@@ -75,7 +75,7 @@ class ApiClient {
         },
       );
 
-      if (response.statusCode == 200 ) {
+      if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         return User.fromJson(responseData);
       } else {
@@ -87,29 +87,40 @@ class ApiClient {
     }
   }
 
-  Future<String> updateUserProfile(User user) async {
-    String? accessToken = await getAccessToken();
-    const url = Endpoints.register;
 
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $accessToken',
-      'Accept': '*/*'
-    };
 
-    final response = await http.put(
-      Uri.parse(url),
-      headers: headers,
-      body: jsonEncode(user.toJson()),
-    );
+  Future<User> updateUserProfile(User user) async {
 
-    if (response.statusCode == 200 || response.statusCode == 201)  {
-      return "Success update data info";
-    } else {
-     return 'Failed to load user profile data' ;
+    try {
+      String? accessToken = await getAccessToken();
+      const url = Endpoints.register;
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+        'Accept': '*/*'
+      };
+
+      final response = await http.put(
+        Uri.parse(url),
+        headers: headers,
+        body: jsonEncode(user.toJson()),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Parse and return the updated user data
+        User updatedUser = User.fromJson(jsonDecode(response.body));
+        return updatedUser;
+      } else {
+        throw Exception(
+            'Failed to update user profile. Status code: ${response.statusCode}');
+      }
+    } catch (e){
+      print('Error updating user profile: $e');
+      throw Exception('Failed to update user profile. Error: $e');
     }
-  }
 
+  }
 
   Future<String> changePassword(String oldPassword, String newPassword) async {
     String? accessToken = await getAccessToken();
@@ -131,8 +142,11 @@ class ApiClient {
         body: body,
       );
 
+      var responseDecoded = jsonDecode(response.body);
+
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print('Password changed successfully');
+
+
         return "Password changed successfully";
       } else {
         print('Failed to change password. Status code: ${response.statusCode}');

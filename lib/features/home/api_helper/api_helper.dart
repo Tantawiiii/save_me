@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../data/api_endpoints.dart';
+import '../../auth/models/user_model.dart';
 import '../models/profile_info.dart';
 
 Future<ProfileInfo?> postProfileData(ProfileInfo profileInfo) async {
@@ -29,7 +31,7 @@ Future<ProfileInfo?> postProfileData(ProfileInfo profileInfo) async {
       print("Success Response");
     }
     final data = jsonDecode(response.body);
-    final profile= ProfileInfo.fromJson(data);
+    final profile = ProfileInfo.fromJson(data);
     return profile;
   } else {
     if (kDebugMode) {
@@ -101,18 +103,40 @@ Future<List<ProfileInfo>> getPublicProfileId() async {
   }
 }
 
-Future<void> uploadProfileImage({required String profileId,
-  required File image}) async {
+Future<User?> deleteUserProfileData(String accessToken) async {
+  const url = Endpoints.profiles;
+  try {
+    final http.Response response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+      return User.fromJson(responseData);
+    } else {
+      return null;
+    }
+  } catch (error) {
+    Fluttertoast.showToast(msg: "$error");
+    throw Exception('Failed to load user profile data');
+  }
+}
+
+Future<void> uploadProfileImage(
+    {required String profileId, required File image}) async {
   String? accessToken = await getAccessToken();
 
   final url = Endpoints.profilePhotoUplaod(profileId);
   var postUri = Uri.parse(url);
-  var request =  http.MultipartRequest("PUT", postUri);
+  var request = http.MultipartRequest("PUT", postUri);
   request.headers.addAll({
     'Authorization': 'Bearer $accessToken',
   });
-  request.files.add( http.MultipartFile.fromBytes('file', await File.fromUri(image.uri).readAsBytes()));
-
+  request.files.add(http.MultipartFile.fromBytes(
+      'file', await File.fromUri(image.uri).readAsBytes()));
 
   try {
     // upload image as multipart
