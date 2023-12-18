@@ -83,7 +83,7 @@ abstract class $AppRouter extends _i15.RootStackRouter {
     Location.name: (routeData) {
       return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.Location(),
+        child: const _i9.LocationPage(),
       );
     },
     LoginRoute.name: (routeData) {
@@ -232,7 +232,7 @@ class HomeRoute extends _i15.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.Location]
+/// [_i9.LocationPage]
 class Location extends _i15.PageRouteInfo<void> {
   const Location({List<_i15.PageRouteInfo>? children})
       : super(

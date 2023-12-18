@@ -10,7 +10,7 @@ abstract class Endpoints{
   static const login = '$baseUrl/api/v1/login';
   static const changePassword = '$baseUrl/api/v1/users/change-password';
   static const profiles = '$baseUrl/api/v1/profiles';
-  static const profileId = '$baseUrl/api/v1/profiles/:profileId/photo';
+  static const profileId = '$baseUrl/api/v1/profiles/:profileId';
 
   static profilePhotoUplaod(String profileId) =>
       '$baseUrl/api/v1/profiles/$profileId/photo';

@@ -409,40 +409,40 @@ class _ProfileState extends State<Profile> {
   }
 
 void updateDataInProfile() async {
+  try {
+    final name = _nameController.text;
+    final phone = _phoneNumController.text;
+    final addInfo = _addInfoController.text;
 
-    try {
-      final name = _nameController.text;
-      final phone = _phoneNumController.text;
-      final addInfo = _addInfoController.text;
+    final user = User(
+      name: name,
+      phoneNumber: phone,
+      contactInfo: addInfo,
+    );
 
-      final user = User(
-        name:  name,
-        phoneNumber: phone,
-        contactInfo:  addInfo,
-      );
+    User updatedUser = await ApiClient().updateUserProfile(user);
 
-      String successUpdate  = await ApiClient().updateUserProfile(user);
+    if (updatedUser != null) {
+      setState(() {
+        userData = updatedUser;
+      });
 
-      if (successUpdate != null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text('Update Date Info Successfully'),
+        backgroundColor: Colors.blue.shade200,
+      ));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text('Failed to Update Date Info.'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
 
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Update Date Info Successfully'),
-          backgroundColor: Colors.blue.shade200,
-        ));
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Failed to Update Date Info.'),
-          backgroundColor: Colors.red.shade300,
-        ));
-      }
-
-      print("Success update :$successUpdate");
-
-    } catch ( e ) {
-      print("Register failed: $e ");
+    print("Success update: $updatedUser");
+  } catch (error) {
+    print("Update failed: $error");
   }
-
-
 }
 
 }
+

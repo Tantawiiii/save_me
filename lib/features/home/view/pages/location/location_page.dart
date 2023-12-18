@@ -4,24 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 import 'package:save_me/features/home/view/pages/location/web_services/network_utils.dart';
 
 
 import '../../../../../utils/constants/colors_code.dart';
 import '../../../../../utils/constants/fonts.dart';
 import '../../../../../utils/strings/Language.dart';
-import '../../../../widgets/upload_bottom_sheet.dart';
+import '../../../../../utils/strings/Strings_en.dart';
 
 
 @RoutePage()
-class Location extends StatefulWidget {
-  const Location({super.key});
+class LocationPage extends StatefulWidget {
+  const LocationPage({super.key});
 
   @override
-  State<Location> createState() => _LocationState();
+  State<LocationPage> createState() => _LocationPageState();
 }
 
-class _LocationState extends State<Location> {
+class _LocationPageState extends State<LocationPage> {
   // function to autoComplete the location
   void placeAutoComplete(String query) async {
     Uri uri =
@@ -40,7 +42,9 @@ class _LocationState extends State<Location> {
   }
 
   TextEditingController locationController = TextEditingController();
-
+  String locationName = "";
+  double latitude = 0.0;
+  double longitude = 0.0;
   // to add Icon Marker on MapView
   Set<Marker> _createMarker() {
     return {
@@ -69,7 +73,7 @@ class _LocationState extends State<Location> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        margin: const EdgeInsets.only(top: 30, right: 24, left: 24),
+        margin: const EdgeInsets.only(top: 20, right: 24, left: 24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,23 +90,25 @@ class _LocationState extends State<Location> {
               height: 8,
             ),
             SizedBox(
-              height: 58,
-              child: TextFormField(
-                maxLines: 1,
-                keyboardType: TextInputType.streetAddress,
-                controller: locationController,
-                textInputAction: TextInputAction.search,
-
-                decoration: InputDecoration(
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 15.5,
-                      right: 8,
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/images/search.svg',
-                      width: 20,
-                      height: 20,
+              height: 56,
+              child: GooglePlaceAutoCompleteTextField(
+                isCrossBtnShown: false,
+                textEditingController: locationController,
+                googleAPIKey: StringsEn.API_KEY_Google,
+                boxDecoration: BoxDecoration(
+                  color: ColorsCode.whiteColor100,
+                ),
+                inputDecoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 6,
+                  ),
+                  prefixIcon: const Padding(
+                    padding: EdgeInsets.only(
+                        left: 0.0, top: 3, bottom: 3, right: 8),
+                    child: Icon(
+                      Icons.my_location_outlined,
+                      size: 24,
                     ),
                   ),
                   filled: true,
@@ -113,19 +119,49 @@ class _LocationState extends State<Location> {
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                    color: Colors.purple.shade100,
-                  )),
-                  hintText: Language.instance.txtHintReturnLocation(),
+                        color: Colors.purple.shade100,
+                      )),
+                  hintText: Language.instance.txtHintLocation(),
                   hintStyle: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillRegular(),
                     color: ColorsCode.grayColor,
                   ),
-                  //isDense: true,
                 ),
-                // validator: (value) {
-                //   return Validation.validateEmail(value ?? "");
-                // },
+                debounceTime: 800,
+                countries: const ["eg", "de"],
+                isLatLngRequired: true,
+                getPlaceDetailWithLatLng: (Prediction prediction) {
+                  if (kDebugMode) {
+                    print("placeDetails${prediction.lng}");
+                  }
+                },
+                itemClick: (Prediction prediction) {
+                  // TODO: Error Location Lat , Long
+                  // Handle the location details directly in the itemClick callback
+                  locationName = prediction.description ?? "";
+                  // Use try-catch to handle potential casting errors
+                  try {
+                    // Attempt to parse lat and lng as double
+                    latitude = double.parse(prediction.lat?.toString() ?? "0.0");
+                    longitude = double.parse(prediction.lng?.toString() ?? "0.0");
+
+                  } catch (e) {
+                    if (kDebugMode) {
+                      print("Error parsing lat/lng: $e");
+                      print("Problematic values - lat: ${prediction.lat}, lng: ${prediction.lng}");
+
+                    }
+                    // Handle the error case, set default values if needed
+                    latitude = 0.0;
+                    longitude = 0.0;
+                  }
+                  locationController.text = locationName;
+                  locationController.selection = TextSelection.fromPosition(
+                    TextPosition(offset: locationName.length),
+                  );
+
+                },
               ),
             ),
             const SizedBox(
@@ -225,7 +261,7 @@ class _LocationState extends State<Location> {
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () {
-                        showBottomSheetDialog(context);
+                     //   showBottomSheetDialog(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,

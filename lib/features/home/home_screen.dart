@@ -18,10 +18,13 @@ import 'package:save_me/features/home/view/pages/profile_page.dart';
 import 'package:save_me/features/home/view/pages/setting_page.dart';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../data/api_client.dart';
 import '../../utils/constants/colors_code.dart';
 import '../../utils/constants/fonts.dart';
 import '../../utils/strings/Language.dart';
+import '../auth/models/user_model.dart';
 
 
 @RoutePage()
@@ -47,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> screens = [
     const Home(),
     const Profile(),
-    const Location(),
+    const LocationPage(),
     const Setting(),
   ];
 
@@ -60,6 +63,24 @@ class _HomeScreenState extends State<HomeScreen> {
   String mainIconPath = 'assets/images/plus.svg';
   Color mainBackColor = ColorsCode.purpleColor;
   Color isActiveIconColor = ColorsCode.purpleColor;
+
+  User? userData;
+
+  @override
+  void initState() {
+
+    super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      final String? token = prefs.getString('access_token');
+      //Fetch a user Data from token
+      ApiClient.getUserProfileData(token!).then((data) {
+        setState(() {
+          userData = data;
+        });
+      });
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Column(
             children: [
               Text(
-                Language.instance.txtAppBarHome(),
+                Language.instance.txtAppBarHome() + userData!.name,
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: Fonts.getFontFamilyTitillSemiBold(),

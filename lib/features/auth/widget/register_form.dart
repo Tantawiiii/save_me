@@ -506,7 +506,6 @@ class _RegisterFormState extends State<RegisterForm> {
                           latitude = 0.0;
                           longitude = 0.0;
                         }
-
                         _locationController.text = locationName;
                         _locationController.selection = TextSelection.fromPosition(
                           TextPosition(offset: locationName.length),
@@ -615,7 +614,6 @@ class _RegisterFormState extends State<RegisterForm> {
           longitude: longitude.toString(),
         ),
         phoneNumber: parsedPhoneNumber,
-        contactInfo: '<string>',
       );
 
       String registerSuccessful = await ApiClient().registerUser(user);
