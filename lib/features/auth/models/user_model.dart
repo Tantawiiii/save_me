@@ -10,11 +10,11 @@ class User {
 
   User({
     this.name,
-     this.email,
-     this.password,
-     this.location,
-     this.phoneNumber,
-     this.contactInfo,
+    this.email,
+    this.password,
+    this.location,
+    this.phoneNumber,
+    this.contactInfo,
   });
 
   Map<String, dynamic> toJson() {
@@ -28,9 +28,6 @@ class User {
     };
   }
 
-  copyWith(){
-
-  }
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       name: json['name'].toString(),
@@ -41,7 +38,23 @@ class User {
       contactInfo: json['contactInfo'].toString(),
     );
   }
-
+  User copyWith({
+    String? name,
+    String? email,
+    String? password,
+    Location? location,
+    String? phoneNumber,
+    String? contactInfo,
+  }) {
+    return User(
+      name: name ?? this.name,
+      email: email ?? this.email,
+      password: password ?? this.password,
+      location: location ?? this.location,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      contactInfo: contactInfo ?? this.contactInfo,
+    );
+  }
 }
 
 class Location {
@@ -49,7 +62,7 @@ class Location {
   final double? latitude;
   final double? longitude;
 
-  Location({ this.name,  this.latitude,  this.longitude});
+  Location({this.name, this.latitude, this.longitude});
 
   Map<String, dynamic> toJson() {
     return {
@@ -58,6 +71,7 @@ class Location {
       'longitude': longitude,
     };
   }
+
   factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
       name: json['name'].toString(),
