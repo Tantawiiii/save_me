@@ -355,7 +355,7 @@ class _ProfileState extends State<Profile> {
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black)));
                 }),
             const SizedBox(
               height: 100,
@@ -378,7 +378,7 @@ class _ProfileState extends State<Profile> {
         contactInfo: addInfo,
       );
 
-      String updatedUser = await ApiClient().updateUserProfile(user);
+      User? updatedUser = await ApiClient().updateUserProfile(user);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text('Update Date Info Successfully'),

@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data?.isEmpty ?? true) {
-                Center(
+                return Center(
                   child: Text(
                     Language.instance.txtStartAddProfile(),
                     style: TextStyle(
@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
               );
             }
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black)),
             );
           }),
     );

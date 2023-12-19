@@ -65,24 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Color isActiveIconColor = ColorsCode.purpleColor;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme(
-          brightness: Brightness.light,
-          primary: ColorsCode.whiteColor,
-          onPrimary: ColorsCode.blackColor,
-          secondary: Colors.white,
-          onSecondary: Colors.grey,
-          background: Colors.white,
-          onBackground: Colors.grey,
-          error: Colors.red,
-          onError: ColorsCode.grayColor,
-          surface: Colors.white,
-          onSurface: Colors.black,
-        ),
-      ),
-      home: Scaffold(
+    return  Scaffold(
         extendBody: true,
         appBar: AppBar(
           systemOverlayStyle: const SystemUiOverlayStyle(
@@ -403,7 +386,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-      ),
     );
   }
 

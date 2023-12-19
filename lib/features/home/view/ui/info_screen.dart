@@ -7,7 +7,6 @@ import 'package:save_me/features/home/models/profile_info.dart';
 import 'package:save_me/features/home/view/ui/public_profile.dart';
 import 'package:save_me/features/widgets/share_dialog.dart';
 import 'package:save_me/utils/strings/Language.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../data/api_client.dart';
 import '../../../../utils/constants/colors_code.dart';
@@ -45,14 +44,6 @@ class _InfoScreenState extends State<InfoScreen> {
                   children: [
                     Text(
                       Language.instance.txtAppBarHome() + userData!.name ?? "",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      Language.instance.txtAppBarHome(),
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: Fonts.getFontFamilyTitillSemiBold(),

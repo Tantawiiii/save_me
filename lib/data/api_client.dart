@@ -88,7 +88,7 @@ class ApiClient {
     }
   }
 
-  Future<String> updateUserProfile(User user) async {
+  Future<User?> updateUserProfile(User user) async {
     const url = Endpoints.register;
     String? accessToken = await getAccessToken();
     try {
@@ -98,12 +98,25 @@ class ApiClient {
           'Authorization': 'Bearer $accessToken',
           'Content-Type': 'application/json',
         },
+        body: jsonEncode(user.toJson()),
       );
 
       if (response.statusCode == 200) {
-        return "Update Successful!";
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        // Store the user data token using shared_preferences
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('access_token', responseData['access_token']);
+        final user = await getUserProfileData();
+        if (user != null) {
+          prefs.setString('user', jsonEncode(user.toJson()));
+        }
+        return user;
       } else {
-        return "Update Failed!";
+        if (kDebugMode) {
+          print("Error: ${response.statusCode}");
+          print("Error Body: ${response.body}");
+        }
+        return null;
       }
     } catch (error) {
       Fluttertoast.showToast(msg: "$error");
@@ -115,9 +128,14 @@ class ApiClient {
     String? accessToken = await getAccessToken();
     const url = Endpoints.changePassword;
 
-    final body = jsonEncode({'oldPassword': oldPassword, 'newPassword': newPassword});
+    final body =
+        jsonEncode({'oldPassword': oldPassword, 'newPassword': newPassword});
 
-    var headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer $accessToken', 'Accept': '*/*'};
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+      'Accept': '*/*'
+    };
 
     try {
       final response = await http.patch(
