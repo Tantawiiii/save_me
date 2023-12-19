@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:save_me/utils/constants/fonts.dart';
 
-void deleteDialog(context, {required dynamic onPressed}) {
+void deleteDialog(context, {required void Function() onPressed}) {
   showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -61,7 +61,7 @@ void deleteDialog(context, {required dynamic onPressed}) {
                 duration: const Duration(milliseconds:300),
                 //TODO: fIX ME Delete this profile
 
-                onPressed: onPressed(),
+                onPressed: onPressed,
                 child: Container(
                   width: double.infinity,
                   height: 56,

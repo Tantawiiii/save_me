@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:save_me/config/routes/app_router.gr.dart';
 import 'package:save_me/features/home/api_helper/api_helper.dart';
+import 'package:save_me/features/home/home_screen.dart';
 import 'package:save_me/features/home/models/profile_info.dart';
 import 'package:save_me/features/home/view/ui/public_profile.dart';
 import 'package:save_me/features/widgets/delete_dialog.dart';
@@ -119,7 +124,11 @@ class _InfoScreenState extends State<InfoScreen> {
                           ),
                           InkWell(
                             onTap: () {
-                              shareDialog(context, onPressed: () {});
+                              shareDialog(
+                                context,
+                                onPressed: () {},
+                                profileId: widget.profileInfo.id!,
+                              );
                             },
                             child: SvgPicture.asset('assets/images/icons/share.svg'),
                           ),
@@ -128,9 +137,16 @@ class _InfoScreenState extends State<InfoScreen> {
                           ),
                           InkWell(
                             onTap: () {
-                             deleteDialog(context, onPressed: (){
-                               deleteUserProfileData(widget.profileInfo.id!);
-                             });
+                              deleteDialog(context, onPressed: () async {
+                                try {
+                                  await deleteUserProfileData(widget.profileInfo.id!);
+                                  Fluttertoast.showToast(msg: "Profile deleted successfully");
+                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+                                } catch (e) {
+                                  log(e.toString());
+                                  Fluttertoast.showToast(msg: "Something went wrong");
+                                }
+                              });
                             },
                             child: SvgPicture.asset('assets/images/icons/delete.svg'),
                           ),
