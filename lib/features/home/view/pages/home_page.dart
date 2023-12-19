@@ -25,19 +25,19 @@ class _HomeState extends State<Home> {
       body: FutureBuilder<List<ProfileInfo>>(
           future: getUserProfileData(),
           builder: (context, snapshot) {
-            if (snapshot.data?.isEmpty ?? true) {
-              return Center(
-                child: Text(
-                  Language.instance.txtStartAddProfile(),
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: Fonts.getFontFamilyTitillBold(),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              );
-            }
             if (snapshot.hasData) {
+              if (snapshot.data?.isEmpty ?? true) {
+                Center(
+                  child: Text(
+                    Language.instance.txtStartAddProfile(),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontFamily: Fonts.getFontFamilyTitillBold(),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              }
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
                   final profile = snapshot.data![index];
                   return Container(
                     margin: const EdgeInsets.all(14),
-                      child: ItemCard(profileInfo: profile),
+                    child: ItemCard(profileInfo: profile),
                   );
                 },
               );

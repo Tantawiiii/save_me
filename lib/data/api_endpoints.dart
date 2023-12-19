@@ -5,7 +5,7 @@ abstract class Endpoints {
   // http://portal-saveme.qa.fillflix.de
   //https://api-saveme.dev.fillflix.de
 
-  static const baseUrl = "https://api-saveme.preprod.fillflix.de";
+  static const baseUrl = "https://api-saveme.dev.fillflix.de";
   static const register = '$baseUrl/api/v1/users';
   static const login = '$baseUrl/api/v1/login';
   static const changePassword = '$baseUrl/api/v1/users/change-password';

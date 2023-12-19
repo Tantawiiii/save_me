@@ -50,8 +50,8 @@ class ApiClient {
       final Map<String, dynamic> responseData = jsonDecode(response.body);
       // Store the user data token using shared_preferences
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('access_token', responseData['access_token']);
-      final user = await getUserProfileData(responseData['access_token']);
+      await prefs.setString('access_token', responseData['access_token']);
+      final user = await getUserProfileData();
       if (user != null) {
         prefs.setString('user', jsonEncode(user.toJson()));
       }
@@ -65,7 +65,8 @@ class ApiClient {
     }
   }
 
-  static Future<User?> getUserProfileData(String accessToken) async {
+  static Future<User?> getUserProfileData() async {
+    String? accessToken = await getAccessToken();
     const url = Endpoints.register;
     try {
       final response = await http.get(
@@ -86,12 +87,12 @@ class ApiClient {
       throw Exception('Failed to load user profile data');
     }
   }
-  Future<String> updateUserProfile(User user) async {
 
+  Future<String> updateUserProfile(User user) async {
     const url = Endpoints.register;
     String? accessToken = await getAccessToken();
     try {
-      final  response = await http.put(
+      final response = await http.put(
         Uri.parse(url),
         headers: {
           'Authorization': 'Bearer $accessToken',
@@ -114,14 +115,9 @@ class ApiClient {
     String? accessToken = await getAccessToken();
     const url = Endpoints.changePassword;
 
-    final body =
-        jsonEncode({'oldPassword': oldPassword, 'newPassword': newPassword});
+    final body = jsonEncode({'oldPassword': oldPassword, 'newPassword': newPassword});
 
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $accessToken',
-      'Accept': '*/*'
-    };
+    var headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer $accessToken', 'Accept': '*/*'};
 
     try {
       final response = await http.patch(
@@ -141,7 +137,7 @@ class ApiClient {
     return "Failed to change password...";
   }
 
-  Future<String?> getAccessToken() async {
+  static Future<String?> getAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('access_token');
   }

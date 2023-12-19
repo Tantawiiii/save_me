@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 import 'package:save_me/features/home/view/cards/add_disabled_profile.dart';
 import 'package:save_me/features/home/view/cards/add_item_profile.dart';
 import 'package:save_me/features/home/view/cards/add_kid_profile.dart';
@@ -26,10 +25,11 @@ import '../../utils/constants/fonts.dart';
 import '../../utils/strings/Language.dart';
 import '../auth/models/user_model.dart';
 
-
 @RoutePage()
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key,}) : super(key: key);
+  const HomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   static String id = 'HomeScreen';
   static final GlobalKey<_HomeScreenState> homePageKey = GlobalKey<_HomeScreenState>();
@@ -63,25 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
   String mainIconPath = 'assets/images/plus.svg';
   Color mainBackColor = ColorsCode.purpleColor;
   Color isActiveIconColor = ColorsCode.purpleColor;
-
-   User? userData;
-
-  @override
-  void initState() {
-
-    super.initState();
-    SharedPreferences.getInstance().then((prefs) {
-      final String? token = prefs.getString('access_token');
-      //Fetch a user Data from token
-      ApiClient.getUserProfileData(token!).then((data) {
-        setState(() {
-          userData = data;
-        });
-      });
-
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -102,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       home: Scaffold(
-        extendBody:true,
+        extendBody: true,
         appBar: AppBar(
           systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.white,
@@ -110,14 +91,29 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           title: Column(
             children: [
-              Text(
-                Language.instance.txtAppBarHome() + userData!.name ?? "",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                  fontSize: 16,
-                ),
-              ),
+              FutureBuilder(
+                  future: ApiClient.getUserProfileData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final User? user = snapshot.data as User?;
+                      return Text(
+                        Language.instance.txtAppBarHome() + user!.name ?? "",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                          fontSize: 16,
+                        ),
+                      );
+                    }
+                    return Text(
+                      Language.instance.txtAppBarHome(),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                        fontSize: 16,
+                      ),
+                    );
+                  }),
               Text(
                 Language.instance.txtAppBarWelcome(),
                 style: TextStyle(
@@ -163,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
             activeBackgroundColor: Colors.black,
             activeForegroundColor: Colors.white,
             direction: SpeedDialDirection.up,
-            visible:true,
+            visible: true,
             closeManually: false,
             curve: Curves.bounceOut,
             overlayColor: Colors.black,
@@ -187,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   //color: Colors.black,
                 ),
                 // backgroundColor: Colors.white,
-                onTap: ()  {
+                onTap: () {
                   onChildTapped(
                     "assets/images/kids.svg",
                     Colors.white,
@@ -196,11 +192,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     currentScreen = const AddKidProfile();
                     isActiveIconColor = ColorsCode.grayColor300;
                   });
-                // Close the SpeedDial after the button is pressed
-               // Provider.of<SpeedDialProvider>(context, listen: false).toggleDial();
+                  // Close the SpeedDial after the button is pressed
+                  // Provider.of<SpeedDialProvider>(context, listen: false).toggleDial();
                 },
                 shape: const CircleBorder(),
-
               ),
               SpeedDialChild(
                 child: SvgPicture.asset(
@@ -227,10 +222,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SpeedDialChild(
                 child: SvgPicture.asset(
-                    "assets/images/Disabled_black.svg",
-                    width: 30,
-                    height: 30,
-                  ),
+                  "assets/images/Disabled_black.svg",
+                  width: 30,
+                  height: 30,
+                ),
                 onTap: () => {
                   onChildTapped(
                     "assets/images/Disabled.svg",
@@ -238,13 +233,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   setState(() {
                     currentScreen = const AddDisabledProfile();
-
                   }),
 
                   // Close the SpeedDial after the button is pressed
                   _scaffoldKey.currentState!.openDrawer(),
                 },
-
                 shape: const CircleBorder(),
               ),
               SpeedDialChild(
@@ -271,10 +264,10 @@ class _HomeScreenState extends State<HomeScreen> {
               SpeedDialChild(
                 //speed dial child
                 child: SvgPicture.asset(
-                    "assets/images/Item_black.svg",
-                    width: 30,
-                    height: 30,
-                  ),
+                  "assets/images/Item_black.svg",
+                  width: 30,
+                  height: 30,
+                ),
                 onTap: () => {
                   onChildTapped(
                     "assets/images/Item.svg",
@@ -282,9 +275,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   setState(() {
                     currentScreen = const AddItemProfile();
-
                   }),
-                isActiveIconColor = ColorsCode.grayColor300,
+                  isActiveIconColor = ColorsCode.grayColor300,
                   // Close the SpeedDial after the button is pressed
                   _scaffoldKey.currentState!.openDrawer(),
                 },
@@ -321,11 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     children: [
                       IconButton(
-                        icon: SvgPicture.asset("assets/images/home.svg",
-                            color: currentTab == 0
-                                ? isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            semanticsLabel: 'Label'),
+                        icon: SvgPicture.asset("assets/images/home.svg", color: currentTab == 0 ? isActiveIconColor : ColorsCode.grayColor300, semanticsLabel: 'Label'),
                         onPressed: () {
                           setState(() {
                             currentTab = 0;
@@ -335,12 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text(
                         Language.instance.txtHomeTab(),
-                        style: TextStyle(
-                            color: currentTab == 0
-                                ?  isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            fontSize: 13,
-                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                        style: TextStyle(color: currentTab == 0 ? isActiveIconColor : ColorsCode.grayColor300, fontSize: 13, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                       ),
                     ],
                   ),
@@ -350,12 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     children: [
                       IconButton(
-                        icon: SvgPicture.asset(
-                            "assets/images/user_fill.svg",
-                            color: currentTab == 1
-                                ? isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            semanticsLabel: 'Label'),
+                        icon: SvgPicture.asset("assets/images/user_fill.svg", color: currentTab == 1 ? isActiveIconColor : ColorsCode.grayColor300, semanticsLabel: 'Label'),
                         onPressed: () {
                           setState(() {
                             currentTab = 1;
@@ -368,12 +346,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text(
                         Language.instance.txtProfileTab(),
-                        style: TextStyle(
-                            color: currentTab == 1
-                                ? isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            fontSize: 13,
-                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                        style: TextStyle(color: currentTab == 1 ? isActiveIconColor : ColorsCode.grayColor300, fontSize: 13, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                       ),
                     ],
                   ),
@@ -393,18 +366,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             currentScreen = screens[currentTab];
                           });
                         },
-                        color: currentTab == 2
-                            ? isActiveIconColor
-                            : ColorsCode.grayColor300,
+                        color: currentTab == 2 ? isActiveIconColor : ColorsCode.grayColor300,
                       ),
                       Text(
                         Language.instance.txtLocationTab(),
-                        style: TextStyle(
-                            color: currentTab == 2
-                                ? isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            fontSize: 13,
-                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                        style: TextStyle(color: currentTab == 2 ? isActiveIconColor : ColorsCode.grayColor300, fontSize: 13, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                       ),
                     ],
                   ),
@@ -424,18 +390,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             currentScreen = screens[currentTab];
                           });
                         },
-                        color: currentTab == 3
-                            ? isActiveIconColor
-                            : ColorsCode.grayColor300,
+                        color: currentTab == 3 ? isActiveIconColor : ColorsCode.grayColor300,
                       ),
                       Text(
                         Language.instance.txtSettingsTab(),
-                        style: TextStyle(
-                            color: currentTab == 3
-                                ? isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            fontSize: 13,
-                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                        style: TextStyle(color: currentTab == 3 ? isActiveIconColor : ColorsCode.grayColor300, fontSize: 13, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
                       ),
                     ],
                   ),
