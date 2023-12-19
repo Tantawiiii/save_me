@@ -103,7 +103,8 @@ Future<List<ProfileInfo>> getPublicProfileId() async {
   }
 }
 
-Future<User?> deleteUserProfileData(String accessToken) async {
+Future<User?> deleteUserProfileData() async {
+  String? accessToken = await getAccessToken();
   const url = Endpoints.profiles;
   try {
     final http.Response response = await http.delete(

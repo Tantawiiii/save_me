@@ -5,6 +5,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:save_me/utils/constants/fonts.dart';
 
 void shareDialog(context, {required Function onPressed}) {
+
+  //TODO: fIX ME
+
   showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -32,6 +35,8 @@ void shareDialog(context, {required Function onPressed}) {
                 ),
               ),
               const SizedBox(height: 28,),
+              //TODO: fIX ME  qr code
+
               Center(
                 child: QrImageView(
                   data: "",
@@ -50,21 +55,22 @@ void shareDialog(context, {required Function onPressed}) {
                 children: [
                   InkWell(
                     onTap: (){
-                      shareDialog(context, onPressed: (){});
+                      //TODO: fIX ME share icon
+
                     },
                     child: SvgPicture.asset('assets/images/icons/share.svg',width: 32,height: 32,),
                   ),
                   const SizedBox(width: 20,),
                   InkWell(
                     onTap: (){
-                      shareDialog(context, onPressed: (){});
+
                     },
                     child: SvgPicture.asset('assets/images/icons/download.svg',width: 32,height: 32,),
                   ),
                   const SizedBox(width: 20,),
                   InkWell(
                     onTap: (){
-                      shareDialog(context, onPressed: (){});
+
                     },
                     child: SvgPicture.asset('assets/images/icons/copy.svg',width: 32,height: 32,),
                   ),

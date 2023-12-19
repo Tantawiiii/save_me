@@ -33,7 +33,7 @@ void deleteDialog(context, {required Function onPressed}) {
               Bounce(
                 duration: const Duration(milliseconds:300),
                 onPressed: (){
-
+                  Navigator.pop(context);
                 },
                 child: Container(
                   width: double.infinity,
@@ -59,9 +59,9 @@ void deleteDialog(context, {required Function onPressed}) {
               const SizedBox(height: 18,),
               Bounce(
                 duration: const Duration(milliseconds:300),
-                onPressed: (){
+                //TODO: fIX ME Delete this profile
 
-                },
+                onPressed: onPressed(),
                 child: Container(
                   width: double.infinity,
                   height: 56,

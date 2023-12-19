@@ -201,7 +201,7 @@ class _ProfileState extends State<Profile> {
                                   borderSide: BorderSide(
                                 color: Colors.purple.shade100,
                               )),
-                              hintText: userData == null ? userData?.contactInfo : Language.instance.txtAddInfo(),
+                              hintText: userData != null ? userData?.contactInfo : Language.instance.txtAddInfo(),
                               hintStyle: TextStyle(
                                 fontSize: 16,
                                 fontFamily: Fonts.getFontFamilyTitillRegular(),
