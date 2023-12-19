@@ -35,15 +35,13 @@ class _SettingState extends State<Setting> {
   bool passwordVisible = true;
   final FocusNode _passwordFocusNode = FocusNode();
 
-  Color backBtnPurple = ColorsCode.purpleColorLight;
-  Color backBtnWhite = ColorsCode.whiteColor100;
-  String currentLang = "";
+  Color backBtnLangEn = ColorsCode.purpleColorLight;
+  Color backBtnLangDe = ColorsCode.whiteColor100;
+
   @override
   void initState() {
     super.initState();
     passwordVisible = true;
-    currentLang = Language.instance.getLanguage();
-
   }
 
   @override
@@ -106,7 +104,8 @@ class _SettingState extends State<Setting> {
                                   setState(() {
                                     changeLanguage("en");
                                     _handleButtonClick();
-
+                                    backBtnLangEn = ColorsCode.purpleColorLight;
+                                    backBtnLangDe = ColorsCode.whiteColor100;
                                   });
                                 },
                                 icon: SvgPicture.asset(
@@ -123,7 +122,7 @@ class _SettingState extends State<Setting> {
                                 ),
                                 //label text
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: currentLang == "EN" ?  backBtnPurple :backBtnWhite,
+                                  backgroundColor: backBtnLangEn,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(4),
@@ -140,7 +139,8 @@ class _SettingState extends State<Setting> {
                                   setState(() {
                                     changeLanguage("de");
                                     _handleButtonClick();
-
+                                    backBtnLangEn = ColorsCode.whiteColor100;
+                                    backBtnLangDe = ColorsCode.purpleColorLight;
                                   });
                                 },
                                 icon: SvgPicture.asset(
@@ -157,7 +157,7 @@ class _SettingState extends State<Setting> {
                                 ),
                                 //label text
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: currentLang == "DE" ? backBtnPurple :backBtnWhite,
+                                  backgroundColor: backBtnLangDe,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(4),
@@ -244,6 +244,8 @@ class _SettingState extends State<Setting> {
                                 ),
                                 filled: true,
                                 fillColor: ColorsCode.whiteColor100,
+
+                                //labelText: Strings.txtPassword,
                                 hintText:
                                     Language.instance.txtHintNewPassword(),
                                 hintStyle: TextStyle(
@@ -472,10 +474,7 @@ class _SettingState extends State<Setting> {
       prefs.setString("language", "EN");
 
       Language.instance.setLanguage("EN");
-    currentLang = "EN";
-      setState(() {
 
-      });
       Locale newLocale = const Locale('en');
       SaveMe.setLocale(context, newLocale);
     } else {
@@ -483,17 +482,14 @@ class _SettingState extends State<Setting> {
       prefs.setString("language", "DE");
 
       Language.instance.setLanguage("DE");
-      currentLang = "DE";
-      setState(() {
 
-      });
       Locale newLocale = const Locale('de');
       SaveMe.setLocale(context, newLocale);
     }
 
-    // setState(() {
-    //   //EasyLoading.showSuccess("Changed");
-    //   Phoenix.rebirth(context);
-    // });
+    setState(() {
+      //EasyLoading.showSuccess("Changed");
+      Phoenix.rebirth(context);
+    });
   }
 }

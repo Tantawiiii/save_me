@@ -1121,19 +1121,19 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
     );
 
 
-     await postProfileData(profileInfo);
+    final createProfileSuccess = await postProfileData(profileInfo);
 
-    // if (createProfileSuccess!= null) {
-    //   ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    //   if (kDebugMode) {
-    //     print("Success Uploading profile information's and added it to Home");
-    //   }
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //     content: Text('Error: $createProfileSuccess'),
-    //     backgroundColor: Colors.red.shade300,
-    //   ));
-    // }
+    if (createProfileSuccess!= null) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      if (kDebugMode) {
+        print("Success Uploading profile information's and added it to Home");
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: $createProfileSuccess'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
   }
 
 }
