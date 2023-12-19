@@ -127,54 +127,32 @@ Future<User?> deleteUserProfileData(String accessToken) async {
 
 Future<void> uploadProfileImage(
     {required String profileId, required File image}) async {
-
   String? accessToken = await getAccessToken();
+
   final url = Endpoints.profilePhotoUplaod(profileId);
   var postUri = Uri.parse(url);
   var request = http.MultipartRequest("PUT", postUri);
   request.headers.addAll({
     'Authorization': 'Bearer $accessToken',
   });
-  request.files.add(
-    await http.MultipartFile.fromPath(
-      'file',
-      image.path,
-    ),
-  );
+  request.files.add(http.MultipartFile.fromBytes(
+      'file', await File.fromUri(image.uri).readAsBytes()));
 
   try {
+    // upload image as multipart
+    // final body = <String, dynamic>{
+    //   'file': await http.MultipartFile.fromPath('file', image.path),
+    // };
+    // final http.Response response = await http.put(
+    //   Uri.parse(url),
+    //   headers: {
+    //     'Authorization': 'Bearer $accessToken',
+    //   },
+    //   body: jsonEncode(body),
+    // );
     final response = await request.send();
-
-    if (response.statusCode == 200) {
-      print('Successfully Uploaded Image...');
-    } else {
-      throw Exception('Failed to upload image');
-    }
-  } catch (error) {
-    print('Error: $error');
-    throw Exception('Failed to upload image');
-  }
-}
-
-Future<void> uploadUesrImage({required String profileId, required File image}) async {
-  String? accessToken = await getAccessToken();
-
-  const url = Endpoints.profileUserUplaod;
-  var postUri = Uri.parse(url);
-  var request = http.MultipartRequest("PUT", postUri);
-  request.headers.addAll({
-    'Authorization': 'Bearer $accessToken',
-  });
-  request.files.add(
-    await http.MultipartFile.fromPath(
-      'file',
-      image.path,
-    ),
-  );
-
-  try {
-    final response = await request.send();
-
+    // FIXME:
+    // TODO:
     if (response.statusCode == 200) {
       print('Successfully Uploaded Image...');
     } else {
@@ -206,7 +184,6 @@ Future<void> deleteProfileImage({required String profileId}) async {
     throw Exception('Failed to delete image');
   }
 }
-
 
 // Function to get the access token from SharedPreferences
 Future<String?> getAccessToken() async {
