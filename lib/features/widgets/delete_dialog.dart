@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:save_me/utils/constants/fonts.dart';
+import 'package:save_me/utils/strings/Language.dart';
 
 void deleteDialog(context, {required void Function() onPressed}) {
   showModalBottomSheet(
@@ -14,7 +15,7 @@ void deleteDialog(context, {required void Function() onPressed}) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Delete Confirmation",
+                Language.instance.txtDeleteConfirm(),
                 style: TextStyle(
                   fontSize: 18,
                   fontFamily: Fonts.getFontFamilyTitillSemiBold(),
@@ -22,7 +23,7 @@ void deleteDialog(context, {required void Function() onPressed}) {
               ),
               const SizedBox(height:12,),
               Text(
-                "Are you sure you want to delete this profile? This action is irreversible, and all your data will be permanently lost.",
+                Language.instance. txtDeleteConfirmHint(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14,
@@ -45,7 +46,7 @@ void deleteDialog(context, {required void Function() onPressed}) {
                   ),
                   child: Center(
                     child: Text(
-                      "No, I don’t want",
+                      Language.instance.txtDeleteNoBtn(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -60,7 +61,6 @@ void deleteDialog(context, {required void Function() onPressed}) {
               Bounce(
                 duration: const Duration(milliseconds:300),
                 //TODO: fIX ME Delete this profile
-
                 onPressed: onPressed,
                 child: Container(
                   width: double.infinity,
@@ -72,7 +72,7 @@ void deleteDialog(context, {required void Function() onPressed}) {
                   ),
                   child: Center(
                     child: Text(
-                      "Yes, Delete this profile",
+                      Language.instance.txtDeleteBtn(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,

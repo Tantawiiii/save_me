@@ -32,7 +32,9 @@ class _SettingState extends State<Setting> {
   final Validation validation = Validation();
   bool isTextFieldVisible = false;
 
-  bool passwordVisible = true;
+  bool oldPasswordVisible = true;
+  bool newPasswordVisible = true;
+  bool confirmPasswordVisible = true;
   final FocusNode _passwordFocusNode = FocusNode();
 
   Color backBtnPurple = ColorsCode.purpleColorLight;
@@ -41,7 +43,9 @@ class _SettingState extends State<Setting> {
   @override
   void initState() {
     super.initState();
-    passwordVisible = true;
+    oldPasswordVisible = true;
+     newPasswordVisible = true;
+     confirmPasswordVisible = true;
     currentLang = Language.instance.getLanguage();
 
   }
@@ -181,7 +185,7 @@ class _SettingState extends State<Setting> {
                           children: [
                             TextFormField(
                               controller: _oldPasswordController,
-                              obscureText: passwordVisible,
+                              obscureText: oldPasswordVisible,
                               keyboardType: TextInputType.visiblePassword,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
@@ -207,7 +211,7 @@ class _SettingState extends State<Setting> {
                                 )),
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    passwordVisible
+                                    oldPasswordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
                                     color: Colors.grey,
@@ -217,7 +221,7 @@ class _SettingState extends State<Setting> {
                                   onPressed: () {
                                     setState(
                                       () {
-                                        passwordVisible = !passwordVisible;
+                                        oldPasswordVisible = !oldPasswordVisible;
                                       },
                                     );
                                   },
@@ -233,7 +237,7 @@ class _SettingState extends State<Setting> {
                             ),
                             TextFormField(
                               controller: _newPasswordController,
-                              obscureText: passwordVisible,
+                              obscureText: newPasswordVisible,
                               keyboardType: TextInputType.visiblePassword,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
@@ -258,7 +262,7 @@ class _SettingState extends State<Setting> {
                                 )),
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    passwordVisible
+                                    newPasswordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
                                     color: Colors.grey,
@@ -268,7 +272,7 @@ class _SettingState extends State<Setting> {
                                   onPressed: () {
                                     setState(
                                       () {
-                                        passwordVisible = !passwordVisible;
+                                        newPasswordVisible = !newPasswordVisible;
                                       },
                                     );
                                   },
@@ -284,7 +288,7 @@ class _SettingState extends State<Setting> {
                             ),
                             TextFormField(
                               controller: _confirmPasswordController,
-                              obscureText: passwordVisible,
+                              obscureText: confirmPasswordVisible,
                               keyboardType: TextInputType.visiblePassword,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
@@ -311,7 +315,7 @@ class _SettingState extends State<Setting> {
                                 )),
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    passwordVisible
+                                    confirmPasswordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
                                     color: Colors.grey,
@@ -319,7 +323,7 @@ class _SettingState extends State<Setting> {
                                   onPressed: () {
                                     setState(
                                       () {
-                                        passwordVisible = !passwordVisible;
+                                        confirmPasswordVisible = !confirmPasswordVisible;
                                       },
                                     );
                                   },

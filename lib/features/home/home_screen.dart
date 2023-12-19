@@ -12,7 +12,7 @@ import 'package:save_me/features/home/view/cards/add_kid_profile.dart';
 import 'package:save_me/features/home/view/cards/add_pet_profile.dart';
 import 'package:save_me/features/home/view/cards/add_senior_profile.dart';
 import 'package:save_me/features/home/view/pages/home_page.dart';
-import 'package:save_me/features/home/view/pages/location/location_page.dart';
+import 'package:save_me/features/home/view/pages/location_page.dart';
 import 'package:save_me/features/home/view/pages/profile_page.dart';
 import 'package:save_me/features/home/view/pages/setting_page.dart';
 
@@ -108,13 +108,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           toolbarHeight: 70,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications_active),
-              padding: const EdgeInsets.only(right: 12),
-              onPressed: () {},
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: const Icon(Icons.notifications_active),
+          //     padding: const EdgeInsets.only(right: 12),
+          //     onPressed: () {},
+          //   ),
+          // ],
           elevation: 12,
           shadowColor: Colors.black45,
           leading: const Padding(

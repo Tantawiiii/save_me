@@ -34,7 +34,7 @@ class AddSeniorProfile extends StatefulWidget {
 
 class _AddSeniorProfileState extends State<AddSeniorProfile> {
   final formKey = GlobalKey<FormState>();
-  File? _image;
+  File? image;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
@@ -71,7 +71,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
 
     if (pickedImage != null) {
       setState(() {
-        _image = File(pickedImage.path);
+        image = File(pickedImage.path);
       });
     }
   }
@@ -244,13 +244,13 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                     color: ColorsCode.whiteColor100,
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
                   ),
-                  child: _image == null
+                  child: image == null
                       ? Center(
                           child:
                               SvgPicture.asset('assets/images/plus_gray.svg'),
                         )
                       : Image.file(
-                          _image!,
+                          image!,
                           fit: BoxFit.cover,
                         ),
                 ),
@@ -1121,19 +1121,25 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
     );
 
 
-     await postProfileData(profileInfo);
+    final createProfileSuccess = await postProfileData(profileInfo);
 
-    // if (createProfileSuccess!= null) {
-    //   ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    //   if (kDebugMode) {
-    //     print("Success Uploading profile information's and added it to Home");
-    //   }
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //     content: Text('Error: $createProfileSuccess'),
-    //     backgroundColor: Colors.red.shade300,
-    //   ));
-    // }
+    if (createProfileSuccess != null) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      if (image != null) {
+        await uploadProfileImage(
+          image: image!,
+          profileId: createProfileSuccess.id!,
+        );
+      }
+      if (kDebugMode) {
+        print("Success Uploading profile information's and added it to Home");
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: $createProfileSuccess'),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
   }
 
 }

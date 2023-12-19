@@ -64,7 +64,8 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
   // Picker Image for the current step
   Future<void> _pickImage() async {
     final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    final pickedImage = await picker.pickImage(source:
+    ImageSource.gallery);
 
     if (pickedImage != null) {
       setState(() {
@@ -139,9 +140,6 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                               _currentStep == getSteps().length - 1;
                           if (isLastStep) {
                             setState(() => isCompleted = true);
-                            if (kDebugMode) {
-                              print('Completed');
-                            }
                             _addDisPersonProfile();
                           } else {
                             setState(() => _currentStep += 1);
@@ -1112,18 +1110,13 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
 
     if (createProfileSuccess != null) {
 
-      if(image != null) {
-        setState((){
-          uploading= true;
-        });
-
-        uploadProfileImage(profileId: createProfileSuccess.id!, image: image!,)
-            .whenComplete(() => setState((){
-          uploading=false;
-        }));
-      }
-
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      if (image != null) {
+        await uploadProfileImage(
+          image: image!,
+          profileId: createProfileSuccess.id!,
+        );
+      }
       if (kDebugMode) {
         print("Success Uploading profile information's and added it to Home");
       }

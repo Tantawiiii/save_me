@@ -22,7 +22,7 @@ import 'package:save_me/features/home/view/cards/add_senior_profile.dart'
     as _i5;
 import 'package:save_me/features/home/view/cards/created_done.dart' as _i6;
 import 'package:save_me/features/home/view/pages/home_page.dart' as _i7;
-import 'package:save_me/features/home/view/pages/location/location_page.dart'
+import 'package:save_me/features/home/view/pages/location_page.dart'
     as _i9;
 import 'package:save_me/features/home/view/pages/profile_page.dart' as _i11;
 import 'package:save_me/features/home/view/pages/setting_page.dart' as _i13;

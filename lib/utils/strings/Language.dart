@@ -1,9 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../../../main.dart';
-
 
 class Language extends ChangeNotifier {
   Language._privateConstructor();
@@ -65,9 +62,9 @@ class Language extends ChangeNotifier {
   txtHintEmail() {
     if (getLanguage() == 'EN') {
       return "Enter your email";
-  } else if (getLanguage() == 'DE') {
-  return "Gib deine E-Mail-Adresse ein";
-  }
+    } else if (getLanguage() == 'DE') {
+      return "Gib deine E-Mail-Adresse ein";
+    }
   }
 
   txtIsEmptyEmail() {
@@ -333,6 +330,7 @@ class Language extends ChangeNotifier {
       return "Profilinformationen sind leer";
     }
   }
+
   txtStartAddProfile() {
     if (getLanguage() == 'EN') {
       return "Start Adding Profiles +";
@@ -397,7 +395,6 @@ class Language extends ChangeNotifier {
     }
   }
 
-
   txtCancel() {
     if (getLanguage() == 'EN') {
       return "Cancel";
@@ -413,6 +410,7 @@ class Language extends ChangeNotifier {
       return "Grundlegende Details zum Kind";
     }
   }
+
   txtBasicInfoHint() {
     if (getLanguage() == 'EN') {
       return "Please add your child information";
@@ -492,6 +490,7 @@ class Language extends ChangeNotifier {
       return "Höhe";
     }
   }
+
   txtCm() {
     if (getLanguage() == 'EN') {
       return "Cm";
@@ -505,6 +504,29 @@ class Language extends ChangeNotifier {
       return "Hey I am  ";
     } else if (getLanguage() == 'DE') {
       return "Hey, das bin ich ";
+    }
+  }
+  txtUploadImage() {
+    if (getLanguage() == 'EN') {
+      return "Upload a photo";
+    } else if (getLanguage() == 'DE') {
+      return "Lade ein Foto hoch";
+    }
+  }
+
+  txtUpdateMsg() {
+    if (getLanguage() == 'EN') {
+      return "Update Date Info Successfully";
+    } else if (getLanguage() == 'DE') {
+      return "Datumsinformationen erfolgreich aktualisieren";
+    }
+  }
+
+  txtResetMsg() {
+    if (getLanguage() == 'EN') {
+      return "Reset Date Info Successfully";
+    } else if (getLanguage() == 'DE') {
+      return "Datumsinformationen erfolgreich zurückgesetzt";
     }
   }
 
@@ -804,7 +826,6 @@ class Language extends ChangeNotifier {
     }
   }
 
-
   txtCompleteProfile() {
     if (getLanguage() == 'EN') {
       return "Complete Profile";
@@ -1004,6 +1025,7 @@ class Language extends ChangeNotifier {
       return "Medikamente eingeben";
     }
   }
+
   txtSeniorHintAdditionInfo() {
     if (getLanguage() == 'EN') {
       return "Enter Senior’s addition information";
@@ -1011,6 +1033,7 @@ class Language extends ChangeNotifier {
       return "Zusätzliche Informationen hinzufügen.";
     }
   }
+
   txtSeniorHome() {
     if (getLanguage() == 'EN') {
       return "Senior’s Home";
@@ -1018,6 +1041,7 @@ class Language extends ChangeNotifier {
       return "Seniorenheim";
     }
   }
+
   txtSeniorHomeInfo() {
     if (getLanguage() == 'EN') {
       return "If senior lives in a special institute, Please enter the following data: ";
@@ -1194,6 +1218,7 @@ class Language extends ChangeNotifier {
       return "Profil der Person mit Behinderung";
     }
   }
+
   txtDisabledCardHint() {
     if (getLanguage() == 'EN') {
       return "Please add disabled person’s information.";
@@ -1201,6 +1226,7 @@ class Language extends ChangeNotifier {
       return "Daten der Person eingeben.";
     }
   }
+
   txtDisabledBasicInfo() {
     if (getLanguage() == 'EN') {
       return "Disabled person basic details: ";
@@ -1304,6 +1330,7 @@ class Language extends ChangeNotifier {
       return "Zusätzliche Informationen hinzufügen.";
     }
   }
+
   txtDisabledHome() {
     if (getLanguage() == 'EN') {
       return "Disabled Person’s Home";
@@ -1311,7 +1338,6 @@ class Language extends ChangeNotifier {
       return "Behindertenheim";
     }
   }
-
 
   txtDisabledHomeInfo() {
     if (getLanguage() == 'EN') {
@@ -1336,6 +1362,7 @@ class Language extends ChangeNotifier {
       return "Erstellen Sie ein Artikelprofil";
     }
   }
+
   txtItemBasicInfo() {
     if (getLanguage() == 'EN') {
       return "Item Basic Details";
@@ -1343,6 +1370,7 @@ class Language extends ChangeNotifier {
       return "Grundlegende Artikelangaben";
     }
   }
+
   txtHintUserItem() {
     if (getLanguage() == 'EN') {
       return "Enter your name Item";
@@ -1366,5 +1394,58 @@ class Language extends ChangeNotifier {
       return "Erstellungsdatum: ";
     }
   }
+
+  txtDeleteConfirm() {
+    if (getLanguage() == 'EN') {
+      return "Delete Confirmation";
+    } else if (getLanguage() == 'DE') {
+      return "Bestätigung löschen";
+    }
+  }
+
+  txtDeleteConfirmHint() {
+    if (getLanguage() == 'EN') {
+      return "Are you sure you want to delete this profile?  This action is irreversible, and all your data will be permanently lost.";
+    } else if (getLanguage() == 'DE') {
+      return "Sind Sie sicher, dass Sie dieses Profil löschen möchten? Diese Aktion ist irreversibel und alle Ihre Daten gehen dauerhaft verloren.";
+    }
+  }
+  txtDeleteNoBtn() {
+    if (getLanguage() == 'EN') {
+      return "No, I don't want";
+    } else if (getLanguage() == 'DE') {
+      return "Nein, ich nicht";
+    }
+  }
+  txtDeleteBtn() {
+    if (getLanguage() == 'EN') {
+      return "Yes, Delete this profile";
+    } else if (getLanguage() == 'DE') {
+      return "Ja, dieses Profil löschen";
+    }
+  }
+  txtShareQr() {
+    if (getLanguage() == 'EN') {
+      return "Scan this QR Code";
+    } else if (getLanguage() == 'DE') {
+      return "Scannen Sie diesen QR-Code";
+    }
+  }
+  txtShareQrCheck() {
+    if (getLanguage() == 'EN') {
+      return "Check out this profile";
+    } else if (getLanguage() == 'DE') {
+      return "Schauen Sie sich dieses Profil an";
+    }
+  }
+  txtShareQrHint() {
+    if (getLanguage() == 'EN') {
+      return "This unique QR code is linked to this profile. Scanning it will only provide access to this profile.";
+    } else if (getLanguage() == 'DE') {
+      return "Dieser einzigartige QR-Code ist mit diesem Profil verknüpft. Durch das Scannen erhalten Sie nur Zugriff auf dieses Profil.";
+    }
+  }
+
+
 
 }

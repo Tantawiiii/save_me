@@ -60,9 +60,10 @@ class _PublicProfileState extends State<PublicProfile> {
                         spacing: 20,
                         children: [
                           Container(
-                            width: 169,
-                            height: 270,
-                            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15, top: 15),
+                            width: 170,
+                            height: 280,
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, bottom: 15, top: 15),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               border: Border.all(
@@ -74,13 +75,19 @@ class _PublicProfileState extends State<PublicProfile> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Image.asset(
-                                  "assets/images/kid_circ.png",
+                                CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage: AssetImage(
+                                      'assets/images/image.png'),
                                 ),
+                                const SizedBox(height: 16,),
                                 Text(
-                                  userData != null ? userData!.name : Language.instance.txtIsEmptyUserName(),
+                                  userData != null
+                                      ? userData!.name
+                                      : Language.instance.txtIsEmptyUserName(),
                                   style: TextStyle(
-                                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                    fontFamily:
+                                    Fonts.getFontFamilyTitillSemiBold(),
                                     fontSize: 16,
                                   ),
                                 ),
@@ -89,15 +96,21 @@ class _PublicProfileState extends State<PublicProfile> {
                                 ),
                                 Text(
                                   userData!.contactInfo ?? "",
-                                  style: TextStyle(fontFamily: Fonts.getFontFamilyTitillRegular(), fontSize: 12, color: Colors.black),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily:
+                                      Fonts.getFontFamilyTitillRegular(),
+                                      fontSize: 12,
+                                      color: Colors.black),
                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            width: 169,
-                            height: 270,
-                            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15, top: 15),
+                            width: 170,
+                            height: 280,
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, bottom: 15, top: 15),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               border: Border.all(
@@ -111,16 +124,24 @@ class _PublicProfileState extends State<PublicProfile> {
                               children: <Widget>[
                                 Row(
                                   children: [
-                                    SvgPicture.asset('assets/images/icons/phone.svg'),
+                                    SvgPicture.asset(
+                                        'assets/images/icons/phone.svg'),
                                     const SizedBox(
                                       width: 6,
                                     ),
                                     Flexible(
                                       child: Text(
-                                        userData != null ? userData!.phoneNumber : Language.instance.txtHintPhoneNumber(),
+                                        userData != null
+                                            ? userData!.phoneNumber
+                                            : Language.instance
+                                            .txtHintPhoneNumber(),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 12, fontFamily: Fonts.getFontFamilyTitillRegular(), color: Colors.black),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontFamily: Fonts
+                                                .getFontFamilyTitillRegular(),
+                                            color: Colors.black),
                                       ),
                                     ),
                                   ],
@@ -131,16 +152,24 @@ class _PublicProfileState extends State<PublicProfile> {
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SvgPicture.asset('assets/images/icons/map.svg'),
+                                    SvgPicture.asset(
+                                        'assets/images/icons/map.svg'),
                                     const SizedBox(
                                       width: 6,
                                     ),
                                     Flexible(
                                       child: Text(
-                                        userData != null ? userData?.location!.name : Language.instance.txtHintLocation(),
+                                        userData != null
+                                            ? userData?.location!.name
+                                            : Language.instance
+                                            .txtHintLocation(),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 12, fontFamily: Fonts.getFontFamilyTitillRegular(), color: Colors.black),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontFamily: Fonts
+                                                .getFontFamilyTitillRegular(),
+                                            color: Colors.black),
                                       ),
                                     ),
                                   ],
@@ -165,16 +194,24 @@ class _PublicProfileState extends State<PublicProfile> {
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SvgPicture.asset('assets/images/icons/info.svg'),
+                                    SvgPicture.asset(
+                                        'assets/images/icons/info.svg'),
                                     const SizedBox(
                                       width: 6,
                                     ),
                                     Flexible(
                                       child: Text(
-                                        userData != null ? userData!.email : Language.instance.txtHintLocation(),
+                                        userData != null
+                                            ? userData!.email
+                                            : Language.instance
+                                            .txtHintLocation(),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 12, fontFamily: Fonts.getFontFamilyTitillRegular(), color: Colors.black),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontFamily: Fonts
+                                                .getFontFamilyTitillRegular(),
+                                            color: Colors.black),
                                       ),
                                     ),
                                   ],
@@ -367,6 +404,41 @@ class _PublicProfileState extends State<PublicProfile> {
                                         Text(
                                           widget.profileInfo.diet!,
                                           style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
+                                        ),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                      ],
+                                    ),
+                                  if (widget.profileInfo
+                                      .additionalInformation! !=
+                                      "" &&
+                                      widget.profileInfo
+                                          .additionalInformation !=
+                                          null)
+                                    Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          Language.instance.txtAdditionInfo(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          widget.profileInfo
+                                              .additionalInformation!,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
                                         ),
                                         const SizedBox(
                                           height: 24,

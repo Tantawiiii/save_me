@@ -6,7 +6,6 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:save_me/config/routes/app_router.gr.dart';
 import 'package:save_me/features/home/api_helper/api_helper.dart';
 import 'package:save_me/features/home/home_screen.dart';
 import 'package:save_me/features/home/models/profile_info.dart';
@@ -32,7 +31,8 @@ class InfoScreen extends StatefulWidget {
 class _InfoScreenState extends State<InfoScreen> {
   static const LatLng _kMapCenter = LatLng(29.9674624, 31.3154334);
 
-  static const CameraPosition _kInitialPosition = CameraPosition(target: _kMapCenter, zoom: 12.0, tilt: 0, bearing: 0);
+  static const CameraPosition _kInitialPosition =
+      CameraPosition(target: _kMapCenter, zoom: 12.0, tilt: 0, bearing: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -68,13 +68,13 @@ class _InfoScreenState extends State<InfoScreen> {
                   ],
                 ),
                 toolbarHeight: 70,
-                actions: [
-                  IconButton(
-                    icon: const Icon(Icons.notifications_active),
-                    padding: const EdgeInsets.only(right: 12),
-                    onPressed: () {},
-                  ),
-                ],
+                // actions: [
+                //   IconButton(
+                //     icon: const Icon(Icons.notifications_active),
+                //     padding: const EdgeInsets.only(right: 12),
+                //     onPressed: () {},
+                //   ),
+                // ],
                 elevation: 8,
                 shadowColor: Colors.black45,
                 leading: Padding(
@@ -92,7 +92,8 @@ class _InfoScreenState extends State<InfoScreen> {
               ),
               body: Card(
                 elevation: 0,
-                margin: const EdgeInsets.only(top: 24, right: 20, left: 20, bottom: 20),
+                margin: const EdgeInsets.only(
+                    top: 24, right: 20, left: 20, bottom: 20),
                 child: SizedBox(
                   width: double.infinity,
                   height: double.infinity,
@@ -113,7 +114,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                 ),
                               );
                             },
-                            child: SvgPicture.asset('assets/images/icons/eye.svg'),
+                            child:
+                                SvgPicture.asset('assets/images/icons/eye.svg'),
                           ),
                           const SizedBox(
                             width: 14,
@@ -130,7 +132,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                 profileId: widget.profileInfo.id!,
                               );
                             },
-                            child: SvgPicture.asset('assets/images/icons/share.svg'),
+                            child: SvgPicture.asset(
+                                'assets/images/icons/share.svg'),
                           ),
                           const SizedBox(
                             width: 14,
@@ -139,16 +142,23 @@ class _InfoScreenState extends State<InfoScreen> {
                             onTap: () {
                               deleteDialog(context, onPressed: () async {
                                 try {
-                                  await deleteUserProfileData(widget.profileInfo.id!);
-                                  Fluttertoast.showToast(msg: "Profile deleted successfully");
-                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+                                  await deleteUserProfileData(
+                                      widget.profileInfo.id!);
+                                  Fluttertoast.showToast(
+                                      msg: "Profile deleted successfully");
+                                  Navigator.pushAndRemoveUntil(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const HomeScreen();
+                                  }), (route) => false);
                                 } catch (e) {
                                   log(e.toString());
-                                  Fluttertoast.showToast(msg: "Something went wrong");
+                                  Fluttertoast.showToast(
+                                      msg: "Something went wrong");
                                 }
                               });
                             },
-                            child: SvgPicture.asset('assets/images/icons/delete.svg'),
+                            child: SvgPicture.asset(
+                                'assets/images/icons/delete.svg'),
                           ),
                         ],
                       ),
@@ -160,9 +170,10 @@ class _InfoScreenState extends State<InfoScreen> {
                         spacing: 20,
                         children: [
                           Container(
-                            width: 169,
-                            height: 270,
-                            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15, top: 15),
+                            width: 170,
+                            height: 280,
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, bottom: 15, top: 15),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               border: Border.all(
@@ -174,13 +185,19 @@ class _InfoScreenState extends State<InfoScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Image.asset(
-                                  "assets/images/kid_circ.png",
+                                CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage: AssetImage(
+                                      'assets/images/image.png'),
                                 ),
+                                const SizedBox(height: 16,),
                                 Text(
-                                  userData != null ? userData!.name : Language.instance.txtIsEmptyUserName(),
+                                  userData != null
+                                      ? userData!.name
+                                      : Language.instance.txtIsEmptyUserName(),
                                   style: TextStyle(
-                                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                    fontFamily:
+                                        Fonts.getFontFamilyTitillSemiBold(),
                                     fontSize: 16,
                                   ),
                                 ),
@@ -189,15 +206,21 @@ class _InfoScreenState extends State<InfoScreen> {
                                 ),
                                 Text(
                                   userData!.contactInfo ?? "",
-                                  style: TextStyle(fontFamily: Fonts.getFontFamilyTitillRegular(), fontSize: 12, color: Colors.black),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily:
+                                          Fonts.getFontFamilyTitillRegular(),
+                                      fontSize: 12,
+                                      color: Colors.black),
                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            width: 169,
-                            height: 270,
-                            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15, top: 15),
+                            width: 170,
+                            height: 280,
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, bottom: 15, top: 15),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               border: Border.all(
@@ -211,16 +234,24 @@ class _InfoScreenState extends State<InfoScreen> {
                               children: <Widget>[
                                 Row(
                                   children: [
-                                    SvgPicture.asset('assets/images/icons/phone.svg'),
+                                    SvgPicture.asset(
+                                        'assets/images/icons/phone.svg'),
                                     const SizedBox(
                                       width: 6,
                                     ),
                                     Flexible(
                                       child: Text(
-                                        userData != null ? userData!.phoneNumber : Language.instance.txtHintPhoneNumber(),
+                                        userData != null
+                                            ? userData!.phoneNumber
+                                            : Language.instance
+                                                .txtHintPhoneNumber(),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 12, fontFamily: Fonts.getFontFamilyTitillRegular(), color: Colors.black),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontFamily: Fonts
+                                                .getFontFamilyTitillRegular(),
+                                            color: Colors.black),
                                       ),
                                     ),
                                   ],
@@ -231,16 +262,24 @@ class _InfoScreenState extends State<InfoScreen> {
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SvgPicture.asset('assets/images/icons/map.svg'),
+                                    SvgPicture.asset(
+                                        'assets/images/icons/map.svg'),
                                     const SizedBox(
                                       width: 6,
                                     ),
                                     Flexible(
                                       child: Text(
-                                        userData != null ? userData?.location!.name : Language.instance.txtHintLocation(),
+                                        userData != null
+                                            ? userData?.location!.name
+                                            : Language.instance
+                                                .txtHintLocation(),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 12, fontFamily: Fonts.getFontFamilyTitillRegular(), color: Colors.black),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontFamily: Fonts
+                                                .getFontFamilyTitillRegular(),
+                                            color: Colors.black),
                                       ),
                                     ),
                                   ],
@@ -265,16 +304,24 @@ class _InfoScreenState extends State<InfoScreen> {
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SvgPicture.asset('assets/images/icons/info.svg'),
+                                    SvgPicture.asset(
+                                        'assets/images/icons/info.svg'),
                                     const SizedBox(
                                       width: 6,
                                     ),
                                     Flexible(
                                       child: Text(
-                                        userData != null ? userData!.email : Language.instance.txtHintLocation(),
+                                        userData != null
+                                            ? userData!.email
+                                            : Language.instance
+                                                .txtHintLocation(),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 12, fontFamily: Fonts.getFontFamilyTitillRegular(), color: Colors.black),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontFamily: Fonts
+                                                .getFontFamilyTitillRegular(),
+                                            color: Colors.black),
                                       ),
                                     ),
                                   ],
@@ -290,7 +337,8 @@ class _InfoScreenState extends State<InfoScreen> {
                       Card(
                         elevation: 2,
                         child: Container(
-                          padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                          padding: const EdgeInsets.only(
+                              left: 15, right: 15, bottom: 15),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
                           ),
@@ -302,16 +350,40 @@ class _InfoScreenState extends State<InfoScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.asset(
-                                    "assets/images/kid_circ.png",
+
+                                  const SizedBox(
+                                    height: 24,
                                   ),
-                                  Text(
-                                    Language.instance.txtHey() + widget.profileInfo.name!,
-                                    style: TextStyle(
-                                      fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                                      fontSize: 16,
+
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    child: widget.profileInfo.photoUrl == null
+                                        ? const CircleAvatar(
+                                            radius: 50,
+                                            backgroundImage: AssetImage(
+                                                'assets/images/image.png'),
+                                          )
+                                        : CircleAvatar(
+                                            radius: 50,
+                                            backgroundImage: NetworkImage(
+                                              widget.profileInfo.photoUrl!,
+                                            ),
+                                          ),
+                                  ),
+                                  const SizedBox(
+                                    height: 24,
+                                  ),
+                                  if (widget.profileInfo.name! != "" &&
+                                      widget.profileInfo.name != "null")
+                                    Text(
+                                      Language.instance.txtHey() +
+                                          widget.profileInfo.name!,
+                                      style: TextStyle(
+                                        fontFamily:
+                                            Fonts.getFontFamilyTitillSemiBold(),
+                                        fontSize: 16,
+                                      ),
                                     ),
-                                  ),
                                   const SizedBox(
                                     height: 18,
                                   ),
@@ -320,42 +392,86 @@ class _InfoScreenState extends State<InfoScreen> {
                                       alignment: WrapAlignment.center,
                                       spacing: 15,
                                       children: [
-                                        Bounce(
-                                          onPressed: () {},
-                                          duration: const Duration(milliseconds: 400),
-                                          child: Chip(
-                                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                                            label: Text(widget.profileInfo.age! + Language.instance.txtYear()),
-                                            avatar: SvgPicture.asset("assets/images/icons/bold.dot.svg"),
+                                        if (widget.profileInfo.age! != "" &&
+                                            widget.profileInfo.age != "null")
+                                          Bounce(
+                                            onPressed: () {},
+                                            duration: const Duration(
+                                                milliseconds: 400),
+                                            child: Chip(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20))),
+                                              label: Text(
+                                                widget.profileInfo.age! +
+                                                    Language.instance.txtYear(),
+                                              ),
+                                              avatar: SvgPicture.asset(
+                                                  "assets/images/icons/bold.dot.svg"),
+                                            ),
                                           ),
-                                        ),
-                                        Bounce(
-                                          onPressed: () {},
-                                          duration: const Duration(milliseconds: 400),
-                                          child: Chip(
-                                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                                            label: Text(widget.profileInfo.birthdate!),
-                                            avatar: SvgPicture.asset("assets/images/icons/bold.dot.svg"),
+                                        if (widget.profileInfo.birthdate! !=
+                                                "" &&
+                                            widget.profileInfo.birthdate !=
+                                                "null")
+                                          Bounce(
+                                            onPressed: () {},
+                                            duration: const Duration(
+                                                milliseconds: 400),
+                                            child: Chip(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20))),
+                                              label: Text(widget
+                                                  .profileInfo.birthdate!),
+                                              avatar: SvgPicture.asset(
+                                                  "assets/images/icons/bold.dot.svg"),
+                                            ),
                                           ),
-                                        ),
-                                        Bounce(
-                                          onPressed: () {},
-                                          duration: const Duration(milliseconds: 400),
-                                          child: Chip(
-                                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                                            label: Text("Cm ${widget.profileInfo.height}"),
-                                            avatar: SvgPicture.asset("assets/images/icons/bold.dot.svg"),
+                                        if (widget.profileInfo.height! != "" &&
+                                            widget.profileInfo.height != "null")
+                                          Bounce(
+                                            onPressed: () {},
+                                            duration: const Duration(
+                                                milliseconds: 400),
+                                            child: Chip(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20))),
+                                              label: Text(
+                                                  "Cm ${widget.profileInfo.height}"),
+                                              avatar: SvgPicture.asset(
+                                                  "assets/images/icons/bold.dot.svg"),
+                                            ),
                                           ),
-                                        ),
-                                        Bounce(
-                                          onPressed: () {},
-                                          duration: const Duration(milliseconds: 400),
-                                          child: Chip(
-                                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                                            label: Text("Kg ${widget.profileInfo.weight}"),
-                                            avatar: SvgPicture.asset("assets/images/icons/bold.dot.svg"),
-                                          ),
-                                        )
+                                        if (widget.profileInfo.weight! != "" &&
+                                            widget.profileInfo.weight != "null")
+                                          Bounce(
+                                            onPressed: () {},
+                                            duration: const Duration(
+                                                milliseconds: 400),
+                                            child: Chip(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20))),
+                                              label: Text(
+                                                  "Kg ${widget.profileInfo.weight}"),
+                                              avatar: SvgPicture.asset(
+                                                  "assets/images/icons/bold.dot.svg"),
+                                            ),
+                                          )
                                       ],
                                     ),
                                   )
@@ -368,126 +484,223 @@ class _InfoScreenState extends State<InfoScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  if (widget.profileInfo.characteristics! != "" && widget.profileInfo.characteristics != null)
+                                  if (widget.profileInfo.characteristics! !=
+                                          "" &&
+                                      widget.profileInfo.characteristics !=
+                                          null)
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          Language.instance.txtCharacteristics(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                                          Language.instance
+                                              .txtCharacteristics(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
                                         ),
                                         const SizedBox(
                                           height: 8,
                                         ),
                                         Text(
                                           widget.profileInfo.characteristics!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
                                         ),
                                         const SizedBox(
                                           height: 24,
                                         ),
                                       ],
                                     ),
-                                  if (widget.profileInfo.behavior! != "" && widget.profileInfo.behavior != null)
+                                  if (widget.profileInfo.behavior! != "" &&
+                                      widget.profileInfo.behavior != null)
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           Language.instance.txtBehavior(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
                                         ),
                                         const SizedBox(
                                           height: 8,
                                         ),
                                         Text(
                                           widget.profileInfo.behavior!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
                                         ),
                                         const SizedBox(
                                           height: 24,
                                         ),
                                       ],
                                     ),
-                                  if (widget.profileInfo.specialCharacteristics! != "" && widget.profileInfo.specialCharacteristics != null)
+                                  if (widget.profileInfo
+                                              .specialCharacteristics! !=
+                                          "" &&
+                                      widget.profileInfo
+                                              .specialCharacteristics !=
+                                          null)
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           Language.instance.txtSpecialChar(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
                                         ),
                                         const SizedBox(
                                           height: 8,
                                         ),
                                         Text(
-                                          widget.profileInfo.specialCharacteristics!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
+                                          widget.profileInfo
+                                              .specialCharacteristics!,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
                                         ),
                                         const SizedBox(
                                           height: 24,
                                         ),
                                       ],
                                     ),
-                                  if (widget.profileInfo.allergies! != "" && widget.profileInfo.allergies != null)
+                                  if (widget.profileInfo.allergies! != "" &&
+                                      widget.profileInfo.allergies != null)
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           Language.instance.txtAllergies(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
                                         ),
                                         const SizedBox(
                                           height: 8,
                                         ),
                                         Text(
                                           widget.profileInfo.allergies!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
                                         ),
                                         const SizedBox(
                                           height: 24,
                                         ),
                                       ],
                                     ),
-                                  if (widget.profileInfo.diet! != "" && widget.profileInfo.diet != null)
+                                  if (widget.profileInfo.diet! != "" &&
+                                      widget.profileInfo.diet != null)
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           Language.instance.txtDiet(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
                                         ),
                                         const SizedBox(
                                           height: 8,
                                         ),
                                         Text(
                                           widget.profileInfo.diet!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
                                         ),
                                         const SizedBox(
                                           height: 24,
                                         ),
                                       ],
                                     ),
-                                  if (widget.profileInfo.diseases! != "" && widget.profileInfo.diseases != null)
+                                  if (widget.profileInfo
+                                              .additionalInformation! !=
+                                          "" &&
+                                      widget.profileInfo
+                                              .additionalInformation !=
+                                          null)
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          Language.instance.txtAdditionInfo(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          widget.profileInfo
+                                              .additionalInformation!,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
+                                        ),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                      ],
+                                    ),
+                                  if (widget.profileInfo.diseases! != "" &&
+                                      widget.profileInfo.diseases != null)
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           Language.instance.txtDiseases(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
                                         ),
                                         const SizedBox(
                                           height: 8,
                                         ),
                                         Text(
                                           widget.profileInfo.diseases!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
                                         ),
                                         const SizedBox(
                                           height: 100,
@@ -516,5 +729,5 @@ class _InfoScreenState extends State<InfoScreen> {
         });
   }
 
-  // Delete item from the list
+// Delete item from the list
 }

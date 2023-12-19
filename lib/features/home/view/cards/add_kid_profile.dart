@@ -62,7 +62,6 @@ bool uploading = false;
       setState(() {
         image = File(pickedImage.path);
 
-
       });
 
 
@@ -236,12 +235,12 @@ bool uploading = false;
                   ),
                   child: image == null
                       ? Center(
-                          child: SvgPicture.asset('assets/images/plus_gray.svg'),
-                        )
-                      :uploading? const CircularProgressIndicator():Image.file(
-                          image!,
-                          fit: BoxFit.cover,
-                        ),
+                    child: SvgPicture.asset('assets/images/plus_gray.svg'),
+                  )
+                      : Image.file(
+                    image!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -842,22 +841,6 @@ bool uploading = false;
     final diseases = _diseasesController.text;
     final addInfo = _addInfoController.text;
 
-    if (kDebugMode) {
-      print('photo: $photo');
-      print('Name: $name');
-      print('birthday: $birthday');
-      print('age: $age');
-      print('weight: $weight');
-      print('height: $height');
-      print('character: $character');
-      print('behavior: $behavior');
-      print('specialChar: $specialChar');
-      print('medication: $medication');
-      print('allergies: $allergies');
-      print('diet: $diet');
-      print('diseases: $diseases');
-      print('addInfo: $addInfo');
-    }
 
     final profileInfo = ProfileInfo(
       profileType: "KID",
@@ -881,17 +864,13 @@ bool uploading = false;
     final createProfileSuccess = await postProfileData(profileInfo);
 
     if (createProfileSuccess!=null) {
-      if(image != null) {
-        setState((){
-          uploading= true;
-        });
-
-        uploadProfileImage(profileId: createProfileSuccess.id!, image: image!,)
-            .whenComplete(() => setState((){
-          uploading=false;
-        }));
-      }
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      if (image != null) {
+        await uploadProfileImage(
+          image: image!,
+          profileId: createProfileSuccess.id!,
+        );
+      }
       if (kDebugMode) {
         print("Success Uploading profile information's and added it to Home");
       }

@@ -122,35 +122,35 @@ Future<void> uploadProfileImage(
   }
 }
 
-Future<void> uploadUesrImage({required String profileId, required File image}) async {
-  String? accessToken = await getAccessToken();
-
-  const url = Endpoints.profileUserUplaod;
-  var postUri = Uri.parse(url);
-  var request = http.MultipartRequest("PUT", postUri);
-  request.headers.addAll({
-    'Authorization': 'Bearer $accessToken',
-  });
-  request.files.add(
-    await http.MultipartFile.fromPath(
-      'file',
-      image.path,
-    ),
-  );
-
-  try {
-    final response = await request.send();
-
-    if (response.statusCode == 200) {
-      print('Successfully Uploaded Image...');
-    } else {
-      throw Exception('Failed to upload image');
-    }
-  } catch (error) {
-    print('Error: $error');
-    throw Exception('Failed to upload image');
-  }
-}
+// Future<void> uploadUesrImage({required String profileId, required File image}) async {
+//   String? accessToken = await getAccessToken();
+//
+//   const url = Endpoints.profileUserUplaodImage;
+//   var postUri = Uri.parse(url);
+//   var request = http.MultipartRequest("PUT", postUri);
+//   request.headers.addAll({
+//     'Authorization': 'Bearer $accessToken',
+//   });
+//   request.files.add(
+//     await http.MultipartFile.fromPath(
+//       'file',
+//       image.path,
+//     ),
+//   );
+//
+//   try {
+//     final response = await request.send();
+//
+//     if (response.statusCode == 200) {
+//       print('Successfully Uploaded Image...');
+//     } else {
+//       throw Exception('Failed to upload image');
+//     }
+//   } catch (error) {
+//     print('Error: $error');
+//     throw Exception('Failed to upload image');
+//   }
+// }
 
 Future<void> deleteProfileImage({required String profileId}) async {
   String? accessToken = await getAccessToken();

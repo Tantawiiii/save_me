@@ -35,8 +35,7 @@ dependencies:
   google_places_flutter: ^2.0.6
   google_maps_webservice: ^0.0.19
   google_maps_place_picker: ^2.0.0
-  geolocator: ^7.0.1
-  geocoding: ^2.1.1
+
   google_maps_flutter: ^2.5.0
   flutter_typeahead: ^4.0.2
 
@@ -56,6 +55,8 @@ dependencies:
   qr_flutter: ^4.1.0
   pretty_qr_code: ^3.0.0
   share_plus: ^7.2.1
+
+
 
 dev_dependencies:
   flutter_test:
