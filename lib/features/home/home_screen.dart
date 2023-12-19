@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Color mainBackColor = ColorsCode.purpleColor;
   Color isActiveIconColor = ColorsCode.purpleColor;
 
-  User? userData;
+   User? userData;
 
   @override
   void initState() {
@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Column(
             children: [
               Text(
-                Language.instance.txtAppBarHome() + userData!.name,
+                Language.instance.txtAppBarHome() + userData!.name ?? "",
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: Fonts.getFontFamilyTitillSemiBold(),

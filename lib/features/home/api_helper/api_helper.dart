@@ -103,9 +103,32 @@ Future<List<ProfileInfo>> getPublicProfileId() async {
   }
 }
 
-Future<void> uploadProfileImage({required String profileId, required File image}) async {
-  String? accessToken = await getAccessToken();
+Future<User?> deleteUserProfileData(String accessToken) async {
+  const url = Endpoints.profiles;
+  try {
+    final http.Response response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
 
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+      return User.fromJson(responseData);
+    } else {
+      return null;
+    }
+  } catch (error) {
+    Fluttertoast.showToast(msg: "$error");
+    throw Exception('Failed to load user profile data');
+  }
+}
+
+Future<void> uploadProfileImage(
+    {required String profileId, required File image}) async {
+
+  String? accessToken = await getAccessToken();
   final url = Endpoints.profilePhotoUplaod(profileId);
   var postUri = Uri.parse(url);
   var request = http.MultipartRequest("PUT", postUri);
@@ -183,6 +206,7 @@ Future<void> deleteProfileImage({required String profileId}) async {
     throw Exception('Failed to delete image');
   }
 }
+
 
 // Function to get the access token from SharedPreferences
 Future<String?> getAccessToken() async {

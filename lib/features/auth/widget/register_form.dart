@@ -1,4 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
@@ -33,7 +35,7 @@ class _RegisterFormState extends State<RegisterForm> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _nameController = TextEditingController();
-  final _locationController = TextEditingController();
+  var _locationController = TextEditingController();
 
   // to get a location data when user change here location
   String locationName = "";
@@ -45,12 +47,15 @@ class _RegisterFormState extends State<RegisterForm> {
   String initialCountry = 'EG';
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
   bool passwordVisible = true;
+  bool conPassVisible = true;
   final FocusNode _passwordFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
     passwordVisible = true;
+    bool conPassVisible = true;
+
   }
 
   @override
@@ -229,17 +234,8 @@ class _RegisterFormState extends State<RegisterForm> {
                           if (_currentStep < 1) {
                             if (_validateCurrentStep()) {
                               _currentStep += 1;
-                              if (kDebugMode) {
-                                print('register step 1');
-                              }
-                            }
-                            if (kDebugMode) {
-                              print('register step 2');
                             }
                           } else {
-                            if (kDebugMode) {
-                              print('register step 3');
-                            }
                             _handleButtonClick();
                             _register();
                           }
@@ -328,16 +324,16 @@ class _RegisterFormState extends State<RegisterForm> {
                   controller: _confirmPasswordController,
                   labelText: Language.instance.txtConfirmPassword(),
                   hintText: Language.instance.txtHintConfirmPassword(),
-                  obscureText: passwordVisible,
+                  obscureText: conPassVisible,
                   keyboardType: TextInputType.visiblePassword,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      conPassVisible ? Icons.visibility : Icons.visibility_off,
                       color: Colors.grey,
                     ),
                     onPressed: () {
                       setState(() {
-                        passwordVisible = !passwordVisible;
+                        conPassVisible = !conPassVisible;
                       });
                     },
                   ),
@@ -482,34 +478,22 @@ class _RegisterFormState extends State<RegisterForm> {
                       countries: const ["eg", "de"],
                       isLatLngRequired: true,
                       getPlaceDetailWithLatLng: (Prediction prediction) {
-                        if (kDebugMode) {
-                          print("placeDetails${prediction.lng}");
+
+                        if (prediction.lat != null && prediction.lng != null) {
+                          latitude = double.parse(prediction.lat!);
+                          longitude = double.parse(prediction.lng!);
                         }
+                        log(prediction.toJson().toString());
                       },
                       itemClick: (Prediction prediction) {
                         // TODO: Error Location Lat , Long
                         // Handle the location details directly in the itemClick callback
                         locationName = prediction.description ?? "";
-                        // Use try-catch to handle potential casting errors
-                        try {
-                          // Attempt to parse lat and lng as double
-                          latitude = double.parse(prediction.lat?.toString() ?? "0.0");
-                          longitude = double.parse(prediction.lng?.toString() ?? "0.0");
-
-                        } catch (e) {
-                          if (kDebugMode) {
-                            print("Error parsing lat/lng: $e");
-                            print("Problematic values - lat: ${prediction.lat}, lng: ${prediction.lng}");
-
-                          }
-                          // Handle the error case, set default values if needed
-                          latitude = 0.0;
-                          longitude = 0.0;
-                        }
                         _locationController.text = locationName;
                         _locationController.selection = TextSelection.fromPosition(
                           TextPosition(offset: locationName.length),
                         );
+
 
                       },
                     ),
@@ -586,7 +570,7 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   void _register() async {
-    try {
+
       // Implement your registration logic here
       final email = _emailController.text;
       final password = _passwordController.text;
@@ -610,25 +594,29 @@ class _RegisterFormState extends State<RegisterForm> {
         password: _passwordController.text,
         location: Location(
           name: locationName,
-          latitude: latitude.toString(),
-          longitude: longitude.toString(),
+          latitude: latitude,
+          longitude: longitude,
         ),
         phoneNumber: parsedPhoneNumber,
       );
 
-      String registerSuccessful = await ApiClient().registerUser(user);
 
-      if (kDebugMode) {
-        print(registerSuccessful);
-      }
+      try {
+
+        await ApiClient().registerUser(user);
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
-    } catch (e) {
-      if (kDebugMode) {
-        print("Register failed: $e ");
-      }
+
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Failed to register user .. '),
+          backgroundColor: Colors.red.shade300,
+        ));
     }
+
+
   }
 }

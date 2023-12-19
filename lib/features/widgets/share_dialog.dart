@@ -35,9 +35,11 @@ void shareDialog(context, {required Function onPressed}) {
               Center(
                 child: QrImageView(
                   data: "",
-                  size: 220,
+                  size: 240,
+                 // embeddedImage: AssetImage("assets/images/logowithnobg.png"),
                   embeddedImageStyle: const QrEmbeddedImageStyle(
-                    size: Size(60, 60),
+                    size: Size(45, 45),
+
                   ),
                 ),
               ),

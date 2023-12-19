@@ -319,7 +319,7 @@ class LoginFormState extends State<LoginForm> {
         //print('accessToken: $accessToken');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Error Login: $user'),
+          content: const Text('Your Email or password is wrong ..'),
           backgroundColor: Colors.red.shade300,
         ));
       }
