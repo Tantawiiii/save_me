@@ -1,18 +1,17 @@
-
-abstract class Endpoints{
+abstract class Endpoints {
   Endpoints._();
 
   // http://portal-saveme.preprod.fillflix.de
   // http://portal-saveme.qa.fillflix.de
+  //https://api-saveme.dev.fillflix.de
 
-  static const baseUrl = "https://api-saveme.dev.fillflix.de";
+  static const baseUrl = "https://api-saveme.preprod.fillflix.de";
   static const register = '$baseUrl/api/v1/users';
   static const login = '$baseUrl/api/v1/login';
   static const changePassword = '$baseUrl/api/v1/users/change-password';
   static const profiles = '$baseUrl/api/v1/profiles';
   static const profileId = '$baseUrl/api/v1/profiles/:profileId';
 
-  static profilePhotoUplaod(String profileId) =>
-      '$baseUrl/api/v1/profiles/$profileId/photo';
-
+  static profilePhotoUplaod(String profileId) => '$baseUrl/api/v1/profiles/$profileId/photo';
+  static const profileUserUplaod = '$baseUrl/api/v1/users/photo';
 }

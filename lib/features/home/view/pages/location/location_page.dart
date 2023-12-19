@@ -7,12 +7,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:save_me/features/home/view/pages/location/web_services/network_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
+import '../../../../../data/api_client.dart';
 import '../../../../../utils/constants/colors_code.dart';
 import '../../../../../utils/constants/fonts.dart';
 import '../../../../../utils/strings/Language.dart';
 import '../../../../../utils/strings/Strings_en.dart';
+import '../../../../auth/models/user_model.dart';
 
 
 @RoutePage()
@@ -65,6 +68,26 @@ class _LocationPageState extends State<LocationPage> {
   static const CameraPosition _kInitialPosition =
       CameraPosition(target: _kMapCenter, zoom: 12.0, tilt: 0, bearing: 0);
 
+
+  // TODO: Fixed Get Profile
+  // Fetch a user  Data from token
+  User? userData;
+  @override
+  void initState() {
+
+    super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      final String? token = prefs.getString('access_token');
+      //Fetch a user Data from token
+      ApiClient.getUserProfileData(token!).then((data) {
+        setState(() {
+          userData = data;
+        });
+      });
+
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +144,10 @@ class _LocationPageState extends State<LocationPage> {
                       borderSide: BorderSide(
                         color: Colors.purple.shade100,
                       )),
-                  hintText: Language.instance.txtHintLocation(),
+                  hintText:
+                  userData != null ?
+                  userData!.location!.name :
+                  Language.instance.txtHintLocation(),
                   hintStyle: TextStyle(
                     fontSize: 14,
                     fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -132,34 +158,21 @@ class _LocationPageState extends State<LocationPage> {
                 countries: const ["eg", "de"],
                 isLatLngRequired: true,
                 getPlaceDetailWithLatLng: (Prediction prediction) {
-                  if (kDebugMode) {
-                    print("placeDetails${prediction.lng}");
+
+                  if (prediction.lat != null && prediction.lng != null) {
+                    latitude = double.parse(prediction.lat!);
+                    longitude = double.parse(prediction.lng!);
                   }
                 },
                 itemClick: (Prediction prediction) {
                   // TODO: Error Location Lat , Long
                   // Handle the location details directly in the itemClick callback
                   locationName = prediction.description ?? "";
-                  // Use try-catch to handle potential casting errors
-                  try {
-                    // Attempt to parse lat and lng as double
-                    latitude = double.parse(prediction.lat?.toString() ?? "0.0");
-                    longitude = double.parse(prediction.lng?.toString() ?? "0.0");
-
-                  } catch (e) {
-                    if (kDebugMode) {
-                      print("Error parsing lat/lng: $e");
-                      print("Problematic values - lat: ${prediction.lat}, lng: ${prediction.lng}");
-
-                    }
-                    // Handle the error case, set default values if needed
-                    latitude = 0.0;
-                    longitude = 0.0;
-                  }
                   locationController.text = locationName;
                   locationController.selection = TextSelection.fromPosition(
                     TextPosition(offset: locationName.length),
                   );
+
 
                 },
               ),

@@ -236,8 +236,8 @@ class _ProfileState extends State<Profile> {
                         color: Colors.purple.shade100,
                       )),
                       hintText:
-                      userData != null ?
-                      userData!.contactInfo :
+                      userData == null ?
+                      userData?.contactInfo :
                       Language.instance.txtAddInfo(),
                       hintStyle: TextStyle(
                         fontSize: 16,
@@ -420,23 +420,12 @@ void updateDataInProfile() async {
       contactInfo: addInfo,
     );
 
-    User updatedUser = await ApiClient().updateUserProfile(user);
+    String updatedUser = await ApiClient().updateUserProfile(user);
 
-    if (updatedUser != null) {
-      setState(() {
-        userData = updatedUser;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('Update Date Info Successfully'),
-        backgroundColor: Colors.blue.shade200,
-      ));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('Failed to Update Date Info.'),
-        backgroundColor: Colors.red.shade300,
-      ));
-    }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text('Update Date Info Successfully'),
+      backgroundColor: Colors.blue.shade200,
+    ));
 
     print("Success update: $updatedUser");
   } catch (error) {

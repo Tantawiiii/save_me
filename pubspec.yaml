@@ -54,6 +54,7 @@ dependencies:
   flutter_bounce: ^1.1.0
   bounceable_effect: ^0.0.1
   qr_flutter: ^4.1.0
+  pretty_qr_code: ^3.0.0
 
 dev_dependencies:
   flutter_test:

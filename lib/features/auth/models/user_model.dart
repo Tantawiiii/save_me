@@ -42,8 +42,8 @@ class User {
 
 class Location {
   final String? name;
-  final String? latitude;
-  final String? longitude;
+  final double? latitude;
+  final double? longitude;
 
   Location({ this.name,  this.latitude,  this.longitude});
 
@@ -57,8 +57,8 @@ class Location {
   factory Location.fromJson(Map<String, dynamic> json) {
     return Location(
       name: json['name'].toString(),
-      latitude: json['latitude'].toString(),
-      longitude: json['longitude'].toString(),
+      latitude: json['latitude'],
+      longitude: json['longitude'],
     );
   }
 }
