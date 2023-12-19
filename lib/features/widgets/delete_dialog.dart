@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:save_me/utils/constants/fonts.dart';
 
-void deleteDialog(context, {required Function onPressed}) {
+void deleteDialog(context, {required dynamic onPressed}) {
   showModalBottomSheet(
       context: context,
       builder: (context) {

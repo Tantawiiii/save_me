@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:save_me/features/home/api_helper/api_helper.dart';
 import 'package:save_me/features/home/models/profile_info.dart';
 import 'package:save_me/features/home/view/ui/public_profile.dart';
+import 'package:save_me/features/widgets/delete_dialog.dart';
 import 'package:save_me/features/widgets/share_dialog.dart';
 import 'package:save_me/utils/strings/Language.dart';
 
@@ -124,15 +126,13 @@ class _InfoScreenState extends State<InfoScreen> {
                           const SizedBox(
                             width: 14,
                           ),
-                          Bounce(
-                            onPressed: () {},
-                            duration: const Duration(milliseconds: 400),
-                            child: InkWell(
-                              onTap: () {
-                                deleteDialog(context);
-                              },
-                              child: SvgPicture.asset('assets/images/icons/delete.svg'),
-                            ),
+                          InkWell(
+                            onTap: () {
+                             deleteDialog(context, onPressed: (){
+                               deleteUserProfileData(widget.profileInfo.id!);
+                             });
+                            },
+                            child: SvgPicture.asset('assets/images/icons/delete.svg'),
                           ),
                         ],
                       ),
@@ -501,94 +501,4 @@ class _InfoScreenState extends State<InfoScreen> {
   }
 
   // Delete item from the list
-  void deleteDialog(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            height: 350,
-            padding: const EdgeInsets.only(top: 4, right: 24, bottom: 4, left: 24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Delete Confirmation",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  "Are you sure you want to delete this profile? This action is irreversible, and all your data will be permanently lost.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                  ),
-                ),
-                const SizedBox(
-                  height: 28,
-                ),
-                Bounce(
-                  duration: const Duration(milliseconds: 300),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    height: 56,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      color: Colors.black,
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: Center(
-                      child: Text(
-                        "No, I don’t want",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 18,
-                ),
-                Bounce(
-                  duration: const Duration(milliseconds: 300),
-                  onPressed: () {},
-                  child: Container(
-                    width: double.infinity,
-                    height: 56,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                      color: Colors.redAccent,
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Yes, Delete this profile",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
-  }
 }

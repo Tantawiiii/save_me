@@ -74,38 +74,9 @@ Future<List<ProfileInfo>> getUserProfileData() async {
   }
 }
 
-Future<List<ProfileInfo>> getPublicProfileId() async {
+Future<void> deleteUserProfileData(String profileId) async {
   String? accessToken = await getAccessToken();
-  const url = Endpoints.profileId;
-  List<ProfileInfo> profiles = [];
-  try {
-    final http.Response response = await http.get(
-      Uri.parse(url),
-      headers: {
-        'Authorization': 'Bearer $accessToken',
-      },
-    );
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      responseData.forEach((profile) {
-        profiles.add(ProfileInfo.fromJson(profile));
-      });
-
-      print('Successfully Getting Profiles Id ...');
-
-      return profiles;
-    } else {
-      throw Exception('Failed to load user profile data');
-    }
-  } catch (error) {
-    print('Error: $error');
-    throw Exception('Failed to load user profile data');
-  }
-}
-
-Future<User?> deleteUserProfileData() async {
-  String? accessToken = await getAccessToken();
-  const url = Endpoints.profiles;
+  final url = Endpoints.profileId(profileId);
   try {
     final http.Response response = await http.delete(
       Uri.parse(url),
@@ -114,12 +85,6 @@ Future<User?> deleteUserProfileData() async {
       },
     );
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      return User.fromJson(responseData);
-    } else {
-      return null;
-    }
   } catch (error) {
     Fluttertoast.showToast(msg: "$error");
     throw Exception('Failed to load user profile data');
