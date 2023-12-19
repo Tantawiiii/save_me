@@ -297,7 +297,7 @@ class _ProfileState extends State<Profile> {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     // showBottomSheetDialog(context);
-                                    updateDataInProfile();
+                                    updateDataInProfile(userData!);
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.black,
@@ -366,28 +366,17 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  void updateDataInProfile() async {
-    try {
-      final name = _nameController.text;
-      final phone = _phoneNumController.text;
-      final addInfo = _addInfoController.text;
-
-      final user = User(
-        name: name,
-        phoneNumber: phone,
-        contactInfo: addInfo,
-      );
-
-      User? updatedUser = await ApiClient().updateUserProfile(user);
-
+  void updateDataInProfile(User user) async {
+    final name = _nameController.text;
+    final phone = _phoneNumController.text;
+    final addInfo = _addInfoController.text;
+    final userUpdated = user.copyWith(name: name, phoneNumber: phone, contactInfo: addInfo);
+    User? updatedUser = await ApiClient().updateUserProfile(userUpdated);
+    if (updatedUser != null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text('Update Date Info Successfully'),
         backgroundColor: Colors.blue.shade200,
       ));
-
-      print("Success update: $updatedUser");
-    } catch (error) {
-      print("Update failed: $error");
     }
   }
 }
