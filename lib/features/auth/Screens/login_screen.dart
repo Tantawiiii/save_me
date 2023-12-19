@@ -54,24 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme(
-          brightness: Brightness.light,
-          primary: ColorsCode.whiteColor,
-          onPrimary: ColorsCode.blackColor,
-          secondary: Colors.white,
-          onSecondary: Colors.grey,
-          background: Colors.white,
-          onBackground: Colors.grey,
-          error: Colors.red,
-          onError: ColorsCode.grayColor,
-          surface: Colors.white,
-          onSurface: Colors.black,
-        ),
-      ),
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 12,
@@ -173,7 +156,6 @@ class _LoginScreenState extends State<LoginScreen> {
         body: const Center(
           child: LoginForm(),
         ),
-      ),
     );
   }
 

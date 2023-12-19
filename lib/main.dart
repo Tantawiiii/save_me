@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:save_me/features/auth/Screens/splashScreen.dart';
+import 'package:save_me/utils/constants/colors_code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -54,8 +55,23 @@ class _SaveMeState extends State<SaveMe> {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme(
+          brightness: Brightness.light,
+          primary: ColorsCode.blackColor,
+          onPrimary: ColorsCode.blackColor,
+          secondary: Colors.black,
+          onSecondary: Colors.grey,
+          background: Colors.white,
+          onBackground: Colors.grey,
+          error: Colors.red,
+          onError: ColorsCode.grayColor,
+          surface: Colors.white,
+          onSurface: Colors.black,
+        ),
+      ),
       home: SplashScreen(),
     );
   }

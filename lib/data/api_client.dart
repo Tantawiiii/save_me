@@ -50,8 +50,8 @@ class ApiClient {
       final Map<String, dynamic> responseData = jsonDecode(response.body);
       // Store the user data token using shared_preferences
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('access_token', responseData['access_token']);
-      final user = await getUserProfileData(responseData['access_token']);
+      await prefs.setString('access_token', responseData['access_token']);
+      final user = await getUserProfileData();
       if (user != null) {
         prefs.setString('user', jsonEncode(user.toJson()));
       }
@@ -65,7 +65,8 @@ class ApiClient {
     }
   }
 
-  static Future<User?> getUserProfileData(String accessToken) async {
+  static Future<User?> getUserProfileData() async {
+    String? accessToken = await getAccessToken();
     const url = Endpoints.register;
     try {
       final response = await http.get(
@@ -86,23 +87,36 @@ class ApiClient {
       throw Exception('Failed to load user profile data');
     }
   }
-  Future<String> updateUserProfile(User user) async {
 
+  Future<User?> updateUserProfile(User user) async {
     const url = Endpoints.register;
     String? accessToken = await getAccessToken();
     try {
-      final  response = await http.put(
+      final response = await http.put(
         Uri.parse(url),
         headers: {
           'Authorization': 'Bearer $accessToken',
           'Content-Type': 'application/json',
         },
+        body: jsonEncode(user.toJson()),
       );
 
       if (response.statusCode == 200) {
-        return "Update Successful!";
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        // Store the user data token using shared_preferences
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('access_token', responseData['access_token']);
+        final user = await getUserProfileData();
+        if (user != null) {
+          prefs.setString('user', jsonEncode(user.toJson()));
+        }
+        return user;
       } else {
-        return "Update Failed!";
+        if (kDebugMode) {
+          print("Error: ${response.statusCode}");
+          print("Error Body: ${response.body}");
+        }
+        return null;
       }
     } catch (error) {
       Fluttertoast.showToast(msg: "$error");
@@ -141,7 +155,7 @@ class ApiClient {
     return "Failed to change password...";
   }
 
-  Future<String?> getAccessToken() async {
+  static Future<String?> getAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('access_token');
   }

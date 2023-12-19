@@ -27,6 +27,10 @@ class User {
       'contactInfo': contactInfo,
     };
   }
+
+  copyWith(){
+
+  }
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       name: json['name'].toString(),

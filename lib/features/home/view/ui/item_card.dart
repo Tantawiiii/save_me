@@ -51,12 +51,20 @@ class ItemCard extends StatelessWidget {
                     ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(4.0),
-                      child: Image.asset(
+                      child:
+                      profileInfo.photoUrl == null ?
+                      Image.asset(
                         'assets/images/image.png',
                         width: 135,
                         height: 145,
                         fit: BoxFit.cover,
-                      ),
+                      )
+                          :    Image.network(
+                        profileInfo.photoUrl!,
+                        width: 135,
+                        height: 145,
+                        fit: BoxFit.cover,
+                      )
                     ),
                     const SizedBox(
                       height: 6,
