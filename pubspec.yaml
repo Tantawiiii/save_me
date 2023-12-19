@@ -35,8 +35,7 @@ dependencies:
   google_places_flutter: ^2.0.6
   google_maps_webservice: ^0.0.19
   google_maps_place_picker: ^2.0.0
-  geolocator: ^7.0.1
-  geocoding: ^2.1.1
+
   google_maps_flutter: ^2.5.0
   flutter_typeahead: ^4.0.2
 
@@ -55,14 +54,25 @@ dependencies:
   bounceable_effect: ^0.0.1
   qr_flutter: ^4.1.0
   pretty_qr_code: ^3.0.0
+  share_plus: ^7.2.1
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
 
-
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/icons/icon_launcher.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  adaptive_icon_background: "#ffffff" # adaptive icon background color, default is "#ffffff"
+  remove_alpha_ios: true # remove alpha from ios, default is true
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

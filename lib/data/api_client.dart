@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -145,6 +146,41 @@ class ApiClient {
     }
     return "Failed to change password...";
   }
+
+  //upload image to user
+  Future<void> uploadUserImage(
+      {required File image}) async {
+
+    String? accessToken = await getAccessToken();
+    const url = Endpoints.profileUserUplaodImage;
+    var postUri = Uri.parse(url);
+    var request = http.MultipartRequest("PUT", postUri);
+    request.headers.addAll({
+      'Authorization': 'Bearer $accessToken',
+    });
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'file',
+        image.path,
+      ),
+    );
+
+    try {
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        print('Successfully Uploaded Image...');
+      } else {
+        throw Exception('Failed to upload image');
+      }
+    } catch (error) {
+      print('Error: $error');
+      throw Exception('Failed to upload image');
+    }
+  }
+
+
+
 
   static Future<String?> getAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

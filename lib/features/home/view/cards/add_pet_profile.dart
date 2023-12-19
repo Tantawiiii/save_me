@@ -14,7 +14,6 @@ import 'package:save_me/features/home/view/cards/created_done.dart';
 import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
-import '../../../auth/utils/validation.dart';
 import '../../api_helper/api_helper.dart';
 import '../../models/profile_info.dart';
 
@@ -126,9 +125,6 @@ class _AddPetProfileState extends State<AddPetProfile> {
                           final isLastStep = _currentStep == getSteps().length - 1;
                           if (isLastStep) {
                             setState(() => isCompleted = true);
-                            if (kDebugMode) {
-                              print('Completed');
-                            }
                             _addPetProfile();
                           } else {
                             setState(() => _currentStep += 1);
@@ -747,7 +743,6 @@ class _AddPetProfileState extends State<AddPetProfile> {
 
   void _addPetProfile() async {
     // Implement your Profile logic here
-    final photo = "_image";
     final name = _nameController.text;
     final birthday = _birthdayController.text;
     final age = _ageController.text;
@@ -762,22 +757,6 @@ class _AddPetProfileState extends State<AddPetProfile> {
     final diseases = _diseasesController.text;
     final addInfo = _addInfoController.text;
 
-    if (kDebugMode) {
-      print('photo: $photo');
-      print('Name: $name');
-      print('birthday: $birthday');
-      print('age: $age');
-      print('weight: $weight');
-      print('height: $height');
-      print('character: $character');
-      print('behavior: $behavior');
-      print('specialChar: $specialChar');
-      print('medication: $medication');
-      print('allergies: $allergies');
-      print('diet: $diet');
-      print('diseases: $diseases');
-      print('addInfo: $addInfo');
-    }
 
     final profileInfo = ProfileInfo(
         profileType: "PET",
