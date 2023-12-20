@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -12,6 +10,7 @@ class LoadingDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        if (isLoading)
           Container(
             color: Colors.black.withOpacity(0.3),
             child: Center(
