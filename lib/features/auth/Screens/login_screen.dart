@@ -125,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     setState(() {
                       changeLanguage("en");
                     });
+
                   } else if (value == 'Deutsch') {
                     // Handle icon2 selection
                     setState(() {

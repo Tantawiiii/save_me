@@ -399,6 +399,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     child: TextFormField(
                       controller: _nameController,
                       keyboardType: TextInputType.name,
+                      cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 15, horizontal: 8),
@@ -523,6 +524,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                       ),
                       initialValue: number,
+                      cursorColor: Colors.black,
                       ignoreBlank: false,
                       selectorTextStyle: const TextStyle(color: Colors.black),
                       textFieldController: _phoneNumberController,
@@ -531,7 +533,6 @@ class _RegisterFormState extends State<RegisterForm> {
                       spaceBetweenSelectorAndTextField: 0,
                       keyboardType: const TextInputType.numberWithOptions(
                           signed: true, decimal: true,),
-                      cursorColor: Colors.black,
                       inputDecoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.only(bottom: 15, left: 8),

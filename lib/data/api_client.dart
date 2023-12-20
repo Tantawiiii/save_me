@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -167,7 +168,7 @@ class ApiClient {
 
     try {
       final response = await request.send();
-
+log(response.statusCode.toString(),name: 'response');
       if (response.statusCode == 200) {
         print('Successfully Uploaded Image...');
       } else {

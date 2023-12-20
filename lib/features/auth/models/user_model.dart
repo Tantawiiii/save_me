@@ -7,8 +7,10 @@ class User {
   final Location? location;
   final String? phoneNumber;
   final String? contactInfo;
+  final String? photoUrl;
 
   User({
+    this.photoUrl,
     this.name,
     this.email,
     this.password,
@@ -25,6 +27,7 @@ class User {
       'location': location?.toJson(),
       'phoneNumber': phoneNumber,
       'contactInfo': contactInfo,
+      'photoUrl': photoUrl,
     };
   }
 
@@ -36,6 +39,7 @@ class User {
       location: Location.fromJson(json['location']),
       phoneNumber: json['phoneNumber'].toString(),
       contactInfo: json['contactInfo'].toString(),
+      photoUrl:json['photoUrl'].toString(),
     );
   }
   User copyWith({

@@ -272,6 +272,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _nameController,
                   keyboardType: TextInputType.name,
+                  cursorColor: Colors.black,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: ColorsCode.whiteColor100,
@@ -315,6 +316,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 style: const TextStyle(
                   color: Colors.black,
                 ),
+                cursorColor: Colors.black,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: ColorsCode.whiteColor100,
@@ -400,6 +402,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _ageController,
                   keyboardType: TextInputType.number,
+                  cursorColor: Colors.black,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: ColorsCode.whiteColor100,
@@ -447,6 +450,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _weightController,
                   keyboardType: TextInputType.number,
+                  cursorColor: Colors.black,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: ColorsCode.whiteColor100,
@@ -487,6 +491,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _heightController,
                   keyboardType: TextInputType.number,
+                  cursorColor: Colors.black,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: ColorsCode.whiteColor100,
@@ -526,6 +531,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _charController,
                   keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.black,
                   maxLines: null,
                   decoration: InputDecoration(
                     filled: true,
@@ -565,6 +571,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _behaviorController,
                   keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.black,
                   maxLines: null,
                   decoration: InputDecoration(
                     filled: true,
@@ -604,6 +611,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _specialCharController,
                   keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.black,
                   maxLines: null,
                   decoration: InputDecoration(
                     filled: true,
@@ -650,6 +658,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _medicinesController,
                   keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.black,
                   maxLines: null,
                   decoration: InputDecoration(
                     filled: true,
@@ -689,6 +698,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _allergiesController,
                   keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.black,
                   maxLines: null,
                   decoration: InputDecoration(
                     filled: true,
@@ -728,6 +738,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _dietController,
                   keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.black,
                   maxLines: null,
                   decoration: InputDecoration(
                     filled: true,
@@ -767,6 +778,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _diseasesController,
                   keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.black,
                   maxLines: null,
                   decoration: InputDecoration(
                     filled: true,
@@ -806,6 +818,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _addInfoController,
                   keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.black,
                   maxLines: null,
                   decoration: InputDecoration(
                     filled: true,
@@ -881,6 +894,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                       ),
                     ),
                     filled: true,
+
                     fillColor: ColorsCode.whiteColor100,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4),
@@ -933,6 +947,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _insituNameController,
                   keyboardType: TextInputType.name,
+                  cursorColor: Colors.black,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: ColorsCode.whiteColor100,
@@ -972,6 +987,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 child: TextFormField(
                   controller: _careAideController,
                   keyboardType: TextInputType.name,
+                  cursorColor: Colors.black,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: ColorsCode.whiteColor100,

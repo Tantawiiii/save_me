@@ -11,6 +11,7 @@ import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
 import '../../../auth/utils/validation.dart';
 import '../../api_helper/api_helper.dart';
+import '../../home_screen.dart';
 import '../../models/profile_info.dart';
 
 
@@ -135,7 +136,13 @@ class _AddItemProfileState extends State<AddItemProfile> {
                                 ),
                                const SizedBox(width: 12),
                                   InkWell(
-                                    onTap: details.onStepCancel,
+                                    onTap: (){
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder:
+                                            (context) =>  const HomeScreen()),
+                                      );
+                                    },
                                     child: Text(
                                       Language.instance.txtCancel(),
                                       style: TextStyle(
@@ -182,6 +189,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                 child: TextFormField(
                   controller: _nameController,
                   keyboardType: TextInputType.name,
+                  cursorColor: Colors.black,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: ColorsCode.whiteColor100,
@@ -224,6 +232,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                 child: TextFormField(
                   //controller: _nameController,
                   keyboardType: TextInputType.multiline,
+                  cursorColor: Colors.black,
                   maxLines: null,
                   decoration: InputDecoration(
                     filled: true,

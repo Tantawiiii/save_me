@@ -49,6 +49,7 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           obscureText: obscureText,
           keyboardType: keyboardType,
+          cursorColor: Colors.black,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 15,horizontal: 8),
             border: OutlineInputBorder(
