@@ -2,24 +2,21 @@
 
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:ndialog/ndialog.dart';
 import 'package:save_me/data/api_client.dart';
 import 'package:save_me/features/auth/models/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
 import '../../../auth/utils/validation.dart';
-
-import 'package:auto_route/auto_route.dart';
-
-import '../../../widgets/upload_bottom_sheet.dart';
 
 @RoutePage()
 class Profile extends StatefulWidget {
@@ -30,15 +27,16 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final TextEditingController _phoneNumController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _addInfoController = TextEditingController();
+  TextEditingController _phoneNumController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _addInfoController = TextEditingController();
 
   // initial Country Code value phone number
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
 
   // Default selected image path
-  final SvgPicture _selectedImage = SvgPicture.asset('assets/images/young_man_white.svg');
+  final SvgPicture _selectedImage =
+      SvgPicture.asset('assets/images/young_man_white.svg');
   List<Map<String, dynamic>> mySvgPaths = [
     {"id": '1', "image": 'assets/images/young_man_white.svg'},
     {"id": '2', "image": 'assets/images/young_man_white.svg'},
@@ -52,6 +50,7 @@ class _ProfileState extends State<Profile> {
 
   // Image Picker for the new photo profile image
   File? image;
+
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
@@ -80,13 +79,23 @@ class _ProfileState extends State<Profile> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       final userData = snapshot.data as User?;
+                      _nameController =
+                          TextEditingController(text: userData?.name);
+                      _phoneNumController =
+                          TextEditingController(text: userData?.phoneNumber);
+                      _addInfoController =
+                          TextEditingController(text: userData?.contactInfo);
+
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             Language.instance.txtUserName(),
-                            style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular(), fontWeight: FontWeight.normal),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                                fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(
                             height: 8,
@@ -96,6 +105,7 @@ class _ProfileState extends State<Profile> {
                             child: TextFormField(
                               controller: _nameController,
                               keyboardType: TextInputType.name,
+                              cursorColor: Colors.black,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: ColorsCode.whiteColor100,
@@ -107,10 +117,11 @@ class _ProfileState extends State<Profile> {
                                     borderSide: BorderSide(
                                   color: Colors.purple.shade100,
                                 )),
-                                hintText: userData != null ? userData!.name : Language.instance.txtIsEmptyUserName(),
+                                hintText: Language.instance.txtHintName(),
                                 hintStyle: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: Fonts.getFontFamilyTitillRegular(),
+                                  fontFamily:
+                                      Fonts.getFontFamilyTitillRegular(),
                                   color: ColorsCode.blackColor700,
                                 ),
                               ),
@@ -124,7 +135,10 @@ class _ProfileState extends State<Profile> {
                           ),
                           Text(
                             Language.instance.txtPhoneNumber(),
-                            style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular(), fontWeight: FontWeight.normal),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                                fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(
                             height: 8,
@@ -136,7 +150,8 @@ class _ProfileState extends State<Profile> {
                             decoration: BoxDecoration(
                               color: Colors.grey.shade100,
                               borderRadius: BorderRadius.circular(4),
-                              border: Border.all(color: Colors.black.withOpacity(0.13)),
+                              border: Border.all(
+                                  color: Colors.black.withOpacity(0.13)),
                             ),
                             child: InternationalPhoneNumberInput(
                               onInputChanged: (PhoneNumber number) {
@@ -150,31 +165,36 @@ class _ProfileState extends State<Profile> {
                                 }
                               },
                               selectorConfig: const SelectorConfig(
-                                selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                                selectorType:
+                                    PhoneInputSelectorType.BOTTOM_SHEET,
                               ),
                               initialValue: number,
                               ignoreBlank: false,
                               autoValidateMode: AutovalidateMode.disabled,
-                              selectorTextStyle: const TextStyle(color: Colors.black),
+                              selectorTextStyle:
+                                  const TextStyle(color: Colors.black),
                               textFieldController: _phoneNumController,
                               formatInput: false,
                               spaceBetweenSelectorAndTextField: 0,
-                              keyboardType: const TextInputType.numberWithOptions(signed: true, decimal: true),
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      signed: true, decimal: true),
                               cursorColor: Colors.black,
                               inputDecoration: InputDecoration(
                                 //prefixIcon: SvgPicture.asset('assets/images/line.svg'),
-                                contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
+                                contentPadding:
+                                    const EdgeInsets.only(bottom: 15, left: 8),
                                 border: InputBorder.none,
-                                hintText: userData != null ? userData!.phoneNumber : Language.instance.txtHintPhoneNumber(),
+                                hintText:
+                                    Language.instance.txtHintPhoneNumber(),
                                 hintStyle: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: Fonts.getFontFamilyTitillRegular(),
+                                  fontFamily:
+                                      Fonts.getFontFamilyTitillRegular(),
                                   color: ColorsCode.blackColor700,
                                 ),
                               ),
-                              onSaved: (PhoneNumber number) {
-                                print('On Saved: $number');
-                              },
+                              onSaved: (PhoneNumber number) {},
                             ),
                           ),
                           const SizedBox(
@@ -182,7 +202,10 @@ class _ProfileState extends State<Profile> {
                           ),
                           Text(
                             Language.instance.txtAddInfo(),
-                            style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular(), fontWeight: FontWeight.normal),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                                fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(
                             height: 8,
@@ -192,6 +215,7 @@ class _ProfileState extends State<Profile> {
                             child: TextFormField(
                               controller: _addInfoController,
                               keyboardType: TextInputType.name,
+                              cursorColor: Colors.black,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: ColorsCode.whiteColor100,
@@ -203,13 +227,13 @@ class _ProfileState extends State<Profile> {
                                     borderSide: BorderSide(
                                   color: Colors.purple.shade100,
                                 )),
-                                hintText:
-                                userData?.contactInfo != "null" ?
-                                userData!.contactInfo :
-                                Language.instance.txtAddInfo(),
+                                hintText: userData?.contactInfo != "null"
+                                    ? userData!.contactInfo
+                                    : Language.instance.txtAddInfo(),
                                 hintStyle: TextStyle(
                                   fontSize: 16,
-                                  fontFamily: Fonts.getFontFamilyTitillRegular(),
+                                  fontFamily:
+                                      Fonts.getFontFamilyTitillRegular(),
                                   color: ColorsCode.blackColor700,
                                 ),
                                 //isDense: true,
@@ -221,13 +245,17 @@ class _ProfileState extends State<Profile> {
                           ),
                           Text(
                             Language.instance.txtAvatarOrPhoto(),
-                            style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                fontWeight: FontWeight.normal),
                           ),
                           const SizedBox(
                             height: 24,
                           ),
                           Container(
-                            margin: const EdgeInsets.only(left: 24, right: 24, top: 10),
+                            margin: const EdgeInsets.only(
+                                left: 24, right: 24, top: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -266,12 +294,22 @@ class _ProfileState extends State<Profile> {
                                         height: 89,
                                         decoration: BoxDecoration(
                                           color: ColorsCode.whiteColor,
-                                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(4)),
                                         ),
                                         child: image == null
-                                            ? Center(
-                                                child: SvgPicture.asset('assets/images/upload_img.svg'),
-                                              )
+                                            ? userData?.photoUrl == null
+                                                ? Center(
+                                                    child: SvgPicture.asset(
+                                                        'assets/images/upload_img.svg'),
+                                                  )
+                                                : CircleAvatar(
+                                                    radius: 50,
+                                                    backgroundImage:
+                                                        NetworkImage(
+                                                      userData!.photoUrl!,
+                                                    ),
+                                                  )
                                             : Image.file(
                                                 image!,
                                                 fit: BoxFit.cover,
@@ -283,7 +321,11 @@ class _ProfileState extends State<Profile> {
                                     ),
                                     Text(
                                       Language.instance.txtUploadImage(),
-                                      style: TextStyle(fontSize: 16, fontFamily: Fonts.getFontFamilyTitillRegular(), color: ColorsCode.purpleColor),
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: Fonts
+                                              .getFontFamilyTitillRegular(),
+                                          color: ColorsCode.purpleColor),
                                     ),
                                   ],
                                 ),
@@ -301,9 +343,8 @@ class _ProfileState extends State<Profile> {
                                   height: 56,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      // showBottomSheetDialog(context);
-                                      updateDataInProfile(userData!);
 
+                                      updateDataInProfile(userData!);
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.black,
@@ -317,7 +358,8 @@ class _ProfileState extends State<Profile> {
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 18,
-                                        fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                        fontFamily:
+                                            Fonts.getFontFamilyTitillSemiBold(),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -332,15 +374,20 @@ class _ProfileState extends State<Profile> {
                                   height: 56,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      _phoneNumController.clear();
-                                      _nameController.clear();
-                                      _addInfoController.clear();
+                                      // _phoneNumController.clear();
+                                      // _nameController.clear();
+                                      // _addInfoController.clear();
 
+                                      setState(() {
+                                        _phoneNumController.toString();
+                                      });
 
-                                      if (Platform.isIOS || Platform.isAndroid) {
+                                      if (Platform.isIOS ||
+                                          Platform.isAndroid) {
                                         Fluttertoast.showToast(
                                             toastLength: Toast.LENGTH_SHORT,
-                                            msg: Language.instance.txtResetMsg());
+                                            msg: Language.instance
+                                                .txtResetMsg());
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(
@@ -355,7 +402,8 @@ class _ProfileState extends State<Profile> {
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,
-                                        fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                        fontFamily:
+                                            Fonts.getFontFamilyTitillSemiBold(),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -372,7 +420,10 @@ class _ProfileState extends State<Profile> {
                     } else if (snapshot.hasError) {
                       return Text("${snapshot.error}");
                     }
-                    return const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black)));
+                    return const Center(
+                        child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.black)));
                   }),
               const SizedBox(
                 height: 100,
@@ -388,16 +439,15 @@ class _ProfileState extends State<Profile> {
     final name = _nameController.text;
     final phone = _phoneNumController.text;
     final addInfo = _addInfoController.text;
-    final userUpdated = user.copyWith(name: name, phoneNumber: phone, contactInfo: addInfo);
+    final userUpdated =
+        user.copyWith(name: name, phoneNumber: phone, contactInfo: addInfo);
     User? updatedUser = await ApiClient().updateUserProfile(userUpdated);
 
-
     if (updatedUser != null) {
-
       if (image != null) {
         await ApiClient().uploadUserImage(
           image: image!,
-        );
+        ).showCustomProgressDialog(context);
       } else {
         // if (Platform.isIOS || Platform.isAndroid) {
         //   Fluttertoast.showToast(
@@ -411,7 +461,6 @@ class _ProfileState extends State<Profile> {
             toastLength: Toast.LENGTH_SHORT,
             msg: Language.instance.txtUpdateMsg());
       }
-
     }
   }
 }

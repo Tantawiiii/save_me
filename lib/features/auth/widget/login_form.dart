@@ -120,6 +120,7 @@ class LoginFormState extends State<LoginForm> {
                         TextFormField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
+                          cursorColor: Colors.black,
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(vertical: 15,horizontal: 8),
                             filled: true,
@@ -161,6 +162,7 @@ class LoginFormState extends State<LoginForm> {
                         TextFormField(
                           controller: _passwordController,
                           obscureText: passwordVisible,
+                          cursorColor: Colors.black,
                           keyboardType: TextInputType.visiblePassword,
                           focusNode: _passwordFocusNode,
                           decoration: InputDecoration(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:save_me/features/home/models/profile_info.dart';
 import 'package:save_me/utils/strings/Language.dart';
 
@@ -52,9 +53,9 @@ class ItemCard extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(4.0),
                       child:
-                      profileInfo.photoUrl == null ?
-                      Image.asset(
-                        'assets/images/image.png',
+                      profileInfo.profileType == "ITEM" ?
+                      SvgPicture.asset(
+                        'assets/images/Item.svg',
                         width: 135,
                         height: 145,
                         fit: BoxFit.cover,

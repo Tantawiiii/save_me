@@ -4,6 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
+import 'package:save_me/main.dart';
 
 import '../../../../data/api_client.dart';
 import '../../../../utils/constants/colors_code.dart';
@@ -25,8 +26,8 @@ class _LocationPageState extends State<LocationPage> {
 
   TextEditingController locationController = TextEditingController();
   String locationName = "";
-  double latitude = 29.9674624;
-  double longitude = 31.3154334;
+  double latitude = 51.507769;
+  double longitude = 7.6350688;
 
   CameraPosition? cameraPosition;
   GoogleMapController? mapController;
@@ -45,6 +46,9 @@ class _LocationPageState extends State<LocationPage> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final userData = snapshot.data as User?;
+                locationController =TextEditingController(text: userData?.location?.name);
+                latitude = userData!.location!.latitude!;
+                longitude = userData!.location!.longitude!;
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,8 +75,7 @@ class _LocationPageState extends State<LocationPage> {
                         ),
                         inputDecoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 6,
+                            horizontal: 9,
                           ),
                           prefixIcon: const Padding(
                             padding: EdgeInsets.only(
@@ -92,9 +95,7 @@ class _LocationPageState extends State<LocationPage> {
                               borderSide: BorderSide(
                             color: Colors.purple.shade100,
                           )),
-                          hintText: userData!.location!.name != "null"
-                              ? userData.location!.name
-                              : Language.instance.txtHintLocation(),
+                          hintText:Language.instance.txtHintLocation(),
                           hintStyle: TextStyle(
                             fontSize: 14,
                             fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -147,69 +148,59 @@ class _LocationPageState extends State<LocationPage> {
                               child: GoogleMap(
                                 initialCameraPosition: CameraPosition(
                                   target: LatLng(latitude, longitude),
-                                  zoom: 12.0,
+                                  zoom: 14.0,
                                   tilt: 0,
                                   bearing: 0,
                                 ),
-                                mapType: MapType.hybrid,
-                                //zoomControlsEnabled: true,
+                                onTap: (pos){
+                                  print("onTap: $pos");
+                                  setState(() {
+                                    latitude = pos.latitude;
+                                        longitude = pos.longitude;
+                                  });
+                                } ,
+                                mapType: MapType.normal,
                                 zoomGesturesEnabled: true,
-                                // trafficEnabled: true,
-                                // liteModeEnabled: true,
-                                //markers: _createMarker(),
-                                onMapCreated: (controller) {
-                                  setState(() {
-                                    mapController = controller;
-                                  });
-                                },
-                                onCameraMove: (CameraPosition position) {
-                                  cameraPosition = position;
-                                },
+                                // onMapCreated: (controller) {
+                                //   setState(() {
+                                //     mapController = controller;
+                                //   });
+                                // },
+                                // onCameraMove: (CameraPosition position) {
+                                //   cameraPosition = position;
+                                // },
                                 //when map drag stops
-                                onCameraIdle: () async {
-                                  List<Placemark> placeMarks =
-                                      await placemarkFromCoordinates(
-                                          cameraPosition!.target.latitude,
-                                          cameraPosition!.target.longitude);
-                                  //get place name from lat and lang
-                                  setState(() {
-                                    location =
-                                        "${placeMarks.first.administrativeArea}, ${placeMarks.first.street}";
-                                    locationController.text = location;
-                                  });
+                                // onCameraIdle: () async {
+                                //   List<Placemark> placeMarks =
+                                //       await placemarkFromCoordinates(
+                                //           cameraPosition!.target.latitude,
+                                //           cameraPosition!.target.longitude);
+                                //   //get place name from lat and lang
+                                //   setState(() {
+                                //     location =
+                                //         "${placeMarks.first.administrativeArea}, ${placeMarks.first.street}";
+                                //     locationController.text = location;
+                                //   });
+                                // },
+                                markers:  {
+                                   Marker(
+                                    markerId: MarkerId("1"),
+                                    icon:BitmapDescriptor.defaultMarker,
+                                    position: LatLng(latitude, longitude),
+                                  ),
+                                },
+                                circles: {
+                                  Circle(
+                                    circleId: CircleId("1"),
+                                    center: LatLng(latitude, longitude),
+                                    radius: 750,
+                                    strokeWidth: 1,
+                                    fillColor: Color(0xFF006491).withOpacity(0.2),
+                                  ),
                                 },
                               ),
                             ),
 
-                            Center(
-                              child: Icon(
-                                Icons.location_pin,
-                                size: 46,
-                                color: Colors.red.shade900,
-                              ),
-                            ),
-
-                            //widget to display location name
-                            Positioned(
-                              top: 4,
-                              right: 4,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Card(
-                                  child: Container(
-                                      padding: const EdgeInsets.all(0),
-                                      width: 330,
-                                      child: ListTile(
-                                        leading: const Icon(Icons.location_on),
-                                        title: Text(
-                                          location,
-                                          style: const TextStyle(fontSize: 14),
-                                        ),
-                                        dense: true,
-                                      )),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
