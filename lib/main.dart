@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:save_me/features/auth/Screens/login_screen.dart';
+import 'package:save_me/features/auth/Screens/register_screen.dart';
 import 'package:save_me/features/auth/Screens/splashScreen.dart';
+import 'package:save_me/features/home/home_screen.dart';
 import 'package:save_me/utils/constants/colors_code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -72,7 +75,13 @@ class _SaveMeState extends State<SaveMe> {
           onSurface: Colors.black,
         ),
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
+      routes: {
+        "/splash" : (_) =>  const SplashScreen(),
+        "/login" : (_) =>  const LoginScreen(),
+        "/register" : (_) =>  const RegisterScreen(),
+        "/home" : (_) =>  const HomeScreen(),
+      },
     );
   }
 }

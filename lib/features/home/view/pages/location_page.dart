@@ -1,10 +1,10 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
-import 'package:save_me/main.dart';
 
 import '../../../../data/api_client.dart';
 import '../../../../utils/constants/colors_code.dart';
@@ -28,7 +28,8 @@ class _LocationPageState extends State<LocationPage> {
   String locationName = "";
   double latitude = 51.507769;
   double longitude = 7.6350688;
-
+  double userlatitude = 51.507769;
+  double userlongitude = 7.6350688;
   CameraPosition? cameraPosition;
   GoogleMapController? mapController;
   String location = Language.instance.txtHintReturnLocation();
@@ -46,20 +47,16 @@ class _LocationPageState extends State<LocationPage> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final userData = snapshot.data as User?;
-                locationController =TextEditingController(text: userData?.location?.name);
-                latitude = userData!.location!.latitude!;
-                longitude = userData!.location!.longitude!;
+                locationController = TextEditingController(text: userData?.location?.name);
+                userlatitude = userData!.location!.latitude!;
+                userlongitude = userData.location!.longitude!;
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       Language.instance.txtReturnLocation(),
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                          fontWeight: FontWeight.normal,
-                          color: ColorsCode.grayColor100),
+                      style: TextStyle(fontSize: 16, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
                     ),
                     const SizedBox(
                       height: 8,
@@ -78,8 +75,7 @@ class _LocationPageState extends State<LocationPage> {
                             horizontal: 9,
                           ),
                           prefixIcon: const Padding(
-                            padding: EdgeInsets.only(
-                                left: 0.0, top: 3, bottom: 3, right: 8),
+                            padding: EdgeInsets.only(left: 0.0, top: 3, bottom: 3, right: 8),
                             child: Icon(
                               Icons.my_location_outlined,
                               size: 24,
@@ -95,7 +91,7 @@ class _LocationPageState extends State<LocationPage> {
                               borderSide: BorderSide(
                             color: Colors.purple.shade100,
                           )),
-                          hintText:Language.instance.txtHintLocation(),
+                          hintText: Language.instance.txtHintLocation(),
                           hintStyle: TextStyle(
                             fontSize: 14,
                             fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -106,8 +102,7 @@ class _LocationPageState extends State<LocationPage> {
                         countries: const ["eg", "de"],
                         isLatLngRequired: true,
                         getPlaceDetailWithLatLng: (Prediction prediction) {
-                          if (prediction.lat != null &&
-                              prediction.lng != null) {
+                          if (prediction.lat != null && prediction.lng != null) {
                             latitude = double.parse(prediction.lat!);
                             longitude = double.parse(prediction.lng!);
                           }
@@ -117,8 +112,7 @@ class _LocationPageState extends State<LocationPage> {
                           // Handle the location details directly in the itemClick callback
                           locationName = prediction.description ?? "";
                           locationController.text = locationName;
-                          locationController.selection =
-                              TextSelection.fromPosition(
+                          locationController.selection = TextSelection.fromPosition(
                             TextPosition(offset: locationName.length),
                           );
                         },
@@ -129,11 +123,7 @@ class _LocationPageState extends State<LocationPage> {
                     ),
                     Text(
                       Language.instance.txtDragLocation(),
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: Fonts.getFontFamilyTitillRegular(),
-                          fontWeight: FontWeight.normal,
-                          color: ColorsCode.grayColor100),
+                      style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
                     ),
                     const SizedBox(
                       height: 24,
@@ -152,40 +142,28 @@ class _LocationPageState extends State<LocationPage> {
                                   tilt: 0,
                                   bearing: 0,
                                 ),
-                                onTap: (pos){
+                                onTap: (pos) {
                                   print("onTap: $pos");
-                                  setState(() {
-                                    latitude = pos.latitude;
-                                        longitude = pos.longitude;
-                                  });
-                                } ,
-                                mapType: MapType.normal,
+                                  latitude = pos.latitude;
+                                  longitude = pos.longitude;
+                                  log(latitude.toString());
+                                  setState(() {});
+                                },
+                                mapType: MapType.terrain,
                                 zoomGesturesEnabled: true,
-                                // onMapCreated: (controller) {
-                                //   setState(() {
-                                //     mapController = controller;
-                                //   });
-                                // },
-                                // onCameraMove: (CameraPosition position) {
-                                //   cameraPosition = position;
-                                // },
-                                //when map drag stops
-                                // onCameraIdle: () async {
-                                //   List<Placemark> placeMarks =
-                                //       await placemarkFromCoordinates(
-                                //           cameraPosition!.target.latitude,
-                                //           cameraPosition!.target.longitude);
-                                //   //get place name from lat and lang
-                                //   setState(() {
-                                //     location =
-                                //         "${placeMarks.first.administrativeArea}, ${placeMarks.first.street}";
-                                //     locationController.text = location;
-                                //   });
-                                // },
-                                markers:  {
-                                   Marker(
+                                onMapCreated: (controller) {
+                                  setState(() {
+                                    mapController = controller;
+                                  });
+                                },
+                                onCameraMove: (CameraPosition position) {
+                                  cameraPosition = position;
+                                },
+
+                                markers: {
+                                  Marker(
                                     markerId: MarkerId("1"),
-                                    icon:BitmapDescriptor.defaultMarker,
+                                    icon: BitmapDescriptor.defaultMarker,
                                     position: LatLng(latitude, longitude),
                                   ),
                                 },
@@ -200,7 +178,6 @@ class _LocationPageState extends State<LocationPage> {
                                 },
                               ),
                             ),
-
                           ],
                         ),
                       ),
@@ -230,8 +207,7 @@ class _LocationPageState extends State<LocationPage> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
-                                  fontFamily:
-                                      Fonts.getFontFamilyTitillSemiBold(),
+                                  fontFamily: Fonts.getFontFamilyTitillSemiBold(),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -258,8 +234,7 @@ class _LocationPageState extends State<LocationPage> {
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
-                                  fontFamily:
-                                      Fonts.getFontFamilyTitillSemiBold(),
+                                  fontFamily: Fonts.getFontFamilyTitillSemiBold(),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

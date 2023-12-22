@@ -22,9 +22,9 @@ class ItemCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => InfoScreen(
-                    profileInfo: profileInfo,
-                  ),
+            builder: (context) => InfoScreen(
+              profileInfo: profileInfo,
+            ),
           ),
         );
       },
@@ -51,22 +51,20 @@ class ItemCard extends StatelessWidget {
                       height: 26,
                     ),
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(4.0),
-                      child:
-                      profileInfo.profileType == "ITEM" ?
-                      SvgPicture.asset(
-                        'assets/images/Item.svg',
-                        width: 135,
-                        height: 145,
-                        fit: BoxFit.cover,
-                      )
-                          :    Image.network(
-                        profileInfo.photoUrl!,
-                        width: 135,
-                        height: 145,
-                        fit: BoxFit.cover,
-                      )
-                    ),
+                        borderRadius: BorderRadius.circular(4.0),
+                        child: profileInfo.profileType == "ITEM" || profileInfo.photoUrl == "null"
+                            ? SvgPicture.asset(
+                                'assets/images/Item.svg',
+                                width: 115,
+                                height: 135,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                profileInfo.photoUrl! ?? "",
+                                width: 135,
+                                height: 145,
+                                fit: BoxFit.cover,
+                              )),
                     const SizedBox(
                       height: 6,
                     ),
@@ -82,8 +80,7 @@ class ItemCard extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                      Language.instance.txtCreateData() +
-                          profileInfo.createdDate!,
+                      Language.instance.txtCreateData() + profileInfo.createdDate!,
                       style: TextStyle(
                         color: ColorsCode.grayColor100,
                         fontSize: 10,
@@ -107,7 +104,7 @@ class ItemCard extends StatelessWidget {
                 child: Center(
                   child: Text(
                     profileInfo.profileType!,
-                    style:  TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),

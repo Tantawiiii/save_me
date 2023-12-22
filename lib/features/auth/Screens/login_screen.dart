@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
-import '../../../utils/constants/colors_code.dart';
 import '../../../utils/strings/Language.dart';
 import '../widget/login_form.dart';
 
@@ -110,42 +109,27 @@ class _LoginScreenState extends State<LoginScreen> {
               onSelected: (String value) {
                 // Show loading indicator
                 setState(() {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    // Prevent dismissing the dialog by tapping outside
-                    builder: (BuildContext context) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  );
                   // Handle item selection
                   if (value == 'English') {
                     setState(() {
                       changeLanguage("en");
                     });
-
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => super.widget));
                   } else if (value == 'Deutsch') {
                     // Handle icon2 selection
                     setState(() {
                       changeLanguage("de");
-
                     });
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => super.widget));
                   }
-
                 });
-                // Simulate an asynchronous operation
-                Future.delayed(const Duration(milliseconds: 1000), () {
-                  // Close the loading indicator dialog
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                  );
 
-                });
               },
               icon: Padding(
                 padding: const EdgeInsets.only(right: 10.0),
@@ -153,6 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ],
+          leading: null,
         ),
         body: const Center(
           child: LoginForm(),

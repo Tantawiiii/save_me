@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:ui' as ui;
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -12,12 +12,10 @@ import 'package:save_me/utils/constants/fonts.dart';
 import 'package:save_me/utils/strings/Language.dart';
 import 'package:share_plus/share_plus.dart';
 
-
-
 GlobalKey globalKey = GlobalKey();
+
 void shareDialog(context,
     {required Function onPressed, required String profileId}) {
-
   showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -40,7 +38,7 @@ void shareDialog(context,
                 height: 12,
               ),
               Text(
-               Language.instance.txtShareQrHint(),
+                Language.instance.txtShareQrHint(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14,
@@ -72,15 +70,12 @@ void shareDialog(context,
                 children: [
                   InkWell(
                     onTap: () {
-                      Share.share(
-                          Endpoints.publicProfileFrontEnd(profileId),
+                      Share.share(Endpoints.publicProfileFrontEnd(profileId),
                           subject: Language.instance.txtShareQrCheck());
 
                       if (Platform.isIOS || Platform.isAndroid) {
-                        Fluttertoast.showToast(
-                            msg: "Profile copied to Share");
+                        Fluttertoast.showToast(msg: "Profile copied to Share");
                       }
-
                     },
                     child: SvgPicture.asset(
                       'assets/images/icons/share.svg',
@@ -93,7 +88,7 @@ void shareDialog(context,
                   ),
                   InkWell(
                     onTap: () {
-
+                      _captureAndSavePng();
                     },
                     child: SvgPicture.asset(
                       'assets/images/icons/download.svg',
@@ -127,24 +122,59 @@ void shareDialog(context,
       });
 }
 
-Future<void> _captureAndSave() async {
-  try {
+String data = '';
+bool dirExists = false;
+dynamic externalDir = '/storage/emulated/0/Download/Qr_code';
 
+Future<void> _captureAndSavePng() async {
+  try {
     RenderRepaintBoundary boundary =
-    globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    ui.Image image = await boundary.toImage();
-    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+        globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    var image = await boundary.toImage(pixelRatio: 3.0);
+
+    //Drawing White Background because Qr Code is Black
+    final whitePaint = Paint()..color = Colors.white;
+    final recorder = PictureRecorder();
+    final canvas = Canvas(recorder,
+        Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()));
+    canvas.drawRect(
+        Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
+        whitePaint);
+    canvas.drawImage(image, Offset.zero, Paint());
+    final picture = recorder.endRecording();
+    final img = await picture.toImage(image.width, image.height);
+    ByteData? byteData = await img.toByteData(format: ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();
 
-    //await GallerySaver.saveImage(pngBytes, albumName: 'YourAlbumName');
-
-
-    if (Platform.isIOS || Platform.isAndroid ) {
-      Fluttertoast.showToast(
-          msg: "QR code Image Downloaded");
+    //Check for duplicate file name to avoid Override
+    String fileName = 'qr_code_saveMe';
+    int i = 1;
+    while (await File('$externalDir/$fileName.png').exists()) {
+      fileName = 'qr_code_$i';
+      i++;
     }
 
+    // Check if Directory Path exists or not
+    dirExists = await File(externalDir).exists();
+    //if not then create the path
+    if (!dirExists) {
+      await Directory(externalDir).create(recursive: true);
+      dirExists = true;
+    }
+
+    final file = await File('$externalDir/$fileName.png').create();
+    await file.writeAsBytes(pngBytes);
+
+    if (Platform.isIOS || Platform.isAndroid) {
+      Fluttertoast.showToast(
+        msg: Language.instance.txtDeleteMsg(),
+      );
+    }
   } catch (e) {
-    print(e);
+    if (Platform.isIOS || Platform.isAndroid) {
+      Fluttertoast.showToast(
+        msg: Language.instance.txtDeleteErrorMsg(),
+      );
+    }
   }
 }

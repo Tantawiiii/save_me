@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
-import '../../../utils/constants/colors_code.dart';
 import 'package:auto_route/auto_route.dart';
 import '../../../utils/strings/Language.dart';
 import '../widget/register_form.dart';
@@ -134,6 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
           ],
+          leading: null,
           //iconTheme: const IconThemeData(color: Colors.black),
         ),
         body: const RegisterForm(),
