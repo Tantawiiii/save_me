@@ -52,15 +52,15 @@ class ItemCard extends StatelessWidget {
                     ),
                     ClipRRect(
                         borderRadius: BorderRadius.circular(4.0),
-                        child: profileInfo.profileType == "ITEM" || profileInfo.photoUrl == null
+                        child: profileInfo.profileType == "ITEM" || profileInfo.photoUrl == "null"
                             ? SvgPicture.asset(
                                 'assets/images/Item.svg',
-                                width: 135,
-                                height: 145,
+                                width: 115,
+                                height: 135,
                                 fit: BoxFit.cover,
                               )
                             : Image.network(
-                                profileInfo.photoUrl!,
+                                profileInfo.photoUrl! ?? "",
                                 width: 135,
                                 height: 145,
                                 fit: BoxFit.cover,

@@ -93,6 +93,7 @@ flutter:
     - assets/images/black_logo.svg
     - assets/images/black_icon.svg
 
+
   fonts:
      - family: cairo
        fonts:

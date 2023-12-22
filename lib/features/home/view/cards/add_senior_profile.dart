@@ -57,6 +57,11 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
   bool isCompleted = false;
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
 
+
+  String locationName = "";
+  double latitude = 0.0;
+  double longitude = 0.0;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -142,7 +147,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                               _currentStep == getSteps().length - 1;
                           if (isLastStep) {
                             setState(() => isCompleted = true);
-                            print('Success added to state Senior');
+
                             _addSeniorProfile();
                           } else {
                             setState(() => _currentStep += 1);
@@ -895,7 +900,9 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                   ),
                   inputDecoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 4),
+                      vertical: 15,
+                      horizontal: 6,
+                    ),
                     prefixIcon: const Padding(
                       padding: EdgeInsets.only(
                           left: 0.0, top: 3, bottom: 3, right: 8),
@@ -925,16 +932,20 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                   countries: const ["eg", "de"],
                   isLatLngRequired: true,
                   getPlaceDetailWithLatLng: (Prediction prediction) {
-                    if (kDebugMode) {
-                      print("placeDetails${prediction.lng}");
+                    if (prediction.lat != null && prediction.lng != null) {
+                      latitude = double.parse(prediction.lat!);
+                      longitude = double.parse(prediction.lng!);
                     }
                   },
                   itemClick: (Prediction prediction) {
-                    _insituLocationController.text = prediction.description!;
+                    // TODO: Error Location Lat , Long
+                    // Handle the location details directly in the itemClick callback
+                    locationName = prediction.description ?? "";
+                    _insituLocationController.text = locationName;
                     _insituLocationController.selection =
-                        TextSelection.fromPosition(TextPosition(
-                            offset: prediction.description!.length));
-
+                        TextSelection.fromPosition(
+                          TextPosition(offset: locationName.length),
+                        );
                   },
                 ),
               ),
@@ -1080,7 +1091,6 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
 
   void _addSeniorProfile() async {
     // Implement your Profile logic here
-    final photo = "";
     final name = _nameController.text;
     final birthday = _birthdayController.text;
     final age = _ageController.text;
@@ -1094,27 +1104,9 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
     final diet = _dietController.text;
     final diseases = _diseasesController.text;
     final addInfo = _addInfoController.text;
-    final location = _insituLocationController.text;
     final instituteName = _insituNameController.text;
     final careAide = _careAideController.text;
     final institutePhone = _insituPhoneController.text;
-
-    if (kDebugMode) {
-      print('photo: $photo');
-      print('Name: $name');
-      print('birthday: $birthday');
-      print('age: $age');
-      print('weight: $weight');
-      print('height: $height');
-      print('character: $character');
-      print('behavior: $behavior');
-      print('specialChar: $specialChar');
-      print('medication: $medication');
-      print('allergies: $allergies');
-      print('diet: $diet');
-      print('diseases: $diseases');
-      print('addInfo: $addInfo');
-    }
 
     final profileInfo = ProfileInfo(
         profileType: "SENIOR",
@@ -1131,7 +1123,17 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
         allergies: allergies,
         diet: diet,
         diseases: diseases,
-        additionalInformation: addInfo
+        additionalInformation: addInfo,
+        institution: Institution(
+        nameIn: instituteName,
+      aidNameIn: careAide,
+      aidPhoneNumberIn: institutePhone,
+      locationIn: Location(
+        nameLocation: locationName,
+        latitude: latitude,
+        longitude: longitude,
+      ),
+    ),
     );
 
 

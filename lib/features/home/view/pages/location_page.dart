@@ -2,11 +2,9 @@ import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
-import 'package:save_me/main.dart';
 
 import '../../../../data/api_client.dart';
 import '../../../../utils/constants/colors_code.dart';
@@ -51,7 +49,7 @@ class _LocationPageState extends State<LocationPage> {
                 final userData = snapshot.data as User?;
                 locationController = TextEditingController(text: userData?.location?.name);
                 userlatitude = userData!.location!.latitude!;
-                userlongitude = userData!.location!.longitude!;
+                userlongitude = userData.location!.longitude!;
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,15 +159,7 @@ class _LocationPageState extends State<LocationPage> {
                                 onCameraMove: (CameraPosition position) {
                                   cameraPosition = position;
                                 },
-                                // when map drag stops
-                                // onCameraIdle: () async {
-                                //   List<Placemark> placeMarks = await placemarkFromCoordinates(cameraPosition!.target.latitude, cameraPosition!.target.longitude);
-                                //   //get place name from lat and lang
-                                //   setState(() {
-                                //     location = "${placeMarks.first.administrativeArea}, ${placeMarks.first.street}";
-                                //     locationController.text = location;
-                                //   });
-                                // },
+
                                 markers: {
                                   Marker(
                                     markerId: MarkerId("1"),

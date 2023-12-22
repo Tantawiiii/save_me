@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class ProfileInfo {
   final String? id;
   final String? profileType;
@@ -17,7 +15,7 @@ class ProfileInfo {
   final String? specialCharacteristics;
   final String? diet;
   final String? additionalInformation;
-  final String? institution;
+  final Institution? institution;
   final String? allergies;
   final String? diseases;
   final String? medicines;
@@ -25,6 +23,7 @@ class ProfileInfo {
   final bool? neutered;
 
   final String? createdDate;
+  final String? message;
 
   ProfileInfo({
     this.id,
@@ -50,6 +49,7 @@ class ProfileInfo {
     this.race,
     this.neutered,
     this.createdDate,
+    this.message,
   });
 
   factory ProfileInfo.fromJson(Map<String?, dynamic> json) {
@@ -71,16 +71,19 @@ class ProfileInfo {
       specialCharacteristics: json['specialCharacteristics'].toString(),
       diet: json['diet'].toString(),
       additionalInformation: json['additionalInformation'].toString(),
-      institution: json['institution'].toString(),
+      institution:json['institution'] != null
+          ? Institution.fromJson(json['institution']!)
+          : null,
       allergies: json['allergies'].toString(),
       diseases: json['diseases'].toString(),
       medicines: json['medicines'].toString(),
       race: json['race'].toString(),
+      message: json['message'].toString(),
       neutered: json['neutered'] as bool?,
     );
   }
 
-  Map<String?, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'createdAt': createdDate,
@@ -99,12 +102,75 @@ class ProfileInfo {
       'specialCharacteristics': specialCharacteristics,
       'diet': diet,
       'additionalInformation': additionalInformation,
-      'institution': institution,
+      'institution': institution?.toJson(),
       'allergies': allergies,
       'diseases': diseases,
       'medicines': medicines,
       'race': race,
       'neutered': neutered,
+      'message': message,
     };
+  }
+}
+
+class Institution {
+  final String? nameIn;
+  final String? websiteIn;
+  final String? aidNameIn;
+  final String? aidPhoneNumberIn;
+  final Location? locationIn;
+
+  Institution({
+    this.nameIn,
+    this.websiteIn,
+    this.aidNameIn,
+    this.locationIn,
+    this.aidPhoneNumberIn,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': nameIn,
+      'website': websiteIn,
+      'aidName': aidNameIn,
+      'aidPhoneNumber': aidPhoneNumberIn,
+      'location': locationIn?.toJson(),
+    };
+  }
+
+  factory Institution.fromJson(Map<String, dynamic> json) {
+    return Institution(
+      nameIn: json['name'].toString(),
+      websiteIn: json['website'].toString(),
+      aidNameIn: json['aidName'].toString(),
+      aidPhoneNumberIn: json['aidPhoneNumber'].toString(),
+      locationIn: json['location'] != null
+          ? Location.fromJson(json['location']!)
+          : null,
+    );
+  }
+}
+
+class Location {
+  final String? nameLocation;
+  final double? latitude;
+  final double? longitude;
+
+  Location({this.nameLocation, this.latitude, this.longitude});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': nameLocation,
+      'latitude': latitude,
+      'longitude': longitude,
+    };
+  }
+
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      nameLocation: json['name'].toString(),
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+    );
   }
 }

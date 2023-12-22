@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:save_me/features/home/models/profile_info.dart';
 import 'package:save_me/utils/strings/Language.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../data/api_client.dart';
 import '../../../../utils/constants/colors_code.dart';
@@ -22,9 +21,10 @@ class PublicProfile extends StatefulWidget {
 }
 
 class _PublicProfileState extends State<PublicProfile> {
-  static const LatLng _kMapCenter = LatLng(29.9674624, 31.3154334);
-
-  static const CameraPosition _kInitialPosition = CameraPosition(target: _kMapCenter, zoom: 12.0, tilt: 0, bearing: 0);
+  String locationName = "";
+  double latitude = 51.507769;
+  double longitude = 7.6350688;
+  GoogleMapController? _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,12 @@ class _PublicProfileState extends State<PublicProfile> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final userData = snapshot.data as User?;
+              latitude = userData!.location!.latitude!;
+              longitude = userData!.location!.longitude!;
               return Card(
                 elevation: 0,
-                margin: const EdgeInsets.only(top: 24, right: 20, left: 20, bottom: 20),
+                margin: const EdgeInsets.only(
+                    top: 24, right: 20, left: 20, bottom: 20),
                 child: SizedBox(
                   width: double.infinity,
                   height: double.infinity,
@@ -76,33 +79,38 @@ class _PublicProfileState extends State<PublicProfile> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CircleAvatar(
-                                  radius: 40,
-                                  backgroundImage: AssetImage(
-                                      'assets/images/image.png'),
-                                ),
-                                const SizedBox(height: 16,),
-                                Text(
-                                  userData != null
-                                      ? userData!.name
-                                      : Language.instance.txtIsEmptyUserName(),
-                                  style: TextStyle(
-                                    fontFamily:
-                                    Fonts.getFontFamilyTitillSemiBold(),
-                                    fontSize: 16,
+                                  radius: 45,
+                                  backgroundImage: NetworkImage(
+                                    userData!.photoUrl!,
                                   ),
                                 ),
                                 const SizedBox(
+                                  height: 14,
+                                ),
+                                if (userData.name! != "" &&
+                                    userData.name != "null")
+                                  Text(
+                                    "${userData.name}",
+                                    style: TextStyle(
+                                      fontFamily:
+                                          Fonts.getFontFamilyTitillSemiBold(),
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                const SizedBox(
                                   height: 8,
                                 ),
-                                Text(
-                                  userData!.contactInfo ?? "",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontFamily:
-                                      Fonts.getFontFamilyTitillRegular(),
-                                      fontSize: 12,
-                                      color: Colors.black),
-                                ),
+                                if (widget.profileInfo.message != "" &&
+                                    widget.profileInfo.message != "null")
+                                  Text(
+                                    "${widget.profileInfo.message}",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontFamily:
+                                            Fonts.getFontFamilyTitillRegular(),
+                                        fontSize: 12,
+                                        color: Colors.black),
+                                  ),
                               ],
                             ),
                           ),
@@ -129,25 +137,25 @@ class _PublicProfileState extends State<PublicProfile> {
                                     const SizedBox(
                                       width: 6,
                                     ),
-                                    Flexible(
-                                      child: Text(
-                                        userData != null
-                                            ? userData!.phoneNumber
-                                            : Language.instance
-                                            .txtHintPhoneNumber(),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: Fonts
-                                                .getFontFamilyTitillRegular(),
-                                            color: Colors.black),
+                                    if (userData.phoneNumber! != "" &&
+                                        userData.phoneNumber != "null")
+                                      Flexible(
+                                        child: Text(
+                                          "${userData.phoneNumber}",
+                                          textAlign: TextAlign.center,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular(),
+                                              fontSize: 12,
+                                              color: Colors.black),
+                                        ),
                                       ),
-                                    ),
                                   ],
                                 ),
                                 const SizedBox(
-                                  height: 16,
+                                  height: 8,
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -157,21 +165,20 @@ class _PublicProfileState extends State<PublicProfile> {
                                     const SizedBox(
                                       width: 6,
                                     ),
-                                    Flexible(
-                                      child: Text(
-                                        userData != null
-                                            ? userData?.location!.name
-                                            : Language.instance
-                                            .txtHintLocation(),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: Fonts
-                                                .getFontFamilyTitillRegular(),
-                                            color: Colors.black),
+                                    if (userData.location!.name != "" &&
+                                        userData.location!.name != "null")
+                                      Flexible(
+                                        child: Text(
+                                          "${userData.location!.name}",
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular(),
+                                              color: Colors.black),
+                                        ),
                                       ),
-                                    ),
                                   ],
                                 ),
                                 const SizedBox(
@@ -183,9 +190,32 @@ class _PublicProfileState extends State<PublicProfile> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  child: const GoogleMap(
-                                    mapType: MapType.hybrid,
-                                    initialCameraPosition: _kInitialPosition,
+                                  child: GoogleMap(
+                                    mapType: MapType.normal,
+                                    compassEnabled: true,
+                                    mapToolbarEnabled: true,
+                                    zoomGesturesEnabled: true,
+                                    zoomControlsEnabled: false,
+                                    myLocationEnabled: true,
+                                    initialCameraPosition: CameraPosition(
+                                      target: LatLng(latitude, longitude),
+                                      zoom: 14.0,
+                                      tilt: 0,
+                                      bearing: 0,
+                                    ),
+                                    onMapCreated: (controller) {
+                                      setState(() {
+                                        _controller = controller;
+                                      });
+                                    },
+                                    markers: {
+                                      Marker(
+                                        markerId: MarkerId("1"),
+                                        icon: BitmapDescriptor.defaultMarker,
+                                        visible: true,
+                                        position: LatLng(latitude, longitude),
+                                      ),
+                                    },
                                   ),
                                 ),
                                 const SizedBox(
@@ -199,21 +229,20 @@ class _PublicProfileState extends State<PublicProfile> {
                                     const SizedBox(
                                       width: 6,
                                     ),
-                                    Flexible(
-                                      child: Text(
-                                        userData != null
-                                            ? userData!.email
-                                            : Language.instance
-                                            .txtHintLocation(),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontFamily: Fonts
-                                                .getFontFamilyTitillRegular(),
-                                            color: Colors.black),
+                                    if (userData.contactInfo != "" &&
+                                        userData.contactInfo != "null")
+                                      Flexible(
+                                        child: Text(
+                                          userData.contactInfo!,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular(),
+                                              color: Colors.black),
+                                        ),
                                       ),
-                                    ),
                                   ],
                                 ),
                               ],
@@ -227,7 +256,8 @@ class _PublicProfileState extends State<PublicProfile> {
                       Card(
                         elevation: 2,
                         child: Container(
-                          padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                          padding: const EdgeInsets.only(
+                              left: 15, right: 15, bottom: 15),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
                           ),
@@ -239,16 +269,34 @@ class _PublicProfileState extends State<PublicProfile> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.asset(
-                                    "assets/images/kid_circ.png",
+                                  const SizedBox(
+                                    height: 24,
                                   ),
-                                  Text(
-                                    Language.instance.txtHey() + widget.profileInfo.name!,
-                                    style: TextStyle(
-                                      fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                                      fontSize: 16,
+                                  if (widget.profileInfo.photoUrl != "" &&
+                                      widget.profileInfo.photoUrl != null)
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(4.0),
+                                      child: CircleAvatar(
+                                        radius: 50,
+                                        backgroundImage: NetworkImage(
+                                          widget.profileInfo.photoUrl!,
+                                        ),
+                                      ),
                                     ),
+                                  const SizedBox(
+                                    height: 24,
                                   ),
+                                  if (widget.profileInfo.name! != "" &&
+                                      widget.profileInfo.name != "null")
+                                    Text(
+                                      Language.instance.txtHey() +
+                                          widget.profileInfo.name!,
+                                      style: TextStyle(
+                                        fontFamily:
+                                            Fonts.getFontFamilyTitillSemiBold(),
+                                        fontSize: 16,
+                                      ),
+                                    ),
                                   const SizedBox(
                                     height: 18,
                                   ),
@@ -257,42 +305,86 @@ class _PublicProfileState extends State<PublicProfile> {
                                       alignment: WrapAlignment.center,
                                       spacing: 15,
                                       children: [
-                                        Bounce(
-                                          onPressed: () {},
-                                          duration: const Duration(milliseconds: 400),
-                                          child: Chip(
-                                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                                            label: Text(widget.profileInfo.age! + Language.instance.txtYear()),
-                                            avatar: SvgPicture.asset("assets/images/icons/bold.dot.svg"),
+                                        if (widget.profileInfo.age! != "" &&
+                                            widget.profileInfo.age != "null")
+                                          Bounce(
+                                            onPressed: () {},
+                                            duration: const Duration(
+                                                milliseconds: 400),
+                                            child: Chip(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20))),
+                                              label: Text(
+                                                widget.profileInfo.age! +
+                                                    Language.instance.txtYear(),
+                                              ),
+                                              avatar: SvgPicture.asset(
+                                                  "assets/images/icons/bold.dot.svg"),
+                                            ),
                                           ),
-                                        ),
-                                        Bounce(
-                                          onPressed: () {},
-                                          duration: const Duration(milliseconds: 400),
-                                          child: Chip(
-                                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                                            label: Text(widget.profileInfo.birthdate!),
-                                            avatar: SvgPicture.asset("assets/images/icons/bold.dot.svg"),
+                                        if (widget.profileInfo.birthdate! !=
+                                                "" &&
+                                            widget.profileInfo.birthdate !=
+                                                "null")
+                                          Bounce(
+                                            onPressed: () {},
+                                            duration: const Duration(
+                                                milliseconds: 400),
+                                            child: Chip(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20))),
+                                              label: Text(widget
+                                                  .profileInfo.birthdate!),
+                                              avatar: SvgPicture.asset(
+                                                  "assets/images/icons/bold.dot.svg"),
+                                            ),
                                           ),
-                                        ),
-                                        Bounce(
-                                          onPressed: () {},
-                                          duration: const Duration(milliseconds: 400),
-                                          child: Chip(
-                                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                                            label: Text("Cm ${widget.profileInfo.height}"),
-                                            avatar: SvgPicture.asset("assets/images/icons/bold.dot.svg"),
+                                        if (widget.profileInfo.height! != "" &&
+                                            widget.profileInfo.height != "null")
+                                          Bounce(
+                                            onPressed: () {},
+                                            duration: const Duration(
+                                                milliseconds: 400),
+                                            child: Chip(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20))),
+                                              label: Text(
+                                                  "${widget.profileInfo.height} Cm"),
+                                              avatar: SvgPicture.asset(
+                                                  "assets/images/icons/bold.dot.svg"),
+                                            ),
                                           ),
-                                        ),
-                                        Bounce(
-                                          onPressed: () {},
-                                          duration: const Duration(milliseconds: 400),
-                                          child: Chip(
-                                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                                            label: Text("Kg ${widget.profileInfo.weight}"),
-                                            avatar: SvgPicture.asset("assets/images/icons/bold.dot.svg"),
-                                          ),
-                                        )
+                                        if (widget.profileInfo.weight! != "" &&
+                                            widget.profileInfo.weight != "null")
+                                          Bounce(
+                                            onPressed: () {},
+                                            duration: const Duration(
+                                                milliseconds: 400),
+                                            child: Chip(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20))),
+                                              label: Text(
+                                                  "${widget.profileInfo.weight} Kg"),
+                                              avatar: SvgPicture.asset(
+                                                  "assets/images/icons/bold.dot.svg"),
+                                            ),
+                                          )
                                       ],
                                     ),
                                   )
@@ -305,105 +397,63 @@ class _PublicProfileState extends State<PublicProfile> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  if (widget.profileInfo.characteristics! != "" && widget.profileInfo.characteristics != null)
+                                  if (widget.profileInfo.characteristics! !=
+                                          "" &&
+                                      widget.profileInfo.characteristics !=
+                                          "null")
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          Language.instance.txtCharacteristics(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                                          Language.instance
+                                              .txtCharacteristics(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
                                         ),
                                         const SizedBox(
                                           height: 8,
                                         ),
                                         Text(
                                           widget.profileInfo.characteristics!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
                                         ),
                                         const SizedBox(
                                           height: 24,
                                         ),
                                       ],
                                     ),
-                                  if (widget.profileInfo.behavior! != "" && widget.profileInfo.behavior != null)
+                                  if (widget.profileInfo.behavior! != "" &&
+                                      widget.profileInfo.behavior != "null")
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           Language.instance.txtBehavior(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
                                         ),
                                         const SizedBox(
                                           height: 8,
                                         ),
                                         Text(
                                           widget.profileInfo.behavior!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
-                                        ),
-                                        const SizedBox(
-                                          height: 24,
-                                        ),
-                                      ],
-                                    ),
-                                  if (widget.profileInfo.specialCharacteristics! != "" && widget.profileInfo.specialCharacteristics != null)
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          Language.instance.txtSpecialChar(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                                        ),
-                                        const SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text(
-                                          widget.profileInfo.specialCharacteristics!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
-                                        ),
-                                        const SizedBox(
-                                          height: 24,
-                                        ),
-                                      ],
-                                    ),
-                                  if (widget.profileInfo.allergies! != "" && widget.profileInfo.allergies != null)
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          Language.instance.txtAllergies(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                                        ),
-                                        const SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text(
-                                          widget.profileInfo.allergies!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
-                                        ),
-                                        const SizedBox(
-                                          height: 24,
-                                        ),
-                                      ],
-                                    ),
-                                  if (widget.profileInfo.diet! != "" && widget.profileInfo.diet != null)
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          Language.instance.txtDiet(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                                        ),
-                                        const SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text(
-                                          widget.profileInfo.diet!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
                                         ),
                                         const SizedBox(
                                           height: 24,
@@ -411,16 +461,111 @@ class _PublicProfileState extends State<PublicProfile> {
                                       ],
                                     ),
                                   if (widget.profileInfo
-                                      .additionalInformation! !=
-                                      "" &&
+                                              .specialCharacteristics! !=
+                                          "" &&
                                       widget.profileInfo
-                                          .additionalInformation !=
-                                          null)
+                                              .specialCharacteristics !=
+                                          "null")
                                     Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          Language.instance.txtSpecialChar(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          widget.profileInfo
+                                              .specialCharacteristics!,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
+                                        ),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                      ],
+                                    ),
+                                  if (widget.profileInfo.allergies! != "" &&
+                                      widget.profileInfo.allergies != "null")
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          Language.instance.txtAllergies(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          widget.profileInfo.allergies!,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
+                                        ),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                      ],
+                                    ),
+                                  if (widget.profileInfo.diet! != "" &&
+                                      widget.profileInfo.diet != "null")
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          Language.instance.txtDiet(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          widget.profileInfo.diet!,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
+                                        ),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                      ],
+                                    ),
+                                  if (widget.profileInfo
+                                              .additionalInformation! !=
+                                          "" &&
+                                      widget.profileInfo
+                                              .additionalInformation !=
+                                          "null")
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           Language.instance.txtAdditionInfo(),
@@ -445,24 +590,210 @@ class _PublicProfileState extends State<PublicProfile> {
                                         ),
                                       ],
                                     ),
-                                  if (widget.profileInfo.diseases! != "" && widget.profileInfo.diseases != null)
+                                  if (widget.profileInfo.diseases! != "" &&
+                                      widget.profileInfo.diseases != 'null')
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           Language.instance.txtDiseases(),
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
                                         ),
                                         const SizedBox(
                                           height: 8,
                                         ),
                                         Text(
                                           widget.profileInfo.diseases!,
-                                          style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillRegular()),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
                                         ),
                                         const SizedBox(
-                                          height: 100,
+                                          height: 24,
+                                        ),
+                                      ],
+                                    ),
+                                  if (widget.profileInfo.medicines! != "" &&
+                                      widget.profileInfo.medicines != 'null')
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          Language.instance.txtMedicines(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          widget.profileInfo.medicines!,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
+                                        ),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                      ],
+                                    ),
+                                  if (widget.profileInfo.institution
+                                              ?.locationIn!.nameLocation !=
+                                          "" &&
+                                      widget.profileInfo.institution
+                                              ?.locationIn!.nameLocation !=
+                                          null &&
+                                      widget.profileInfo.institution
+                                              ?.locationIn!.nameLocation !=
+                                          "null")
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          Language.instance.txtSeniorLocation(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          widget.profileInfo.institution
+                                                  ?.locationIn!.nameLocation ??
+                                              "",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
+                                        ),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                      ],
+                                    ),
+                                  if (widget.profileInfo.institution?.nameIn !=
+                                          "" &&
+                                      widget.profileInfo.institution?.nameIn !=
+                                          null)
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          Language.instance
+                                              .txtSeniorInstitute(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          widget.profileInfo.institution
+                                                  ?.nameIn! ??
+                                              "",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
+                                        ),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                      ],
+                                    ),
+                                  if (widget.profileInfo.institution
+                                              ?.aidNameIn !=
+                                          "" &&
+                                      widget.profileInfo.institution
+                                              ?.aidNameIn !=
+                                          null)
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          Language.instance.txtSeniorCareAide(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          widget.profileInfo.institution
+                                                  ?.aidNameIn! ??
+                                              "",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
+                                        ),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                      ],
+                                    ),
+                                  if (widget.profileInfo.institution
+                                              ?.aidPhoneNumberIn !=
+                                          "" &&
+                                      widget.profileInfo.institution
+                                              ?.aidPhoneNumberIn !=
+                                          null)
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          Language.instance
+                                              .txtSeniorCareAidePhone(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillSemiBold()),
+                                        ),
+                                        const SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                          widget.profileInfo.institution
+                                                  ?.aidPhoneNumberIn! ??
+                                              "",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: Fonts
+                                                  .getFontFamilyTitillRegular()),
+                                        ),
+                                        const SizedBox(
+                                          height: 24,
                                         ),
                                       ],
                                     ),
@@ -483,7 +814,7 @@ class _PublicProfileState extends State<PublicProfile> {
               return Text("${snapshot.error}");
             }
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black)),
             );
           }),
     );

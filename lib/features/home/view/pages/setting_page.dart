@@ -2,9 +2,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:save_me/features/auth/Screens/splashScreen.dart';
 import 'package:save_me/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -407,12 +405,7 @@ class _SettingState extends State<Setting> {
                             onTap: () {
                               // to remove an access Token and logout
                               setToken();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SplashScreen(),
-                                ),
-                              );
+                              Navigator.pushReplacementNamed(context, "/splash");
                             },
                             child:
                                 SvgPicture.asset('assets/images/Logout.svg')),

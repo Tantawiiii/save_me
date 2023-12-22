@@ -12,7 +12,6 @@ import '../../../utils/constants/fonts.dart';
 import '../../../utils/strings/Language.dart';
 import '../../home/home_screen.dart';
 import '../../widgets/loading_dialog.dart';
-import '../Screens/register_screen.dart';
 import '../utils/validation.dart';
 
 class LoginForm extends StatefulWidget {
@@ -258,12 +257,7 @@ class LoginFormState extends State<LoginForm> {
                               Bounce(
                                 duration: const Duration(milliseconds: 150),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const RegisterScreen()),
-                                  );
+                                  Navigator.pushReplacementNamed(context, "/register");
                                 },
                                 child: Text(
                                   Language.instance.txtButtonRegister(),
@@ -311,11 +305,12 @@ class LoginFormState extends State<LoginForm> {
           print('Email: $email');
           print('Password: $password');
         }
-        // String accessToken = user['access_token'];
-        Navigator.pushReplacement(
+        //Navigator.pushReplacementNamed(context, "/home");
+
+        Navigator.push(
           context,
-          MaterialPageRoute(builder:
-              (context) =>  const HomeScreen()),
+          MaterialPageRoute(
+              builder: (context) => const HomeScreen()),
         );
 
         //print('accessToken: $accessToken');

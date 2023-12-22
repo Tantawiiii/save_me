@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,18 +36,7 @@ class _ProfileState extends State<Profile> {
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
 
   // Default selected image path
-  final SvgPicture _selectedImage =
-      SvgPicture.asset('assets/images/young_man_white.svg');
-  List<Map<String, dynamic>> mySvgPaths = [
-    {"id": '1', "image": 'assets/images/young_man_white.svg'},
-    {"id": '2', "image": 'assets/images/young_man_white.svg'},
-    {"id": '3', "image": 'assets/images/young_man_white.svg'},
-    {"id": '4', "image": 'assets/images/young_man_white.svg'},
-    {"id": '5', "image": 'assets/images/young_man_white.svg'},
-    {"id": '6', "image": 'assets/images/young_man_white.svg'},
-    {"id": '7', "image": 'assets/images/young_man_white.svg'},
-    {"id": '8', "image": 'assets/images/young_man_white.svg'},
-  ];
+  String selectedValue = 'Old_man_black';
 
   // Image Picker for the new photo profile image
   File? image;
@@ -227,9 +217,7 @@ class _ProfileState extends State<Profile> {
                                     borderSide: BorderSide(
                                   color: Colors.purple.shade100,
                                 )),
-                                hintText: userData?.contactInfo != "null"
-                                    ? userData!.contactInfo
-                                    : Language.instance.txtAddInfo(),
+                                hintText: Language.instance.txtAddInfo(),
                                 hintStyle: TextStyle(
                                   fontSize: 16,
                                   fontFamily:
@@ -259,30 +247,60 @@ class _ProfileState extends State<Profile> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                // DropdownButton(
-                                //         isDense: true,
-                                //         value: _selectedImage,
-                                //         onChanged: null,
-                                //         items: [
-                                //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
-                                //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
-                                //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
-                                //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
-                                //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
-                                //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
-                                //           DropdownMenuItem(child: SvgPicture.asset('assets/images/young_man_white.svg'),),
-                                //         ],
-                                //       ),
-                                //
-                                // Text(
-                                //   'OR',
-                                //   style: TextStyle(
-                                //     fontSize: 16,
-                                //     fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                                //     fontWeight: FontWeight.normal,
-                                //     color: ColorsCode.grayColor100,
-                                //   ),
-                                // ),
+                                DropdownButton<String>(
+                                  elevation: 0,
+                                  value: selectedValue,
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      selectedValue = value!;
+                                    });
+                                  },
+                                  icon: const Padding(
+                                    padding: EdgeInsets.all(6.0),
+                                    child: Icon(
+                                        Icons.keyboard_arrow_down_outlined),
+                                  ),
+                                  iconSize: 24,
+                                  dropdownColor: Colors.white,
+                                  items: [
+                                    'Old_man_black',
+                                    'Old_man_white',
+                                    'Old_woman_black',
+                                    'Old_woman_white',
+                                    'young_man_Black',
+                                    'young_man_white',
+                                    'young_woman_black',
+                                    'young_woman_white',
+                                  ].map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/icons/$value.png',
+                                            width: 70,
+                                            // Adjust the size as needed
+                                            height: 70,
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                                Text(
+                                  'OR',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: Fonts.getFontFamilyTitillBold(),
+                                    fontWeight: FontWeight.normal,
+                                    color: ColorsCode.grayColor100,
+                                  ),
+                                ),
                                 Column(
                                   children: <Widget>[
                                     GestureDetector(
@@ -298,17 +316,13 @@ class _ProfileState extends State<Profile> {
                                               Radius.circular(4)),
                                         ),
                                         child: image == null
-                                            ? userData?.photoUrl == null
+                                            ? userData?.photoUrl == "null"
                                                 ? Center(
                                                     child: SvgPicture.asset(
                                                         'assets/images/upload_img.svg'),
                                                   )
-                                                : CircleAvatar(
-                                                    radius: 50,
-                                                    backgroundImage:
-                                                        NetworkImage(
-                                                      userData!.photoUrl!,
-                                                    ),
+                                                : Image.network(
+                                                    userData!.photoUrl!,
                                                   )
                                             : Image.file(
                                                 image!,
@@ -338,21 +352,21 @@ class _ProfileState extends State<Profile> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Expanded(
-                                child: SizedBox(
+                              Bounce(
+                                duration: const Duration(milliseconds: 300),
+                                onPressed: () {
+                                  updateDataInProfile(userData!);
+                                },
+                                child: Container(
                                   height: 56,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-
-                                      updateDataInProfile(userData!);
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.black,
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                    ),
+                                  width: 215,
+                                  decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    color: Colors.black,
+                                    shape: BoxShape.rectangle,
+                                  ),
+                                  child: Center(
                                     child: Text(
                                       Language.instance.txtUpdate(),
                                       style: TextStyle(
@@ -369,34 +383,28 @@ class _ProfileState extends State<Profile> {
                               const SizedBox(
                                 width: 2,
                               ),
-                              Expanded(
-                                child: SizedBox(
+                              Bounce(
+                                duration: const Duration(milliseconds: 300),
+                                onPressed: () {
+                                  setState(() {
+                                    _phoneNumController.toString();
+                                  });
+
+                                  if (Platform.isIOS || Platform.isAndroid) {
+                                    Fluttertoast.showToast(
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        msg: Language.instance.txtResetMsg());
+                                  }
+                                },
+                                child: Container(
                                   height: 56,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      // _phoneNumController.clear();
-                                      // _nameController.clear();
-                                      // _addInfoController.clear();
-
-                                      setState(() {
-                                        _phoneNumController.toString();
-                                      });
-
-                                      if (Platform.isIOS ||
-                                          Platform.isAndroid) {
-                                        Fluttertoast.showToast(
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            msg: Language.instance
-                                                .txtResetMsg());
-                                      }
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white,
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                    ),
+                                  decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    color: Colors.white,
+                                    shape: BoxShape.rectangle,
+                                  ),
+                                  child: Center(
                                     child: Text(
                                       Language.instance.txtRestCancel(),
                                       style: TextStyle(
@@ -410,10 +418,10 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 46,
-                              ),
                             ],
+                          ),
+                          const SizedBox(
+                            height: 46,
                           ),
                         ],
                       );
@@ -445,17 +453,12 @@ class _ProfileState extends State<Profile> {
 
     if (updatedUser != null) {
       if (image != null) {
-        await ApiClient().uploadUserImage(
-          image: image!,
-        ).showCustomProgressDialog(context);
-      } else {
-        // if (Platform.isIOS || Platform.isAndroid) {
-        //   Fluttertoast.showToast(
-        //     toastLength: Toast.LENGTH_SHORT,
-        //       msg: "Image Failed Updated",);
-        // }
+        await ApiClient()
+            .uploadUserImage(
+              image: image!,
+            )
+            .showCustomProgressDialog(context);
       }
-
       if (Platform.isIOS || Platform.isAndroid) {
         Fluttertoast.showToast(
             toastLength: Toast.LENGTH_SHORT,

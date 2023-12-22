@@ -506,6 +506,7 @@ class Language extends ChangeNotifier {
       return "Hey, das bin ich ";
     }
   }
+
   txtUploadImage() {
     if (getLanguage() == 'EN') {
       return "Upload a photo";
@@ -527,6 +528,22 @@ class Language extends ChangeNotifier {
       return "Reset Date Info Successfully";
     } else if (getLanguage() == 'DE') {
       return "Datumsinformationen erfolgreich zurückgesetzt";
+    }
+  }
+
+  txtDeleteMsg() {
+    if (getLanguage() == 'EN') {
+      return "QR code Image Downloaded... ";
+    } else if (getLanguage() == 'DE') {
+      return "QR-Code-Bild heruntergeladen...";
+    }
+  }
+
+  txtDeleteErrorMsg() {
+    if (getLanguage() == 'EN') {
+      return "Something went wrong!!!";
+    } else if (getLanguage() == 'DE') {
+      return "Etwas ist schief gelaufen!!!";
     }
   }
 
@@ -1058,6 +1075,14 @@ class Language extends ChangeNotifier {
     }
   }
 
+  txtSeniorLocation() {
+    if (getLanguage() == 'EN') {
+      return "Institute location";
+    } else if (getLanguage() == 'DE') {
+      return "Standort des Instituts";
+    }
+  }
+
   // days of week shorted
   txtSeniorInstitute() {
     if (getLanguage() == 'EN') {
@@ -1080,6 +1105,14 @@ class Language extends ChangeNotifier {
       return "Care Aide’s Name";
     } else if (getLanguage() == 'DE') {
       return "Name des Pflegepersonals";
+    }
+  }
+
+  txtSeniorCareAidePhone() {
+    if (getLanguage() == 'EN') {
+      return "Care Aide’s Phone number";
+    } else if (getLanguage() == 'DE') {
+      return "Telefonnummer des Pflegeassistenten";
     }
   }
 
@@ -1410,6 +1443,7 @@ class Language extends ChangeNotifier {
       return "Sind Sie sicher, dass Sie dieses Profil löschen möchten? Diese Aktion ist irreversibel und alle Ihre Daten gehen dauerhaft verloren.";
     }
   }
+
   txtDeleteNoBtn() {
     if (getLanguage() == 'EN') {
       return "No, I don't want";
@@ -1417,6 +1451,7 @@ class Language extends ChangeNotifier {
       return "Nein, ich nicht";
     }
   }
+
   txtDeleteBtn() {
     if (getLanguage() == 'EN') {
       return "Yes, Delete this profile";
@@ -1424,6 +1459,15 @@ class Language extends ChangeNotifier {
       return "Ja, dieses Profil löschen";
     }
   }
+
+  txtToastDelete() {
+    if (getLanguage() == 'EN') {
+      return "Profile deleted successfully.";
+    } else if (getLanguage() == 'DE') {
+      return "Profil erfolgreich gelöscht.";
+    }
+  }
+
   txtShareQr() {
     if (getLanguage() == 'EN') {
       return "Scan this QR Code";
@@ -1431,6 +1475,7 @@ class Language extends ChangeNotifier {
       return "Scannen Sie diesen QR-Code";
     }
   }
+
   txtShareQrCheck() {
     if (getLanguage() == 'EN') {
       return "Check out this profile";
@@ -1438,6 +1483,7 @@ class Language extends ChangeNotifier {
       return "Schauen Sie sich dieses Profil an";
     }
   }
+
   txtShareQrHint() {
     if (getLanguage() == 'EN') {
       return "This unique QR code is linked to this profile. Scanning it will only provide access to this profile.";
@@ -1445,7 +1491,4 @@ class Language extends ChangeNotifier {
       return "Dieser einzigartige QR-Code ist mit diesem Profil verknüpft. Durch das Scannen erhalten Sie nur Zugriff auf dieses Profil.";
     }
   }
-
-
-
 }

@@ -15,7 +15,6 @@ import '../../../utils/constants/fonts.dart';
 import '../../../utils/strings/Language.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/loading_dialog.dart';
-import '../Screens/login_screen.dart';
 import '../models/user_model.dart';
 import '../utils/validation.dart';
 
@@ -54,8 +53,7 @@ class _RegisterFormState extends State<RegisterForm> {
   void initState() {
     super.initState();
     passwordVisible = true;
-    bool conPassVisible = true;
-
+    conPassVisible = true;
   }
 
   @override
@@ -199,12 +197,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                       duration:
                                           const Duration(milliseconds: 150),
                                       onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const LoginScreen()),
-                                        );
+                                     Navigator.pushReplacementNamed(context, "/login");
                                       },
                                       child: Text(
                                         Language.instance.txtButtonLogin(),
@@ -479,7 +472,6 @@ class _RegisterFormState extends State<RegisterForm> {
                       countries: const ["eg", "de"],
                       isLatLngRequired: true,
                       getPlaceDetailWithLatLng: (Prediction prediction) {
-
                         if (prediction.lat != null && prediction.lng != null) {
                           latitude = double.parse(prediction.lat!);
                           longitude = double.parse(prediction.lng!);
@@ -491,11 +483,10 @@ class _RegisterFormState extends State<RegisterForm> {
                         // Handle the location details directly in the itemClick callback
                         locationName = prediction.description ?? "";
                         _locationController.text = locationName;
-                        _locationController.selection = TextSelection.fromPosition(
+                        _locationController.selection =
+                            TextSelection.fromPosition(
                           TextPosition(offset: locationName.length),
                         );
-
-
                       },
                     ),
                   ),
@@ -532,7 +523,9 @@ class _RegisterFormState extends State<RegisterForm> {
                       //maxLength: 11,
                       spaceBetweenSelectorAndTextField: 0,
                       keyboardType: const TextInputType.numberWithOptions(
-                          signed: true, decimal: true,),
+                        signed: true,
+                        decimal: true,
+                      ),
                       inputDecoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.only(bottom: 15, left: 8),
@@ -545,10 +538,9 @@ class _RegisterFormState extends State<RegisterForm> {
                         ),
                       ),
                       onInputChanged: (PhoneNumber value) {
-                       // String countryCode = value.dialCode ?? " ";
+                        // String countryCode = value.dialCode ?? " ";
                         // TODO: Fixed to get country code with entered Phone number
                         parsedPhoneNumber = value.phoneNumber ?? "";
-
                       },
                     ),
                   ),
@@ -571,53 +563,43 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   void _register() async {
+    // Implement your registration logic here
+    final email = _emailController.text;
+    final password = _passwordController.text;
+    final name = _nameController.text;
 
-      // Implement your registration logic here
-      final email = _emailController.text;
-      final password = _passwordController.text;
-      final name = _nameController.text;
-      final location = _locationController.text;
-
-      if (kDebugMode) {
-        print('Name: $name');
-        print('Email: $email');
-        print('Password: $password');
-        print('PhoneNumber: $parsedPhoneNumber');
-        print('location: $locationName');
-        print('lat: $latitude');
-        print('long: $longitude');
-      }
-
-      LoadingDialog(isLoading: isLoading);
-      final user = User(
-        name: _nameController.text,
-        email: _emailController.text,
-        password: _passwordController.text,
-        location: Location(
-          name: locationName,
-          latitude: latitude,
-          longitude: longitude,
-        ),
-        phoneNumber: parsedPhoneNumber,
-      );
-
-
-      try {
-
-        await ApiClient().registerUser(user);
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
-
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Failed to register user .. '),
-          backgroundColor: Colors.red.shade300,
-        ));
+    if (kDebugMode) {
+      print('Name: $name');
+      print('Email: $email');
+      print('Password: $password');
+      print('PhoneNumber: $parsedPhoneNumber');
+      print('location: $locationName');
+      print('lat: $latitude');
+      print('long: $longitude');
     }
 
+    LoadingDialog(isLoading: isLoading);
+    final user = User(
+      name: _nameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+      location: Location(
+        name: locationName,
+        latitude: latitude,
+        longitude: longitude,
+      ),
+      phoneNumber: parsedPhoneNumber,
+    );
 
+    try {
+      await ApiClient().registerUser(user);
+
+      Navigator.pushReplacementNamed(context, "/login");
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text('Failed to register user .. '),
+        backgroundColor: Colors.red.shade300,
+      ));
+    }
   }
 }
