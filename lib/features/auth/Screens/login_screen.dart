@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:save_me/features/internet/no_internet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
@@ -18,25 +20,26 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   //internet Connection
-  // bool isOnline = true;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Listen to internet status changes
-  //   internetStatusController.stream.listen((bool online) {
-  //     setState(() {
-  //       isOnline = online;
-  //     });
-  //   });
-  //
-  //   // Initialize the UI with the current internet status
-  //   checkInternetStatus();
-  // }
-  // void _onStatusChange(bool online) {
-  //   setState(() {
-  //     isOnline = online;
-  //   });
-  // }
+  bool isConnected = true;
+  @override
+  void initState() {
+    super.initState();
+    checkConnectivity();
+  }
+
+  Future<void> checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        isConnected = false;
+      });
+    } else {
+      setState(() {
+        isConnected = true;
+      });
+    }
+  }
+
   String currentLang = "";
   SvgPicture englishIcon = SvgPicture.asset(
     "assets/images/icons/circ_english.svg",
@@ -139,8 +142,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
           leading: null,
         ),
-        body: const Center(
-          child: LoginForm(),
+        body:  const Center(
+        //  child: isConnected ? LoginForm() : NoInternet(),
+          child:  LoginForm(),
         ),
     );
   }

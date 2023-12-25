@@ -1428,6 +1428,14 @@ class Language extends ChangeNotifier {
     }
   }
 
+  txtMassageHint() {
+    if (getLanguage() == 'EN') {
+      return "massage";
+    } else if (getLanguage() == 'DE') {
+      return "massage";
+    }
+  }
+
   txtDeleteConfirm() {
     if (getLanguage() == 'EN') {
       return "Delete Confirmation";
@@ -1489,6 +1497,14 @@ class Language extends ChangeNotifier {
       return "This unique QR code is linked to this profile. Scanning it will only provide access to this profile.";
     } else if (getLanguage() == 'DE') {
       return "Dieser einzigartige QR-Code ist mit diesem Profil verknüpft. Durch das Scannen erhalten Sie nur Zugriff auf dieses Profil.";
+    }
+  }
+
+  txtDefaultMassage() {
+    if (getLanguage() == 'EN') {
+      return "Your assistance is greatly appreciated. Your prompt action will ensure the safety and well-being of the kid. Thank you for helping us reunite with our loved one.";
+    } else if (getLanguage() == 'DE') {
+      return "Für Ihre Unterstützung bin ich sehr dankbar. Ihre schnelle Reaktion gewährleistet die Sicherheit und das Wohlbefinden unseres Kindes. Vielen Dank, dass Sie uns geholfen haben, uns mit unserem Lieben wieder zu vereinen.";
     }
   }
 }

@@ -43,6 +43,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
   final TextEditingController _addInfoController = TextEditingController();
   int _currentStep = 0;
   bool isCompleted = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -114,7 +115,9 @@ class _AddPetProfileState extends State<AddPetProfile> {
                     ),
                     Theme(
                       data: ThemeData(
-                        colorScheme: Theme.of(context).colorScheme.copyWith(primary: ColorsCode.purpleColor),
+                        colorScheme: Theme.of(context)
+                            .colorScheme
+                            .copyWith(primary: ColorsCode.purpleColor),
                       ),
                       child: Stepper(
                         physics: const ClampingScrollPhysics(),
@@ -122,7 +125,8 @@ class _AddPetProfileState extends State<AddPetProfile> {
                         steps: getSteps(),
                         currentStep: _currentStep,
                         onStepContinue: () {
-                          final isLastStep = _currentStep == getSteps().length - 1;
+                          final isLastStep =
+                              _currentStep == getSteps().length - 1;
                           if (isLastStep) {
                             setState(() => isCompleted = true);
                             _addPetProfile();
@@ -130,12 +134,17 @@ class _AddPetProfileState extends State<AddPetProfile> {
                             setState(() => _currentStep += 1);
                           }
                         },
-                        onStepTapped: (step) => setState(() => _currentStep = step),
-                        onStepCancel: _currentStep == 0 ? null : () => setState(() => _currentStep -= 1),
-                        controlsBuilder: (BuildContext context, ControlsDetails details) {
-                          final isLastStep = _currentStep == getSteps().length - 1;
+                        onStepTapped: (step) =>
+                            setState(() => _currentStep = step),
+                        onStepCancel: _currentStep == 0
+                            ? null
+                            : () => setState(() => _currentStep -= 1),
+                        controlsBuilder:
+                            (BuildContext context, ControlsDetails details) {
+                          final isLastStep =
+                              _currentStep == getSteps().length - 1;
                           return Container(
-                            margin: const EdgeInsets.only(top: 32),
+                            margin: const EdgeInsets.only(top: 32, bottom: 100),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
@@ -152,16 +161,36 @@ class _AddPetProfileState extends State<AddPetProfile> {
                                       ),
                                     ),
                                     child: Text(
-                                      isLastStep ? Language.instance.txtCreate() : Language.instance.txtNext(),
+                                      isLastStep
+                                          ? Language.instance.txtCreate()
+                                          : Language.instance.txtNext(),
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                        fontFamily:
+                                            Fonts.getFontFamilyTitillSemiBold(),
                                         fontSize: 16,
                                       ),
                                     ),
                                   ),
                                 ),
-                                if (_currentStep != 0) const SizedBox(width: 12),
+                                if (_currentStep == 0)
+                                  const SizedBox(width: 12),
+                                if (_currentStep == 0)
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pushReplacementNamed(
+                                          context, "/home");
+                                    },
+                                    child: Text(
+                                      Language.instance.txtCancel(),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily:
+                                            Fonts.getFontFamilyTitillSemiBold(),
+                                      ),
+                                    ),
+                                  ),
+                                const SizedBox(width: 12),
                                 if (_currentStep != 0)
                                   InkWell(
                                     onTap: details.onStepCancel,
@@ -169,7 +198,8 @@ class _AddPetProfileState extends State<AddPetProfile> {
                                       Language.instance.txtCancel(),
                                       style: TextStyle(
                                         fontSize: 16,
-                                        fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                                        fontFamily:
+                                            Fonts.getFontFamilyTitillSemiBold(),
                                       ),
                                     ),
                                   ),
@@ -197,7 +227,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
             children: <Widget>[
               Text(
                 Language.instance.txtPhoto(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -215,7 +249,8 @@ class _AddPetProfileState extends State<AddPetProfile> {
                   ),
                   child: image == null
                       ? Center(
-                          child: SvgPicture.asset('assets/images/plus_gray.svg'),
+                          child:
+                              SvgPicture.asset('assets/images/plus_gray.svg'),
                         )
                       : Image.file(
                           image!,
@@ -228,7 +263,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               Text(
                 Language.instance.txtName(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -265,7 +304,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               Text(
                 Language.instance.txtBirthday(),
-                style: TextStyle(fontSize: 14, color: ColorsCode.grayColor100, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal),
+                style: TextStyle(
+                    fontSize: 14,
+                    color: ColorsCode.grayColor100,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal),
               ),
               const SizedBox(
                 height: 8,
@@ -313,7 +356,8 @@ class _AddPetProfileState extends State<AddPetProfile> {
                             ),
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
-                                foregroundColor: Colors.black, // button text color
+                                foregroundColor:
+                                    Colors.black, // button text color
                               ),
                             ),
                           ),
@@ -325,7 +369,9 @@ class _AddPetProfileState extends State<AddPetProfile> {
                     if (kDebugMode) {
                       print(pickedDate);
                     }
-                    String formattedDate = DateFormat(Language.instance.txtDatePattern()).format(pickedDate);
+                    String formattedDate =
+                        DateFormat(Language.instance.txtDatePattern())
+                            .format(pickedDate);
 
                     setState(() {
                       _birthdayController.text = formattedDate;
@@ -342,7 +388,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               Text(
                 Language.instance.txtAge(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -386,7 +436,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
             children: <Widget>[
               Text(
                 Language.instance.txtWeight(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -422,7 +476,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               Text(
                 Language.instance.txtHeight(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -458,7 +516,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               Text(
                 Language.instance.txtCharacteristics(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -494,7 +556,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               Text(
                 Language.instance.txtBehavior(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -530,7 +596,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               Text(
                 Language.instance.txtSpecialChar(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -573,7 +643,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
             children: <Widget>[
               Text(
                 Language.instance.txtMedicines(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -610,7 +684,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               Text(
                 Language.instance.txtAllergies(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -646,7 +724,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               Text(
                 Language.instance.txtDiet(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -682,7 +764,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               Text(
                 Language.instance.txtDiseases(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -718,7 +804,11 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               Text(
                 Language.instance.txtAdditionInfo(),
-                style: TextStyle(fontSize: 14, fontFamily: Fonts.getFontFamilyTitillSemiBold(), fontWeight: FontWeight.normal, color: ColorsCode.grayColor100),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                    fontWeight: FontWeight.normal,
+                    color: ColorsCode.grayColor100),
               ),
               const SizedBox(
                 height: 8,
@@ -769,7 +859,6 @@ class _AddPetProfileState extends State<AddPetProfile> {
     final diet = _dietController.text;
     final diseases = _diseasesController.text;
     final addInfo = _addInfoController.text;
-
 
     final profileInfo = ProfileInfo(
         profileType: "PET",

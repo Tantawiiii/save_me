@@ -197,7 +197,8 @@ class _RegisterFormState extends State<RegisterForm> {
                                       duration:
                                           const Duration(milliseconds: 150),
                                       onPressed: () {
-                                     Navigator.pushReplacementNamed(context, "/login");
+                                        Navigator.pushReplacementNamed(
+                                            context, "/login");
                                       },
                                       child: Text(
                                         Language.instance.txtButtonLogin(),
@@ -564,19 +565,6 @@ class _RegisterFormState extends State<RegisterForm> {
 
   void _register() async {
     // Implement your registration logic here
-    final email = _emailController.text;
-    final password = _passwordController.text;
-    final name = _nameController.text;
-
-    if (kDebugMode) {
-      print('Name: $name');
-      print('Email: $email');
-      print('Password: $password');
-      print('PhoneNumber: $parsedPhoneNumber');
-      print('location: $locationName');
-      print('lat: $latitude');
-      print('long: $longitude');
-    }
 
     LoadingDialog(isLoading: isLoading);
     final user = User(

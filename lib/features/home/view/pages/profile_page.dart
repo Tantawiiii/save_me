@@ -36,7 +36,7 @@ class _ProfileState extends State<Profile> {
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
 
   // Default selected image path
-  String selectedValue = 'Old_man_black';
+  String selectedValue = 'Old_woman_white';
 
   // Image Picker for the new photo profile image
   File? image;
@@ -243,7 +243,9 @@ class _ProfileState extends State<Profile> {
                           ),
                           Container(
                             margin: const EdgeInsets.only(
-                                left: 24, right: 24, top: 10),
+                              left: 24,
+                              right: 24,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -261,7 +263,7 @@ class _ProfileState extends State<Profile> {
                                         Icons.keyboard_arrow_down_outlined),
                                   ),
                                   iconSize: 24,
-                                  dropdownColor: Colors.white,
+                                  dropdownColor: Colors.grey.shade200,
                                   items: [
                                     'Old_man_black',
                                     'Old_man_white',
@@ -281,11 +283,19 @@ class _ProfileState extends State<Profile> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Image.asset(
-                                            'assets/images/icons/$value.png',
-                                            width: 70,
-                                            // Adjust the size as needed
-                                            height: 70,
+                                          Container(
+                                            width: 90,
+                                            height: 90,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(500),
+                                                color: Colors.grey.shade200),
+                                            child: Image.asset(
+                                              'assets/images/icons/$value.png',
+                                              width: 70,
+                                              // Adjust the size as needed
+                                              height: 70,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -359,7 +369,7 @@ class _ProfileState extends State<Profile> {
                                 },
                                 child: Container(
                                   height: 56,
-                                  width: 215,
+                                  width: 200,
                                   decoration: const BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4)),

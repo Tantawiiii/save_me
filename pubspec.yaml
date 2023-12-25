@@ -28,6 +28,8 @@ dependencies:
   flutter_svg: ^2.0.9
 
   image_picker: ^1.0.4
+  image_cropper: 4.0.1
+
   hexcolor: ^3.0.1
   bouncing_button: ^0.0.1+2
   flutter_speed_dial: ^7.0.0
@@ -40,8 +42,8 @@ dependencies:
   flutter_typeahead: ^4.0.2
 
   get: ^4.6.6
-  # connectivity: ^3.0.6
-  internet_connection_checker: ^1.0.0+1
+  connectivity: ^3.0.6
+  # internet_connection_checker: ^1.0.0+1
 
   flutter_screenutil: ^5.9.0
   provider: ^5.0.0
@@ -74,7 +76,7 @@ flutter_launcher_icons:
   min_sdk_android: 21 # android min sdk min:16, default 21
   adaptive_icon_background: "#ffffff" # adaptive icon background color, default is "#ffffff"
   remove_alpha_ios: true # remove alpha from ios, default is true
-  
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -95,21 +97,21 @@ flutter:
 
 
   fonts:
-     - family: cairo
-       fonts:
-         - asset: assets/fonts/cairo.ttf
-     - family: abel
-       fonts:
-         - asset: assets/fonts/abel-regular.ttf
-     - family: TitilliumWeb-Bold
-       fonts:
-           - asset: assets/fonts/TitilliumWeb-Bold.ttf
-     - family: TitilliumWeb-Regular
-       fonts:
-         - asset: assets/fonts/TitilliumWeb-Regular.ttf
-     - family: TitilliumWeb-SemiBold
-       fonts:
-         - asset: assets/fonts/TitilliumWeb-SemiBold.ttf
+    - family: cairo
+      fonts:
+        - asset: assets/fonts/cairo.ttf
+    - family: abel
+      fonts:
+        - asset: assets/fonts/abel-regular.ttf
+    - family: TitilliumWeb-Bold
+      fonts:
+        - asset: assets/fonts/TitilliumWeb-Bold.ttf
+    - family: TitilliumWeb-Regular
+      fonts:
+        - asset: assets/fonts/TitilliumWeb-Regular.ttf
+    - family: TitilliumWeb-SemiBold
+      fonts:
+        - asset: assets/fonts/TitilliumWeb-SemiBold.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
