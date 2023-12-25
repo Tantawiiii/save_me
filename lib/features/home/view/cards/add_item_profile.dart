@@ -137,11 +137,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                                const SizedBox(width: 12),
                                   InkWell(
                                     onTap: (){
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(builder:
-                                            (context) =>  const HomeScreen()),
-                                      );
+                                      Navigator.pushReplacementNamed(context, "/home");
                                     },
                                     child: Text(
                                       Language.instance.txtCancel(),

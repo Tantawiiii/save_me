@@ -147,7 +147,7 @@ bool uploading = false;
                       (BuildContext context, ControlsDetails details) {
                     final isLastStep = _currentStep == getSteps().length - 1;
                     return Container(
-                      margin: const EdgeInsets.only(top: 32),
+                      margin: const EdgeInsets.only(top: 32,bottom: 100),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
@@ -176,7 +176,23 @@ bool uploading = false;
                               ),
                             ),
                           ),
-                          if (_currentStep != 0) const SizedBox(width: 12),
+                          if (_currentStep == 0)
+                            const SizedBox(width: 12),
+                          if (_currentStep == 0)
+                            InkWell(
+                              onTap: (){
+                                Navigator.pushReplacementNamed(context, "/home");
+                              },
+                              child: Text(
+                                Language.instance.txtCancel(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily:
+                                  Fonts.getFontFamilyTitillSemiBold(),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
                           if (_currentStep != 0)
                             InkWell(
                               onTap: details.onStepCancel,

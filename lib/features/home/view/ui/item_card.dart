@@ -16,6 +16,34 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String svgAssetPath = '';
+    String typeCard = '';
+    switch (profileInfo.profileType) {
+      case "ITEM":
+        svgAssetPath = 'assets/images/Item.svg';
+        typeCard = "Item profile";
+        break;
+      case "DISABLED_PERSON":
+        svgAssetPath = 'assets/images/Disabled.svg';
+        typeCard = "Disabled person profile";
+        break;
+      case "KID":
+        svgAssetPath = 'assets/images/kids.svg';
+        typeCard = "Child profile";
+        break;
+      case "PET":
+        svgAssetPath = 'assets/images/Pets.svg';
+        typeCard = "Pet profile";
+        break;
+      case "SENIOR":
+        svgAssetPath = 'assets/images/Seniors.svg';
+        typeCard = "Senior profile";
+        break;
+      default:
+        svgAssetPath = 'assets/images/Item.svg';
+        typeCard = "item profile";
+    }
+
     return Bounce(
       duration: const Duration(milliseconds: 200),
       onPressed: () {
@@ -31,19 +59,25 @@ class ItemCard extends StatelessWidget {
       child: Container(
         width: 180,
         height: 340,
-        decoration: const BoxDecoration(color: Colors.white),
-        child: Card(
-          elevation: 2,
-          shadowColor: ColorsCode.grayColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-            //set border radius more than 50% of height and width to make circle
-          ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(.3),
+              blurRadius: 10.0,
+              spreadRadius: 4.0,
+            )
+          ],
           color: Colors.white,
-          child: Stack(
-            alignment: Alignment.topRight,
-            children: [
-              Center(
+        ),
+        child: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            Card(
+              elevation: 0,
+              shadowColor: ColorsCode.grayColor,
+              color: Colors.white,
+              child: Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
@@ -52,17 +86,17 @@ class ItemCard extends StatelessWidget {
                     ),
                     ClipRRect(
                         borderRadius: BorderRadius.circular(4.0),
-                        child: profileInfo.profileType == "ITEM" || profileInfo.photoUrl == "null"
+                        child: profileInfo.photoUrl == null
                             ? SvgPicture.asset(
-                                'assets/images/Item.svg',
-                                width: 115,
-                                height: 135,
+                                svgAssetPath,
+                                width: 100,
+                                height: 120,
                                 fit: BoxFit.cover,
                               )
                             : Image.network(
-                                profileInfo.photoUrl! ?? "",
-                                width: 135,
-                                height: 145,
+                                profileInfo.photoUrl!,
+                                width: 130,
+                                height: 140,
                                 fit: BoxFit.cover,
                               )),
                     const SizedBox(
@@ -80,7 +114,8 @@ class ItemCard extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                      Language.instance.txtCreateData() + profileInfo.createdDate!,
+                      Language.instance.txtCreateData() +
+                          profileInfo.createdDate!,
                       style: TextStyle(
                         color: ColorsCode.grayColor100,
                         fontSize: 10,
@@ -90,30 +125,32 @@ class ItemCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                width: 120,
-                height: 40,
-                alignment: Alignment.topRight,
-                decoration: BoxDecoration(
-                  color: ColorsCode.purpleColor,
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(12.0),
-                    bottomLeft: Radius.circular(12.0),
-                  ),
+            ),
+            Container(
+              width: 120,
+              height: 36,
+              alignment: Alignment.topRight,
+              decoration: BoxDecoration(
+                color: ColorsCode.purpleColor,
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(12.0),
+                  bottomLeft: Radius.circular(12.0),
                 ),
-                child: Center(
-                  child: Text(
-                    profileInfo.profileType!,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontFamily: Fonts.getFontFamilyTitillRegular(),
-                    ),
+              ),
+              child: Center(
+                child: Text(
+                  typeCard,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontFamily: Fonts.getFontFamilyTitillRegular(),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

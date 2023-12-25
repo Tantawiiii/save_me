@@ -21,7 +21,6 @@ import 'package:auto_route/auto_route.dart';
 import '../../api_helper/api_helper.dart';
 import '../../models/profile_info.dart';
 
-
 @RoutePage()
 class AddDisabledProfile extends StatefulWidget {
   const AddDisabledProfile({super.key});
@@ -33,6 +32,11 @@ class AddDisabledProfile extends StatefulWidget {
 class _AddDisabledProfileState extends State<AddDisabledProfile> {
   final formKey = GlobalKey<FormState>();
   bool uploading = false;
+
+  String locationName = "";
+  double latitude = 0.0;
+  double longitude = 0.0;
+
   File? image;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
@@ -47,13 +51,15 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
   final TextEditingController _diseasesController = TextEditingController();
   final TextEditingController _dietController = TextEditingController();
   final TextEditingController _addInfoController = TextEditingController();
-  final TextEditingController _insituLocationController = TextEditingController();
+  final TextEditingController _insituLocationController =
+      TextEditingController();
   final TextEditingController _insituNameController = TextEditingController();
   final TextEditingController _careAideController = TextEditingController();
   final TextEditingController _insituPhoneController = TextEditingController();
   int _currentStep = 0;
   bool isCompleted = false;
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
+
   @override
   void initState() {
     // TODO: implement initState
@@ -64,8 +70,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
   // Picker Image for the current step
   Future<void> _pickImage() async {
     final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source:
-    ImageSource.gallery);
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
       setState(() {
@@ -154,51 +159,71 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                             (BuildContext context, ControlsDetails details) {
                           final isLastStep =
                               _currentStep == getSteps().length - 1;
-                          return Container(
-                            margin: const EdgeInsets.only(top: 32),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 56,
-                                  width: 155,
-                                  child: ElevatedButton(
-                                    onPressed: details.onStepContinue,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.black,
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(4),
+                          return SingleChildScrollView(
+                            child: Container(
+                              margin:
+                                  const EdgeInsets.only(top: 32, bottom: 100),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 56,
+                                    width: 155,
+                                    child: ElevatedButton(
+                                      onPressed: details.onStepContinue,
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.black,
+                                        elevation: 2,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
                                       ),
-                                    ),
-                                    child: Text(
-                                      isLastStep
-                                          ? Language.instance.txtCreate()
-                                          : Language.instance.txtNext(),
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily:
-                                            Fonts.getFontFamilyTitillSemiBold(),
-                                        fontSize: 16,
+                                      child: Text(
+                                        isLastStep
+                                            ? Language.instance.txtCreate()
+                                            : Language.instance.txtNext(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: Fonts
+                                              .getFontFamilyTitillSemiBold(),
+                                          fontSize: 16,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                if (_currentStep != 0)
+                                  if (_currentStep == 0)
+                                    const SizedBox(width: 12),
+                                  if (_currentStep == 0)
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushReplacementNamed(
+                                            context, "/home");
+                                      },
+                                      child: Text(
+                                        Language.instance.txtCancel(),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: Fonts
+                                              .getFontFamilyTitillSemiBold(),
+                                        ),
+                                      ),
+                                    ),
                                   const SizedBox(width: 12),
-                                if (_currentStep != 0)
-                                  InkWell(
-                                    onTap: details.onStepCancel,
-                                    child: Text(
-                                      Language.instance.txtCancel(),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily:
-                                            Fonts.getFontFamilyTitillSemiBold(),
+                                  if (_currentStep != 0)
+                                    InkWell(
+                                      onTap: details.onStepCancel,
+                                      child: Text(
+                                        Language.instance.txtCancel(),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: Fonts
+                                              .getFontFamilyTitillSemiBold(),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
                         },
@@ -215,67 +240,113 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
         Step(
           state: _currentStep > 0 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 0,
-          title:  Text(Language.instance.txtDisabledBasicInfo()),
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                Language.instance.txtPhoto(),
-                style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                    fontWeight: FontWeight.normal,
-                    color: ColorsCode.grayColor100),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              GestureDetector(
-                onTap: () {
-                  _pickImage();
-                },
-                child: Container(
-                  width: 148,
-                  height: 89,
-                  decoration: BoxDecoration(
-                    color: ColorsCode.whiteColor100,
-                    borderRadius: const BorderRadius.all(Radius.circular(4)),
-                  ),
-                  child: image == null
-                      ? Center(
-                          child:
-                              SvgPicture.asset('assets/images/plus_gray.svg'),
-                        )
-                      : Image.file(
-                          image!,
-                          fit: BoxFit.cover,
-                        ),
+          title: Text(Language.instance.txtDisabledBasicInfo()),
+          content: Form(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  Language.instance.txtPhoto(),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                      fontWeight: FontWeight.normal,
+                      color: ColorsCode.grayColor100),
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                Language.instance.txtName(),
-                style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                    fontWeight: FontWeight.normal,
-                    color: ColorsCode.grayColor100),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                height: 56,
-                child: TextFormField(
-                  controller: _nameController,
-                  keyboardType: TextInputType.name,
+                const SizedBox(
+                  height: 8,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    _pickImage();
+                  },
+                  child: Container(
+                    width: 148,
+                    height: 89,
+                    decoration: BoxDecoration(
+                      color: ColorsCode.whiteColor100,
+                      borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    ),
+                    child: image == null
+                        ? Center(
+                            child:
+                                SvgPicture.asset('assets/images/plus_gray.svg'),
+                          )
+                        : Image.file(
+                            image!,
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  Language.instance.txtName(),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                      fontWeight: FontWeight.normal,
+                      color: ColorsCode.grayColor100),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  height: 56,
+                  child: TextFormField(
+                    controller: _nameController,
+                    keyboardType: TextInputType.name,
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: ColorsCode.whiteColor100,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                        color: Colors.purple.shade100,
+                      )),
+                      hintText: Language.instance.txtHintUserDisabled(),
+                      hintStyle: TextStyle(
+                        fontSize: 14,
+                        fontFamily: Fonts.getFontFamilyTitillRegular(),
+                        color: ColorsCode.grayColor,
+                      ),
+                      //isDense: true,
+                    ),
+                    validator: (value) {
+                      return Validation.validateEmail(value ?? "");
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  Language.instance.txtBirthday(),
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: ColorsCode.grayColor100,
+                      fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                      fontWeight: FontWeight.normal),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                TextField(
+                  controller: _birthdayController,
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: ColorsCode.whiteColor100,
+                    suffixIcon: const Icon(Icons.date_range),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4),
                       borderSide: BorderSide.none,
@@ -284,7 +355,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Language.instance.txtHintUserDisabled(),
+                    hintText: Language.instance.txtHintBirthday(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -292,145 +363,103 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                     ),
                     //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
+                  readOnly: true,
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialEntryMode: DatePickerEntryMode.calendarOnly,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1950),
+                        lastDate: DateTime(2100),
+                        builder: (context, child) {
+                          return Theme(
+                            data: Theme.of(context).copyWith(
+                              colorScheme: const ColorScheme.light(
+                                primary: Colors.black12,
+                                onPrimary: Colors.white,
+                                onSurface: Colors.black,
+                              ),
+                              textButtonTheme: TextButtonThemeData(
+                                style: TextButton.styleFrom(
+                                  foregroundColor:
+                                      Colors.black, // button text color
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        });
+
+                    if (pickedDate != null) {
+                      if (kDebugMode) {
+                        print(pickedDate);
+                      }
+                      String formattedDate =
+                          DateFormat(Language.instance.txtDatePattern())
+                              .format(pickedDate);
+                      if (kDebugMode) {
+                        print(pickedDate);
+                      }
+
+                      setState(() {
+                        _birthdayController.text = formattedDate;
+                      });
+                    } else {
+                      if (kDebugMode) {
+                        print('Bug Formatted');
+                      }
+                    }
                   },
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                Language.instance.txtBirthday(),
-                style: TextStyle(
-                    fontSize: 14,
-                    color: ColorsCode.grayColor100,
-                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                    fontWeight: FontWeight.normal),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              TextField(
-                controller: _birthdayController,
-                style: const TextStyle(
-                  color: Colors.black,
+                const SizedBox(
+                  height: 16,
                 ),
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: ColorsCode.whiteColor100,
-                  suffixIcon: const Icon(Icons.date_range),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Colors.purple.shade100,
-                  )),
-                  hintText: Language.instance.txtHintBirthday(),
-                  hintStyle: TextStyle(
-                    fontSize: 14,
-                    fontFamily: Fonts.getFontFamilyTitillRegular(),
-                    color: ColorsCode.grayColor,
-                  ),
-                  //isDense: true,
-                ),
-                readOnly: true,
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                      initialEntryMode: DatePickerEntryMode.calendarOnly,
-                      initialDate: DateTime.now(),
-                    firstDate: DateTime(1950),
-                    lastDate: DateTime(2100),
-                    builder: (context,child){
-                      return Theme(
-                        data: Theme.of(context).copyWith(
-                          colorScheme: const ColorScheme.light(
-                            primary: Colors.black12,
-                            onPrimary: Colors.white,
-                            onSurface: Colors.black,
-                          ),
-                          textButtonTheme:TextButtonThemeData(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.black, // button text color
-                            ),
-                          ),
-                        ), child:child!,
-                      );
-                    }
-                  );
-
-                  if (pickedDate != null) {
-                    if (kDebugMode) {
-                      print(pickedDate);
-                    }
-                    String formattedDate =
-                        DateFormat(Language.instance.txtDatePattern()).format(pickedDate);
-                    if (kDebugMode) {
-                      print(pickedDate);
-                    }
-
-                    setState(() {
-                      _birthdayController.text = formattedDate;
-                    });
-                  } else {
-                    if (kDebugMode) {
-                      print('Bug Formatted');
-                    }
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                Language.instance.txtAge(),
-                style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                    fontWeight: FontWeight.normal,
-                    color: ColorsCode.grayColor100),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                height: 56,
-                child: TextFormField(
-                  controller: _ageController,
-                  keyboardType: TextInputType.number,
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: ColorsCode.whiteColor100,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4),
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                      color: Colors.purple.shade100,
-                    )),
-                    hintText: Language.instance.txtDisabledAgeHint(),
-                    hintStyle: TextStyle(
+                Text(
+                  Language.instance.txtAge(),
+                  style: TextStyle(
                       fontSize: 14,
-                      fontFamily: Fonts.getFontFamilyTitillRegular(),
-                      color: ColorsCode.grayColor,
+                      fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                      fontWeight: FontWeight.normal,
+                      color: ColorsCode.grayColor100),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  height: 56,
+                  child: TextFormField(
+                    controller: _ageController,
+                    keyboardType: TextInputType.number,
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: ColorsCode.whiteColor100,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                        color: Colors.purple.shade100,
+                      )),
+                      hintText: Language.instance.txtDisabledAgeHint(),
+                      hintStyle: TextStyle(
+                        fontSize: 14,
+                        fontFamily: Fonts.getFontFamilyTitillRegular(),
+                        color: ColorsCode.grayColor,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Step(
           // Body info Ui Design and Implementation
           state: _currentStep > 1 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 1,
-          title:  Text(Language.instance.txtDisabledBodyInfo()),
+          title: Text(Language.instance.txtDisabledBodyInfo()),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -544,7 +573,8 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                         borderSide: BorderSide(
                       color: Colors.purple.shade100,
                     )),
-                    hintText: Language.instance.txtDisabledHintCharacteristics(),
+                    hintText:
+                        Language.instance.txtDisabledHintCharacteristics(),
                     hintStyle: TextStyle(
                       fontSize: 14,
                       fontFamily: Fonts.getFontFamilyTitillRegular(),
@@ -639,7 +669,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
         Step(
           state: _currentStep > 2 ? StepState.complete : StepState.indexed,
           isActive: _currentStep >= 2,
-          title:  Text(Language.instance.txtDisabledHealthInfo()),
+          title: Text(Language.instance.txtDisabledHealthInfo()),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -858,7 +888,6 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                     fontWeight: FontWeight.normal,
                     color: ColorsCode.blackColor100),
               ),
-
               const SizedBox(
                 height: 24,
               ),
@@ -883,8 +912,8 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                     color: ColorsCode.whiteColor100,
                   ),
                   inputDecoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 4),
+                    contentPadding:
+                        const EdgeInsets.symmetric(vertical: 15, horizontal: 4),
                     prefixIcon: const Padding(
                       padding: EdgeInsets.only(
                           left: 0.0, top: 3, bottom: 3, right: 8),
@@ -894,7 +923,6 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                       ),
                     ),
                     filled: true,
-
                     fillColor: ColorsCode.whiteColor100,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4),
@@ -902,8 +930,8 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                     ),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.purple.shade100,
-                        )),
+                      color: Colors.purple.shade100,
+                    )),
                     hintText: Language.instance.txtHintLocation(),
                     hintStyle: TextStyle(
                       fontSize: 14,
@@ -924,7 +952,6 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                     _insituLocationController.selection =
                         TextSelection.fromPosition(TextPosition(
                             offset: prediction.description!.length));
-
                   },
                 ),
               ),
@@ -957,8 +984,8 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                     ),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.purple.shade100,
-                        )),
+                      color: Colors.purple.shade100,
+                    )),
                     hintText: Language.instance.txtSeniorInstituteHint(),
                     hintStyle: TextStyle(
                       fontSize: 14,
@@ -997,8 +1024,8 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                     ),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.purple.shade100,
-                        )),
+                      color: Colors.purple.shade100,
+                    )),
                     hintText: Language.instance.txtSeniorCareAideHint(),
                     hintStyle: TextStyle(
                       fontSize: 14,
@@ -1059,8 +1086,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                   initialValue: number,
                   cursorColor: Colors.black,
                   inputDecoration: InputDecoration(
-                    contentPadding:
-                    const EdgeInsets.only(bottom: 15, left: 8),
+                    contentPadding: const EdgeInsets.only(bottom: 15, left: 8),
                     border: InputBorder.none,
                     hintText: Language.instance.txtHintPhoneNumber(),
                     hintStyle: TextStyle(
@@ -1076,7 +1102,6 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                   },
                 ),
               ),
-
             ],
           ),
         ),
@@ -1104,28 +1129,36 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
     final institutePhone = _insituPhoneController.text;
 
     final profileInfo = ProfileInfo(
-        profileType: "DISABLED_PERSON",
-        photoUrl: "",
-        name: name,
-        birthdate: birthday,
-        age: age,
-        weight: weight,
-        height: height,
-        characteristics: character,
-        behavior: behavior,
-        specialCharacteristics: specialChar,
-        medicines: medication,
-        allergies: allergies,
-        diet: diet,
-        diseases: diseases,
-        additionalInformation: addInfo
+      profileType: "DISABLED_PERSON",
+      photoUrl: "",
+      name: name,
+      birthdate: birthday,
+      age: age,
+      weight: weight,
+      height: height,
+      characteristics: character,
+      behavior: behavior,
+      specialCharacteristics: specialChar,
+      medicines: medication,
+      allergies: allergies,
+      diet: diet,
+      diseases: diseases,
+      additionalInformation: addInfo,
+      institution: Institution(
+        nameIn: instituteName,
+        aidNameIn: careAide,
+        aidPhoneNumberIn: institutePhone,
+        locationIn: Location(
+          nameLocation: locationName,
+          latitude: latitude,
+          longitude: longitude,
+        ),
+      ),
     );
-
 
     final createProfileSuccess = await postProfileData(profileInfo);
 
     if (createProfileSuccess != null) {
-
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       if (image != null) {
         await uploadProfileImage(

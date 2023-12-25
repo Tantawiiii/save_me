@@ -301,17 +301,13 @@ class LoginFormState extends State<LoginForm> {
 
       if (user != null) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        if (kDebugMode) {
-          print('Email: $email');
-          print('Password: $password');
-        }
-        //Navigator.pushReplacementNamed(context, "/home");
+        Navigator.pushReplacementNamed(context, "/home");
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const HomeScreen()),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (context) => const HomeScreen()),
+        // );
 
         //print('accessToken: $accessToken');
       } else {
