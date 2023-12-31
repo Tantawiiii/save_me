@@ -46,7 +46,7 @@ void shareDialog(context,
                 ),
               ),
               const SizedBox(
-                height: 28,
+                height: 10,
               ),
               Center(
                 child: RepaintBoundary(
@@ -56,13 +56,13 @@ void shareDialog(context,
                     size: 240,
                     // embeddedImage: AssetImage("assets/images/logowithnobg.png"),
                     embeddedImageStyle: const QrEmbeddedImageStyle(
-                      size: Size(45, 45),
+                      size: Size(40, 40),
                     ),
                   ),
                 ),
               ),
               const SizedBox(
-                height: 24,
+                height: 16,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

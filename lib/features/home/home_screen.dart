@@ -16,15 +16,12 @@ import 'package:save_me/features/home/view/pages/location_page.dart';
 import 'package:save_me/features/home/view/pages/profile_page.dart';
 import 'package:save_me/features/home/view/pages/setting_page.dart';
 
-import 'package:auto_route/auto_route.dart';
-
 import '../../data/api_client.dart';
 import '../../utils/constants/colors_code.dart';
 import '../../utils/constants/fonts.dart';
 import '../../utils/strings/Language.dart';
 import '../auth/models/user_model.dart';
 
-@RoutePage()
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,
@@ -326,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(
-                  width: 15,
+                  width: 8,
                 ),
                 Expanded(
                   child: Column(
@@ -360,7 +357,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(
-                  width: 15,
+                  width: 8,
                 ),
                 Expanded(
                   child: Column(
@@ -393,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(
-                  width: 15,
+                  width: 8,
                 ),
                 Expanded(
                   child: Column(

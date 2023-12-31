@@ -42,12 +42,12 @@ dependencies:
   flutter_typeahead: ^4.0.2
 
   get: ^4.6.6
-  connectivity: ^3.0.6
+  # connectivity: ^3.0.6
   # internet_connection_checker: ^1.0.0+1
 
   flutter_screenutil: ^5.9.0
   provider: ^5.0.0
-  auto_route: ^7.8.4
+  #auto_route: ^7.8.4
 
   maps_places_autocomplete: ^0.0.2
   flutter_phoenix: ^1.1.1

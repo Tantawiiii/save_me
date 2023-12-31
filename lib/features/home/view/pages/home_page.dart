@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:save_me/features/home/api_helper/api_helper.dart';
 import 'package:save_me/features/home/models/profile_info.dart';
+import 'package:save_me/features/widgets/loading_dialog.dart';
 
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
-import 'package:auto_route/auto_route.dart';
 
 import '../ui/item_card.dart';
 
-@RoutePage()
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -54,7 +53,8 @@ class _HomeState extends State<Home> {
               );
             }
             return const Center(
-              child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black)),
+              child: LoadingDialog(isLoading: true),
+              // CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black)),
             );
           }),
     );

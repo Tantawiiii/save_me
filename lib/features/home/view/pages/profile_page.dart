@@ -1,13 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:ndialog/ndialog.dart';
@@ -17,9 +16,9 @@ import 'package:save_me/features/auth/models/user_model.dart';
 import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
-import '../../../auth/utils/validation.dart';
+import '../../../widgets/loading_dialog.dart';
+import '../utils/image_picker_cropper.dart';
 
-@RoutePage()
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -41,13 +40,13 @@ class _ProfileState extends State<Profile> {
   // Image Picker for the new photo profile image
   File? image;
 
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+  Future<void> _pickAndCropImage() async {
+    ImagePickerCropper imagePickerCropper = ImagePickerCropper();
+    File? croppedImage = await imagePickerCropper.pickAndCropImage(context);
 
-    if (pickedImage != null) {
+    if (croppedImage != null) {
       setState(() {
-        image = File(pickedImage.path);
+        image = croppedImage;
       });
     }
   }
@@ -73,9 +72,12 @@ class _ProfileState extends State<Profile> {
                           TextEditingController(text: userData?.name);
                       _phoneNumController =
                           TextEditingController(text: userData?.phoneNumber);
-                      _addInfoController =
-                          TextEditingController(text: userData?.contactInfo);
-
+                      _addInfoController = TextEditingController(
+                        text: (userData?.contactInfo == "" ||
+                                userData?.contactInfo == "null")
+                            ? Language.instance.txtAdditionInfo()
+                            : userData?.contactInfo,
+                      );
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,9 +117,6 @@ class _ProfileState extends State<Profile> {
                                   color: ColorsCode.blackColor700,
                                 ),
                               ),
-                              validator: (value) {
-                                return Validation.validateEmail(value ?? "");
-                              },
                             ),
                           ),
                           const SizedBox(
@@ -168,10 +167,10 @@ class _ProfileState extends State<Profile> {
                               spaceBetweenSelectorAndTextField: 0,
                               keyboardType:
                                   const TextInputType.numberWithOptions(
-                                      signed: true, decimal: true),
+                                signed: true,
+                              ),
                               cursorColor: Colors.black,
                               inputDecoration: InputDecoration(
-                                //prefixIcon: SvgPicture.asset('assets/images/line.svg'),
                                 contentPadding:
                                     const EdgeInsets.only(bottom: 15, left: 8),
                                 border: InputBorder.none,
@@ -224,7 +223,6 @@ class _ProfileState extends State<Profile> {
                                       Fonts.getFontFamilyTitillRegular(),
                                   color: ColorsCode.blackColor700,
                                 ),
-                                //isDense: true,
                               ),
                             ),
                           ),
@@ -262,7 +260,7 @@ class _ProfileState extends State<Profile> {
                                     child: Icon(
                                         Icons.keyboard_arrow_down_outlined),
                                   ),
-                                  iconSize: 24,
+                                  iconSize: 20,
                                   dropdownColor: Colors.grey.shade200,
                                   items: [
                                     'Old_man_black',
@@ -284,17 +282,16 @@ class _ProfileState extends State<Profile> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Container(
-                                            width: 90,
-                                            height: 90,
+                                            width: 65,
+                                            height: 65,
                                             decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(500),
+                                                shape: BoxShape.circle,
                                                 color: Colors.grey.shade200),
                                             child: Image.asset(
                                               'assets/images/icons/$value.png',
-                                              width: 70,
+                                              width: 65,
                                               // Adjust the size as needed
-                                              height: 70,
+                                              height: 65,
                                             ),
                                           ),
                                         ],
@@ -303,10 +300,11 @@ class _ProfileState extends State<Profile> {
                                   }).toList(),
                                 ),
                                 Text(
-                                  'OR',
+                                  'Or',
                                   style: TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: Fonts.getFontFamilyTitillBold(),
+                                    fontSize: 16,
+                                    fontFamily:
+                                        Fonts.getFontFamilyTitillSemiBold(),
                                     fontWeight: FontWeight.normal,
                                     color: ColorsCode.grayColor100,
                                   ),
@@ -315,29 +313,50 @@ class _ProfileState extends State<Profile> {
                                   children: <Widget>[
                                     GestureDetector(
                                       onTap: () {
-                                        _pickImage();
+                                        _pickAndCropImage();
                                       },
                                       child: Container(
-                                        width: 148,
+                                        width: 125,
                                         height: 89,
                                         decoration: BoxDecoration(
-                                          color: ColorsCode.whiteColor,
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(4)),
+                                          color: Colors.grey.shade200,
+                                          shape: BoxShape.circle,
                                         ),
-                                        child: image == null
-                                            ? userData?.photoUrl == "null"
-                                                ? Center(
-                                                    child: SvgPicture.asset(
-                                                        'assets/images/upload_img.svg'),
-                                                  )
-                                                : Image.network(
-                                                    userData!.photoUrl!,
-                                                  )
-                                            : Image.file(
-                                                image!,
-                                                fit: BoxFit.cover,
-                                              ),
+                                        child: CircleAvatar(
+                                          radius: 50,
+                                          backgroundColor: Colors.white54,
+                                          child: image == null &&
+                                                  (userData?.photoUrl == null ||
+                                                      userData?.photoUrl ==
+                                                          "null")
+                                              ? SvgPicture.asset(
+                                                  'assets/images/upload_img.svg')
+                                              : image != null
+                                                  ? Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              6.0),
+                                                      child: CircleAvatar(
+                                                        radius: 45,
+                                                        backgroundImage:
+                                                            FileImage(
+                                                          image!,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              6.0),
+                                                      child: CircleAvatar(
+                                                        radius: 45,
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                          userData!.photoUrl!,
+                                                        ),
+                                                      ),
+                                                    ),
+                                        ),
                                       ),
                                     ),
                                     const SizedBox(
@@ -369,7 +388,7 @@ class _ProfileState extends State<Profile> {
                                 },
                                 child: Container(
                                   height: 56,
-                                  width: 200,
+                                  width: 180,
                                   decoration: const BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(4)),
@@ -391,7 +410,7 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ),
                               const SizedBox(
-                                width: 2,
+                                width: 4,
                               ),
                               Bounce(
                                 duration: const Duration(milliseconds: 300),
@@ -439,9 +458,11 @@ class _ProfileState extends State<Profile> {
                       return Text("${snapshot.error}");
                     }
                     return const Center(
-                        child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.black)));
+                      child: LoadingDialog(isLoading: true),
+                      // CircularProgressIndicator(
+                      //     valueColor:
+                      //         AlwaysStoppedAnimation<Color>(Colors.black))
+                    );
                   }),
               const SizedBox(
                 height: 100,

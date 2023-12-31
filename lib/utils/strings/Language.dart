@@ -751,7 +751,7 @@ class Language extends ChangeNotifier {
     if (getLanguage() == 'EN') {
       return "Settings";
     } else if (getLanguage() == 'DE') {
-      return "Einstellungen";
+      return "Einstellung";
     }
   }
 
@@ -1444,11 +1444,35 @@ class Language extends ChangeNotifier {
     }
   }
 
+  txtCancelConfirm() {
+    if (getLanguage() == 'EN') {
+      return "Confirm Profile Creation Cancellation";
+    } else if (getLanguage() == 'DE') {
+      return "Bestätigen Sie den Abbruch der Profilerstellung";
+    }
+  }
+
   txtDeleteConfirmHint() {
     if (getLanguage() == 'EN') {
       return "Are you sure you want to delete this profile?  This action is irreversible, and all your data will be permanently lost.";
     } else if (getLanguage() == 'DE') {
       return "Sind Sie sicher, dass Sie dieses Profil löschen möchten? Diese Aktion ist irreversibel und alle Ihre Daten gehen dauerhaft verloren.";
+    }
+  }
+
+  txtCancelConfirmHint() {
+    if (getLanguage() == 'EN') {
+      return "Canceling now will result in the loss of entered data. Are you sure?";
+    } else if (getLanguage() == 'DE') {
+      return "Wenn Sie jetzt abbrechen, gehen die eingegebenen Daten verloren. Bist du sicher?";
+    }
+  }
+
+  txtCancelBtn() {
+    if (getLanguage() == 'EN') {
+      return "Yes, I want";
+    } else if (getLanguage() == 'DE') {
+      return "Ja ich will";
     }
   }
 

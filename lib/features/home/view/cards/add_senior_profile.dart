@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,10 +17,11 @@ import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
 import '../../../../utils/strings/Strings_en.dart';
 import '../../../auth/utils/validation.dart';
+import '../../../widgets/cancel_dialog.dart';
 import '../../api_helper/api_helper.dart';
 import '../../models/profile_info.dart';
+import '../utils/image_picker_cropper.dart';
 
-@RoutePage()
 class AddSeniorProfile extends StatefulWidget {
   const AddSeniorProfile({super.key});
 
@@ -67,13 +67,13 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
   }
 
   // Picker Image for the current step
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+  Future<void> _pickAndCropImage() async {
+    ImagePickerCropper imagePickerCropper = ImagePickerCropper();
+    File? croppedImage = await imagePickerCropper.pickAndCropImage(context);
 
-    if (pickedImage != null) {
+    if (croppedImage != null) {
       setState(() {
-        image = File(pickedImage.path);
+        image = croppedImage;
       });
     }
   }
@@ -160,7 +160,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                           final isLastStep =
                               _currentStep == getSteps().length - 1;
                           return Container(
-                            margin: const EdgeInsets.only(top: 32,bottom: 100),
+                            margin: const EdgeInsets.only(top: 32, bottom: 100),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
@@ -194,8 +194,10 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                                 if (_currentStep == 0)
                                   InkWell(
                                     onTap: () {
-                                      Navigator.pushReplacementNamed(
-                                          context, "/home");
+                                      cancelDialog(context, onPressed: () {
+                                        Navigator.pushReplacementNamed(
+                                            context, "/home");
+                                      });
                                     },
                                     child: Text(
                                       Language.instance.txtCancel(),
@@ -209,7 +211,12 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                                 const SizedBox(width: 12),
                                 if (_currentStep != 0)
                                   InkWell(
-                                    onTap: details.onStepCancel,
+                                    onTap: () {
+                                      cancelDialog(context, onPressed: () {
+                                        Navigator.pushReplacementNamed(
+                                            context, "/home");
+                                      });
+                                    },
                                     child: Text(
                                       Language.instance.txtCancel(),
                                       style: TextStyle(
@@ -255,7 +262,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    _pickImage();
+                    _pickAndCropImage();
                   },
                   child: Container(
                     width: 148,

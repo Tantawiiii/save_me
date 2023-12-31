@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
@@ -16,12 +15,12 @@ import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
 import '../../../../utils/strings/Strings_en.dart';
 import '../../../auth/utils/validation.dart';
-import 'package:auto_route/auto_route.dart';
 
+import '../../../widgets/cancel_dialog.dart';
 import '../../api_helper/api_helper.dart';
 import '../../models/profile_info.dart';
+import '../utils/image_picker_cropper.dart';
 
-@RoutePage()
 class AddDisabledProfile extends StatefulWidget {
   const AddDisabledProfile({super.key});
 
@@ -37,7 +36,6 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
   double latitude = 0.0;
   double longitude = 0.0;
 
-  File? image;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
@@ -68,13 +66,15 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
   }
 
   // Picker Image for the current step
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+  File? image;
 
-    if (pickedImage != null) {
+  Future<void> _pickAndCropImage() async {
+    ImagePickerCropper imagePickerCropper = ImagePickerCropper();
+    File? croppedImage = await imagePickerCropper.pickAndCropImage(context);
+
+    if (croppedImage != null) {
       setState(() {
-        image = File(pickedImage.path);
+        image = croppedImage;
       });
     }
   }
@@ -197,8 +197,10 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                                   if (_currentStep == 0)
                                     InkWell(
                                       onTap: () {
-                                        Navigator.pushReplacementNamed(
-                                            context, "/home");
+                                        cancelDialog(context, onPressed: () {
+                                          Navigator.pushReplacementNamed(
+                                              context, "/home");
+                                        });
                                       },
                                       child: Text(
                                         Language.instance.txtCancel(),
@@ -212,7 +214,12 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                                   const SizedBox(width: 12),
                                   if (_currentStep != 0)
                                     InkWell(
-                                      onTap: details.onStepCancel,
+                                      onTap: () {
+                                        cancelDialog(context, onPressed: () {
+                                          Navigator.pushReplacementNamed(
+                                              context, "/home");
+                                        });
+                                      },
                                       child: Text(
                                         Language.instance.txtCancel(),
                                         style: TextStyle(
@@ -259,7 +266,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    _pickImage();
+                    _pickAndCropImage();
                   },
                   child: Container(
                     width: 148,
@@ -913,7 +920,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                   ),
                   inputDecoration: InputDecoration(
                     contentPadding:
-                        const EdgeInsets.symmetric(vertical: 15, horizontal: 4),
+                        const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
                     prefixIcon: const Padding(
                       padding: EdgeInsets.only(
                           left: 0.0, top: 3, bottom: 3, right: 8),

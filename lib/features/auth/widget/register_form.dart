@@ -441,7 +441,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       ),
                       inputDecoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
-                          vertical: 15,
+                          vertical: 2,
                           horizontal: 6,
                         ),
                         prefixIcon: const Padding(

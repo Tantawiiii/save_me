@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,7 +12,6 @@ import '../../../../utils/strings/Language.dart';
 import '../../../auth/utils/validation.dart';
 import '../../../widgets/loading_dialog.dart';
 
-@RoutePage()
 class Setting extends StatefulWidget {
   const Setting({super.key});
 
@@ -38,14 +36,14 @@ class _SettingState extends State<Setting> {
   Color backBtnPurple = ColorsCode.purpleColorLight;
   Color backBtnWhite = ColorsCode.whiteColor100;
   String currentLang = "";
+
   @override
   void initState() {
     super.initState();
     oldPasswordVisible = true;
-     newPasswordVisible = true;
-     confirmPasswordVisible = true;
+    newPasswordVisible = true;
+    confirmPasswordVisible = true;
     currentLang = Language.instance.getLanguage();
-
   }
 
   @override
@@ -108,7 +106,6 @@ class _SettingState extends State<Setting> {
                                   setState(() {
                                     changeLanguage("en");
                                     _handleButtonClick();
-
                                   });
                                 },
                                 icon: SvgPicture.asset(
@@ -125,7 +122,9 @@ class _SettingState extends State<Setting> {
                                 ),
                                 //label text
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: currentLang == "EN" ?  backBtnPurple :backBtnWhite,
+                                  backgroundColor: currentLang == "EN"
+                                      ? backBtnPurple
+                                      : backBtnWhite,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(4),
@@ -142,7 +141,6 @@ class _SettingState extends State<Setting> {
                                   setState(() {
                                     changeLanguage("de");
                                     _handleButtonClick();
-
                                   });
                                 },
                                 icon: SvgPicture.asset(
@@ -159,7 +157,9 @@ class _SettingState extends State<Setting> {
                                 ),
                                 //label text
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: currentLang == "DE" ? backBtnPurple :backBtnWhite,
+                                  backgroundColor: currentLang == "DE"
+                                      ? backBtnPurple
+                                      : backBtnWhite,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(4),
@@ -219,7 +219,8 @@ class _SettingState extends State<Setting> {
                                   onPressed: () {
                                     setState(
                                       () {
-                                        oldPasswordVisible = !oldPasswordVisible;
+                                        oldPasswordVisible =
+                                            !oldPasswordVisible;
                                       },
                                     );
                                   },
@@ -270,7 +271,8 @@ class _SettingState extends State<Setting> {
                                   onPressed: () {
                                     setState(
                                       () {
-                                        newPasswordVisible = !newPasswordVisible;
+                                        newPasswordVisible =
+                                            !newPasswordVisible;
                                       },
                                     );
                                   },
@@ -321,7 +323,8 @@ class _SettingState extends State<Setting> {
                                   onPressed: () {
                                     setState(
                                       () {
-                                        confirmPasswordVisible = !confirmPasswordVisible;
+                                        confirmPasswordVisible =
+                                            !confirmPasswordVisible;
                                       },
                                     );
                                   },
@@ -405,7 +408,8 @@ class _SettingState extends State<Setting> {
                             onTap: () {
                               // to remove an access Token and logout
                               setToken();
-                              Navigator.pushReplacementNamed(context, "/splash");
+                              Navigator.pushReplacementNamed(
+                                  context, "/splash");
                             },
                             child:
                                 SvgPicture.asset('assets/images/Logout.svg')),
@@ -469,10 +473,8 @@ class _SettingState extends State<Setting> {
       prefs.setString("language", "EN");
 
       Language.instance.setLanguage("EN");
-    currentLang = "EN";
-      setState(() {
-
-      });
+      currentLang = "EN";
+      setState(() {});
       Locale newLocale = const Locale('en');
       SaveMe.setLocale(context, newLocale);
     } else {
@@ -481,9 +483,7 @@ class _SettingState extends State<Setting> {
 
       Language.instance.setLanguage("DE");
       currentLang = "DE";
-      setState(() {
-
-      });
+      setState(() {});
       Locale newLocale = const Locale('de');
       SaveMe.setLocale(context, newLocale);
     }
