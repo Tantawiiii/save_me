@@ -1,7 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart' show PageTransitionType;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../home/home_screen.dart';
 import 'login_screen.dart';
 
-@RoutePage()
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -30,9 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
     String accessToken = prefs.getString('access_token') ?? '';
 
     // Check if the access token is empty or not
-    Widget nextScreen = accessToken.isNotEmpty
-        ? const HomeScreen()
-        : const LoginScreen();
+    Widget nextScreen =
+        accessToken.isNotEmpty ? const HomeScreen() : const LoginScreen();
 
     // Navigate to the next screen with a smooth transition
     Navigator.pushReplacement(

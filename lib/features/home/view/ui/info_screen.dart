@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -178,7 +177,7 @@ class _InfoScreenState extends State<InfoScreen> {
                         children: [
                           Container(
                             width: 170,
-                            height: 280,
+                            height: 300,
                             padding: const EdgeInsets.only(
                                 left: 8, right: 8, bottom: 2, top: 2),
                             decoration: BoxDecoration(
@@ -351,7 +350,7 @@ class _InfoScreenState extends State<InfoScreen> {
                           ),
                           Container(
                             width: 170,
-                            height: 280,
+                            height: 300,
                             padding: const EdgeInsets.only(
                                 left: 10, right: 10, bottom: 15, top: 15),
                             decoration: BoxDecoration(

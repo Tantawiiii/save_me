@@ -16,15 +16,12 @@ import 'package:save_me/features/home/view/pages/location_page.dart';
 import 'package:save_me/features/home/view/pages/profile_page.dart';
 import 'package:save_me/features/home/view/pages/setting_page.dart';
 
-import 'package:auto_route/auto_route.dart';
-
 import '../../data/api_client.dart';
 import '../../utils/constants/colors_code.dart';
 import '../../utils/constants/fonts.dart';
 import '../../utils/strings/Language.dart';
 import '../auth/models/user_model.dart';
 
-@RoutePage()
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,
@@ -295,126 +292,138 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.only(left: 0, right: 26),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  children: [
-                    IconButton(
-                      icon: SvgPicture.asset("assets/images/home.svg",
-                          color: currentTab == 0
-                              ? isActiveIconColor
-                              : ColorsCode.grayColor300,
-                          semanticsLabel: 'Label'),
-                      onPressed: () {
-                        setState(() {
-                          currentTab = 0;
-                          currentScreen = screens[currentTab];
-                        });
-                      },
-                    ),
-                    Text(
-                      Language.instance.txtHomeTab(),
-                      style: TextStyle(
-                          color: currentTab == 0
-                              ? isActiveIconColor
-                              : ColorsCode.grayColor300,
-                          fontSize: 13,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  width: 32,
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                      icon: SvgPicture.asset("assets/images/user_fill.svg",
-                          color: currentTab == 1
-                              ? isActiveIconColor
-                              : ColorsCode.grayColor300,
-                          semanticsLabel: 'Label'),
-                      onPressed: () {
-                        setState(() {
-                          currentTab = 1;
-                          currentScreen = screens[currentTab];
-                          if (currentTab == 1) {
-                            isActiveIconColor;
-                          }
-                        });
-                      },
-                    ),
-                    Text(
-                      Language.instance.txtProfileTab(),
-                      style: TextStyle(
-                          color: currentTab == 1
-                              ? isActiveIconColor
-                              : ColorsCode.grayColor300,
-                          fontSize: 13,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  width: 32,
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.my_location_rounded,
-                        size: 28,
+                Expanded(
+                  child: Column(
+                    children: [
+                      IconButton(
+                        icon: SvgPicture.asset("assets/images/home.svg",
+                            color: currentTab == 0
+                                ? isActiveIconColor
+                                : ColorsCode.grayColor300,
+                            semanticsLabel: 'Label'),
+                        onPressed: () {
+                          setState(() {
+                            currentTab = 0;
+                            currentScreen = screens[currentTab];
+                          });
+                        },
                       ),
-                      onPressed: () {
-                        setState(() {
-                          currentTab = 2;
-                          currentScreen = screens[currentTab];
-                        });
-                      },
-                      color: currentTab == 2
-                          ? isActiveIconColor
-                          : ColorsCode.grayColor300,
-                    ),
-                    Text(
-                      Language.instance.txtLocationTab(),
-                      style: TextStyle(
-                          color: currentTab == 2
-                              ? isActiveIconColor
-                              : ColorsCode.grayColor300,
-                          fontSize: 13,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                    ),
-                  ],
+                      Text(
+                        Language.instance.txtHomeTab(),
+                        style: TextStyle(
+                            color: currentTab == 0
+                                ? isActiveIconColor
+                                : ColorsCode.grayColor300,
+                            fontSize: 13,
+                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
-                  width: 26,
+                  width: 8,
                 ),
-                Column(
-                  children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.settings,
-                        size: 28,
+                Expanded(
+                  child: Column(
+                    children: [
+                      IconButton(
+                        icon: SvgPicture.asset("assets/images/user_fill.svg",
+                            color: currentTab == 1
+                                ? isActiveIconColor
+                                : ColorsCode.grayColor300,
+                            semanticsLabel: 'Label'),
+                        onPressed: () {
+                          setState(() {
+                            currentTab = 1;
+                            currentScreen = screens[currentTab];
+                            if (currentTab == 1) {
+                              isActiveIconColor;
+                            }
+                          });
+                        },
                       ),
-                      onPressed: () {
-                        setState(() {
-                          currentTab = 3;
-                          currentScreen = screens[currentTab];
-                        });
-                      },
-                      color: currentTab == 3
-                          ? isActiveIconColor
-                          : ColorsCode.grayColor300,
-                    ),
-                    Text(
-                      Language.instance.txtSettingsTab(),
-                      style: TextStyle(
-                          color: currentTab == 3
-                              ? isActiveIconColor
-                              : ColorsCode.grayColor300,
-                          fontSize: 13,
-                          fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                    ),
-                  ],
+                      Text(
+                        Language.instance.txtProfileTab(),
+                        style: TextStyle(
+                            color: currentTab == 1
+                                ? isActiveIconColor
+                                : ColorsCode.grayColor300,
+                            fontSize: 13,
+                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          Icons.my_location_rounded,
+                          size: 28,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            currentTab = 2;
+                            currentScreen = screens[currentTab];
+                          });
+                        },
+                        color: currentTab == 2
+                            ? isActiveIconColor
+                            : ColorsCode.grayColor300,
+                      ),
+                      Text(
+                        Language.instance.txtLocationTab(),
+                        style: TextStyle(
+                            color: currentTab == 2
+                                ? isActiveIconColor
+                                : ColorsCode.grayColor300,
+                            fontSize: 13,
+                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          Icons.settings,
+                          size: 28,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            currentTab = 3;
+                            currentScreen = screens[currentTab];
+                          });
+                        },
+                        color: currentTab == 3
+                            ? isActiveIconColor
+                            : ColorsCode.grayColor300,
+                      ),
+                      Text(
+                        Language.instance.txtSettingsTab(),
+                        style: TextStyle(
+                            color: currentTab == 3
+                                ? isActiveIconColor
+                                : ColorsCode.grayColor300,
+                            fontSize: 13,
+                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  width: 55,
                 ),
               ],
             ),

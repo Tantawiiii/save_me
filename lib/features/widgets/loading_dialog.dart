@@ -3,7 +3,9 @@ import 'package:lottie/lottie.dart';
 
 class LoadingDialog extends StatelessWidget {
   const LoadingDialog({super.key, required this.isLoading});
+
   final bool isLoading;
+
   //TODO: fIX ME Loading
 
   @override
@@ -12,7 +14,7 @@ class LoadingDialog extends StatelessWidget {
       children: [
         if (isLoading)
           Container(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.white.withOpacity(0.12),
             child: Center(
               child: Lottie.asset(
                 'assets/anim/loading_location.json',

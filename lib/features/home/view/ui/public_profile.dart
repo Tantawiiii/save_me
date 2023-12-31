@@ -48,7 +48,7 @@ class _PublicProfileState extends State<PublicProfile> {
             if (snapshot.hasData) {
               final userData = snapshot.data as User?;
               latitude = userData!.location!.latitude!;
-              longitude = userData!.location!.longitude!;
+              longitude = userData.location!.longitude!;
               return Card(
                 elevation: 0,
                 margin: const EdgeInsets.only(
@@ -64,7 +64,7 @@ class _PublicProfileState extends State<PublicProfile> {
                         children: [
                           Container(
                             width: 170,
-                            height: 280,
+                            height: 300,
                             padding: const EdgeInsets.only(
                                 left: 10, right: 10, bottom: 15, top: 15),
                             decoration: BoxDecoration(
@@ -81,7 +81,7 @@ class _PublicProfileState extends State<PublicProfile> {
                                 CircleAvatar(
                                   radius: 45,
                                   backgroundImage: NetworkImage(
-                                    userData!.photoUrl!,
+                                    userData.photoUrl!,
                                   ),
                                 ),
                                 const SizedBox(
@@ -111,12 +111,21 @@ class _PublicProfileState extends State<PublicProfile> {
                                         fontSize: 12,
                                         color: Colors.black),
                                   ),
+                                Text(
+                                  Language.instance.txtDefaultMassage(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily:
+                                          Fonts.getFontFamilyTitillRegular(),
+                                      fontSize: 12,
+                                      color: Colors.black),
+                                ),
                               ],
                             ),
                           ),
                           Container(
                             width: 170,
-                            height: 280,
+                            height: 300,
                             padding: const EdgeInsets.only(
                                 left: 10, right: 10, bottom: 15, top: 15),
                             decoration: BoxDecoration(
@@ -814,7 +823,8 @@ class _PublicProfileState extends State<PublicProfile> {
               return Text("${snapshot.error}");
             }
             return const Center(
-              child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black)),
+              child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.black)),
             );
           }),
     );

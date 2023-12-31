@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
@@ -16,8 +15,8 @@ import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
 import '../../../../utils/strings/Strings_en.dart';
 import '../../../auth/models/user_model.dart';
+import '../../../widgets/loading_dialog.dart';
 
-@RoutePage()
 class LocationPage extends StatefulWidget {
   const LocationPage({super.key});
 
@@ -278,9 +277,12 @@ class _LocationPageState extends State<LocationPage> {
                   }
 
                   return const Center(
-                      child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.black)));
+                    child: LoadingDialog(isLoading: true),
+                    //
+                    // CircularProgressIndicator(
+                    //     valueColor:
+                    //         AlwaysStoppedAnimation<Color>(Colors.black))
+                  );
                 }),
           ],
         ),

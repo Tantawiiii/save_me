@@ -1,21 +1,18 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:save_me/features/home/view/cards/created_done.dart';
+import 'package:save_me/features/widgets/cancel_dialog.dart';
 
 import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
 import '../../../auth/utils/validation.dart';
 import '../../api_helper/api_helper.dart';
-import '../../home_screen.dart';
 import '../../models/profile_info.dart';
 
-
-@RoutePage()
 class AddItemProfile extends StatefulWidget {
   const AddItemProfile({super.key});
 
@@ -27,7 +24,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _addInfoController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-   int _currentStep = 0;
+  int _currentStep = 0;
   bool isCompleted = false;
 
   @override
@@ -35,8 +32,8 @@ class _AddItemProfileState extends State<AddItemProfile> {
     return Scaffold(
       backgroundColor: ColorsCode.whiteColor,
       resizeToAvoidBottomInset: false,
-      body: isCompleted ?
-      const Center(
+      body: isCompleted
+          ? const Center(
               child: CreatedProfile(),
             )
           : Container(
@@ -103,7 +100,8 @@ class _AddItemProfileState extends State<AddItemProfile> {
                             setState(() => _currentStep += 1);
                           }
                         },
-                        onStepTapped: (step) => setState(() => _currentStep = step),
+                        onStepTapped: (step) =>
+                            setState(() => _currentStep = step),
                         controlsBuilder:
                             (BuildContext context, ControlsDetails details) {
                           return Container(
@@ -124,7 +122,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
                                       ),
                                     ),
                                     child: Text(
-                                     Language.instance.txtCreate(),
+                                      Language.instance.txtCreate(),
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontFamily:
@@ -134,20 +132,23 @@ class _AddItemProfileState extends State<AddItemProfile> {
                                     ),
                                   ),
                                 ),
-                               const SizedBox(width: 12),
-                                  InkWell(
-                                    onTap: (){
-                                      Navigator.pushReplacementNamed(context, "/home");
-                                    },
-                                    child: Text(
-                                      Language.instance.txtCancel(),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily:
-                                            Fonts.getFontFamilyTitillSemiBold(),
-                                      ),
+                                const SizedBox(width: 12),
+                                InkWell(
+                                  onTap: () {
+                                    cancelDialog(context, onPressed: () {
+                                      Navigator.pushReplacementNamed(
+                                          context, "/home");
+                                    });
+                                  },
+                                  child: Text(
+                                    Language.instance.txtCancel(),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily:
+                                          Fonts.getFontFamilyTitillSemiBold(),
                                     ),
                                   ),
+                                ),
                               ],
                             ),
                           );
@@ -164,7 +165,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
   List<Step> getSteps() => [
         Step(
           isActive: _currentStep == 0,
-          title:  Text(Language.instance.txtItemBasicInfo()),
+          title: Text(Language.instance.txtItemBasicInfo()),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,13 +260,10 @@ class _AddItemProfileState extends State<AddItemProfile> {
         ),
       ];
 
-
-
   void _addItemProfile() async {
     // Implement your Profile logic here
     final name = _nameController.text;
     final addInfo = _addInfoController.text;
-
 
     if (kDebugMode) {
       print('Name: $name');
@@ -273,15 +271,11 @@ class _AddItemProfileState extends State<AddItemProfile> {
     }
 
     final profileInfo = ProfileInfo(
-        profileType: "ITEM",
-        name: name,
-        additionalInformation: addInfo
-    );
-
+        profileType: "ITEM", name: name, additionalInformation: addInfo);
 
     final createProfileSuccess = await postProfileData(profileInfo);
 
-    if (createProfileSuccess!= null) {
+    if (createProfileSuccess != null) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       if (kDebugMode) {
         print("Success Uploading profile information's and added it to Home");

@@ -2,7 +2,6 @@
 
 import 'dart:io';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,10 +13,11 @@ import 'package:save_me/features/home/view/cards/created_done.dart';
 import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
+import '../../../widgets/cancel_dialog.dart';
 import '../../api_helper/api_helper.dart';
 import '../../models/profile_info.dart';
+import '../utils/image_picker_cropper.dart';
 
-@RoutePage()
 class AddPetProfile extends StatefulWidget {
   const AddPetProfile({super.key});
 
@@ -52,13 +52,13 @@ class _AddPetProfileState extends State<AddPetProfile> {
   }
 
   // Picker Image for the current step
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+  Future<void> _pickAndCropImage() async {
+    ImagePickerCropper imagePickerCropper = ImagePickerCropper();
+    File? croppedImage = await imagePickerCropper.pickAndCropImage(context);
 
-    if (pickedImage != null) {
+    if (croppedImage != null) {
       setState(() {
-        image = File(pickedImage.path);
+        image = croppedImage;
       });
     }
   }
@@ -178,8 +178,10 @@ class _AddPetProfileState extends State<AddPetProfile> {
                                 if (_currentStep == 0)
                                   InkWell(
                                     onTap: () {
-                                      Navigator.pushReplacementNamed(
-                                          context, "/home");
+                                      cancelDialog(context, onPressed: () {
+                                        Navigator.pushReplacementNamed(
+                                            context, "/home");
+                                      });
                                     },
                                     child: Text(
                                       Language.instance.txtCancel(),
@@ -193,7 +195,12 @@ class _AddPetProfileState extends State<AddPetProfile> {
                                 const SizedBox(width: 12),
                                 if (_currentStep != 0)
                                   InkWell(
-                                    onTap: details.onStepCancel,
+                                    onTap: () {
+                                      cancelDialog(context, onPressed: () {
+                                        Navigator.pushReplacementNamed(
+                                            context, "/home");
+                                      });
+                                    },
                                     child: Text(
                                       Language.instance.txtCancel(),
                                       style: TextStyle(
@@ -238,7 +245,7 @@ class _AddPetProfileState extends State<AddPetProfile> {
               ),
               GestureDetector(
                 onTap: () {
-                  _pickImage();
+                  _pickAndCropImage();
                 },
                 child: Container(
                   width: 148,

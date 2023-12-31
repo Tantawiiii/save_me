@@ -9,7 +9,8 @@ void deleteDialog(context, {required void Function() onPressed}) {
       builder: (context) {
         return Container(
           height: 350,
-          padding: const EdgeInsets.only(top:4,right: 24,bottom: 4,left: 24),
+          padding:
+              const EdgeInsets.only(top: 4, right: 24, bottom: 4, left: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -21,19 +22,23 @@ void deleteDialog(context, {required void Function() onPressed}) {
                   fontFamily: Fonts.getFontFamilyTitillSemiBold(),
                 ),
               ),
-              const SizedBox(height:12,),
+              const SizedBox(
+                height: 12,
+              ),
               Text(
-                Language.instance. txtDeleteConfirmHint(),
+                Language.instance.txtDeleteConfirmHint(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14,
                   fontFamily: Fonts.getFontFamilyTitillSemiBold(),
                 ),
               ),
-              const SizedBox(height: 28,),
+              const SizedBox(
+                height: 28,
+              ),
               Bounce(
-                duration: const Duration(milliseconds:300),
-                onPressed: (){
+                duration: const Duration(milliseconds: 300),
+                onPressed: () {
                   Navigator.pop(context);
                 },
                 child: Container(
@@ -57,10 +62,11 @@ void deleteDialog(context, {required void Function() onPressed}) {
                   ),
                 ),
               ),
-              const SizedBox(height: 18,),
+              const SizedBox(
+                height: 18,
+              ),
               Bounce(
-                duration: const Duration(milliseconds:300),
-                //TODO: fIX ME Delete this profile
+                duration: const Duration(milliseconds: 300),
                 onPressed: onPressed,
                 child: Container(
                   width: double.infinity,
