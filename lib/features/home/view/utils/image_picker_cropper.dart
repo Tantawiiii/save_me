@@ -1,7 +1,8 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ImagePickerCropper {
   Future<File?> pickAndCropImage(BuildContext context) async {
@@ -9,7 +10,10 @@ class ImagePickerCropper {
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
-      File? croppedImage = await _cropImage(context, File(pickedImage.path));
+      File? croppedImage = await _cropImage(
+        context,
+        File(pickedImage.path),
+      );
       return croppedImage;
     }
 
@@ -28,14 +32,14 @@ class ImagePickerCropper {
       ],
       uiSettings: [
         AndroidUiSettings(
-          toolbarTitle: 'Cropper',
-          toolbarColor: Colors.deepOrange,
+          toolbarTitle: 'Crop Image',
+          toolbarColor: Colors.black,
           toolbarWidgetColor: Colors.white,
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false,
         ),
         IOSUiSettings(
-          title: 'Cropper',
+          title: 'Crop Image',
         ),
         WebUiSettings(
           context: context,

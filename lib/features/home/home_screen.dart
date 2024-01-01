@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, library_private_types_in_public_api
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +22,7 @@ import '../../utils/constants/colors_code.dart';
 import '../../utils/constants/fonts.dart';
 import '../../utils/strings/Language.dart';
 import '../auth/models/user_model.dart';
+import '../internet/no_internet.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -64,373 +66,401 @@ class _HomeScreenState extends State<HomeScreen> {
   Color isActiveIconColor = ColorsCode.purpleColor;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkConnectivity();
+  }
+
+  void checkConnectivity() async {
+    await Connectivity().checkConnectivity();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.white,
-          statusBarIconBrightness: Brightness.dark,
-        ),
-        title: Column(
-          children: [
-            FutureBuilder(
-                future: ApiClient.getUserProfileData(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final User? user = snapshot.data as User?;
-                    return Text(
-                      Language.instance.txtAppBarHome() + user!.name ?? "",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                        fontSize: 16,
-                      ),
-                    );
-                  }
-                  return Text(
-                    Language.instance.txtAppBarHome(),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                      fontSize: 16,
+    return StreamBuilder<ConnectivityResult>(
+        stream: Connectivity().onConnectivityChanged,
+        builder: (context, snapshot) {
+          return snapshot.data == ConnectivityResult.none
+              ? const NoInternet()
+              : Scaffold(
+                  extendBody: true,
+                  appBar: AppBar(
+                    systemOverlayStyle: const SystemUiOverlayStyle(
+                      statusBarColor: Colors.white,
+                      statusBarIconBrightness: Brightness.dark,
                     ),
-                  );
-                }),
-            Text(
-              Language.instance.txtAppBarWelcome(),
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Fonts.getFontFamilyTitillRegular(),
-                fontSize: 10,
-              ),
-            ),
-          ],
-        ),
-        toolbarHeight: 70,
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.notifications_active),
-        //     padding: const EdgeInsets.only(right: 12),
-        //     onPressed: () {},
-        //   ),
-        // ],
-        elevation: 12,
-        shadowColor: Colors.black45,
-        leading: const Padding(
-          padding: EdgeInsets.only(left: 3.0),
-          child: Image(
-            image: AssetImage('assets/images/logowithnobg.png'),
-          ),
-        ),
-        centerTitle: true,
-        // backgroundColor: Theme.of(context).colorScheme.primary,
-        iconTheme: const IconThemeData(color: Colors.black),
-      ),
-      body: PageStorage(
-        bucket: bucket,
-        child: currentScreen,
-      ),
-      // Make the Floating Action Button to a fixed location when use Keyboard navigation
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      floatingActionButton: Container(
-        margin: const EdgeInsets.only(right: 8, left: 8),
-        child: SpeedDial(
-          backgroundColor: mainBackColor,
-          //foregroundColor: ColorsCode.blackColor,
-          activeBackgroundColor: Colors.black,
-          activeForegroundColor: Colors.white,
-          direction: SpeedDialDirection.up,
-          visible: true,
-          closeManually: false,
-          curve: Curves.bounceOut,
-          overlayColor: Colors.black,
-          overlayOpacity: 0.2,
-          spaceBetweenChildren: 4,
-          spacing: 3,
-          buttonSize: const Size(75.0, 75.0),
-          childrenButtonSize: const Size(70.0, 70.0),
-          childMargin: const EdgeInsets.all(20),
-          mini: false,
-          elevation: 8.0,
-          //shadow elevation of button
-          shape: const CircleBorder(),
-          //shape of button
-          children: [
-            SpeedDialChild(
-              child: SvgPicture.asset(
-                "assets/images/Kids_black.svg",
-                width: 30,
-                height: 30,
-                //color: Colors.black,
-              ),
-              // backgroundColor: Colors.white,
-              onTap: () {
-                onChildTapped(
-                  "assets/images/kids.svg",
-                  Colors.white,
+                    title: Column(
+                      children: [
+                        FutureBuilder(
+                            future: ApiClient.getUserProfileData(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                final User? user = snapshot.data as User?;
+                                return Text(
+                                  Language.instance.txtAppBarHome() +
+                                          user!.name ??
+                                      "",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily:
+                                        Fonts.getFontFamilyTitillSemiBold(),
+                                    fontSize: 16,
+                                  ),
+                                );
+                              }
+                              return Text(
+                                Language.instance.txtAppBarHome(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily:
+                                      Fonts.getFontFamilyTitillSemiBold(),
+                                  fontSize: 16,
+                                ),
+                              );
+                            }),
+                        Text(
+                          Language.instance.txtAppBarWelcome(),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: Fonts.getFontFamilyTitillRegular(),
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    ),
+                    toolbarHeight: 70,
+                    // actions: [
+                    //   IconButton(
+                    //     icon: const Icon(Icons.notifications_active),
+                    //     padding: const EdgeInsets.only(right: 12),
+                    //     onPressed: () {},
+                    //   ),
+                    // ],
+                    elevation: 12,
+                    shadowColor: Colors.black45,
+                    leading: const Padding(
+                      padding: EdgeInsets.only(left: 3.0),
+                      child: Image(
+                        image: AssetImage('assets/images/logowithnobg.png'),
+                      ),
+                    ),
+                    centerTitle: true,
+                    // backgroundColor: Theme.of(context).colorScheme.primary,
+                    iconTheme: const IconThemeData(color: Colors.black),
+                  ),
+                  body: PageStorage(
+                    bucket: bucket,
+                    child: currentScreen,
+                  ),
+                  // Make the Floating Action Button to a fixed location when use Keyboard navigation
+                  resizeToAvoidBottomInset: false,
+                  backgroundColor: Colors.white,
+                  floatingActionButton: Container(
+                    margin: const EdgeInsets.only(right: 8, left: 8),
+                    child: SpeedDial(
+                      backgroundColor: mainBackColor,
+                      //foregroundColor: ColorsCode.blackColor,
+                      activeBackgroundColor: Colors.black,
+                      activeForegroundColor: Colors.white,
+                      direction: SpeedDialDirection.up,
+                      visible: true,
+                      closeManually: false,
+                      curve: Curves.bounceOut,
+                      overlayColor: Colors.black,
+                      overlayOpacity: 0.2,
+                      spaceBetweenChildren: 4,
+                      spacing: 3,
+                      buttonSize: const Size(75.0, 75.0),
+                      childrenButtonSize: const Size(70.0, 70.0),
+                      childMargin: const EdgeInsets.all(20),
+                      mini: false,
+                      elevation: 8.0,
+                      //shadow elevation of button
+                      shape: const CircleBorder(),
+                      //shape of button
+                      children: [
+                        SpeedDialChild(
+                          child: SvgPicture.asset(
+                            "assets/images/Kids_black.svg",
+                            width: 30,
+                            height: 30,
+                            //color: Colors.black,
+                          ),
+                          // backgroundColor: Colors.white,
+                          onTap: () {
+                            onChildTapped(
+                              "assets/images/kids.svg",
+                              Colors.white,
+                            );
+                            setState(() {
+                              currentScreen = const AddKidProfile();
+                              isActiveIconColor = ColorsCode.grayColor300;
+                            });
+                            // Close the SpeedDial after the button is pressed
+                            // Provider.of<SpeedDialProvider>(context, listen: false).toggleDial();
+                          },
+                          shape: const CircleBorder(),
+                        ),
+                        SpeedDialChild(
+                          child: SvgPicture.asset(
+                            "assets/images/Seniors_black.svg",
+                            width: 30,
+                            height: 30,
+                            //color: Colors.black,
+                          ),
+                          // backgroundColor: Colors.white,
+                          onTap: () => {
+                            onChildTapped(
+                              "assets/images/Seniors.svg",
+                              Colors.white,
+                            ),
+                            setState(() {
+                              currentScreen = const AddSeniorProfile();
+                              isActiveIconColor = ColorsCode.grayColor300;
+                            }),
+
+                            // Close the SpeedDial after the button is pressed
+                            _scaffoldKey.currentState!.openDrawer(),
+                          },
+                          shape: const CircleBorder(),
+                        ),
+                        SpeedDialChild(
+                          child: SvgPicture.asset(
+                            "assets/images/Disabled_black.svg",
+                            width: 30,
+                            height: 30,
+                          ),
+                          onTap: () => {
+                            onChildTapped(
+                              "assets/images/Disabled.svg",
+                              Colors.white,
+                            ),
+                            setState(() {
+                              currentScreen = const AddDisabledProfile();
+                            }),
+
+                            // Close the SpeedDial after the button is pressed
+                            _scaffoldKey.currentState!.openDrawer(),
+                          },
+                          shape: const CircleBorder(),
+                        ),
+                        SpeedDialChild(
+                          child: SvgPicture.asset(
+                            "assets/images/Pets_black.svg",
+                            width: 30,
+                            height: 30,
+                          ),
+                          onTap: () => {
+                            onChildTapped(
+                              "assets/images/Pets.svg",
+                              Colors.white,
+                            ),
+                            setState(() {
+                              currentScreen = const AddPetProfile();
+                              isActiveIconColor = ColorsCode.grayColor300;
+                            }),
+
+                            // Close the SpeedDial after the button is pressed
+                            _scaffoldKey.currentState!.openDrawer(),
+                          },
+                          shape: const CircleBorder(),
+                        ),
+                        SpeedDialChild(
+                          //speed dial child
+                          child: SvgPicture.asset(
+                            "assets/images/Item_black.svg",
+                            width: 30,
+                            height: 30,
+                          ),
+                          onTap: () => {
+                            onChildTapped(
+                              "assets/images/Item.svg",
+                              Colors.white,
+                            ),
+                            setState(() {
+                              currentScreen = const AddItemProfile();
+                            }),
+                            isActiveIconColor = ColorsCode.grayColor300,
+                            // Close the SpeedDial after the button is pressed
+                            _scaffoldKey.currentState!.openDrawer(),
+                          },
+                          shape: const CircleBorder(),
+                        ),
+                      ],
+                      activeChild: SvgPicture.asset(
+                        'assets/images/close.svg',
+                        color: Colors.white,
+                        width: 24,
+                        height: 24,
+                      ),
+                      child: SvgPicture.asset(
+                        mainIconPath,
+                        width: 18,
+                        height: 18,
+                        //color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  floatingActionButtonLocation:
+                      FloatingActionButtonLocation.endDocked,
+                  bottomNavigationBar: SizedBox(
+                    height: 95,
+                    child: BottomAppBar(
+                      shape: const CircularNotchedRectangle(),
+                      elevation: 14,
+                      notchMargin: 0,
+                      shadowColor: ColorsCode.blackColor100,
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 0, right: 26),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  IconButton(
+                                    icon: SvgPicture.asset(
+                                        "assets/images/home.svg",
+                                        color: currentTab == 0
+                                            ? isActiveIconColor
+                                            : ColorsCode.grayColor300,
+                                        semanticsLabel: 'Label'),
+                                    onPressed: () {
+                                      setState(() {
+                                        currentTab = 0;
+                                        currentScreen = screens[currentTab];
+                                      });
+                                    },
+                                  ),
+                                  Text(
+                                    Language.instance.txtHomeTab(),
+                                    style: TextStyle(
+                                        color: currentTab == 0
+                                            ? isActiveIconColor
+                                            : ColorsCode.grayColor300,
+                                        fontSize: 13,
+                                        fontFamily: Fonts
+                                            .getFontFamilyTitillSemiBold()),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  IconButton(
+                                    icon: SvgPicture.asset(
+                                        "assets/images/user_fill.svg",
+                                        color: currentTab == 1
+                                            ? isActiveIconColor
+                                            : ColorsCode.grayColor300,
+                                        semanticsLabel: 'Label'),
+                                    onPressed: () {
+                                      setState(() {
+                                        currentTab = 1;
+                                        currentScreen = screens[currentTab];
+                                        if (currentTab == 1) {
+                                          isActiveIconColor;
+                                        }
+                                      });
+                                    },
+                                  ),
+                                  Text(
+                                    Language.instance.txtProfileTab(),
+                                    style: TextStyle(
+                                        color: currentTab == 1
+                                            ? isActiveIconColor
+                                            : ColorsCode.grayColor300,
+                                        fontSize: 13,
+                                        fontFamily: Fonts
+                                            .getFontFamilyTitillSemiBold()),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.my_location_rounded,
+                                      size: 28,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        currentTab = 2;
+                                        currentScreen = screens[currentTab];
+                                      });
+                                    },
+                                    color: currentTab == 2
+                                        ? isActiveIconColor
+                                        : ColorsCode.grayColor300,
+                                  ),
+                                  Text(
+                                    Language.instance.txtLocationTab(),
+                                    style: TextStyle(
+                                        color: currentTab == 2
+                                            ? isActiveIconColor
+                                            : ColorsCode.grayColor300,
+                                        fontSize: 13,
+                                        fontFamily: Fonts
+                                            .getFontFamilyTitillSemiBold()),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.settings,
+                                      size: 28,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        currentTab = 3;
+                                        currentScreen = screens[currentTab];
+                                      });
+                                    },
+                                    color: currentTab == 3
+                                        ? isActiveIconColor
+                                        : ColorsCode.grayColor300,
+                                  ),
+                                  Text(
+                                    Language.instance.txtSettingsTab(),
+                                    style: TextStyle(
+                                        color: currentTab == 3
+                                            ? isActiveIconColor
+                                            : ColorsCode.grayColor300,
+                                        fontSize: 13,
+                                        fontFamily: Fonts
+                                            .getFontFamilyTitillSemiBold()),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 55,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 );
-                setState(() {
-                  currentScreen = const AddKidProfile();
-                  isActiveIconColor = ColorsCode.grayColor300;
-                });
-                // Close the SpeedDial after the button is pressed
-                // Provider.of<SpeedDialProvider>(context, listen: false).toggleDial();
-              },
-              shape: const CircleBorder(),
-            ),
-            SpeedDialChild(
-              child: SvgPicture.asset(
-                "assets/images/Seniors_black.svg",
-                width: 30,
-                height: 30,
-                //color: Colors.black,
-              ),
-              // backgroundColor: Colors.white,
-              onTap: () => {
-                onChildTapped(
-                  "assets/images/Seniors.svg",
-                  Colors.white,
-                ),
-                setState(() {
-                  currentScreen = const AddSeniorProfile();
-                  isActiveIconColor = ColorsCode.grayColor300;
-                }),
-
-                // Close the SpeedDial after the button is pressed
-                _scaffoldKey.currentState!.openDrawer(),
-              },
-              shape: const CircleBorder(),
-            ),
-            SpeedDialChild(
-              child: SvgPicture.asset(
-                "assets/images/Disabled_black.svg",
-                width: 30,
-                height: 30,
-              ),
-              onTap: () => {
-                onChildTapped(
-                  "assets/images/Disabled.svg",
-                  Colors.white,
-                ),
-                setState(() {
-                  currentScreen = const AddDisabledProfile();
-                }),
-
-                // Close the SpeedDial after the button is pressed
-                _scaffoldKey.currentState!.openDrawer(),
-              },
-              shape: const CircleBorder(),
-            ),
-            SpeedDialChild(
-              child: SvgPicture.asset(
-                "assets/images/Pets_black.svg",
-                width: 30,
-                height: 30,
-              ),
-              onTap: () => {
-                onChildTapped(
-                  "assets/images/Pets.svg",
-                  Colors.white,
-                ),
-                setState(() {
-                  currentScreen = const AddPetProfile();
-                  isActiveIconColor = ColorsCode.grayColor300;
-                }),
-
-                // Close the SpeedDial after the button is pressed
-                _scaffoldKey.currentState!.openDrawer(),
-              },
-              shape: const CircleBorder(),
-            ),
-            SpeedDialChild(
-              //speed dial child
-              child: SvgPicture.asset(
-                "assets/images/Item_black.svg",
-                width: 30,
-                height: 30,
-              ),
-              onTap: () => {
-                onChildTapped(
-                  "assets/images/Item.svg",
-                  Colors.white,
-                ),
-                setState(() {
-                  currentScreen = const AddItemProfile();
-                }),
-                isActiveIconColor = ColorsCode.grayColor300,
-                // Close the SpeedDial after the button is pressed
-                _scaffoldKey.currentState!.openDrawer(),
-              },
-              shape: const CircleBorder(),
-            ),
-          ],
-          activeChild: SvgPicture.asset(
-            'assets/images/close.svg',
-            color: Colors.white,
-            width: 24,
-            height: 24,
-          ),
-          child: SvgPicture.asset(
-            mainIconPath,
-            width: 18,
-            height: 18,
-            //color: Colors.white,
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: SizedBox(
-        height: 95,
-        child: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          elevation: 14,
-          notchMargin: 0,
-          shadowColor: ColorsCode.blackColor100,
-          child: Container(
-            padding: const EdgeInsets.only(left: 0, right: 26),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      IconButton(
-                        icon: SvgPicture.asset("assets/images/home.svg",
-                            color: currentTab == 0
-                                ? isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            semanticsLabel: 'Label'),
-                        onPressed: () {
-                          setState(() {
-                            currentTab = 0;
-                            currentScreen = screens[currentTab];
-                          });
-                        },
-                      ),
-                      Text(
-                        Language.instance.txtHomeTab(),
-                        style: TextStyle(
-                            color: currentTab == 0
-                                ? isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            fontSize: 13,
-                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      IconButton(
-                        icon: SvgPicture.asset("assets/images/user_fill.svg",
-                            color: currentTab == 1
-                                ? isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            semanticsLabel: 'Label'),
-                        onPressed: () {
-                          setState(() {
-                            currentTab = 1;
-                            currentScreen = screens[currentTab];
-                            if (currentTab == 1) {
-                              isActiveIconColor;
-                            }
-                          });
-                        },
-                      ),
-                      Text(
-                        Language.instance.txtProfileTab(),
-                        style: TextStyle(
-                            color: currentTab == 1
-                                ? isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            fontSize: 13,
-                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.my_location_rounded,
-                          size: 28,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            currentTab = 2;
-                            currentScreen = screens[currentTab];
-                          });
-                        },
-                        color: currentTab == 2
-                            ? isActiveIconColor
-                            : ColorsCode.grayColor300,
-                      ),
-                      Text(
-                        Language.instance.txtLocationTab(),
-                        style: TextStyle(
-                            color: currentTab == 2
-                                ? isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            fontSize: 13,
-                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.settings,
-                          size: 28,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            currentTab = 3;
-                            currentScreen = screens[currentTab];
-                          });
-                        },
-                        color: currentTab == 3
-                            ? isActiveIconColor
-                            : ColorsCode.grayColor300,
-                      ),
-                      Text(
-                        Language.instance.txtSettingsTab(),
-                        style: TextStyle(
-                            color: currentTab == 3
-                                ? isActiveIconColor
-                                : ColorsCode.grayColor300,
-                            fontSize: 13,
-                            fontFamily: Fonts.getFontFamilyTitillSemiBold()),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  width: 55,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+        });
   }
 
   // Method to handle the tap event for a SpeedDialChild

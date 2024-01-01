@@ -71,7 +71,7 @@ class ProfileInfo {
       specialCharacteristics: json['specialCharacteristics'].toString(),
       diet: json['diet'].toString(),
       additionalInformation: json['additionalInformation'].toString(),
-      institution:json['institution'] != null
+      institution: json['institution'] != null
           ? Institution.fromJson(json['institution']!)
           : null,
       allergies: json['allergies'].toString(),
@@ -111,6 +111,63 @@ class ProfileInfo {
       'message': message,
     };
   }
+
+  // Update data from copy with
+  ProfileInfo copyWith({
+    String? id,
+    String? profileType,
+    String? photoUrl,
+    String? name,
+    String? birthdate,
+    String? age,
+    String? size,
+    String? weight,
+    String? height,
+    String? heightUnit,
+    String? weightUnit,
+    String? characteristics,
+    String? behavior,
+    String? specialCharacteristics,
+    String? diet,
+    String? additionalInformation,
+    Institution? institution,
+    String? allergies,
+    String? diseases,
+    String? medicines,
+    String? race,
+    bool? neutered,
+    String? createdDate,
+    String? message,
+  }) {
+    return ProfileInfo(
+      id: id ?? this.id,
+      profileType: profileType ?? this.profileType,
+      photoUrl: photoUrl ?? this.photoUrl,
+      name: name ?? this.name,
+      birthdate: birthdate ?? this.birthdate,
+      age: age ?? this.age,
+      size: size ?? this.size,
+      weight: weight ?? this.weight,
+      height: height ?? this.height,
+      heightUnit: heightUnit ?? this.heightUnit,
+      weightUnit: weightUnit ?? this.weightUnit,
+      characteristics: characteristics ?? this.characteristics,
+      behavior: behavior ?? this.behavior,
+      specialCharacteristics:
+          specialCharacteristics ?? this.specialCharacteristics,
+      diet: diet ?? this.diet,
+      additionalInformation:
+          additionalInformation ?? this.additionalInformation,
+      institution: institution ?? this.institution,
+      allergies: allergies ?? this.allergies,
+      diseases: diseases ?? this.diseases,
+      medicines: medicines ?? this.medicines,
+      race: race ?? this.race,
+      neutered: neutered ?? this.neutered,
+      createdDate: createdDate ?? this.createdDate,
+      message: message ?? this.message,
+    );
+  }
 }
 
 class Institution {
@@ -149,6 +206,22 @@ class Institution {
           : null,
     );
   }
+
+  Institution copyWith({
+    String? nameIn,
+    String? websiteIn,
+    String? aidNameIn,
+    String? aidPhoneNumberIn,
+    Location? locationIn,
+  }) {
+    return Institution(
+      nameIn: nameIn ?? this.nameIn,
+      websiteIn: websiteIn ?? this.websiteIn,
+      aidNameIn: aidNameIn ?? this.aidNameIn,
+      aidPhoneNumberIn: aidPhoneNumberIn ?? this.aidPhoneNumberIn,
+      locationIn: locationIn ?? this.locationIn,
+    );
+  }
 }
 
 class Location {
@@ -164,6 +237,18 @@ class Location {
       'latitude': latitude,
       'longitude': longitude,
     };
+  }
+
+  Location copyWith({
+    String? nameLocation,
+    double? latitude,
+    double? longitude,
+  }) {
+    return Location(
+      nameLocation: nameLocation ?? this.nameLocation,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+    );
   }
 
   factory Location.fromJson(Map<String, dynamic> json) {

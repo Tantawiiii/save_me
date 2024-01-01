@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../data/api_endpoints.dart';
-import '../../auth/models/user_model.dart';
 import '../models/profile_info.dart';
 
 Future<ProfileInfo?> postProfileData(ProfileInfo profileInfo) async {
@@ -74,6 +73,36 @@ Future<List<ProfileInfo>> getUserProfileData() async {
   }
 }
 
+Future<void> updateProfile(String profileId, ProfileInfo updateInfo) async {
+  String? accessToken = await getAccessToken();
+  final String url = Endpoints.profileId(profileId);
+
+  try {
+    final response = await http.put(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+      body: jsonEncode(updateInfo.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      // Successfully updated profile
+      if (kDebugMode) {
+        print('Profile updated successfully');
+      }
+    } else {
+      if (kDebugMode) {
+        print("Error: ${response.statusCode}");
+        print("Error Body: ${response.body}");
+      }
+    }
+  } catch (e) {
+    // Handle exception
+    print('Exception during profile update: $e');
+  }
+}
+
 Future<void> deleteUserProfileData(String profileId) async {
   String? accessToken = await getAccessToken();
   final url = Endpoints.profileId(profileId);
@@ -84,7 +113,6 @@ Future<void> deleteUserProfileData(String profileId) async {
         'Authorization': 'Bearer $accessToken',
       },
     );
-
   } catch (error) {
     Fluttertoast.showToast(msg: "$error");
     throw Exception('Failed to load user profile data');
@@ -93,7 +121,6 @@ Future<void> deleteUserProfileData(String profileId) async {
 
 Future<void> uploadProfileImage(
     {required String profileId, required File image}) async {
-
   String? accessToken = await getAccessToken();
   final url = Endpoints.profilePhotoUplaod(profileId);
   var postUri = Uri.parse(url);
@@ -122,36 +149,6 @@ Future<void> uploadProfileImage(
   }
 }
 
-// Future<void> uploadUesrImage({required String profileId, required File image}) async {
-//   String? accessToken = await getAccessToken();
-//
-//   const url = Endpoints.profileUserUplaodImage;
-//   var postUri = Uri.parse(url);
-//   var request = http.MultipartRequest("PUT", postUri);
-//   request.headers.addAll({
-//     'Authorization': 'Bearer $accessToken',
-//   });
-//   request.files.add(
-//     await http.MultipartFile.fromPath(
-//       'file',
-//       image.path,
-//     ),
-//   );
-//
-//   try {
-//     final response = await request.send();
-//
-//     if (response.statusCode == 200) {
-//       print('Successfully Uploaded Image...');
-//     } else {
-//       throw Exception('Failed to upload image');
-//     }
-//   } catch (error) {
-//     print('Error: $error');
-//     throw Exception('Failed to upload image');
-//   }
-// }
-
 Future<void> deleteProfileImage({required String profileId}) async {
   String? accessToken = await getAccessToken();
   final url = Endpoints.profilePhotoUplaod(profileId);
@@ -172,7 +169,6 @@ Future<void> deleteProfileImage({required String profileId}) async {
     throw Exception('Failed to delete image');
   }
 }
-
 
 // Function to get the access token from SharedPreferences
 Future<String?> getAccessToken() async {
