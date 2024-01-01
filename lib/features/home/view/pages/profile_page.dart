@@ -204,6 +204,8 @@ class _ProfileState extends State<Profile> {
                               keyboardType: TextInputType.name,
                               cursorColor: Colors.black,
                               decoration: InputDecoration(
+                                contentPadding:
+                                const EdgeInsets.only(bottom: 6, left: 8),
                                 filled: true,
                                 fillColor: ColorsCode.whiteColor100,
                                 border: OutlineInputBorder(

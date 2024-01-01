@@ -227,356 +227,360 @@ class _InfoScreenState extends State<InfoScreen> {
                                 ),
                                 Wrap(
                                   alignment: WrapAlignment.center,
-                                  spacing: 10,
+                                  spacing: 8,
                                   children: [
-                                    Container(
-                                      width: 170,
-                                      height: 300,
-                                      padding: const EdgeInsets.only(
-                                          left: 8, right: 8, bottom: 2, top: 2),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(4),
-                                        border: Border.all(
-                                          color: ColorsCode.purpleColor,
-                                          width: 1,
+                                    Flexible(
+                                      child: Container(
+                                        width: 150,
+                                        height: 300,
+                                        padding: const EdgeInsets.only(
+                                            left: 8, right: 8, bottom: 2, top: 2),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(4),
+                                          border: Border.all(
+                                            color: ColorsCode.purpleColor,
+                                            width: 1,
+                                          ),
                                         ),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 45,
-                                            backgroundImage: NetworkImage(
-                                              userData.photoUrl!,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 6,
-                                          ),
-                                          if (userData.name! != "" &&
-                                              userData.name != "null")
-                                            Text(
-                                              "${userData.name}",
-                                              style: TextStyle(
-                                                fontFamily: Fonts
-                                                    .getFontFamilyTitillSemiBold(),
-                                                fontSize: 16,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 45,
+                                              backgroundImage: NetworkImage(
+                                                userData.photoUrl!,
                                               ),
                                             ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          // if (widget.profileInfo.message != "" &&
-                                          //     widget.profileInfo.message != "null")
-                                          if (!isEditing)
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                Text(
-                                                  Language.instance
-                                                      .txtDefaultMassage(),
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontFamily: Fonts
-                                                          .getFontFamilyTitillRegular(),
-                                                      fontSize: 12,
-                                                      color: Colors.black),
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      isEditing = !isEditing;
-                                                    });
-                                                  },
-                                                  child: SvgPicture.asset(
-                                                    "assets/images/icons/edit.svg",
-                                                    width: 20,
-                                                    height: 20,
-                                                  ),
-                                                ),
-                                              ],
+                                            const SizedBox(
+                                              height: 6,
                                             ),
-                                          if (isEditing)
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                SizedBox(
-                                                  height: 65,
-                                                  child: TextFormField(
-                                                    keyboardType:
-                                                        TextInputType.multiline,
-                                                    cursorColor: Colors.black,
-                                                    maxLines: 2,
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                    ),
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          const EdgeInsets.only(
-                                                        bottom: 0,
-                                                        left: 2,
-                                                        right: 2,
-                                                      ),
-                                                      filled: true,
-                                                      fillColor: ColorsCode
-                                                          .whiteColor100,
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(4),
-                                                        borderSide:
-                                                            BorderSide.none,
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: Colors
-                                                              .purple.shade100,
-                                                        ),
-                                                      ),
-                                                      hintText: Language
-                                                          .instance
-                                                          .txtMassageHint(),
-                                                      hintStyle: TextStyle(
-                                                        fontSize: 14,
+                                            if (userData.name! != "" &&
+                                                userData.name != "null")
+                                              Text(
+                                                "${userData.name}",
+                                                style: TextStyle(
+                                                  fontFamily: Fonts
+                                                      .getFontFamilyTitillSemiBold(),
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            // if (widget.profileInfo.message != "" &&
+                                            //     widget.profileInfo.message != "null")
+                                            if (!isEditing)
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    Language.instance
+                                                        .txtDefaultMassage(),
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
                                                         fontFamily: Fonts
                                                             .getFontFamilyTitillRegular(),
-                                                        color: ColorsCode
-                                                            .grayColor,
-                                                      ),
+                                                        fontSize: 12,
+                                                        color: Colors.black),
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        isEditing = !isEditing;
+                                                      });
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                      "assets/images/icons/edit.svg",
+                                                      width: 20,
+                                                      height: 20,
                                                     ),
                                                   ),
-                                                ),
-                                                Bounce(
-                                                  duration: const Duration(
-                                                      milliseconds: 300),
-                                                  onPressed: () {},
-                                                  child: Container(
-                                                    height: 30,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  4)),
-                                                      color: Colors.black,
-                                                      shape: BoxShape.rectangle,
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        Language.instance
-                                                            .txtUpdate(),
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12,
+                                                ],
+                                              ),
+                                            if (isEditing)
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    height: 65,
+                                                    child: TextFormField(
+                                                      keyboardType:
+                                                          TextInputType.multiline,
+                                                      cursorColor: Colors.black,
+                                                      maxLines: 2,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                      decoration: InputDecoration(
+                                                        contentPadding:
+                                                            const EdgeInsets.only(
+                                                          bottom: 0,
+                                                          left: 2,
+                                                          right: 2,
+                                                        ),
+                                                        filled: true,
+                                                        fillColor: ColorsCode
+                                                            .whiteColor100,
+                                                        border:
+                                                            OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(4),
+                                                          borderSide:
+                                                              BorderSide.none,
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide: BorderSide(
+                                                            color: Colors
+                                                                .purple.shade100,
+                                                          ),
+                                                        ),
+                                                        hintText: Language
+                                                            .instance
+                                                            .txtMassageHint(),
+                                                        hintStyle: TextStyle(
+                                                          fontSize: 14,
                                                           fontFamily: Fonts
-                                                              .getFontFamilyTitillSemiBold(),
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                                              .getFontFamilyTitillRegular(),
+                                                          color: ColorsCode
+                                                              .grayColor,
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                Bounce(
-                                                  duration: const Duration(
-                                                      milliseconds: 300),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      isEditing = false;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    height: 30,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  4)),
-                                                      color: Colors.white,
-                                                      shape: BoxShape.rectangle,
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        Language.instance
-                                                            .txtCancel(),
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 12,
-                                                          fontFamily: Fonts
-                                                              .getFontFamilyTitillSemiBold(),
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                                  Bounce(
+                                                    duration: const Duration(
+                                                        milliseconds: 300),
+                                                    onPressed: () {},
+                                                    child: Container(
+                                                      height: 30,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    4)),
+                                                        color: Colors.black,
+                                                        shape: BoxShape.rectangle,
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          Language.instance
+                                                              .txtUpdate(),
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12,
+                                                            fontFamily: Fonts
+                                                                .getFontFamilyTitillSemiBold(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                        ],
+                                                  Bounce(
+                                                    duration: const Duration(
+                                                        milliseconds: 300),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        isEditing = false;
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                      height: 30,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    4)),
+                                                        color: Colors.white,
+                                                        shape: BoxShape.rectangle,
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          Language.instance
+                                                              .txtCancel(),
+                                                          style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 12,
+                                                            fontFamily: Fonts
+                                                                .getFontFamilyTitillSemiBold(),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                    Container(
-                                      width: 170,
-                                      height: 300,
-                                      padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          bottom: 15,
-                                          top: 15),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(4),
-                                        border: Border.all(
-                                          color: ColorsCode.purpleColor,
-                                          width: 1,
+                                    Flexible(
+                                      child: Container(
+                                        width: 150,
+                                        height: 300,
+                                        padding: const EdgeInsets.only(
+                                            left: 10,
+                                            right: 10,
+                                            bottom: 15,
+                                            top: 15),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(4),
+                                          border: Border.all(
+                                            color: ColorsCode.purpleColor,
+                                            width: 1,
+                                          ),
                                         ),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                  'assets/images/icons/phone.svg'),
-                                              const SizedBox(
-                                                width: 6,
-                                              ),
-                                              if (userData.phoneNumber! != "" &&
-                                                  userData.phoneNumber !=
-                                                      "null")
-                                                Flexible(
-                                                  child: Text(
-                                                    "${userData.phoneNumber}",
-                                                    textAlign: TextAlign.center,
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        fontFamily: Fonts
-                                                            .getFontFamilyTitillRegular(),
-                                                        fontSize: 12,
-                                                        color: Colors.black),
-                                                  ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                    'assets/images/icons/phone.svg'),
+                                                const SizedBox(
+                                                  width: 6,
                                                 ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(
-                                                  'assets/images/icons/map.svg'),
-                                              const SizedBox(
-                                                width: 6,
-                                              ),
-                                              if (userData.location!.name !=
-                                                      "" &&
-                                                  userData.location!.name !=
-                                                      "null")
-                                                Flexible(
-                                                  child: Text(
-                                                    "${userData.location!.name}",
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontFamily: Fonts
-                                                            .getFontFamilyTitillRegular(),
-                                                        color: Colors.black),
+                                                if (userData.phoneNumber! != "" &&
+                                                    userData.phoneNumber !=
+                                                        "null")
+                                                  Flexible(
+                                                    child: Text(
+                                                      "${userData.phoneNumber}",
+                                                      textAlign: TextAlign.center,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          fontFamily: Fonts
+                                                              .getFontFamilyTitillRegular(),
+                                                          fontSize: 12,
+                                                          color: Colors.black),
+                                                    ),
                                                   ),
-                                                ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Container(
-                                            height: 135,
-                                            width: 130,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
+                                              ],
                                             ),
-                                            child: GoogleMap(
-                                              mapType: MapType.normal,
-                                              compassEnabled: true,
-                                              mapToolbarEnabled: true,
-                                              zoomGesturesEnabled: true,
-                                              zoomControlsEnabled: false,
-                                              myLocationEnabled: true,
-                                              initialCameraPosition:
-                                                  CameraPosition(
-                                                target:
-                                                    LatLng(latitude, longitude),
-                                                zoom: 14.0,
-                                                tilt: 0,
-                                                bearing: 0,
-                                              ),
-                                              onMapCreated: (controller) {
-                                                setState(() {
-                                                  _controller = controller;
-                                                });
-                                              },
-                                              markers: {
-                                                Marker(
-                                                  markerId: const MarkerId("1"),
-                                                  icon: BitmapDescriptor
-                                                      .defaultMarker,
-                                                  visible: true,
-                                                  position: LatLng(
-                                                      latitude, longitude),
-                                                ),
-                                              },
+                                            const SizedBox(
+                                              height: 8,
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            height: 14,
-                                          ),
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(
-                                                  'assets/images/icons/info.svg'),
-                                              const SizedBox(
-                                                width: 6,
-                                              ),
-                                              if (userData.contactInfo != "" &&
-                                                  userData.contactInfo !=
-                                                      "null")
-                                                Flexible(
-                                                  child: Text(
-                                                    userData.contactInfo!,
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontFamily: Fonts
-                                                            .getFontFamilyTitillRegular(),
-                                                        color: Colors.black),
-                                                  ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                SvgPicture.asset(
+                                                    'assets/images/icons/map.svg'),
+                                                const SizedBox(
+                                                  width: 6,
                                                 ),
-                                            ],
-                                          ),
-                                        ],
+                                                if (userData.location!.name !=
+                                                        "" &&
+                                                    userData.location!.name !=
+                                                        "null")
+                                                  Flexible(
+                                                    child: Text(
+                                                      "${userData.location!.name}",
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontFamily: Fonts
+                                                              .getFontFamilyTitillRegular(),
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Container(
+                                              height: 135,
+                                              width: 130,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                              child: GoogleMap(
+                                                mapType: MapType.normal,
+                                                compassEnabled: true,
+                                                mapToolbarEnabled: true,
+                                                zoomGesturesEnabled: true,
+                                                zoomControlsEnabled: false,
+                                                myLocationEnabled: true,
+                                                initialCameraPosition:
+                                                    CameraPosition(
+                                                  target:
+                                                      LatLng(latitude, longitude),
+                                                  zoom: 14.0,
+                                                  tilt: 0,
+                                                  bearing: 0,
+                                                ),
+                                                onMapCreated: (controller) {
+                                                  setState(() {
+                                                    _controller = controller;
+                                                  });
+                                                },
+                                                markers: {
+                                                  Marker(
+                                                    markerId: const MarkerId("1"),
+                                                    icon: BitmapDescriptor
+                                                        .defaultMarker,
+                                                    visible: true,
+                                                    position: LatLng(
+                                                        latitude, longitude),
+                                                  ),
+                                                },
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 14,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                SvgPicture.asset(
+                                                    'assets/images/icons/info.svg'),
+                                                const SizedBox(
+                                                  width: 6,
+                                                ),
+                                                if (userData.contactInfo != "" &&
+                                                    userData.contactInfo !=
+                                                        "null")
+                                                  Flexible(
+                                                    child: Text(
+                                                      userData.contactInfo!,
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontFamily: Fonts
+                                                              .getFontFamilyTitillRegular(),
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
