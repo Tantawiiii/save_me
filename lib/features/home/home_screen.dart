@@ -39,13 +39,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // GlobalKey for accessing the SpeedDial widget
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  // Method to open the SpeedDial
-  void openSpeedDial() {
-    _scaffoldKey.currentState!.openDrawer();
-  }
-
+// widget  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+//
+//   // Method to open the SpeedDial
+//   void openSpeedDial() {
+//     _scaffoldKey.currentState!.openDrawer();
+//   }
+//
   int currentTab = 0;
   final List<Widget> screens = [
     const Home(),
@@ -221,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             }),
 
                             // Close the SpeedDial after the button is pressed
-                            _scaffoldKey.currentState!.openDrawer(),
+                           // _scaffoldKey.currentState!.openDrawer(),
                           },
                           shape: const CircleBorder(),
                         ),
@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             }),
 
                             // Close the SpeedDial after the button is pressed
-                            _scaffoldKey.currentState!.openDrawer(),
+                          //  _scaffoldKey.currentState!.openDrawer(),
                           },
                           shape: const CircleBorder(),
                         ),
@@ -262,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             }),
 
                             // Close the SpeedDial after the button is pressed
-                            _scaffoldKey.currentState!.openDrawer(),
+                           // _scaffoldKey.currentState!.openDrawer(),
                           },
                           shape: const CircleBorder(),
                         ),
@@ -283,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             }),
                             isActiveIconColor = ColorsCode.grayColor300,
                             // Close the SpeedDial after the button is pressed
-                            _scaffoldKey.currentState!.openDrawer(),
+                            //_scaffoldKey.currentState!.openDrawer(),
                           },
                           shape: const CircleBorder(),
                         ),

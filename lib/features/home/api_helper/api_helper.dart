@@ -81,6 +81,7 @@ Future<void> updateProfile(String profileId, ProfileInfo updateInfo) async {
     final response = await http.put(
       Uri.parse(url),
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer $accessToken',
       },
       body: jsonEncode(updateInfo.toJson()),

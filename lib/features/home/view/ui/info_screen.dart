@@ -97,13 +97,6 @@ class _InfoScreenState extends State<InfoScreen> {
                             ],
                           ),
                           toolbarHeight: 70,
-                          // actions: [
-                          //   IconButton(
-                          //     icon: const Icon(Icons.notifications_active),
-                          //     padding: const EdgeInsets.only(right: 12),
-                          //     onPressed: () {},
-                          //   ),
-                          // ],
                           elevation: 8,
                           shadowColor: Colors.black45,
                           leading: Padding(
