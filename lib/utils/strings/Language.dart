@@ -917,9 +917,9 @@ class Language extends ChangeNotifier {
 
   txtPleaseCheck() {
     if (getLanguage() == 'EN') {
-      return "Please check your connection. When you’re back online refresh the page or hit the button below.";
+      return "Please check your connection with the internet. When you're back online refresh the app.";
     } else if (getLanguage() == 'DE') {
-      return "Bitte überprüfen Sie Ihre Verbindung. Wenn Sie wieder online sind, aktualisieren Sie die Seite oder klicken Sie auf die Schaltfläche unten.";
+      return "Bitte überprüfen Sie Ihre Internetverbindung. Wenn Sie wieder online sind, aktualisieren Sie die App.";
     }
   }
 

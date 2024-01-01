@@ -206,9 +206,6 @@ class _AddItemProfileState extends State<AddItemProfile> {
                     ),
                     //isDense: true,
                   ),
-                  validator: (value) {
-                    return Validation.validateEmail(value ?? "");
-                  },
                 ),
               ),
               const SizedBox(
@@ -227,7 +224,7 @@ class _AddItemProfileState extends State<AddItemProfile> {
               ),
               SizedBox(
                 child: TextFormField(
-                  //controller: _nameController,
+                  controller: _addInfoController,
                   keyboardType: TextInputType.multiline,
                   cursorColor: Colors.black,
                   maxLines: null,

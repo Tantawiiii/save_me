@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:ndialog/ndialog.dart';
 import 'package:save_me/data/api_client.dart';
@@ -410,7 +408,7 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ),
                               const SizedBox(
-                                width: 4,
+                                width: 8,
                               ),
                               Bounce(
                                 duration: const Duration(milliseconds: 300),
@@ -447,6 +445,9 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                               ),
+                              SizedBox(
+                                width: 16,
+                              )
                             ],
                           ),
                           const SizedBox(

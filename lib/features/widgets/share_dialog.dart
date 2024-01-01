@@ -53,11 +53,23 @@ void shareDialog(context,
                   key: globalKey,
                   child: QrImageView(
                     data: Endpoints.publicProfileFrontEnd(profileId),
-                    size: 240,
-                    // embeddedImage: AssetImage("assets/images/logowithnobg.png"),
-                    embeddedImageStyle: const QrEmbeddedImageStyle(
-                      size: Size(40, 40),
+                    size: 220,
+                    foregroundColor: Colors.black,
+                    version: QrVersions.auto,
+                    embeddedImage: const AssetImage(
+                      "assets/images/logowithnobg.png",
                     ),
+                    embeddedImageStyle: const QrEmbeddedImageStyle(
+                      size: Size(70, 70),
+                    ),
+                    errorStateBuilder: (cxt, err) {
+                      return const Center(
+                        child: Text(
+                          'Uh oh! Something went wrong...',
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),

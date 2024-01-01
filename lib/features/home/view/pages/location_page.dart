@@ -230,7 +230,7 @@ class _LocationPageState extends State<LocationPage> {
                               ),
                             ),
                             const SizedBox(
-                              width: 0,
+                              width: 8,
                             ),
                             Bounce(
                               duration: const Duration(milliseconds: 300),
@@ -265,6 +265,9 @@ class _LocationPageState extends State<LocationPage> {
                                 ),
                               ),
                             ),
+                            const SizedBox(
+                              width: 16,
+                            ),
                           ],
                         ),
                         const SizedBox(
@@ -275,7 +278,6 @@ class _LocationPageState extends State<LocationPage> {
                   } else if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
-
                   return const Center(
                     child: LoadingDialog(isLoading: true),
                     //
