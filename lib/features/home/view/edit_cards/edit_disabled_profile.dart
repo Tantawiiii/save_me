@@ -2,14 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
-import 'package:save_me/features/home/view/cards/created_done.dart';
-
+import '../../../../data/api_client.dart';
 import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../../utils/strings/Language.dart';
@@ -21,14 +22,16 @@ import '../../api_helper/api_helper.dart';
 import '../../models/profile_info.dart';
 import '../utils/image_picker_cropper.dart';
 
-class AddDisabledProfile extends StatefulWidget {
-  const AddDisabledProfile({super.key});
+class EditDisabledProfile extends StatefulWidget {
+  const EditDisabledProfile({super.key, required this.profileInfo});
+
+  final ProfileInfo profileInfo;
 
   @override
-  State<AddDisabledProfile> createState() => _AddDisabledProfileState();
+  State<EditDisabledProfile> createState() => _EditDisabledProfileState();
 }
 
-class _AddDisabledProfileState extends State<AddDisabledProfile> {
+class _EditDisabledProfileState extends State<EditDisabledProfile> {
   final formKey = GlobalKey<FormState>();
   bool uploading = false;
 
@@ -36,24 +39,23 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
   double latitude = 0.0;
   double longitude = 0.0;
 
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _birthdayController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _weightController = TextEditingController();
-  final TextEditingController _heightController = TextEditingController();
-  final TextEditingController _charController = TextEditingController();
-  final TextEditingController _behaviorController = TextEditingController();
-  final TextEditingController _specialCharController = TextEditingController();
-  final TextEditingController _medicinesController = TextEditingController();
-  final TextEditingController _allergiesController = TextEditingController();
-  final TextEditingController _diseasesController = TextEditingController();
-  final TextEditingController _dietController = TextEditingController();
-  final TextEditingController _addInfoController = TextEditingController();
-  final TextEditingController _insituLocationController =
-      TextEditingController();
-  final TextEditingController _insituNameController = TextEditingController();
-  final TextEditingController _careAideController = TextEditingController();
-  final TextEditingController _insituPhoneController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _birthdayController = TextEditingController();
+  TextEditingController _ageController = TextEditingController();
+  TextEditingController _weightController = TextEditingController();
+  TextEditingController _heightController = TextEditingController();
+  TextEditingController _charController = TextEditingController();
+  TextEditingController _behaviorController = TextEditingController();
+  TextEditingController _specialCharController = TextEditingController();
+  TextEditingController _medicinesController = TextEditingController();
+  TextEditingController _allergiesController = TextEditingController();
+  TextEditingController _diseasesController = TextEditingController();
+  TextEditingController _dietController = TextEditingController();
+  TextEditingController _addInfoController = TextEditingController();
+  TextEditingController _insituLocationController = TextEditingController();
+  TextEditingController _insituNameController = TextEditingController();
+  TextEditingController _careAideController = TextEditingController();
+  TextEditingController _insituPhoneController = TextEditingController();
   int _currentStep = 0;
   bool isCompleted = false;
   PhoneNumber number = PhoneNumber(isoCode: 'EG');
@@ -81,165 +83,227 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
 
   @override
   Widget build(BuildContext context) {
+    _nameController = TextEditingController(text: widget.profileInfo.name);
+    _addInfoController =
+        TextEditingController(text: widget.profileInfo.additionalInformation);
+    _ageController = TextEditingController(text: widget.profileInfo.age);
+    _insituLocationController = TextEditingController(
+        text: widget.profileInfo.institution!.locationIn!.nameLocation);
+    _allergiesController =
+        TextEditingController(text: widget.profileInfo.allergies);
+    _behaviorController =
+        TextEditingController(text: widget.profileInfo.behavior);
+    _birthdayController =
+        TextEditingController(text: widget.profileInfo.birthdate);
+    _careAideController =
+        TextEditingController(text: widget.profileInfo.institution!.aidNameIn);
+    _charController =
+        TextEditingController(text: widget.profileInfo.characteristics);
+    _dietController = TextEditingController(text: widget.profileInfo.diet);
+    _diseasesController =
+        TextEditingController(text: widget.profileInfo.diseases);
+    _heightController = TextEditingController(text: widget.profileInfo.height);
+    _weightController = TextEditingController(text: widget.profileInfo.weight);
+    _insituNameController =
+        TextEditingController(text: widget.profileInfo.institution!.nameIn);
+    _insituPhoneController = TextEditingController(
+        text: widget.profileInfo.institution!.aidPhoneNumberIn);
+    _medicinesController =
+        TextEditingController(text: widget.profileInfo.medicines);
+    _specialCharController =
+        TextEditingController(text: widget.profileInfo.specialCharacteristics);
+
     return Scaffold(
       backgroundColor: ColorsCode.whiteColor,
       resizeToAvoidBottomInset: false,
-      body: isCompleted
-          ? const Center(
-              child: CreatedProfile(),
-            )
-          : Container(
-              margin: const EdgeInsets.only(
-                top: 0.0,
+      appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+          statusBarIconBrightness: Brightness.dark,
+        ),
+        title: Column(
+          children: [
+            Text(
+              Language.instance.txtAppBarHome(), // + user!.name ?? "",
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                fontSize: 16,
               ),
-              child: SingleChildScrollView(
+            ),
+            Text(
+              Language.instance.txtAppBarWelcome(),
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: Fonts.getFontFamilyTitillRegular(),
+                fontSize: 10,
+              ),
+            ),
+          ],
+        ),
+        toolbarHeight: 70,
+        elevation: 8,
+        shadowColor: Colors.black45,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 3.0),
+          child: InkWell(
+            onTap: () => Navigator.of(context).pop(),
+            child: const Image(
+              image: AssetImage('assets/images/logowithnobg.png'),
+            ),
+          ),
+        ),
+        centerTitle: true,
+        // backgroundColor: Theme.of(context).colorScheme.primary,
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      body: Container(
+        margin: const EdgeInsets.only(
+          top: 0.0,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 24.0,
+                  left: 24.0,
+                  right: 24.0,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.only(
-                        top: 24.0,
-                        left: 24.0,
-                        right: 24.0,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            Language.instance.txtDisabledCard(),
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontFamily: Fonts.getFontFamilyTitillBold(),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 8.0,
-                          ),
-                          Text(
-                            Language.instance.txtDisabledCardHint(),
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: Fonts.getFontFamilyTitillRegular(),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                    Text(
+                      Language.instance.txtDisabledCard(),
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: Fonts.getFontFamilyTitillBold(),
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Theme(
-                      data: ThemeData(
-                        colorScheme: Theme.of(context)
-                            .colorScheme
-                            .copyWith(primary: ColorsCode.purpleColor),
-                      ),
-                      child: Stepper(
-                        physics: const ClampingScrollPhysics(),
-                        type: StepperType.vertical,
-                        steps: getSteps(),
-                        currentStep: _currentStep,
-                        onStepContinue: () {
-                          final isLastStep =
-                              _currentStep == getSteps().length - 1;
-                          if (isLastStep) {
-                            setState(() => isCompleted = true);
-                            _addDisPersonProfile();
-                          } else {
-                            setState(() => _currentStep += 1);
-                          }
-                        },
-                        onStepTapped: (step) =>
-                            setState(() => _currentStep = step),
-                        onStepCancel: _currentStep == 0
-                            ? null
-                            : () => setState(() => _currentStep -= 1),
-                        controlsBuilder:
-                            (BuildContext context, ControlsDetails details) {
-                          final isLastStep =
-                              _currentStep == getSteps().length - 1;
-                          return SingleChildScrollView(
-                            child: Container(
-                              margin:
-                                  const EdgeInsets.only(top: 32, bottom: 100),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 56,
-                                    width: 155,
-                                    child: ElevatedButton(
-                                      onPressed: details.onStepContinue,
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.black,
-                                        elevation: 2,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        isLastStep
-                                            ? Language.instance.txtCreate()
-                                            : Language.instance.txtNext(),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: Fonts
-                                              .getFontFamilyTitillSemiBold(),
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  if (_currentStep == 0)
-                                    const SizedBox(width: 12),
-                                  if (_currentStep == 0)
-                                    InkWell(
-                                      onTap: () {
-                                        cancelDialog(context, onPressed: () {
-                                          Navigator.pushReplacementNamed(
-                                              context, "/home");
-                                        });
-                                      },
-                                      child: Text(
-                                        Language.instance.txtCancel(),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontFamily: Fonts
-                                              .getFontFamilyTitillSemiBold(),
-                                        ),
-                                      ),
-                                    ),
-                                  const SizedBox(width: 12),
-                                  if (_currentStep != 0)
-                                    InkWell(
-                                      onTap: () {
-                                        cancelDialog(context, onPressed: () {
-                                          Navigator.pushReplacementNamed(
-                                              context, "/home");
-                                        });
-                                      },
-                                      child: Text(
-                                        Language.instance.txtCancel(),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontFamily: Fonts
-                                              .getFontFamilyTitillSemiBold(),
-                                        ),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(
+                      Language.instance.txtDisabledCardHint(),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: Fonts.getFontFamilyTitillRegular(),
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
+              Theme(
+                data: ThemeData(
+                  colorScheme: Theme.of(context)
+                      .colorScheme
+                      .copyWith(primary: ColorsCode.purpleColor),
+                ),
+                child: Stepper(
+                  physics: const ClampingScrollPhysics(),
+                  type: StepperType.vertical,
+                  steps: getSteps(),
+                  currentStep: _currentStep,
+                  onStepContinue: () {
+                    final isLastStep = _currentStep == getSteps().length - 1;
+                    if (isLastStep) {
+                      setState(() => isCompleted = true);
+                      _updateDisPersonProfile(widget.profileInfo);
+                      Navigator.pushReplacementNamed(context, "/home");
+                    } else {
+                      setState(() => _currentStep += 1);
+                    }
+                  },
+                  onStepTapped: (step) => setState(() => _currentStep = step),
+                  onStepCancel: _currentStep == 0
+                      ? null
+                      : () => setState(() => _currentStep -= 1),
+                  controlsBuilder:
+                      (BuildContext context, ControlsDetails details) {
+                    final isLastStep = _currentStep == getSteps().length - 1;
+                    return SingleChildScrollView(
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 32, bottom: 100),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 56,
+                              width: 155,
+                              child: ElevatedButton(
+                                onPressed: details.onStepContinue,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black,
+                                  elevation: 2,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                ),
+                                child: Text(
+                                  isLastStep
+                                      ? Language.instance.txtCreate()
+                                      : Language.instance.txtNext(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily:
+                                        Fonts.getFontFamilyTitillSemiBold(),
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            if (_currentStep == 0) const SizedBox(width: 12),
+                            if (_currentStep == 0)
+                              InkWell(
+                                onTap: () {
+                                  cancelDialog(context, onPressed: () {
+                                    Navigator.pushReplacementNamed(
+                                        context, "/home");
+                                  });
+                                },
+                                child: Text(
+                                  Language.instance.txtCancel(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily:
+                                        Fonts.getFontFamilyTitillSemiBold(),
+                                  ),
+                                ),
+                              ),
+                            const SizedBox(width: 12),
+                            if (_currentStep != 0)
+                              InkWell(
+                                onTap: () {
+                                  cancelDialog(context, onPressed: () {
+                                    Navigator.pushReplacementNamed(
+                                        context, "/home");
+                                  });
+                                },
+                                child: Text(
+                                  Language.instance.txtCancel(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily:
+                                        Fonts.getFontFamilyTitillSemiBold(),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -275,15 +339,24 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                       color: ColorsCode.whiteColor100,
                       borderRadius: const BorderRadius.all(Radius.circular(4)),
                     ),
-                    child: image == null
+                    child: image == null &&
+                            (widget.profileInfo.photoUrl == null ||
+                                widget.profileInfo.photoUrl == "null")
                         ? Center(
                             child:
                                 SvgPicture.asset('assets/images/plus_gray.svg'),
                           )
-                        : Image.file(
-                            image!,
-                            fit: BoxFit.cover,
-                          ),
+                        : image != null
+                            ? Image.file(
+                                image!,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                widget.profileInfo.photoUrl!,
+                                width: 120,
+                                height: 120,
+                                fit: BoxFit.cover,
+                              ),
                   ),
                 ),
                 const SizedBox(
@@ -1120,9 +1193,8 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
         ),
       ];
 
-  void _addDisPersonProfile() async {
+  void _updateDisPersonProfile(ProfileInfo profileInfo) async {
     // Implement your Profile logic here
-    final photo = "_image";
     final name = _nameController.text;
     final birthday = _birthdayController.text;
     final age = _ageController.text;
@@ -1141,11 +1213,9 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
     final careAide = _careAideController.text;
     final institutePhone = _insituPhoneController.text;
 
-    final profileInfo = ProfileInfo(
-      profileType: "DISABLED_PERSON",
-      photoUrl: "",
+    final profileUpdate = profileInfo.copyWith(
       name: name,
-      birthdate: birthday,
+      additionalInformation: addInfo,
       age: age,
       weight: weight,
       height: height,
@@ -1156,37 +1226,24 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
       allergies: allergies,
       diet: diet,
       diseases: diseases,
-      additionalInformation: addInfo,
       institution: Institution(
-        nameIn: instituteName,
-        aidNameIn: careAide,
-        aidPhoneNumberIn: institutePhone,
-        locationIn: LocationProfile(
-          nameLocation: locationName,
-          latitude: latitude,
-          longitude: longitude,
-        ),
-      ),
+          aidPhoneNumberIn: institutePhone,
+          nameIn: instituteName,
+          aidNameIn: careAide,
+          locationIn: LocationProfile(nameLocation: location)),
     );
+    await updateProfile(widget.profileInfo.id!, profileUpdate);
 
-    final createProfileSuccess = await postProfileData(profileInfo);
-
-    if (createProfileSuccess != null) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      if (image != null) {
-        await uploadProfileImage(
-          image: image!,
-          profileId: createProfileSuccess.id!,
-        );
-      }
-      if (kDebugMode) {
-        print("Success Uploading profile information's and added it to Home");
-      }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Error: $createProfileSuccess'),
-        backgroundColor: Colors.red.shade300,
-      ));
+    if (image != null) {
+      await ApiClient().uploadUserImage(
+        image: image!,
+      );
+      //   .showCustomProgressDialog(context);
+    }
+    if (Platform.isIOS || Platform.isAndroid) {
+      Fluttertoast.showToast(
+          toastLength: Toast.LENGTH_SHORT,
+          msg: Language.instance.txtUpdateMsg());
     }
   }
 }

@@ -32,6 +32,7 @@ class CreatedProfile extends StatelessWidget {
                   const SizedBox(height: 44),
                   Text(
                     Language.instance.txtCreatedDone(),
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: ColorsCode.blueDarkColor,
                       fontSize: 18,

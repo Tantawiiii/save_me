@@ -3,7 +3,7 @@ class ProfileInfo {
   final String? profileType;
   final String? photoUrl;
   final String? name;
-  final String? birthdate;
+  String? birthdate = "";
   final String? age;
   final String? size;
   final String? weight;
@@ -118,7 +118,7 @@ class ProfileInfo {
     String? profileType,
     String? photoUrl,
     String? name,
-    String? birthdate,
+    // String? birthdate,
     String? age,
     String? size,
     String? weight,
@@ -136,7 +136,7 @@ class ProfileInfo {
     String? medicines,
     String? race,
     bool? neutered,
-    String? createdDate,
+    // String? createdDate,
     String? message,
   }) {
     return ProfileInfo(
@@ -144,7 +144,7 @@ class ProfileInfo {
       profileType: profileType ?? this.profileType,
       photoUrl: photoUrl ?? this.photoUrl,
       name: name ?? this.name,
-      birthdate: birthdate ?? this.birthdate,
+      // birthdate: birthdate ?? this.birthdate,
       age: age ?? this.age,
       size: size ?? this.size,
       weight: weight ?? this.weight,
@@ -164,7 +164,7 @@ class ProfileInfo {
       medicines: medicines ?? this.medicines,
       race: race ?? this.race,
       neutered: neutered ?? this.neutered,
-      createdDate: createdDate ?? this.createdDate,
+      // createdDate: createdDate ?? this.createdDate,
       message: message ?? this.message,
     );
   }
@@ -175,7 +175,7 @@ class Institution {
   final String? websiteIn;
   final String? aidNameIn;
   final String? aidPhoneNumberIn;
-  final Location? locationIn;
+  final LocationProfile? locationIn;
 
   Institution({
     this.nameIn,
@@ -202,7 +202,7 @@ class Institution {
       aidNameIn: json['aidName'].toString(),
       aidPhoneNumberIn: json['aidPhoneNumber'].toString(),
       locationIn: json['location'] != null
-          ? Location.fromJson(json['location']!)
+          ? LocationProfile.fromJson(json['location']!)
           : null,
     );
   }
@@ -212,7 +212,7 @@ class Institution {
     String? websiteIn,
     String? aidNameIn,
     String? aidPhoneNumberIn,
-    Location? locationIn,
+    LocationProfile? locationIn,
   }) {
     return Institution(
       nameIn: nameIn ?? this.nameIn,
@@ -224,12 +224,12 @@ class Institution {
   }
 }
 
-class Location {
+class LocationProfile {
   final String? nameLocation;
   final double? latitude;
   final double? longitude;
 
-  Location({this.nameLocation, this.latitude, this.longitude});
+  LocationProfile({this.nameLocation, this.latitude, this.longitude});
 
   Map<String, dynamic> toJson() {
     return {
@@ -239,20 +239,20 @@ class Location {
     };
   }
 
-  Location copyWith({
+  LocationProfile copyWith({
     String? nameLocation,
     double? latitude,
     double? longitude,
   }) {
-    return Location(
+    return LocationProfile(
       nameLocation: nameLocation ?? this.nameLocation,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
     );
   }
 
-  factory Location.fromJson(Map<String, dynamic> json) {
-    return Location(
+  factory LocationProfile.fromJson(Map<String, dynamic> json) {
+    return LocationProfile(
       nameLocation: json['name'].toString(),
       latitude: json['latitude'],
       longitude: json['longitude'],

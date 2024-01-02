@@ -6,7 +6,6 @@ import 'package:save_me/utils/strings/Language.dart';
 
 import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
-
 import 'info_screen.dart';
 
 class ItemCard extends StatelessWidget {
@@ -58,7 +57,7 @@ class ItemCard extends StatelessWidget {
       },
       child: Container(
         width: 180,
-        height: 340,
+        height: 360,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
@@ -95,8 +94,8 @@ class ItemCard extends StatelessWidget {
                               )
                             : Image.network(
                                 profileInfo.photoUrl!,
-                                width: 130,
-                                height: 140,
+                                width: 120,
+                                height: 120,
                                 fit: BoxFit.cover,
                               )),
                     const SizedBox(

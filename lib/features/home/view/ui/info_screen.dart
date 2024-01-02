@@ -20,6 +20,7 @@ import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../auth/models/user_model.dart';
 import '../../../internet/no_internet.dart';
+import '../edit_cards/edit_disabled_profile.dart';
 import '../edit_cards/edit_item_profile.dart';
 
 class InfoScreen extends StatefulWidget {
@@ -97,13 +98,6 @@ class _InfoScreenState extends State<InfoScreen> {
                             ],
                           ),
                           toolbarHeight: 70,
-                          // actions: [
-                          //   IconButton(
-                          //     icon: const Icon(Icons.notifications_active),
-                          //     padding: const EdgeInsets.only(right: 12),
-                          //     onPressed: () {},
-                          //   ),
-                          // ],
                           elevation: 8,
                           shadowColor: Colors.black45,
                           leading: Padding(
@@ -167,7 +161,16 @@ class _InfoScreenState extends State<InfoScreen> {
                                             );
                                             break;
                                           case "DISABLED_PERSON":
-                                            //  typeCard = "Disabled person profile";
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditDisabledProfile(
+                                                  profileInfo:
+                                                      widget.profileInfo,
+                                                ),
+                                              ),
+                                            );
                                             break;
                                           case "KID":
                                             //  typeCard = "Child profile";
@@ -234,10 +237,10 @@ class _InfoScreenState extends State<InfoScreen> {
                                 ),
                                 Wrap(
                                   alignment: WrapAlignment.center,
-                                  spacing: 10,
+                                  spacing: 14,
                                   children: [
                                     Container(
-                                      width: 170,
+                                      width: 160,
                                       height: 300,
                                       padding: const EdgeInsets.only(
                                           left: 8, right: 8, bottom: 2, top: 2),
@@ -434,7 +437,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                       ),
                                     ),
                                     Container(
-                                      width: 170,
+                                      width: 160,
                                       height: 300,
                                       padding: const EdgeInsets.only(
                                           left: 10,

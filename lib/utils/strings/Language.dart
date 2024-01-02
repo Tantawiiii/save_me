@@ -861,9 +861,9 @@ class Language extends ChangeNotifier {
 
   txtRestCancel() {
     if (getLanguage() == 'EN') {
-      return "Reset and Cancel";
+      return "Reset";
     } else if (getLanguage() == 'DE') {
-      return "Zurücksetzen und Abbrechen";
+      return "Zurücksetzen";
     }
   }
 

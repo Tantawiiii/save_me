@@ -54,70 +54,75 @@ class NoInternet extends StatelessWidget {
         // backgroundColor: Theme.of(context).colorScheme.primary,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          top: 100,
-          right: 32,
-          left: 32,
-        ),
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Lottie.asset('assets/anim/no_connection.json',
-                animate: true, height: 300, width: 300),
-            const SizedBox(
-              height: 32,
+      body: ListView(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(
+              top: 100,
+              right: 32,
+              left: 32,
             ),
-            Text(
-              Language.instance.txtOffline(),
-              style: TextStyle(
-                  fontSize: 32,
-                  fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-                  color: Colors.black),
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Lottie.asset('assets/anim/no_connection.json',
+                    animate: true, height: 300, width: 300),
+                const SizedBox(
+                  height: 32,
+                ),
+                Text(
+                  Language.instance.txtOffline(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 32,
+                      fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                      color: Colors.black),
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                Text(
+                  Language.instance.txtPleaseCheck(),
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: Fonts.getFontFamilyTitillRegular(),
+                    color: Colors.black,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 60,
+                ),
+                // SizedBox(
+                //   width: 200,
+                //   height: 56,
+                //   child: ClipRRect(
+                //     child: ElevatedButton(
+                //       style: ElevatedButton.styleFrom(
+                //         backgroundColor: Colors.black,
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(4),
+                //         ),
+                //       ),
+                //       onPressed: () {},
+                //       child: Text(
+                //         Language.instance.txtBtnRef(),
+                //         style: TextStyle(
+                //           color: Colors.white,
+                //           fontSize: 18,
+                //           fontFamily: Fonts.getFontFamilyTitillSemiBold(),
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+              ],
             ),
-            const SizedBox(
-              height: 32,
-            ),
-            Text(
-              Language.instance.txtPleaseCheck(),
-              style: TextStyle(
-                fontSize: 14,
-                fontFamily: Fonts.getFontFamilyTitillRegular(),
-                color: Colors.black,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 60,
-            ),
-            // SizedBox(
-            //   width: 200,
-            //   height: 56,
-            //   child: ClipRRect(
-            //     child: ElevatedButton(
-            //       style: ElevatedButton.styleFrom(
-            //         backgroundColor: Colors.black,
-            //         shape: RoundedRectangleBorder(
-            //           borderRadius: BorderRadius.circular(4),
-            //         ),
-            //       ),
-            //       onPressed: () {},
-            //       child: Text(
-            //         Language.instance.txtBtnRef(),
-            //         style: TextStyle(
-            //           color: Colors.white,
-            //           fontSize: 18,
-            //           fontFamily: Fonts.getFontFamilyTitillSemiBold(),
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

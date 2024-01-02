@@ -79,16 +79,16 @@ class _PublicProfileState extends State<PublicProfile> {
                                 children: [
                                   Wrap(
                                     alignment: WrapAlignment.center,
-                                    spacing: 20,
+                                    spacing: 14,
                                     children: [
                                       Container(
-                                        width: 170,
+                                        width: 150,
                                         height: 300,
                                         padding: const EdgeInsets.only(
-                                            left: 10,
-                                            right: 10,
-                                            bottom: 15,
-                                            top: 15),
+                                            left: 8,
+                                            right: 8,
+                                            bottom: 2,
+                                            top: 2),
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(4),
@@ -152,7 +152,7 @@ class _PublicProfileState extends State<PublicProfile> {
                                         ),
                                       ),
                                       Container(
-                                        width: 170,
+                                        width: 150,
                                         height: 300,
                                         padding: const EdgeInsets.only(
                                             left: 10,
