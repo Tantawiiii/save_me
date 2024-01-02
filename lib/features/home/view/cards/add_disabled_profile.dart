@@ -983,6 +983,9 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                   keyboardType: TextInputType.name,
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 9,
+                    ),
                     filled: true,
                     fillColor: ColorsCode.whiteColor100,
                     border: OutlineInputBorder(
@@ -1023,6 +1026,9 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                   keyboardType: TextInputType.name,
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 9,
+                    ),
                     filled: true,
                     fillColor: ColorsCode.whiteColor100,
                     border: OutlineInputBorder(
@@ -1155,7 +1161,7 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
         nameIn: instituteName,
         aidNameIn: careAide,
         aidPhoneNumberIn: institutePhone,
-        locationIn: Location(
+        locationIn: LocationProfile(
           nameLocation: locationName,
           latitude: latitude,
           longitude: longitude,

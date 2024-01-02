@@ -1161,7 +1161,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
         nameIn: instituteName,
         aidNameIn: careAide,
         aidPhoneNumberIn: institutePhone,
-        locationIn: Location(
+        locationIn: LocationProfile(
           nameLocation: locationName,
           latitude: latitude,
           longitude: longitude,
