@@ -246,7 +246,7 @@ class _EditDisabledProfileState extends State<EditDisabledProfile> {
                                 ),
                                 child: Text(
                                   isLastStep
-                                      ? Language.instance.txtCreate()
+                                      ? Language.instance.txtUpdate()
                                       : Language.instance.txtNext(),
                                   style: TextStyle(
                                     color: Colors.white,

@@ -10,6 +10,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:save_me/features/home/api_helper/api_helper.dart';
 import 'package:save_me/features/home/home_screen.dart';
 import 'package:save_me/features/home/models/profile_info.dart';
+import 'package:save_me/features/home/view/edit_cards/edit_kid_profile.dart';
+import 'package:save_me/features/home/view/edit_cards/edit_pet_profile.dart';
+import 'package:save_me/features/home/view/edit_cards/edit_senior_profile.dart';
 import 'package:save_me/features/home/view/ui/public_profile.dart';
 import 'package:save_me/features/widgets/delete_dialog.dart';
 import 'package:save_me/features/widgets/share_dialog.dart';
@@ -53,8 +56,12 @@ class _InfoScreenState extends State<InfoScreen> {
     await Connectivity().checkConnectivity();
   }
 
+  TextEditingController _massageController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    _massageController =
+        TextEditingController(text: widget.profileInfo.message);
     return StreamBuilder<ConnectivityResult>(
         stream: Connectivity().onConnectivityChanged,
         builder: (context, snapshot) {
@@ -173,16 +180,41 @@ class _InfoScreenState extends State<InfoScreen> {
                                             );
                                             break;
                                           case "KID":
-                                            //  typeCard = "Child profile";
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditKidProfile(
+                                                  profileInfo:
+                                                      widget.profileInfo,
+                                                ),
+                                              ),
+                                            );
                                             break;
                                           case "PET":
-                                            //typeCard = "Pet profile";
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditPetProfile(
+                                                  profileInfo:
+                                                      widget.profileInfo,
+                                                ),
+                                              ),
+                                            );
                                             break;
                                           case "SENIOR":
-                                            //  typeCard = "Senior profile";
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditSeniorProfile(
+                                                  profileInfo:
+                                                      widget.profileInfo,
+                                                ),
+                                              ),
+                                            );
                                             break;
-                                          default:
-                                          //typeCard = "item profile";
                                         }
                                       },
                                       child: SvgPicture.asset(
@@ -279,23 +311,38 @@ class _InfoScreenState extends State<InfoScreen> {
                                           const SizedBox(
                                             height: 8,
                                           ),
-                                          // if (widget.profileInfo.message != "" &&
-                                          //     widget.profileInfo.message != "null")
                                           if (!isEditing)
                                             Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
                                               children: [
-                                                Text(
-                                                  Language.instance
-                                                      .txtDefaultMassage(),
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontFamily: Fonts
-                                                          .getFontFamilyTitillRegular(),
-                                                      fontSize: 12,
-                                                      color: Colors.black),
-                                                ),
+                                                widget.profileInfo.message !=
+                                                            "" &&
+                                                        widget.profileInfo
+                                                                .message !=
+                                                            null
+                                                    ? Text(
+                                                        Language.instance
+                                                            .txtDefaultMassage(),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            fontFamily: Fonts
+                                                                .getFontFamilyTitillRegular(),
+                                                            fontSize: 12,
+                                                            color:
+                                                                Colors.black),
+                                                      )
+                                                    : Text(
+                                                        "${widget.profileInfo.message}",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            fontFamily: Fonts
+                                                                .getFontFamilyTitillRegular(),
+                                                            fontSize: 12,
+                                                            color: Colors.red),
+                                                      ),
                                                 GestureDetector(
                                                   onTap: () {
                                                     setState(() {
@@ -320,6 +367,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 SizedBox(
                                                   height: 65,
                                                   child: TextFormField(
+                                                    controller:
+                                                        _massageController,
                                                     keyboardType:
                                                         TextInputType.multiline,
                                                     cursorColor: Colors.black,
@@ -368,7 +417,16 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 Bounce(
                                                   duration: const Duration(
                                                       milliseconds: 300),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    // update the Message
+                                                    _updateMassageProfile(
+                                                        widget.profileInfo);
+
+                                                    // to close the message Filed
+                                                    setState(() {
+                                                      isEditing = false;
+                                                    });
+                                                  },
                                                   child: Container(
                                                     height: 30,
                                                     decoration:
@@ -1233,6 +1291,15 @@ class _InfoScreenState extends State<InfoScreen> {
                     ));
                   });
         });
+  }
+
+  void _updateMassageProfile(ProfileInfo profileInfo) async {
+    final massage = _massageController.text;
+
+    final profileUpdate = profileInfo.copyWith(
+      message: massage,
+    );
+    await updateProfile(widget.profileInfo.id!, profileUpdate);
   }
 
 // Delete item from the list

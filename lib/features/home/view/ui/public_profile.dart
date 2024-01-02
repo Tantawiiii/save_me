@@ -82,7 +82,7 @@ class _PublicProfileState extends State<PublicProfile> {
                                     spacing: 14,
                                     children: [
                                       Container(
-                                        width: 150,
+                                        width: 160,
                                         height: 300,
                                         padding: const EdgeInsets.only(
                                             left: 8,
@@ -152,7 +152,7 @@ class _PublicProfileState extends State<PublicProfile> {
                                         ),
                                       ),
                                       Container(
-                                        width: 150,
+                                        width: 160,
                                         height: 300,
                                         padding: const EdgeInsets.only(
                                             left: 10,
