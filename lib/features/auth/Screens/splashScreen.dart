@@ -22,20 +22,22 @@ class _SplashScreenState extends State<SplashScreen> {
     checkAccessToken();
   }
 
+  String? accessToken = "";
+
   Future<void> checkAccessToken() async {
     // Get SharedPreferences instance
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('access_token') ?? '';
+    accessToken = prefs.getString('access_token') ?? '';
 
     // Check if the access token is empty or not
-    Widget nextScreen =
-        accessToken.isNotEmpty ? const HomeScreen() : const LoginScreen();
-
-    // Navigate to the next screen with a smooth transition
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => nextScreen),
-    );
+    // Widget nextScreen =
+    //
+    //
+    // // Navigate to the next screen with a smooth transition
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => nextScreen),
+    // );
   }
 
   @override
@@ -52,7 +54,8 @@ class _SplashScreenState extends State<SplashScreen> {
         backgroundImage: AssetImage("assets/images/logowithnobg.png"),
         backgroundColor: Colors.white,
       ),
-      nextScreen: const LoginScreen(),
+      nextScreen:
+          accessToken!.isNotEmpty ? const HomeScreen() : const LoginScreen(),
     );
   }
 }

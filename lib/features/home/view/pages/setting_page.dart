@@ -1,7 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:save_me/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -434,25 +437,29 @@ class _SettingState extends State<Setting> {
     String newPassword = _newPasswordController.text;
 
     if (_formKey1.currentState!.validate()) {
-      dynamic updatePassSuccess = await ApiClient().changePassword(
+      dynamic updatePassSuccess = await ApiClient.changePassword(
         currentPassword,
         newPassword,
       );
 
       if (updatePassSuccess != null) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Change Password Successfully'),
-          backgroundColor: Colors.blue.shade200,
-        ));
+        if (Platform.isIOS || Platform.isAndroid) {
+          Fluttertoast.showToast(
+              backgroundColor: Colors.blue.shade200,
+              toastLength: Toast.LENGTH_SHORT,
+              msg: Language.instance.txtToastChangePass());
+        }
         setState(() {
           // Toggle the visibility state
           isTextFieldVisible = !isTextFieldVisible;
         });
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Failed to change password'),
-          backgroundColor: Colors.red.shade300,
-        ));
+        if (Platform.isIOS || Platform.isAndroid) {
+          Fluttertoast.showToast(
+              backgroundColor: Colors.red.shade300,
+              toastLength: Toast.LENGTH_SHORT,
+              msg: Language.instance.txtToastErrorChangePass());
+        }
 
         setState(() {
           // Toggle the visibility state

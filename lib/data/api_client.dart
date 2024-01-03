@@ -122,36 +122,37 @@ class ApiClient {
     }
   }
 
-  Future<String> changePassword(String oldPassword, String newPassword) async {
+  static Future<String?> changePassword(
+      String oldPassword, String newPassword) async {
     String? accessToken = await getAccessToken();
     const url = Endpoints.changePassword;
 
-    final body = jsonEncode({'oldPassword': oldPassword, 'newPassword': newPassword});
+    final body =
+        jsonEncode({'oldPassword': oldPassword, 'newPassword': newPassword});
 
-    var headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer $accessToken', 'Accept': '*/*'};
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+      'Accept': '*/*'
+    };
 
-    try {
-      final response = await http.patch(
-        Uri.parse(url),
-        headers: headers,
-        body: body,
-      );
+    final response = await http.patch(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+    );
 
-      var responseDecoded = jsonDecode(response.body);
+    var responseDecoded = jsonDecode(response.body);
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return "Password changed successfully";
-      }
-    } catch (e) {
-      print('Error changing password: $e');
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return "Password changed successfully";
+    } else {
+      return null;
     }
-    return "Failed to change password...";
   }
 
   //upload image to user
-  Future<void> uploadUserImage(
-      {required File image}) async {
-
+  Future<void> uploadUserImage({required File image}) async {
     String? accessToken = await getAccessToken();
     const url = Endpoints.profileUserUplaodImage;
     var postUri = Uri.parse(url);
@@ -168,7 +169,7 @@ class ApiClient {
 
     try {
       final response = await request.send();
-log(response.statusCode.toString(),name: 'response');
+      log(response.statusCode.toString(), name: 'response');
       if (response.statusCode == 200) {
         print('Successfully Uploaded Image...');
       } else {
@@ -179,9 +180,6 @@ log(response.statusCode.toString(),name: 'response');
       throw Exception('Failed to upload image');
     }
   }
-
-
-
 
   static Future<String?> getAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
