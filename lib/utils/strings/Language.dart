@@ -1500,6 +1500,22 @@ class Language extends ChangeNotifier {
     }
   }
 
+  txtToastErrorChangePass() {
+    if (getLanguage() == 'EN') {
+      return "Failed to change your password check your password.";
+    } else if (getLanguage() == 'DE') {
+      return "Ihr Passwort konnte nicht geändert werden. Überprüfen Sie Ihr Passwort.";
+    }
+  }
+
+  txtToastChangePass() {
+    if (getLanguage() == 'EN') {
+      return "Change password successfully.";
+    } else if (getLanguage() == 'DE') {
+      return "Passwort erfolgreich ändern.";
+    }
+  }
+
   txtShareQr() {
     if (getLanguage() == 'EN') {
       return "Scan this QR Code";

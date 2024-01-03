@@ -246,7 +246,7 @@ class _EditSeniorProfileState extends State<EditSeniorProfile> {
                               ),
                               child: Text(
                                 isLastStep
-                                    ? Language.instance.txtCreate()
+                                    ? Language.instance.txtUpdate()
                                     : Language.instance.txtNext(),
                                 style: TextStyle(
                                   color: Colors.white,

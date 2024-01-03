@@ -3,7 +3,7 @@ class ProfileInfo {
   final String? profileType;
   final String? photoUrl;
   final String? name;
-  String? birthdate = "";
+  String? birthdate;
   final String? age;
   final String? size;
   final String? weight;
