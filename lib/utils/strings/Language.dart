@@ -1532,6 +1532,30 @@ class Language extends ChangeNotifier {
     }
   }
 
+  txtShareQrField() {
+    if (getLanguage() == 'EN') {
+      return "Uh oh! Something went wrong...";
+    } else if (getLanguage() == 'DE') {
+      return "Oh oh! Etwas ist schief gelaufen...";
+    }
+  }
+
+  txtShareQrMsgShare() {
+    if (getLanguage() == 'EN') {
+      return "Profile link copied to share it.";
+    } else if (getLanguage() == 'DE') {
+      return "Profillink kopiert, um ihn zu teilen.";
+    }
+  }
+
+  txtShareQrMsgClipboard() {
+    if (getLanguage() == 'EN') {
+      return "Profile copied to clipboard.";
+    } else if (getLanguage() == 'DE') {
+      return "Profil in die Zwischenablage kopiert.";
+    }
+  }
+
   txtShareQrHint() {
     if (getLanguage() == 'EN') {
       return "This unique QR code is linked to this profile. Scanning it will only provide access to this profile.";

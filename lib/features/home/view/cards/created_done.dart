@@ -47,7 +47,9 @@ class CreatedProfile extends StatelessWidget {
                         height: 56,
                         //width: 155,
                         child: ElevatedButton(
-                          onPressed: () => {Navigator.pop(context)},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
                             elevation: 2,

@@ -23,6 +23,7 @@ import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../auth/models/user_model.dart';
 import '../../../internet/no_internet.dart';
+import '../../../widgets/loading_dialog.dart';
 import '../edit_cards/edit_disabled_profile.dart';
 import '../edit_cards/edit_item_profile.dart';
 
@@ -39,6 +40,9 @@ class _InfoScreenState extends State<InfoScreen> {
   String locationName = "";
   double latitude = 51.507769;
   double longitude = 7.6350688;
+
+  double latitudeInstitute = 51.507769;
+  double longitudeInstitute = 7.6350688;
 
   GoogleMapController? _controller;
 
@@ -60,6 +64,27 @@ class _InfoScreenState extends State<InfoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String svgAssetPath = '';
+    switch (widget.profileInfo.profileType) {
+      case "ITEM":
+        svgAssetPath = 'assets/images/Item.svg';
+        break;
+      case "DISABLED_PERSON":
+        svgAssetPath = 'assets/images/Disabled.svg';
+        break;
+      case "KID":
+        svgAssetPath = 'assets/images/kids.svg';
+        break;
+      case "PET":
+        svgAssetPath = 'assets/images/Pets.svg';
+        break;
+      case "SENIOR":
+        svgAssetPath = 'assets/images/Seniors.svg';
+        break;
+      default:
+        svgAssetPath = 'assets/images/Item.svg';
+    }
+
     _massageController =
         TextEditingController(text: widget.profileInfo.message);
     return StreamBuilder<ConnectivityResult>(
@@ -74,6 +99,12 @@ class _InfoScreenState extends State<InfoScreen> {
                       final userData = snapshot.data as User?;
                       latitude = userData!.location!.latitude!;
                       longitude = userData.location!.longitude!;
+
+                      latitudeInstitute =
+                          widget.profileInfo.institution!.locationIn!.latitude!;
+                      longitudeInstitute = widget
+                          .profileInfo.institution!.locationIn!.longitude!;
+
                       return Scaffold(
                         appBar: AppBar(
                           systemOverlayStyle: const SystemUiOverlayStyle(
@@ -265,15 +296,15 @@ class _InfoScreenState extends State<InfoScreen> {
                                   ],
                                 ),
                                 const SizedBox(
-                                  height: 24,
+                                  height: 16,
                                 ),
                                 Wrap(
                                   alignment: WrapAlignment.center,
-                                  spacing: 14,
+                                  spacing: 12,
                                   children: [
                                     Container(
-                                      width: 160,
-                                      height: 300,
+                                      width: 170,
+                                      height: 320,
                                       padding: const EdgeInsets.only(
                                           left: 8, right: 8, bottom: 2, top: 2),
                                       decoration: BoxDecoration(
@@ -495,8 +526,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                       ),
                                     ),
                                     Container(
-                                      width: 160,
-                                      height: 300,
+                                      width: 170,
+                                      height: 320,
                                       padding: const EdgeInsets.only(
                                           left: 10,
                                           right: 10,
@@ -511,7 +542,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                       ),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: <Widget>[
@@ -542,7 +573,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                             ],
                                           ),
                                           const SizedBox(
-                                            height: 8,
+                                            height: 12,
                                           ),
                                           Row(
                                             crossAxisAlignment:
@@ -573,7 +604,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                             ],
                                           ),
                                           const SizedBox(
-                                            height: 8,
+                                            height: 12,
                                           ),
                                           Container(
                                             height: 135,
@@ -617,18 +648,17 @@ class _InfoScreenState extends State<InfoScreen> {
                                           const SizedBox(
                                             height: 14,
                                           ),
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(
-                                                  'assets/images/icons/info.svg'),
-                                              const SizedBox(
-                                                width: 6,
-                                              ),
-                                              if (userData.contactInfo != "" &&
-                                                  userData.contactInfo !=
-                                                      "null")
+                                          if (userData.contactInfo != "" &&
+                                              userData.contactInfo != "null")
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                SvgPicture.asset(
+                                                    'assets/images/icons/info.svg'),
+                                                const SizedBox(
+                                                  width: 6,
+                                                ),
                                                 Flexible(
                                                   child: Text(
                                                     userData.contactInfo!,
@@ -642,8 +672,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                                         color: Colors.black),
                                                   ),
                                                 ),
-                                            ],
-                                          ),
+                                              ],
+                                            ),
                                         ],
                                       ),
                                     ),
@@ -675,21 +705,26 @@ class _InfoScreenState extends State<InfoScreen> {
                                             const SizedBox(
                                               height: 24,
                                             ),
-                                            if (widget.profileInfo.photoUrl !=
-                                                    "" &&
-                                                widget.profileInfo.photoUrl !=
-                                                    null)
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(4.0),
-                                                child: CircleAvatar(
-                                                  radius: 50,
-                                                  backgroundImage: NetworkImage(
-                                                    widget
-                                                        .profileInfo.photoUrl!,
+                                            widget.profileInfo.photoUrl == null
+                                                ? SvgPicture.asset(
+                                                    svgAssetPath,
+                                                    width: 100,
+                                                    height: 120,
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                : ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4.0),
+                                                    child: CircleAvatar(
+                                                      radius: 50,
+                                                      backgroundImage:
+                                                          NetworkImage(
+                                                        widget.profileInfo
+                                                            .photoUrl!,
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
                                             const SizedBox(
                                               height: 24,
                                             ),
@@ -1147,6 +1182,58 @@ class _InfoScreenState extends State<InfoScreen> {
                                                             .getFontFamilyTitillRegular()),
                                                   ),
                                                   const SizedBox(
+                                                    height: 16,
+                                                  ),
+                                                  Container(
+                                                    height: 200,
+                                                    width: 320,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  16.0)),
+                                                    ),
+                                                    child: GoogleMap(
+                                                      mapType: MapType.normal,
+                                                      compassEnabled: true,
+                                                      mapToolbarEnabled: true,
+                                                      zoomGesturesEnabled: true,
+                                                      zoomControlsEnabled:
+                                                          false,
+                                                      myLocationEnabled: true,
+                                                      initialCameraPosition:
+                                                          CameraPosition(
+                                                        target: LatLng(
+                                                            latitudeInstitute,
+                                                            longitudeInstitute),
+                                                        zoom: 14.0,
+                                                        tilt: 0,
+                                                        bearing: 0,
+                                                      ),
+                                                      onMapCreated:
+                                                          (controller) {
+                                                        setState(() {
+                                                          _controller =
+                                                              controller;
+                                                        });
+                                                      },
+                                                      markers: {
+                                                        Marker(
+                                                          markerId:
+                                                              const MarkerId(
+                                                                  "1"),
+                                                          icon: BitmapDescriptor
+                                                              .defaultMarker,
+                                                          visible: true,
+                                                          position: LatLng(
+                                                              latitudeInstitute,
+                                                              longitudeInstitute),
+                                                        ),
+                                                      },
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
                                                     height: 24,
                                                   ),
                                                 ],
@@ -1285,9 +1372,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     }
                     return const Scaffold(
                         body: Center(
-                      child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.black)),
+                      child: LoadingDialog(isLoading: true),
                     ));
                   });
         });
@@ -1297,8 +1382,9 @@ class _InfoScreenState extends State<InfoScreen> {
     final massage = _massageController.text;
 
     final profileUpdate = profileInfo.copyWith(
-      message: massage,
-    );
+
+        ///  message: massage,
+        );
     await updateProfile(widget.profileInfo.id!, profileUpdate);
   }
 

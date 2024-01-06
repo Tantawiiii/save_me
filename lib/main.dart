@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:save_me/features/auth/Screens/login_screen.dart';
 import 'package:save_me/features/auth/Screens/register_screen.dart';
@@ -6,6 +7,7 @@ import 'package:save_me/features/home/home_screen.dart';
 import 'package:save_me/utils/constants/colors_code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'features/internet/no_internet.dart';
 
 String language = "EN";
 late Locale _locale;
@@ -42,7 +44,6 @@ class SaveMe extends StatefulWidget {
     _SaveMeState? state = context.findAncestorStateOfType<_SaveMeState>();
     return state!.getLocal();
   }
-
 }
 
 class _SaveMeState extends State<SaveMe> {
@@ -54,6 +55,17 @@ class _SaveMeState extends State<SaveMe> {
 
   Locale getLocal() {
     return _locale;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkConnectivity();
+  }
+
+  void checkConnectivity() async {
+    await Connectivity().checkConnectivity();
   }
 
   @override
@@ -75,12 +87,18 @@ class _SaveMeState extends State<SaveMe> {
           onSurface: Colors.black,
         ),
       ),
-      home: const SplashScreen(),
+      home: StreamBuilder<ConnectivityResult>(
+          stream: Connectivity().onConnectivityChanged,
+          builder: (context, snapshot) {
+            return snapshot.data == ConnectivityResult.none
+                ? const NoInternet()
+                : const SplashScreen();
+          }),
       routes: {
-        "/splash" : (_) =>  const SplashScreen(),
-        "/login" : (_) =>  const LoginScreen(),
-        "/register" : (_) =>  const RegisterScreen(),
-        "/home" : (_) =>  const HomeScreen(),
+        "/splash": (_) => const SplashScreen(),
+        "/login": (_) => const LoginScreen(),
+        "/register": (_) => const RegisterScreen(),
+        "/home": (_) => const HomeScreen(),
       },
     );
   }
