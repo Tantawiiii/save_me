@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -931,7 +932,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                     ),
                     inputDecoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
-                        vertical: 15,
+                        vertical: 2,
                         horizontal: 6,
                       ),
                       prefixIcon: const Padding(
@@ -967,6 +968,7 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
                         latitude = double.parse(prediction.lat!);
                         longitude = double.parse(prediction.lng!);
                       }
+                      log(prediction.toJson().toString());
                     },
                     itemClick: (Prediction prediction) {
                       // TODO: Error Location Lat , Long
@@ -1178,9 +1180,6 @@ class _AddSeniorProfileState extends State<AddSeniorProfile> {
           image: image!,
           profileId: createProfileSuccess.id!,
         );
-      }
-      if (kDebugMode) {
-        print("Success Uploading profile information's and added it to Home");
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

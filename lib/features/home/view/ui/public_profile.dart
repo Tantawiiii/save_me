@@ -12,6 +12,7 @@ import '../../../../utils/constants/colors_code.dart';
 import '../../../../utils/constants/fonts.dart';
 import '../../../auth/models/user_model.dart';
 import '../../../internet/no_internet.dart';
+import '../../../widgets/loading_dialog.dart';
 
 class PublicProfile extends StatefulWidget {
   const PublicProfile({super.key, required this.profileInfo});
@@ -26,6 +27,9 @@ class _PublicProfileState extends State<PublicProfile> {
   String locationName = "";
   double latitude = 51.507769;
   double longitude = 7.6350688;
+
+  double latitudeInstitute = 51.507769;
+  double longitudeInstitute = 7.6350688;
   GoogleMapController? _controller;
 
   @override
@@ -41,6 +45,27 @@ class _PublicProfileState extends State<PublicProfile> {
 
   @override
   Widget build(BuildContext context) {
+    String svgAssetPath = '';
+    switch (widget.profileInfo.profileType) {
+      case "ITEM":
+        svgAssetPath = 'assets/images/Item.svg';
+        break;
+      case "DISABLED_PERSON":
+        svgAssetPath = 'assets/images/Disabled.svg';
+        break;
+      case "KID":
+        svgAssetPath = 'assets/images/kids.svg';
+        break;
+      case "PET":
+        svgAssetPath = 'assets/images/Pets.svg';
+        break;
+      case "SENIOR":
+        svgAssetPath = 'assets/images/Seniors.svg';
+        break;
+      default:
+        svgAssetPath = 'assets/images/Item.svg';
+    }
+
     return StreamBuilder<ConnectivityResult>(
         stream: Connectivity().onConnectivityChanged,
         builder: (context, snapshot) {
@@ -68,6 +93,12 @@ class _PublicProfileState extends State<PublicProfile> {
                           final userData = snapshot.data as User?;
                           latitude = userData!.location!.latitude!;
                           longitude = userData.location!.longitude!;
+
+                          latitudeInstitute = widget
+                              .profileInfo.institution!.locationIn!.latitude!;
+                          longitudeInstitute = widget
+                              .profileInfo.institution!.locationIn!.longitude!;
+
                           return Card(
                             elevation: 0,
                             margin: const EdgeInsets.only(
@@ -79,11 +110,11 @@ class _PublicProfileState extends State<PublicProfile> {
                                 children: [
                                   Wrap(
                                     alignment: WrapAlignment.center,
-                                    spacing: 14,
+                                    spacing: 12,
                                     children: [
                                       Container(
-                                        width: 160,
-                                        height: 300,
+                                        width: 170,
+                                        height: 320,
                                         padding: const EdgeInsets.only(
                                             left: 8,
                                             right: 8,
@@ -152,8 +183,8 @@ class _PublicProfileState extends State<PublicProfile> {
                                         ),
                                       ),
                                       Container(
-                                        width: 160,
-                                        height: 300,
+                                        width: 170,
+                                        height: 320,
                                         padding: const EdgeInsets.only(
                                             left: 10,
                                             right: 10,
@@ -169,7 +200,7 @@ class _PublicProfileState extends State<PublicProfile> {
                                         ),
                                         child: Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              MainAxisAlignment.center,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
@@ -202,7 +233,7 @@ class _PublicProfileState extends State<PublicProfile> {
                                               ],
                                             ),
                                             const SizedBox(
-                                              height: 8,
+                                              height: 12,
                                             ),
                                             Row(
                                               crossAxisAlignment:
@@ -233,7 +264,7 @@ class _PublicProfileState extends State<PublicProfile> {
                                               ],
                                             ),
                                             const SizedBox(
-                                              height: 8,
+                                              height: 12,
                                             ),
                                             Container(
                                               height: 135,
@@ -277,19 +308,17 @@ class _PublicProfileState extends State<PublicProfile> {
                                             const SizedBox(
                                               height: 14,
                                             ),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                SvgPicture.asset(
-                                                    'assets/images/icons/info.svg'),
-                                                const SizedBox(
-                                                  width: 6,
-                                                ),
-                                                if (userData.contactInfo !=
-                                                        "" &&
-                                                    userData.contactInfo !=
-                                                        "null")
+                                            if (userData.contactInfo != "" &&
+                                                userData.contactInfo != "null")
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  SvgPicture.asset(
+                                                      'assets/images/icons/info.svg'),
+                                                  const SizedBox(
+                                                    width: 6,
+                                                  ),
                                                   Flexible(
                                                     child: Text(
                                                       userData.contactInfo!,
@@ -303,8 +332,8 @@ class _PublicProfileState extends State<PublicProfile> {
                                                           color: Colors.black),
                                                     ),
                                                   ),
-                                              ],
-                                            ),
+                                                ],
+                                              ),
                                           ],
                                         ),
                                       ),
@@ -336,23 +365,27 @@ class _PublicProfileState extends State<PublicProfile> {
                                               const SizedBox(
                                                 height: 24,
                                               ),
-                                              if (widget.profileInfo.photoUrl !=
-                                                      "" &&
-                                                  widget.profileInfo.photoUrl !=
-                                                      null)
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          4.0),
-                                                  child: CircleAvatar(
-                                                    radius: 50,
-                                                    backgroundImage:
-                                                        NetworkImage(
-                                                      widget.profileInfo
-                                                          .photoUrl!,
+                                              widget.profileInfo.photoUrl ==
+                                                      null
+                                                  ? SvgPicture.asset(
+                                                      svgAssetPath,
+                                                      width: 100,
+                                                      height: 120,
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4.0),
+                                                      child: CircleAvatar(
+                                                        radius: 50,
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                          widget.profileInfo
+                                                              .photoUrl!,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
                                               const SizedBox(
                                                 height: 24,
                                               ),
@@ -825,6 +858,59 @@ class _PublicProfileState extends State<PublicProfile> {
                                                               .getFontFamilyTitillRegular()),
                                                     ),
                                                     const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                    Container(
+                                                      height: 200,
+                                                      width: 320,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    16.0)),
+                                                      ),
+                                                      child: GoogleMap(
+                                                        mapType: MapType.normal,
+                                                        compassEnabled: true,
+                                                        mapToolbarEnabled: true,
+                                                        zoomGesturesEnabled:
+                                                            true,
+                                                        zoomControlsEnabled:
+                                                            false,
+                                                        myLocationEnabled: true,
+                                                        initialCameraPosition:
+                                                            CameraPosition(
+                                                          target: LatLng(
+                                                              latitudeInstitute,
+                                                              longitudeInstitute),
+                                                          zoom: 14.0,
+                                                          tilt: 0,
+                                                          bearing: 0,
+                                                        ),
+                                                        onMapCreated:
+                                                            (controller) {
+                                                          setState(() {
+                                                            _controller =
+                                                                controller;
+                                                          });
+                                                        },
+                                                        markers: {
+                                                          Marker(
+                                                            markerId:
+                                                                const MarkerId(
+                                                                    "1"),
+                                                            icon: BitmapDescriptor
+                                                                .defaultMarker,
+                                                            visible: true,
+                                                            position: LatLng(
+                                                                latitudeInstitute,
+                                                                longitudeInstitute),
+                                                          ),
+                                                        },
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
                                                       height: 24,
                                                     ),
                                                   ],
@@ -963,9 +1049,7 @@ class _PublicProfileState extends State<PublicProfile> {
                           return Text("${snapshot.error}");
                         }
                         return const Center(
-                          child: CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.black)),
+                          child: LoadingDialog(isLoading: true),
                         );
                       }),
                 );

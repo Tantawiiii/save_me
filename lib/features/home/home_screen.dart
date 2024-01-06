@@ -221,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             }),
 
                             // Close the SpeedDial after the button is pressed
-                           // _scaffoldKey.currentState!.openDrawer(),
+                            // _scaffoldKey.currentState!.openDrawer(),
                           },
                           shape: const CircleBorder(),
                         ),
@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             }),
 
                             // Close the SpeedDial after the button is pressed
-                          //  _scaffoldKey.currentState!.openDrawer(),
+                            //  _scaffoldKey.currentState!.openDrawer(),
                           },
                           shape: const CircleBorder(),
                         ),
@@ -262,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             }),
 
                             // Close the SpeedDial after the button is pressed
-                           // _scaffoldKey.currentState!.openDrawer(),
+                            // _scaffoldKey.currentState!.openDrawer(),
                           },
                           shape: const CircleBorder(),
                         ),
@@ -312,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       notchMargin: 0,
                       shadowColor: ColorsCode.blackColor100,
                       child: Container(
-                        padding: const EdgeInsets.only(left: 0, right: 26),
+                        padding: const EdgeInsets.only(left: 0, right: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,

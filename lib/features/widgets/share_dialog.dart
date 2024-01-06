@@ -57,15 +57,15 @@ void shareDialog(context,
                     foregroundColor: Colors.black,
                     version: QrVersions.auto,
                     embeddedImage: const AssetImage(
-                      "assets/images/logowithnobg.png",
+                      "assets/images/icons/logo_share.png",
                     ),
                     embeddedImageStyle: const QrEmbeddedImageStyle(
-                      size: Size(70, 70),
+                      size: Size(50, 50),
                     ),
                     errorStateBuilder: (cxt, err) {
-                      return const Center(
+                      return Center(
                         child: Text(
-                          'Uh oh! Something went wrong...',
+                          Language.instance.txtShareQrField(),
                           textAlign: TextAlign.center,
                         ),
                       );
@@ -86,7 +86,8 @@ void shareDialog(context,
                           subject: Language.instance.txtShareQrCheck());
 
                       if (Platform.isIOS || Platform.isAndroid) {
-                        Fluttertoast.showToast(msg: "Profile copied to Share");
+                        Fluttertoast.showToast(
+                            msg: Language.instance.txtShareQrMsgShare());
                       }
                     },
                     child: SvgPicture.asset(
@@ -117,7 +118,7 @@ void shareDialog(context,
                           text: Endpoints.publicProfileFrontEnd(profileId)));
                       if (Platform.isIOS || Platform.isAndroid) {
                         Fluttertoast.showToast(
-                            msg: "Profile copied to clipboard");
+                            msg: Language.instance.txtShareQrMsgClipboard());
                       }
                     },
                     child: SvgPicture.asset(

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -919,8 +920,10 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                     color: ColorsCode.whiteColor100,
                   ),
                   inputDecoration: InputDecoration(
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 2,
+                      horizontal: 6,
+                    ),
                     prefixIcon: const Padding(
                       padding: EdgeInsets.only(
                           left: 0.0, top: 3, bottom: 3, right: 8),
@@ -950,15 +953,21 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
                   countries: const ["eg", "de"],
                   isLatLngRequired: true,
                   getPlaceDetailWithLatLng: (Prediction prediction) {
-                    if (kDebugMode) {
-                      print("placeDetails${prediction.lng}");
+                    if (prediction.lat != null && prediction.lng != null) {
+                      latitude = double.parse(prediction.lat!);
+                      longitude = double.parse(prediction.lng!);
                     }
+                    log(prediction.toJson().toString());
                   },
                   itemClick: (Prediction prediction) {
-                    _insituLocationController.text = prediction.description!;
+                    // TODO: Error Location Lat , Long
+                    // Handle the location details directly in the itemClick callback
+                    locationName = prediction.description ?? "";
+                    _insituLocationController.text = locationName;
                     _insituLocationController.selection =
-                        TextSelection.fromPosition(TextPosition(
-                            offset: prediction.description!.length));
+                        TextSelection.fromPosition(
+                      TextPosition(offset: locationName.length),
+                    );
                   },
                 ),
               ),
@@ -1122,7 +1131,6 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
 
   void _addDisPersonProfile() async {
     // Implement your Profile logic here
-    final photo = "_image";
     final name = _nameController.text;
     final birthday = _birthdayController.text;
     final age = _ageController.text;
@@ -1136,7 +1144,6 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
     final diet = _dietController.text;
     final diseases = _diseasesController.text;
     final addInfo = _addInfoController.text;
-    final location = _insituLocationController.text;
     final instituteName = _insituNameController.text;
     final careAide = _careAideController.text;
     final institutePhone = _insituPhoneController.text;
@@ -1172,15 +1179,11 @@ class _AddDisabledProfileState extends State<AddDisabledProfile> {
     final createProfileSuccess = await postProfileData(profileInfo);
 
     if (createProfileSuccess != null) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
       if (image != null) {
         await uploadProfileImage(
           image: image!,
           profileId: createProfileSuccess.id!,
         );
-      }
-      if (kDebugMode) {
-        print("Success Uploading profile information's and added it to Home");
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
