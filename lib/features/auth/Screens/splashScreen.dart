@@ -3,12 +3,15 @@
 import 'dart:async';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart' show PageTransitionType;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
 import '../../home/home_screen.dart';
+import '../../internet/no_internet.dart';
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,6 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     checkAccessToken();
+    checkConnectivity();
+  }
+
+  void checkConnectivity() async {
+    await Connectivity().checkConnectivity();
   }
 
   String? accessToken;
@@ -32,7 +40,6 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     accessToken = prefs.getString('access_token') ?? '';
 
-    print(accessToken);
     startTimer();
     // Check if the access token is empty or not
     // Widget nextScreen =
@@ -46,9 +53,11 @@ class _SplashScreenState extends State<SplashScreen> {
     Countdown(
       seconds: 20,
       build: (BuildContext context, double time) => Text(time.toString()),
-      interval: Duration(milliseconds: 100),
+      interval: const Duration(milliseconds: 100),
       onFinished: () {
-        print('Timer is done!');
+        if (kDebugMode) {
+          print('Timer is done!');
+        }
       },
     );
   }
@@ -57,17 +66,17 @@ class _SplashScreenState extends State<SplashScreen> {
   int _start = 3;
 
   void startTimer() {
-    const oneSec = const Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
         if (_start == 0) {
-          setState(() {
+          setState(() async {
             timer.cancel();
 
-            accessToken != null && accessToken!.isNotEmpty
-                ? const HomeScreen()
-                : const LoginScreen();
+            // accessToken != null && accessToken!.isNotEmpty
+            //     ? const HomeScreen()
+            //     : const LoginScreen();
           });
         } else {
           setState(() {
@@ -92,9 +101,17 @@ class _SplashScreenState extends State<SplashScreen> {
         backgroundImage: AssetImage("assets/images/logowithnobg.png"),
         backgroundColor: Colors.white,
       ),
-      nextScreen: accessToken != null && accessToken!.isNotEmpty
-          ? const HomeScreen()
-          : const LoginScreen(),
+      nextScreen: StreamBuilder<ConnectivityResult>(
+          stream: Connectivity().onConnectivityChanged,
+          builder: (context, connectivitySnapshot) {
+            if (connectivitySnapshot.data == ConnectivityResult.none) {
+              return const NoInternet();
+            } else {
+              return accessToken != null && accessToken!.isNotEmpty
+                  ? const HomeScreen()
+                  : const LoginScreen();
+            }
+          }),
     );
   }
 }

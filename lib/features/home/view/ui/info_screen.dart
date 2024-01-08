@@ -100,10 +100,12 @@ class _InfoScreenState extends State<InfoScreen> {
                       latitude = userData!.location!.latitude!;
                       longitude = userData.location!.longitude!;
 
-                      latitudeInstitute =
-                          widget.profileInfo.institution!.locationIn!.latitude!;
-                      longitudeInstitute = widget
-                          .profileInfo.institution!.locationIn!.longitude!;
+                      // latitudeInstitute = widget
+                      //         .profileInfo.institution!.locationIn!.latitude! ??
+                      //     0.0;
+                      // longitudeInstitute = widget.profileInfo.institution!
+                      //         .locationIn!.longitude! ??
+                      //     0.0;
 
                       return Scaffold(
                         appBar: AppBar(
@@ -1204,9 +1206,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                                       myLocationEnabled: true,
                                                       initialCameraPosition:
                                                           CameraPosition(
-                                                        target: LatLng(
-                                                            latitudeInstitute,
-                                                            longitudeInstitute),
+                                                        target:
+                                                            getTargetLatLng(),
                                                         zoom: 14.0,
                                                         tilt: 0,
                                                         bearing: 0,
@@ -1226,9 +1227,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                                           icon: BitmapDescriptor
                                                               .defaultMarker,
                                                           visible: true,
-                                                          position: LatLng(
-                                                              latitudeInstitute,
-                                                              longitudeInstitute),
+                                                          position:
+                                                              getTargetLatLng(),
                                                         ),
                                                       },
                                                     ),
@@ -1376,6 +1376,24 @@ class _InfoScreenState extends State<InfoScreen> {
                     ));
                   });
         });
+  }
+
+  LatLng getTargetLatLng() {
+    // fix this error Null check operator used on a null value
+    var institution = widget.profileInfo.institution;
+    if (institution != null) {
+      var locationIn = institution.locationIn;
+      if (locationIn != null) {
+        var latitude = locationIn.latitude;
+        var longitude = locationIn.longitude;
+        if (latitude != null && longitude != null) {
+          return LatLng(latitude, longitude);
+        }
+      }
+    }
+
+    // Return a default LatLng or handle null case based on your requirements
+    return const LatLng(0.0, 0.0);
   }
 
   void _updateMassageProfile(ProfileInfo profileInfo) async {

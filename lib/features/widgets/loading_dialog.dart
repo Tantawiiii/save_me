@@ -7,17 +7,16 @@ class LoadingDialog extends StatelessWidget {
   final bool isLoading;
 
   //TODO: fIX ME Loading
-
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         if (isLoading)
           Container(
-            color: Colors.white.withOpacity(0.12),
+            color: Colors.white,
             child: Center(
               child: Lottie.asset(
-                'assets/anim/loading_location.json',
+                'assets/anim/location.json',
                 width: 130,
                 height: 130,
                 animate: true,

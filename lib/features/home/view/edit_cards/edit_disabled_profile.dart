@@ -115,6 +115,9 @@ class _EditDisabledProfileState extends State<EditDisabledProfile> {
     _specialCharController =
         TextEditingController(text: widget.profileInfo.specialCharacteristics);
 
+    longitude = widget.profileInfo.institution!.locationIn!.longitude!;
+    latitude = widget.profileInfo.institution!.locationIn!.latitude!;
+
     return FutureBuilder(
         future: ApiClient.getUserProfileData(),
         builder: (context, snapshot) {
@@ -229,9 +232,6 @@ class _EditDisabledProfileState extends State<EditDisabledProfile> {
                           },
                           onStepTapped: (step) =>
                               setState(() => _currentStep = step),
-                          onStepCancel: _currentStep == 0
-                              ? null
-                              : () => setState(() => _currentStep -= 1),
                           controlsBuilder:
                               (BuildContext context, ControlsDetails details) {
                             final isLastStep =
@@ -1248,7 +1248,11 @@ class _EditDisabledProfileState extends State<EditDisabledProfile> {
           aidPhoneNumberIn: institutePhone,
           nameIn: instituteName,
           aidNameIn: careAide,
-          locationIn: LocationProfile(nameLocation: location)),
+          locationIn: LocationProfile(
+            nameLocation: location,
+            latitude: latitude,
+            longitude: longitude,
+          )),
     );
     await updateProfile(widget.profileInfo.id!, profileUpdate);
 
