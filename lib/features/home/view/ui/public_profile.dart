@@ -94,11 +94,6 @@ class _PublicProfileState extends State<PublicProfile> {
                           latitude = userData!.location!.latitude!;
                           longitude = userData.location!.longitude!;
 
-                          latitudeInstitute = widget
-                              .profileInfo.institution!.locationIn!.latitude!;
-                          longitudeInstitute = widget
-                              .profileInfo.institution!.locationIn!.longitude!;
-
                           return Card(
                             elevation: 0,
                             margin: const EdgeInsets.only(
@@ -882,8 +877,16 @@ class _PublicProfileState extends State<PublicProfile> {
                                                         initialCameraPosition:
                                                             CameraPosition(
                                                           target: LatLng(
-                                                              latitudeInstitute,
-                                                              longitudeInstitute),
+                                                              widget
+                                                                  .profileInfo
+                                                                  .institution!
+                                                                  .locationIn!
+                                                                  .latitude!,
+                                                              widget
+                                                                  .profileInfo
+                                                                  .institution!
+                                                                  .locationIn!
+                                                                  .longitude!),
                                                           zoom: 14.0,
                                                           tilt: 0,
                                                           bearing: 0,
@@ -904,8 +907,16 @@ class _PublicProfileState extends State<PublicProfile> {
                                                                 .defaultMarker,
                                                             visible: true,
                                                             position: LatLng(
-                                                                latitudeInstitute,
-                                                                longitudeInstitute),
+                                                                widget
+                                                                    .profileInfo
+                                                                    .institution!
+                                                                    .locationIn!
+                                                                    .latitude!,
+                                                                widget
+                                                                    .profileInfo
+                                                                    .institution!
+                                                                    .locationIn!
+                                                                    .longitude!),
                                                           ),
                                                         },
                                                       ),

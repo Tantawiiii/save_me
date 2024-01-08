@@ -205,7 +205,7 @@ class _ProfileState extends State<Profile> {
                               cursorColor: Colors.black,
                               decoration: InputDecoration(
                                 contentPadding:
-                                const EdgeInsets.only(bottom: 6, left: 8),
+                                    const EdgeInsets.only(bottom: 6, left: 8),
                                 filled: true,
                                 fillColor: ColorsCode.whiteColor100,
                                 border: OutlineInputBorder(
@@ -447,7 +447,7 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 16,
                               )
                             ],

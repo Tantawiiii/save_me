@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:save_me/features/auth/Screens/login_screen.dart';
 import 'package:save_me/features/auth/Screens/register_screen.dart';
@@ -6,8 +5,6 @@ import 'package:save_me/features/auth/Screens/splashScreen.dart';
 import 'package:save_me/features/home/home_screen.dart';
 import 'package:save_me/utils/constants/colors_code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'features/internet/no_internet.dart';
 
 String language = "EN";
 late Locale _locale;
@@ -58,17 +55,6 @@ class _SaveMeState extends State<SaveMe> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    checkConnectivity();
-  }
-
-  void checkConnectivity() async {
-    await Connectivity().checkConnectivity();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -87,13 +73,7 @@ class _SaveMeState extends State<SaveMe> {
           onSurface: Colors.black,
         ),
       ),
-      home: StreamBuilder<ConnectivityResult>(
-          stream: Connectivity().onConnectivityChanged,
-          builder: (context, snapshot) {
-            return snapshot.data == ConnectivityResult.none
-                ? const NoInternet()
-                : const SplashScreen();
-          }),
+      home: const SplashScreen(),
       routes: {
         "/splash": (_) => const SplashScreen(),
         "/login": (_) => const LoginScreen(),

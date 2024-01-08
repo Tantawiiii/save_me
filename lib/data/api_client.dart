@@ -171,12 +171,13 @@ class ApiClient {
       final response = await request.send();
       log(response.statusCode.toString(), name: 'response');
       if (response.statusCode == 200) {
-        print('Successfully Uploaded Image...');
+        if (kDebugMode) {
+          print('Successfully Uploaded Image...');
+        }
       } else {
         throw Exception('Failed to upload image');
       }
     } catch (error) {
-      print('Error: $error');
       throw Exception('Failed to upload image');
     }
   }
