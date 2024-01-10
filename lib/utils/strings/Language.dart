@@ -503,7 +503,31 @@ class Language extends ChangeNotifier {
     if (getLanguage() == 'EN') {
       return "Hey I am  ";
     } else if (getLanguage() == 'DE') {
-      return "Hey, das bin ich ";
+      return "hallo, lch bin ";
+    }
+  }
+
+  txtLive() {
+    if (getLanguage() == 'EN') {
+      return "I live in ";
+    } else if (getLanguage() == 'DE') {
+      return "Ich lebe im ";
+    }
+  }
+
+  txtCare() {
+    if (getLanguage() == 'EN') {
+      return "My care aide is: ";
+    } else if (getLanguage() == 'DE') {
+      return "Pflegeperson: ";
+    }
+  }
+
+  txtCarePhone() {
+    if (getLanguage() == 'EN') {
+      return "Care aide's number: ";
+    } else if (getLanguage() == 'DE') {
+      return "Telefonnummer der Pflegeperson: ";
     }
   }
 
@@ -1438,7 +1462,7 @@ class Language extends ChangeNotifier {
 
   txtDeleteConfirm() {
     if (getLanguage() == 'EN') {
-      return "Delete Confirmation";
+      return "Delete confirmation";
     } else if (getLanguage() == 'DE') {
       return "Bestätigung löschen";
     }
@@ -1486,7 +1510,7 @@ class Language extends ChangeNotifier {
 
   txtDeleteBtn() {
     if (getLanguage() == 'EN') {
-      return "Yes, Delete this profile";
+      return "Yes, delete this profile";
     } else if (getLanguage() == 'DE') {
       return "Ja, dieses Profil löschen";
     }
