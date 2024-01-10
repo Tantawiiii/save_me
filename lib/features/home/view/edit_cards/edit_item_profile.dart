@@ -313,7 +313,7 @@ class _EditItemProfileState extends State<EditItemProfile> {
     final addInfo = _addInfoController.text;
 
     final profileUpdate = profileInfo.copyWith(
-        name: name, additionalInformation: addInfo, birthdate: "");
+        name: name, additionalInformation: addInfo, birthdate: "", message: "");
     await updateProfile(widget.profileInfo.id!, profileUpdate);
   }
 }

@@ -115,8 +115,8 @@ class _EditDisabledProfileState extends State<EditDisabledProfile> {
     _specialCharController =
         TextEditingController(text: widget.profileInfo.specialCharacteristics);
 
-    longitude = widget.profileInfo.institution!.locationIn!.longitude!;
-    latitude = widget.profileInfo.institution!.locationIn!.latitude!;
+    longitude = widget.profileInfo.institution?.locationIn?.longitude ?? 0.0;
+    latitude = widget.profileInfo.institution?.locationIn?.latitude ?? 0.0;
 
     return FutureBuilder(
         future: ApiClient.getUserProfileData(),

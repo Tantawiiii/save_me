@@ -36,7 +36,7 @@ void cancelDialog(context, {required void Function() onPressed}) {
               const SizedBox(
                 height: 28,
               ),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -46,7 +46,7 @@ void cancelDialog(context, {required void Function() onPressed}) {
                       Navigator.pop(context);
                     },
                     child: Container(
-                      width: 130,
+                      width: double.infinity,
                       height: 56,
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -67,13 +67,13 @@ void cancelDialog(context, {required void Function() onPressed}) {
                     ),
                   ),
                   const SizedBox(
-                    width: 16,
+                    height: 16,
                   ),
                   Bounce(
                     duration: const Duration(milliseconds: 300),
                     onPressed: onPressed,
                     child: Container(
-                      width: 130,
+                      width: double.infinity,
                       height: 56,
                       decoration: BoxDecoration(
                         borderRadius:

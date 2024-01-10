@@ -26,11 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     checkAccessToken();
-    checkConnectivity();
-  }
-
-  void checkConnectivity() async {
-    await Connectivity().checkConnectivity();
   }
 
   String? accessToken;
@@ -89,6 +84,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Future<ConnectivityResult?> checkConnectivity() async {
+      var connectivityResult = await Connectivity().checkConnectivity();
+      return connectivityResult;
+    }
+
     return AnimatedSplashScreen(
       splashIconSize: 400,
       duration: 1000,
@@ -101,17 +101,21 @@ class _SplashScreenState extends State<SplashScreen> {
         backgroundImage: AssetImage("assets/images/logowithnobg.png"),
         backgroundColor: Colors.white,
       ),
-      nextScreen: StreamBuilder<ConnectivityResult>(
-          stream: Connectivity().onConnectivityChanged,
-          builder: (context, connectivitySnapshot) {
-            if (connectivitySnapshot.data == ConnectivityResult.none) {
-              return const NoInternet();
-            } else {
-              return accessToken != null && accessToken!.isNotEmpty
-                  ? const HomeScreen()
-                  : const LoginScreen();
-            }
-          }),
+      nextScreen: FutureBuilder<ConnectivityResult?>(
+        future: checkConnectivity(),
+        builder: (context, connectivitySnapshot) {
+          if (connectivitySnapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (connectivitySnapshot.data == ConnectivityResult.none) {
+            // No internet connection
+            return const NoInternet();
+          } else {
+            return accessToken != null && accessToken!.isNotEmpty
+                ? const HomeScreen()
+                : const LoginScreen();
+          }
+        },
+      ),
     );
   }
 }

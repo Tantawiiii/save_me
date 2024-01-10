@@ -744,7 +744,59 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 ),
                                               ),
                                             const SizedBox(
-                                              height: 18,
+                                              height: 8,
+                                            ),
+                                            if (widget.profileInfo
+                                                        .institution?.aidNameIn !=
+                                                    "" &&
+                                                widget.profileInfo.institution
+                                                        ?.aidNameIn !=
+                                                    null &&
+                                                widget.profileInfo.institution
+                                                        ?.aidNameIn !=
+                                                    "null")
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    "${Language.instance.txtLive()} ${widget.profileInfo.institution?.nameIn!} \n ",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontFamily: Fonts
+                                                          .getFontFamilyTitillRegular(),
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 8,
+                                                  ),
+                                                  Text(
+                                                    "${Language.instance.txtCare()} ${widget.profileInfo.institution?.aidNameIn!} \n "
+                                                    "${Language.instance.txtCarePhone()} ${widget.profileInfo.institution?.aidPhoneNumberIn!}",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontFamily: Fonts
+                                                          .getFontFamilyTitillRegular(),
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 8,
+                                                  ),
+                                                  Text(
+                                                    "${Language.instance.txtLive()} ${widget.profileInfo.institution?.nameIn!} \n "
+                                                    "${Language.instance.txtCare()} ${widget.profileInfo.institution?.aidNameIn!} \n "
+                                                    "${Language.instance.txtCarePhone()} ${widget.profileInfo.institution?.aidPhoneNumberIn!}",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontFamily: Fonts
+                                                          .getFontFamilyTitillRegular(),
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            const SizedBox(
+                                              height: 12,
                                             ),
                                             Center(
                                               child: Wrap(
@@ -1136,225 +1188,6 @@ class _InfoScreenState extends State<InfoScreen> {
                                                   ),
                                                 ],
                                               ),
-                                            if (widget
-                                                        .profileInfo
-                                                        .institution
-                                                        ?.locationIn!
-                                                        .nameLocation !=
-                                                    "" &&
-                                                widget
-                                                        .profileInfo
-                                                        .institution
-                                                        ?.locationIn!
-                                                        .nameLocation !=
-                                                    null &&
-                                                widget
-                                                        .profileInfo
-                                                        .institution
-                                                        ?.locationIn!
-                                                        .nameLocation !=
-                                                    "null")
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    Language.instance
-                                                        .txtSeniorLocation(),
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily: Fonts
-                                                            .getFontFamilyTitillSemiBold()),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 8,
-                                                  ),
-                                                  Text(
-                                                    widget
-                                                            .profileInfo
-                                                            .institution
-                                                            ?.locationIn!
-                                                            .nameLocation ??
-                                                        "",
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily: Fonts
-                                                            .getFontFamilyTitillRegular()),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 16,
-                                                  ),
-                                                  Container(
-                                                    height: 200,
-                                                    width: 320,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  16.0)),
-                                                    ),
-                                                    child: GoogleMap(
-                                                      mapType: MapType.normal,
-                                                      compassEnabled: true,
-                                                      mapToolbarEnabled: true,
-                                                      zoomGesturesEnabled: true,
-                                                      zoomControlsEnabled:
-                                                          false,
-                                                      myLocationEnabled: true,
-                                                      initialCameraPosition:
-                                                          CameraPosition(
-                                                        target:
-                                                            getTargetLatLng(),
-                                                        zoom: 14.0,
-                                                        tilt: 0,
-                                                        bearing: 0,
-                                                      ),
-                                                      onMapCreated:
-                                                          (controller) {
-                                                        setState(() {
-                                                          _controller =
-                                                              controller;
-                                                        });
-                                                      },
-                                                      markers: {
-                                                        Marker(
-                                                          markerId:
-                                                              const MarkerId(
-                                                                  "1"),
-                                                          icon: BitmapDescriptor
-                                                              .defaultMarker,
-                                                          visible: true,
-                                                          position:
-                                                              getTargetLatLng(),
-                                                        ),
-                                                      },
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 24,
-                                                  ),
-                                                ],
-                                              ),
-                                            if (widget.profileInfo.institution
-                                                        ?.nameIn !=
-                                                    "" &&
-                                                widget.profileInfo.institution
-                                                        ?.nameIn !=
-                                                    null)
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    Language.instance
-                                                        .txtSeniorInstitute(),
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily: Fonts
-                                                            .getFontFamilyTitillSemiBold()),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 8,
-                                                  ),
-                                                  Text(
-                                                    widget
-                                                            .profileInfo
-                                                            .institution
-                                                            ?.nameIn! ??
-                                                        "",
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily: Fonts
-                                                            .getFontFamilyTitillRegular()),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 24,
-                                                  ),
-                                                ],
-                                              ),
-                                            if (widget.profileInfo.institution
-                                                        ?.aidNameIn !=
-                                                    "" &&
-                                                widget.profileInfo.institution
-                                                        ?.aidNameIn !=
-                                                    null)
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    Language.instance
-                                                        .txtSeniorCareAide(),
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily: Fonts
-                                                            .getFontFamilyTitillSemiBold()),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 8,
-                                                  ),
-                                                  Text(
-                                                    widget
-                                                            .profileInfo
-                                                            .institution
-                                                            ?.aidNameIn! ??
-                                                        "",
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily: Fonts
-                                                            .getFontFamilyTitillRegular()),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 24,
-                                                  ),
-                                                ],
-                                              ),
-                                            if (widget.profileInfo.institution
-                                                        ?.aidPhoneNumberIn !=
-                                                    "" &&
-                                                widget.profileInfo.institution
-                                                        ?.aidPhoneNumberIn !=
-                                                    null)
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    Language.instance
-                                                        .txtSeniorCareAidePhone(),
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily: Fonts
-                                                            .getFontFamilyTitillSemiBold()),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 8,
-                                                  ),
-                                                  Text(
-                                                    widget
-                                                            .profileInfo
-                                                            .institution
-                                                            ?.aidPhoneNumberIn! ??
-                                                        "",
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily: Fonts
-                                                            .getFontFamilyTitillRegular()),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 24,
-                                                  ),
-                                                ],
-                                              ),
                                           ],
                                         ),
                                         const SizedBox(
@@ -1400,9 +1233,8 @@ class _InfoScreenState extends State<InfoScreen> {
     final massage = _massageController.text;
 
     final profileUpdate = profileInfo.copyWith(
-
-        ///  message: massage,
-        );
+      message: massage,
+    );
     await updateProfile(widget.profileInfo.id!, profileUpdate);
   }
 

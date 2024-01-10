@@ -71,16 +71,16 @@ void deleteDialog(context, {required void Function() onPressed}) {
                 child: Container(
                   width: double.infinity,
                   height: 56,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    color: Colors.redAccent,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    color: Colors.red.shade100,
                     shape: BoxShape.rectangle,
                   ),
                   child: Center(
                     child: Text(
                       Language.instance.txtDeleteBtn(),
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.red,
                         fontSize: 16,
                         fontFamily: Fonts.getFontFamilyTitillSemiBold(),
                         fontWeight: FontWeight.bold,

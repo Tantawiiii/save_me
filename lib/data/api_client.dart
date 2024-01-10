@@ -182,6 +182,33 @@ class ApiClient {
     }
   }
 
+  Future<void> uploadAvatar(List<Map<String, String>> idList) async {
+    String? accessToken = await getAccessToken();
+    const url = Endpoints.avatars;
+
+    try {
+      // Create a comma-separated string of IDs
+      final idsString = idList.map((idMap) => idMap['id']).join(',');
+
+      final response = await http.get(
+        Uri.parse('$url?ids=$idsString'),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+
+        for (var item in data) {
+          String photoUrl = item["photoUrl"];
+          print(photoUrl);
+        }
+      } else {
+        print('Failed to fetch photoUrls. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
   static Future<String?> getAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('access_token');
